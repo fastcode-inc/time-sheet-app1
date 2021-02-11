@@ -37,7 +37,6 @@ export class UsersDetailsComponent extends BaseDetailsComponent<IUsers> implemen
 		super.ngOnInit();
 		this.setForm();
     	this.getItem();
-    	this.setPickerSearchListener();
 	}
   
   setForm(){

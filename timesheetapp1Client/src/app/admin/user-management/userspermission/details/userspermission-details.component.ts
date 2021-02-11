@@ -41,7 +41,6 @@ export class UserspermissionDetailsComponent extends BaseDetailsComponent<IUsers
 		super.ngOnInit();
 		this.setForm();
     	this.getItem();
-    	this.setPickerSearchListener();
 	}
   
   setForm(){

@@ -227,7 +227,7 @@ public class UsersroleAppService implements IUsersroleAppService {
 		for (int i = 0; i < list.size(); i++) {
 			if(!(
 		        list.get(i).replace("%20","").trim().equals("displayName") ||
-		        list.get(i).replace("%20","").trim().equals("username") ||
+		        list.get(i).replace("%20","").trim().equals("lastname") ||
 				list.get(i).replace("%20","").trim().equals("roleId") ||
 				list.get(i).replace("%20","").trim().equals("usersId")
 			)) 
@@ -288,11 +288,11 @@ public class UsersroleAppService implements IUsersroleAppService {
 			}
 		    if(details.getKey().replace("%20","").trim().equals("users")) {
 				if(details.getValue().getOperator().equals("contains"))
-					builder.and(usersrole.users.username.likeIgnoreCase("%"+ details.getValue().getSearchValue() + "%"));
+					builder.and(usersrole.users.lastname.likeIgnoreCase("%"+ details.getValue().getSearchValue() + "%"));
 				else if(details.getValue().getOperator().equals("equals"))
-					builder.and(usersrole.users.username.eq(details.getValue().getSearchValue()));
+					builder.and(usersrole.users.lastname.eq(details.getValue().getSearchValue()));
 				else if(details.getValue().getOperator().equals("notEqual"))
-					builder.and(usersrole.users.username.ne(details.getValue().getSearchValue()));
+					builder.and(usersrole.users.lastname.ne(details.getValue().getSearchValue()));
 			}
 		}
 		
@@ -311,7 +311,7 @@ public class UsersroleAppService implements IUsersroleAppService {
         }
         
 		if(joinCol != null && joinCol.getKey().equals("users")) {
-		    builder.and(usersrole.users.username.eq(joinCol.getValue()));
+		    builder.and(usersrole.users.lastname.eq(joinCol.getValue()));
         }
         }
 		return builder;

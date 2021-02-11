@@ -231,7 +231,7 @@ public class UserspermissionAppService implements IUserspermissionAppService {
 		for (int i = 0; i < list.size(); i++) {
 			if(!(
 		        list.get(i).replace("%20","").trim().equals("displayName") ||
-		        list.get(i).replace("%20","").trim().equals("username") ||
+		        list.get(i).replace("%20","").trim().equals("lastname") ||
 				list.get(i).replace("%20","").trim().equals("permissionId") ||
 				list.get(i).replace("%20","").trim().equals("revoked") ||
 				list.get(i).replace("%20","").trim().equals("usersId")
@@ -299,11 +299,11 @@ public class UserspermissionAppService implements IUserspermissionAppService {
 			}
 		    if(details.getKey().replace("%20","").trim().equals("users")) {
 				if(details.getValue().getOperator().equals("contains"))
-					builder.and(userspermission.users.username.likeIgnoreCase("%"+ details.getValue().getSearchValue() + "%"));
+					builder.and(userspermission.users.lastname.likeIgnoreCase("%"+ details.getValue().getSearchValue() + "%"));
 				else if(details.getValue().getOperator().equals("equals"))
-					builder.and(userspermission.users.username.eq(details.getValue().getSearchValue()));
+					builder.and(userspermission.users.lastname.eq(details.getValue().getSearchValue()));
 				else if(details.getValue().getOperator().equals("notEqual"))
-					builder.and(userspermission.users.username.ne(details.getValue().getSearchValue()));
+					builder.and(userspermission.users.lastname.ne(details.getValue().getSearchValue()));
 			}
 		}
 		
@@ -322,7 +322,7 @@ public class UserspermissionAppService implements IUserspermissionAppService {
         }
         
 		if(joinCol != null && joinCol.getKey().equals("users")) {
-		    builder.and(userspermission.users.username.eq(joinCol.getValue()));
+		    builder.and(userspermission.users.lastname.eq(joinCol.getValue()));
         }
         }
 		return builder;

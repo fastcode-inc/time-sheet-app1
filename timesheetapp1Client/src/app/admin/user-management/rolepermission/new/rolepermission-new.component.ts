@@ -43,7 +43,6 @@ export class RolepermissionNewComponent extends BaseNewComponent<IRolepermission
 		super.ngOnInit();
     	this.setForm();
 		this.checkPassedData();
-		this.setPickerSearchListener();
     }
  		
 	setForm(){

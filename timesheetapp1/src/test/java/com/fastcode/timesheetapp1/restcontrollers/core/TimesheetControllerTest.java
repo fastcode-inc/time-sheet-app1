@@ -119,9 +119,9 @@ public class TimesheetControllerTest {
     
 	int countTimesheet = 10;
 	
-	int countUsers = 10;
-	
 	int countTimesheetstatus = 10;
+	
+	int countUsers = 10;
 	
 	@PostConstruct
 	public void init() {
@@ -154,16 +154,34 @@ public class TimesheetControllerTest {
 		timesheetEntity.setPeriodstartingdate(SearchUtils.stringToLocalDate("19"+countTimesheet+"-09-01"));
 		timesheetEntity.setVersiono(0L);
 		relationCount++;
-		UsersEntity users= createUsersEntity();
-		timesheetEntity.setUsers(users);
 		TimesheetstatusEntity timesheetstatus= createTimesheetstatusEntity();
 		timesheetEntity.setTimesheetstatus(timesheetstatus);
+		UsersEntity users= createUsersEntity();
+		timesheetEntity.setUsers(users);
 		if(!timesheetRepository.findAll().contains(timesheetEntity))
 		{
 			 timesheetEntity = timesheetRepository.save(timesheetEntity);
 		}
 		countTimesheet++;
 	    return timesheetEntity;
+	}
+	public TimesheetstatusEntity createTimesheetstatusEntity() {
+	
+		if(countTimesheetstatus>60) {
+			countTimesheetstatus = 10;
+		}
+		
+		TimesheetstatusEntity timesheetstatusEntity = new TimesheetstatusEntity();
+		timesheetstatusEntity.setId(Long.valueOf(relationCount));
+  		timesheetstatusEntity.setStatusname(String.valueOf(relationCount));
+		timesheetstatusEntity.setVersiono(0L);
+		relationCount++;
+		if(!timesheetstatusRepository.findAll().contains(timesheetstatusEntity))
+		{
+			 timesheetstatusEntity = timesheetstatusRepository.save(timesheetstatusEntity);
+		}
+		countTimesheetstatus++;
+	    return timesheetstatusEntity;
 	}
 	public UsersEntity createUsersEntity() {
 	
@@ -191,24 +209,6 @@ public class TimesheetControllerTest {
 		}
 		countUsers++;
 	    return usersEntity;
-	}
-	public TimesheetstatusEntity createTimesheetstatusEntity() {
-	
-		if(countTimesheetstatus>60) {
-			countTimesheetstatus = 10;
-		}
-		
-		TimesheetstatusEntity timesheetstatusEntity = new TimesheetstatusEntity();
-		timesheetstatusEntity.setId(Long.valueOf(relationCount));
-  		timesheetstatusEntity.setStatusname(String.valueOf(relationCount));
-		timesheetstatusEntity.setVersiono(0L);
-		relationCount++;
-		if(!timesheetstatusRepository.findAll().contains(timesheetstatusEntity))
-		{
-			 timesheetstatusEntity = timesheetstatusRepository.save(timesheetstatusEntity);
-		}
-		countTimesheetstatus++;
-	    return timesheetstatusEntity;
 	}
 
 	public TimesheetEntity createEntity() {

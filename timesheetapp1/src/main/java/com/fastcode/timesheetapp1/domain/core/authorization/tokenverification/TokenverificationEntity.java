@@ -18,10 +18,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class TokenverificationEntity extends AbstractEntity {
 
-    @Basic
-    @Column(name = "expiration_time", nullable = true)
-    private Date expirationTime;
-
     @Id
     @EqualsAndHashCode.Include()
     @Column(name = "users_id", nullable = false)
@@ -31,6 +27,10 @@ public class TokenverificationEntity extends AbstractEntity {
     @EqualsAndHashCode.Include()
     @Column(name = "token_type", nullable = false,length =256)
     private String tokenType;
+
+    @Basic
+    @Column(name = "expiration_time", nullable = true)
+    private Date expirationTime;
 
     @Basic
     @Column(name = "token", nullable = true,length =512)

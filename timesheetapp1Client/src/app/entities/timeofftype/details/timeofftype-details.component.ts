@@ -37,7 +37,6 @@ export class TimeofftypeDetailsComponent extends BaseDetailsComponent<ITimeoffty
 		super.ngOnInit();
 		this.setForm();
     	this.getItem();
-    	this.setPickerSearchListener();
 	}
   
   setForm(){

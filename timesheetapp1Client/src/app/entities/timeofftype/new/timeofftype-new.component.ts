@@ -39,7 +39,6 @@ export class TimeofftypeNewComponent extends BaseNewComponent<ITimeofftype> impl
 		super.ngOnInit();
     	this.setForm();
 		this.checkPassedData();
-		this.setPickerSearchListener();
     }
  		
 	setForm(){

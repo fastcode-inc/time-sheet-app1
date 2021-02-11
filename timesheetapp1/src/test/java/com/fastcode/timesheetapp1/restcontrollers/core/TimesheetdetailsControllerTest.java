@@ -58,10 +58,10 @@ import com.fastcode.timesheetapp1.domain.core.project.IProjectRepository;
 import com.fastcode.timesheetapp1.domain.core.project.ProjectEntity;
 import com.fastcode.timesheetapp1.domain.core.customer.ICustomerRepository;
 import com.fastcode.timesheetapp1.domain.core.customer.CustomerEntity;
-import com.fastcode.timesheetapp1.domain.core.authorization.users.IUsersRepository;
-import com.fastcode.timesheetapp1.domain.core.authorization.users.UsersEntity;
 import com.fastcode.timesheetapp1.domain.core.timesheetstatus.ITimesheetstatusRepository;
 import com.fastcode.timesheetapp1.domain.core.timesheetstatus.TimesheetstatusEntity;
+import com.fastcode.timesheetapp1.domain.core.authorization.users.IUsersRepository;
+import com.fastcode.timesheetapp1.domain.core.authorization.users.UsersEntity;
 import com.fastcode.timesheetapp1.application.core.task.TaskAppService;    
 import com.fastcode.timesheetapp1.application.core.timeofftype.TimeofftypeAppService;    
 import com.fastcode.timesheetapp1.application.core.timesheet.TimesheetAppService;    
@@ -99,12 +99,12 @@ public class TimesheetdetailsControllerTest {
 	protected ICustomerRepository customerRepository;
 	
 	@Autowired
-	@Qualifier("usersRepository") 
-	protected IUsersRepository usersRepository;
-	
-	@Autowired
 	@Qualifier("timesheetstatusRepository") 
 	protected ITimesheetstatusRepository timesheetstatusRepository;
+	
+	@Autowired
+	@Qualifier("usersRepository") 
+	protected IUsersRepository usersRepository;
 	
 	@SpyBean
 	@Qualifier("timesheetdetailsAppService")
@@ -146,15 +146,15 @@ public class TimesheetdetailsControllerTest {
 	
 	int countTask = 10;
 	
-	int countCustomer = 10;
-	
 	int countTimeofftype = 10;
+	
+	int countCustomer = 10;
 	
 	int countTimesheet = 10;
 	
-	int countUsers = 10;
-	
 	int countTimesheetstatus = 10;
+	
+	int countUsers = 10;
 	
 	@PostConstruct
 	public void init() {
@@ -172,8 +172,8 @@ public class TimesheetdetailsControllerTest {
 		em.createNativeQuery("truncate table timesheet.timesheet RESTART IDENTITY").executeUpdate();
 		em.createNativeQuery("truncate table timesheet.project RESTART IDENTITY").executeUpdate();
 		em.createNativeQuery("truncate table timesheet.customer RESTART IDENTITY").executeUpdate();
-		em.createNativeQuery("truncate table timesheet.users RESTART IDENTITY").executeUpdate();
 		em.createNativeQuery("truncate table timesheet.timesheetstatus RESTART IDENTITY").executeUpdate();
+		em.createNativeQuery("truncate table timesheet.users RESTART IDENTITY").executeUpdate();
 	 	em.createNativeQuery("SET REFERENTIAL_INTEGRITY TRUE").executeUpdate();
 		em.getTransaction().commit();
 	}
@@ -223,6 +223,24 @@ public class TimesheetdetailsControllerTest {
 		countTask++;
 	    return taskEntity;
 	}
+	public TimeofftypeEntity createTimeofftypeEntity() {
+	
+		if(countTimeofftype>60) {
+			countTimeofftype = 10;
+		}
+		
+		TimeofftypeEntity timeofftypeEntity = new TimeofftypeEntity();
+		timeofftypeEntity.setId(Long.valueOf(relationCount));
+  		timeofftypeEntity.setTypename(String.valueOf(relationCount));
+		timeofftypeEntity.setVersiono(0L);
+		relationCount++;
+		if(!timeofftypeRepository.findAll().contains(timeofftypeEntity))
+		{
+			 timeofftypeEntity = timeofftypeRepository.save(timeofftypeEntity);
+		}
+		countTimeofftype++;
+	    return timeofftypeEntity;
+	}
 	public CustomerEntity createCustomerEntity() {
 	
 		if(countCustomer>60) {
@@ -243,24 +261,6 @@ public class TimesheetdetailsControllerTest {
 		countCustomer++;
 	    return customerEntity;
 	}
-	public TimeofftypeEntity createTimeofftypeEntity() {
-	
-		if(countTimeofftype>60) {
-			countTimeofftype = 10;
-		}
-		
-		TimeofftypeEntity timeofftypeEntity = new TimeofftypeEntity();
-		timeofftypeEntity.setId(Long.valueOf(relationCount));
-  		timeofftypeEntity.setTypename(String.valueOf(relationCount));
-		timeofftypeEntity.setVersiono(0L);
-		relationCount++;
-		if(!timeofftypeRepository.findAll().contains(timeofftypeEntity))
-		{
-			 timeofftypeEntity = timeofftypeRepository.save(timeofftypeEntity);
-		}
-		countTimeofftype++;
-	    return timeofftypeEntity;
-	}
 	public TimesheetEntity createTimesheetEntity() {
 	
 		if(countTimesheet>60) {
@@ -274,16 +274,34 @@ public class TimesheetdetailsControllerTest {
 		timesheetEntity.setPeriodstartingdate(SearchUtils.stringToLocalDate("19"+countTimesheet+"-09-01"));
 		timesheetEntity.setVersiono(0L);
 		relationCount++;
-		UsersEntity users= createUsersEntity();
-		timesheetEntity.setUsers(users);
 		TimesheetstatusEntity timesheetstatus= createTimesheetstatusEntity();
 		timesheetEntity.setTimesheetstatus(timesheetstatus);
+		UsersEntity users= createUsersEntity();
+		timesheetEntity.setUsers(users);
 		if(!timesheetRepository.findAll().contains(timesheetEntity))
 		{
 			 timesheetEntity = timesheetRepository.save(timesheetEntity);
 		}
 		countTimesheet++;
 	    return timesheetEntity;
+	}
+	public TimesheetstatusEntity createTimesheetstatusEntity() {
+	
+		if(countTimesheetstatus>60) {
+			countTimesheetstatus = 10;
+		}
+		
+		TimesheetstatusEntity timesheetstatusEntity = new TimesheetstatusEntity();
+		timesheetstatusEntity.setId(Long.valueOf(relationCount));
+  		timesheetstatusEntity.setStatusname(String.valueOf(relationCount));
+		timesheetstatusEntity.setVersiono(0L);
+		relationCount++;
+		if(!timesheetstatusRepository.findAll().contains(timesheetstatusEntity))
+		{
+			 timesheetstatusEntity = timesheetstatusRepository.save(timesheetstatusEntity);
+		}
+		countTimesheetstatus++;
+	    return timesheetstatusEntity;
 	}
 	public UsersEntity createUsersEntity() {
 	
@@ -311,24 +329,6 @@ public class TimesheetdetailsControllerTest {
 		}
 		countUsers++;
 	    return usersEntity;
-	}
-	public TimesheetstatusEntity createTimesheetstatusEntity() {
-	
-		if(countTimesheetstatus>60) {
-			countTimesheetstatus = 10;
-		}
-		
-		TimesheetstatusEntity timesheetstatusEntity = new TimesheetstatusEntity();
-		timesheetstatusEntity.setId(Long.valueOf(relationCount));
-  		timesheetstatusEntity.setStatusname(String.valueOf(relationCount));
-		timesheetstatusEntity.setVersiono(0L);
-		relationCount++;
-		if(!timesheetstatusRepository.findAll().contains(timesheetstatusEntity))
-		{
-			 timesheetstatusEntity = timesheetstatusRepository.save(timesheetstatusEntity);
-		}
-		countTimesheetstatus++;
-	    return timesheetstatusEntity;
 	}
 
 	public TimesheetdetailsEntity createEntity() {

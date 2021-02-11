@@ -49,10 +49,10 @@ import com.fastcode.timesheetapp1.domain.core.timesheetstatus.ITimesheetstatusRe
 import com.fastcode.timesheetapp1.domain.core.timesheetstatus.TimesheetstatusEntity;
 import com.fastcode.timesheetapp1.domain.core.timesheet.ITimesheetRepository;
 import com.fastcode.timesheetapp1.domain.core.timesheet.TimesheetEntity;
-import com.fastcode.timesheetapp1.domain.core.authorization.users.IUsersRepository;
-import com.fastcode.timesheetapp1.domain.core.authorization.users.UsersEntity;
 import com.fastcode.timesheetapp1.domain.core.timesheetstatus.ITimesheetstatusRepository;
 import com.fastcode.timesheetapp1.domain.core.timesheetstatus.TimesheetstatusEntity;
+import com.fastcode.timesheetapp1.domain.core.authorization.users.IUsersRepository;
+import com.fastcode.timesheetapp1.domain.core.authorization.users.UsersEntity;
 import com.fastcode.timesheetapp1.application.core.timesheet.TimesheetAppService;    
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -72,12 +72,12 @@ public class TimesheetstatusControllerTest {
 	protected ITimesheetRepository timesheetRepository;
 	
 	@Autowired
-	@Qualifier("usersRepository") 
-	protected IUsersRepository usersRepository;
-	
-	@Autowired
 	@Qualifier("timesheetstatusRepository") 
 	protected ITimesheetstatusRepository timesheetstatusRepository;
+	
+	@Autowired
+	@Qualifier("usersRepository") 
+	protected IUsersRepository usersRepository;
 	
 	@SpyBean
 	@Qualifier("timesheetstatusAppService")
@@ -109,9 +109,9 @@ public class TimesheetstatusControllerTest {
     
 	int countTimesheet = 10;
 	
-	int countUsers = 10;
-	
 	int countTimesheetstatus = 10;
+	
+	int countUsers = 10;
 	
 	@PostConstruct
 	public void init() {
@@ -125,8 +125,8 @@ public class TimesheetstatusControllerTest {
 		em.createNativeQuery("SET REFERENTIAL_INTEGRITY FALSE").executeUpdate();
 		em.createNativeQuery("truncate table timesheet.timesheetstatus RESTART IDENTITY").executeUpdate();
 		em.createNativeQuery("truncate table timesheet.timesheet RESTART IDENTITY").executeUpdate();
-		em.createNativeQuery("truncate table timesheet.users RESTART IDENTITY").executeUpdate();
 		em.createNativeQuery("truncate table timesheet.timesheetstatus RESTART IDENTITY").executeUpdate();
+		em.createNativeQuery("truncate table timesheet.users RESTART IDENTITY").executeUpdate();
 	 	em.createNativeQuery("SET REFERENTIAL_INTEGRITY TRUE").executeUpdate();
 		em.getTransaction().commit();
 	}
@@ -144,16 +144,34 @@ public class TimesheetstatusControllerTest {
 		timesheetEntity.setPeriodstartingdate(SearchUtils.stringToLocalDate("19"+countTimesheet+"-09-01"));
 		timesheetEntity.setVersiono(0L);
 		relationCount++;
-		UsersEntity users= createUsersEntity();
-		timesheetEntity.setUsers(users);
 		TimesheetstatusEntity timesheetstatus= createTimesheetstatusEntity();
 		timesheetEntity.setTimesheetstatus(timesheetstatus);
+		UsersEntity users= createUsersEntity();
+		timesheetEntity.setUsers(users);
 		if(!timesheetRepository.findAll().contains(timesheetEntity))
 		{
 			 timesheetEntity = timesheetRepository.save(timesheetEntity);
 		}
 		countTimesheet++;
 	    return timesheetEntity;
+	}
+	public TimesheetstatusEntity createTimesheetstatusEntity() {
+	
+		if(countTimesheetstatus>60) {
+			countTimesheetstatus = 10;
+		}
+		
+		TimesheetstatusEntity timesheetstatusEntity = new TimesheetstatusEntity();
+		timesheetstatusEntity.setId(Long.valueOf(relationCount));
+  		timesheetstatusEntity.setStatusname(String.valueOf(relationCount));
+		timesheetstatusEntity.setVersiono(0L);
+		relationCount++;
+		if(!timesheetstatusRepository.findAll().contains(timesheetstatusEntity))
+		{
+			 timesheetstatusEntity = timesheetstatusRepository.save(timesheetstatusEntity);
+		}
+		countTimesheetstatus++;
+	    return timesheetstatusEntity;
 	}
 	public UsersEntity createUsersEntity() {
 	
@@ -181,24 +199,6 @@ public class TimesheetstatusControllerTest {
 		}
 		countUsers++;
 	    return usersEntity;
-	}
-	public TimesheetstatusEntity createTimesheetstatusEntity() {
-	
-		if(countTimesheetstatus>60) {
-			countTimesheetstatus = 10;
-		}
-		
-		TimesheetstatusEntity timesheetstatusEntity = new TimesheetstatusEntity();
-		timesheetstatusEntity.setId(Long.valueOf(relationCount));
-  		timesheetstatusEntity.setStatusname(String.valueOf(relationCount));
-		timesheetstatusEntity.setVersiono(0L);
-		relationCount++;
-		if(!timesheetstatusRepository.findAll().contains(timesheetstatusEntity))
-		{
-			 timesheetstatusEntity = timesheetstatusRepository.save(timesheetstatusEntity);
-		}
-		countTimesheetstatus++;
-	    return timesheetstatusEntity;
 	}
 
 	public TimesheetstatusEntity createEntity() {

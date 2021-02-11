@@ -37,7 +37,6 @@ export class AppConfigurationDetailsComponent extends BaseDetailsComponent<IAppC
 		super.ngOnInit();
 		this.setForm();
     	this.getItem();
-    	this.setPickerSearchListener();
 	}
   
   setForm(){

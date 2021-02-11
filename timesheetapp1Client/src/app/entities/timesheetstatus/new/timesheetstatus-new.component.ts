@@ -39,7 +39,6 @@ export class TimesheetstatusNewComponent extends BaseNewComponent<ITimesheetstat
 		super.ngOnInit();
     	this.setForm();
 		this.checkPassedData();
-		this.setPickerSearchListener();
     }
  		
 	setForm(){

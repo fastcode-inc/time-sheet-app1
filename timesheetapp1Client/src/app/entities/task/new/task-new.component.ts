@@ -41,7 +41,6 @@ export class TaskNewComponent extends BaseNewComponent<ITask> implements OnInit 
 		super.ngOnInit();
     	this.setForm();
 		this.checkPassedData();
-		this.setPickerSearchListener();
     }
  		
 	setForm(){

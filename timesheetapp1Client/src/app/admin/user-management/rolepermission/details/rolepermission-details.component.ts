@@ -41,7 +41,6 @@ export class RolepermissionDetailsComponent extends BaseDetailsComponent<IRolepe
 		super.ngOnInit();
 		this.setForm();
     	this.getItem();
-    	this.setPickerSearchListener();
 	}
   
   setForm(){

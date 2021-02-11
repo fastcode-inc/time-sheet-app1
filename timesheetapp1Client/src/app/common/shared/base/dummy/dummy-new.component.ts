@@ -38,7 +38,6 @@ export class DummyNewComponent extends BaseNewComponent<IDummy> implements OnIni
 		super.ngOnInit();
 		this.setForm();
 		this.checkPassedData();
-		this.setPickerSearchListener();
 	}
 
 	setForm() {

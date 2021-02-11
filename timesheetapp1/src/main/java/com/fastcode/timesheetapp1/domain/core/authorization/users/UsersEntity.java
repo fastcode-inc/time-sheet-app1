@@ -4,12 +4,12 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 import java.time.*;
-import com.fastcode.timesheetapp1.domain.core.timesheet.TimesheetEntity;
-import com.fastcode.timesheetapp1.domain.core.authorization.userspermission.UserspermissionEntity;
 import com.fastcode.timesheetapp1.domain.core.usertask.UsertaskEntity;
-import com.fastcode.timesheetapp1.domain.core.authorization.userspreference.UserspreferenceEntity;
 import com.fastcode.timesheetapp1.domain.core.authorization.tokenverification.TokenverificationEntity;
 import com.fastcode.timesheetapp1.domain.core.authorization.usersrole.UsersroleEntity;
+import com.fastcode.timesheetapp1.domain.core.timesheet.TimesheetEntity;
+import com.fastcode.timesheetapp1.domain.core.authorization.userspermission.UserspermissionEntity;
+import com.fastcode.timesheetapp1.domain.core.authorization.userspreference.UserspreferenceEntity;
 import com.fastcode.timesheetapp1.domain.core.abstractentity.AbstractEntity;
 import lombok.Getter;
 import lombok.Setter;
@@ -84,7 +84,20 @@ public class UsersEntity extends AbstractEntity {
     }
     
 	@ShallowReference
-    @OneToOne(mappedBy = "users", cascade=CascadeType.MERGE)
+    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<UsersroleEntity> usersrolesSet = new HashSet<UsersroleEntity>();
+    
+    public void addUsersroles(UsersroleEntity usersroles) {        
+    	usersrolesSet.add(usersroles);
+        usersroles.setUsers(this);
+    }
+    public void removeUsersroles(UsersroleEntity usersroles) {
+        usersrolesSet.remove(usersroles);
+        usersroles.setUsers(null);
+    }
+    
+	@ShallowReference
+    @OneToOne(mappedBy = "users", cascade=CascadeType.ALL, orphanRemoval = true)
     private UserspreferenceEntity userspreference;
     
     public void setUserspreference(UserspreferenceEntity userspreference) {
@@ -123,19 +136,6 @@ public class UsersEntity extends AbstractEntity {
     public void removeTokenverifications(TokenverificationEntity tokenverifications) {
         tokenverificationsSet.remove(tokenverifications);
         tokenverifications.setUsers(null);
-    }
-    
-	@ShallowReference
-    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<UsersroleEntity> usersrolesSet = new HashSet<UsersroleEntity>();
-    
-    public void addUsersroles(UsersroleEntity usersroles) {        
-    	usersrolesSet.add(usersroles);
-        usersroles.setUsers(this);
-    }
-    public void removeUsersroles(UsersroleEntity usersroles) {
-        usersrolesSet.remove(usersroles);
-        usersroles.setUsers(null);
     }
     
 	@ShallowReference

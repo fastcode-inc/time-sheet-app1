@@ -39,7 +39,6 @@ export class ProjectDetailsComponent extends BaseDetailsComponent<IProject> impl
 		super.ngOnInit();
 		this.setForm();
     	this.getItem();
-    	this.setPickerSearchListener();
 	}
   
   setForm(){

@@ -48,7 +48,6 @@ describe('TimesheetstatusNewComponent', () => {
     beforeEach(() => {
       fixture = TestBed.createComponent(TimesheetstatusNewComponent);
       component = fixture.componentInstance;
-      spyOn(component, 'manageScreenResizing').and.returnValue();
       fixture.detectChanges();
     });
 

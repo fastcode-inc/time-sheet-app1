@@ -17,12 +17,12 @@ import lombok.NoArgsConstructor;
 public class UserspreferenceEntity extends AbstractEntity {
 
     @Basic
-    @Column(name = "theme", nullable = false,length =256)
-    private String theme;
-
-    @Basic
     @Column(name = "language", nullable = false,length =256)
     private String language;
+
+    @Basic
+    @Column(name = "theme", nullable = false,length =256)
+    private String theme;
 
     @Id
     @EqualsAndHashCode.Include()

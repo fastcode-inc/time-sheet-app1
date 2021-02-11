@@ -101,6 +101,10 @@ public class TimesheetdetailsController {
 		if (offset == null) { offset = env.getProperty("fastCode.offset.default"); }
 		if (limit == null) { limit = env.getProperty("fastCode.limit.default"); }
 
+		if(sort == null || sort.isEmpty()) {
+			sort = Sort.by(Sort.Direction.ASC, "workdate");
+		}
+		
 		Pageable Pageable = new OffsetBasedPageRequest(Integer.parseInt(offset), Integer.parseInt(limit), sort);
 		SearchCriteria searchCriteria = SearchUtils.generateSearchCriteriaObject(search);
 

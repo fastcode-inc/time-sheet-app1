@@ -37,10 +37,6 @@ export class GeneralNewComponent implements OnInit {
 		this.onSelectAssociation.emit(association);
 	}
 
-	associationOptionSelected($event){
-		this.onAssociationOptionSelected.emit($event);
-	}
-
 	back(){
 		this.onBack.emit();
 	}

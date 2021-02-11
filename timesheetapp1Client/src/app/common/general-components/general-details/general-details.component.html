@@ -14,9 +14,13 @@
 </div>
 <mat-card class="card">
 	<mat-card-content>
-		<fc-fields [fields]="fields" [itemForm]="itemForm" [parentAssociations]="parentAssociations"
-			(onPickerScroll)="pickerScroll($event)" (onAssociationOptionSelected)="associationOptionSelected($event)"
-			(onSelectAssociation)="selectAssociation($event)">
+		<fc-fields 
+		  [fields]="fields"
+		  [itemForm]="itemForm"
+		  [parentAssociations]="parentAssociations"
+		  (onPickerScroll)="pickerScroll($event)"
+		  (onSelectAssociation)="selectAssociation($event)"
+		>
 		</fc-fields>
 		<br>
 		<br>

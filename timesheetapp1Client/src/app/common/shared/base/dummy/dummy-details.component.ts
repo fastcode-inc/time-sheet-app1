@@ -37,7 +37,6 @@ export class DummyDetailsComponent extends BaseDetailsComponent<IDummy> implemen
     super.ngOnInit();
     this.setForm();
     this.getItem();
-    this.setPickerSearchListener();
   }
   
   setForm(){
@@ -81,20 +80,22 @@ export class DummyDetailsComponent extends BaseDetailsComponent<IDummy> implemen
         service: this.parentService,
         descriptiveField: 'parentDescriptiveField',
         referencedDescriptiveField: 'name',
+        data: []
       },
       {
-				column: [
-					{
-						key: 'dummyId',
-						value: undefined,
-						referencedkey: 'id'
-					},
-				],
-				isParent: true,
-				table: 'oneChild',
-				type: 'OneToOne',
-			    associatedPrimaryKeys: [ 'id', ]
+		column: [
+			{
+				key: 'dummyId',
+				value: undefined,
+				referencedkey: 'id'
 			},
+		],
+		isParent: true,
+		table: 'oneChild',
+		type: 'OneToOne',
+	    associatedPrimaryKeys: [ 'id', ]
+        data: []
+	  },
     ];
     this.childAssociations = this.associations.filter(association => {
       return (association.isParent);
