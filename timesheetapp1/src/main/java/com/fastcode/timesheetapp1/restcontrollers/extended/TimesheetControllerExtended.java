@@ -76,7 +76,7 @@ public class TimesheetControllerExtended extends TimesheetController {
 	@RequestMapping(value = "/getTimesheet", method = RequestMethod.GET, consumes = {"application/json"}, produces = {"application/json"})
 	public ResponseEntity<TimesheetOutput> findTimesheetByDate(@RequestParam("date") String date, @RequestParam("includeDetails") Boolean includeDetails) {
 
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-mm-yyyy");
 		LocalDate datel = LocalDate.parse(date,formatter);
 		TimesheetOutput output = _timesheetAppServiceExtended.findTimesheetByDate(datel, includeDetails);
 		Optional.ofNullable(output).orElseThrow(() -> new EntityNotFoundException(String.format("Not found")));
