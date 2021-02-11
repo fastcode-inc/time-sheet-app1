@@ -23,4 +23,5 @@
     <changeSet author="fastCode, Inc" id="userpreference">
     	<loadData encoding="UTF-8" file="db/data/userpreference.csv" separator="," tableName="userspreference"/>
 		</changeSet>
+    
 </databaseChangeLog>
