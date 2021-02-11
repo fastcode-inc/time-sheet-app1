@@ -87,7 +87,6 @@ public class TimesheetController {
 		return new ResponseEntity(output, HttpStatus.OK);
 	}
 
-
     @PreAuthorize("hasAnyAuthority('TIMESHEETENTITY_READ')")
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET, consumes = {"application/json"}, produces = {"application/json"})
 	public ResponseEntity<FindTimesheetByIdOutput> findById(@PathVariable String id) {

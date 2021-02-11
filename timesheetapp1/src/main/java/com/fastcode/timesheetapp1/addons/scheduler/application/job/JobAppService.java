@@ -410,7 +410,7 @@ public class JobAppService implements IJobAppService {
 	public FindByJobOutput returnJob(String jobName, String jobGroup) throws SchedulerException {
 
 		JobKey jobKey = new JobKey(jobName, jobGroup);
-
+		
 		if (getScheduler().checkExists(jobKey)) {
 
 			FindByJobOutput jobDetails = returnJobDetails(jobKey);
