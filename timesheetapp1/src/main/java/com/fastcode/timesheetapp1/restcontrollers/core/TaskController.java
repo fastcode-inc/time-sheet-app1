@@ -100,6 +100,10 @@ public class TaskController {
 		if (offset == null) { offset = env.getProperty("fastCode.offset.default"); }
 		if (limit == null) { limit = env.getProperty("fastCode.limit.default"); }
 
+		if(sort == null || sort.isEmpty()) {
+			sort = Sort.by(Sort.Direction.ASC, "name");
+		}
+		
 		Pageable Pageable = new OffsetBasedPageRequest(Integer.parseInt(offset), Integer.parseInt(limit), sort);
 		SearchCriteria searchCriteria = SearchUtils.generateSearchCriteriaObject(search);
 
@@ -119,6 +123,10 @@ public class TaskController {
    		if (offset == null) { offset = env.getProperty("fastCode.offset.default"); }
 		if (limit == null) { limit = env.getProperty("fastCode.limit.default"); }
 
+		if(sort == null || sort.isEmpty()) {
+			sort = Sort.by(Sort.Direction.ASC, "workdate");
+		}
+		
 		Pageable pageable = new OffsetBasedPageRequest(Integer.parseInt(offset), Integer.parseInt(limit), sort);
 
 		SearchCriteria searchCriteria = SearchUtils.generateSearchCriteriaObject(search);
@@ -138,6 +146,10 @@ public class TaskController {
    		if (offset == null) { offset = env.getProperty("fastCode.offset.default"); }
 		if (limit == null) { limit = env.getProperty("fastCode.limit.default"); }
 
+		if(sort == null || sort.isEmpty()) {
+			sort = Sort.by(Sort.Direction.ASC, "taskid");
+		}
+		
 		Pageable pageable = new OffsetBasedPageRequest(Integer.parseInt(offset), Integer.parseInt(limit), sort);
 
 		SearchCriteria searchCriteria = SearchUtils.generateSearchCriteriaObject(search);

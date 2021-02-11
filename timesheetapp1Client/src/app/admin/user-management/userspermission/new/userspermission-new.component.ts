@@ -43,7 +43,6 @@ export class UserspermissionNewComponent extends BaseNewComponent<IUserspermissi
 		super.ngOnInit();
     	this.setForm();
 		this.checkPassedData();
-		this.setPickerSearchListener();
     }
  		
 	setForm(){

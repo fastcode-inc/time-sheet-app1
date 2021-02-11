@@ -37,7 +37,6 @@ export class TimesheetstatusDetailsComponent extends BaseDetailsComponent<ITimes
 		super.ngOnInit();
 		this.setForm();
     	this.getItem();
-    	this.setPickerSearchListener();
 	}
   
   setForm(){

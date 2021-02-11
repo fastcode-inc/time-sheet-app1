@@ -49,7 +49,6 @@ describe('RoleNewComponent', () => {
     beforeEach(() => {
       fixture = TestBed.createComponent(RoleNewComponent);
       component = fixture.componentInstance;
-      spyOn(component, 'manageScreenResizing').and.returnValue();
       fixture.detectChanges();
     });
 

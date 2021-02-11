@@ -18,7 +18,7 @@ import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { TranslateTestingModule } from './translate-testing.module';
-import { ActivatedRouteMock, GlobalsMock, AuthenticationServiceMock, GlobalPermissionServiceMock, MatDialogMock, dialogRefMock } from './mocks';
+import { ActivatedRouteMock, GlobalsMock, AuthenticationServiceMock, GlobalPermissionServiceMock, MatDialogMock, MatDialogRefMock } from './mocks';
 import { AuthenticationService } from 'src/app/core/authentication.service';
 import { GlobalPermissionService } from 'src/app/core/global-permission.service';
 
@@ -62,7 +62,7 @@ export var providers: any[] = [
   { provide: AuthenticationService, useClass: AuthenticationServiceMock},
   { provide: GlobalPermissionService, useClass: GlobalPermissionServiceMock},
   { provide: MatDialog, useClass: MatDialogMock},
-  { provide: MatDialogRef, useValue: dialogRefMock },
+  { provide: MatDialogRef, useValue: MatDialogRefMock },
   PickerDialogService,
 ]
 

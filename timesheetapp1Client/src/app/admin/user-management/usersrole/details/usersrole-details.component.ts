@@ -41,7 +41,6 @@ export class UsersroleDetailsComponent extends BaseDetailsComponent<IUsersrole> 
 		super.ngOnInit();
 		this.setForm();
     	this.getItem();
-    	this.setPickerSearchListener();
 	}
   
   setForm(){

@@ -19,7 +19,6 @@ export class GeneralDetailsComponent implements OnInit {
 	@Input() title;
 
 	@Output() onPickerScroll: EventEmitter<any> = new EventEmitter();
-	@Output() onAssociationOptionSelected: EventEmitter<any> = new EventEmitter();
 	@Output() onSelectAssociation: EventEmitter<any> = new EventEmitter();
 	@Output() onBack: EventEmitter<any> = new EventEmitter();
 	@Output() onSubmit: EventEmitter<any> = new EventEmitter();
@@ -38,10 +37,6 @@ export class GeneralDetailsComponent implements OnInit {
 
 	selectAssociation(association){
 		this.onSelectAssociation.emit(association);
-	}
-
-	associationOptionSelected($event){
-		this.onAssociationOptionSelected.emit($event);
 	}
 
 	back(){

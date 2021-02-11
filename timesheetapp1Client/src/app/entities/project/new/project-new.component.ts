@@ -41,7 +41,6 @@ export class ProjectNewComponent extends BaseNewComponent<IProject> implements O
 		super.ngOnInit();
     	this.setForm();
 		this.checkPassedData();
-		this.setPickerSearchListener();
     }
  		
 	setForm(){

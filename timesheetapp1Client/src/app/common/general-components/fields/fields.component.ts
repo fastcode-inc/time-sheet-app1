@@ -5,56 +5,43 @@ import { IAssociationEntry } from 'src/app/common/shared';
 @Component({
   selector: 'fc-fields',
   templateUrl: './fields.component.html',
-  styleUrls: ['./fields.component.scss']
+  styleUrls: ['./fields.component.scss'],
 })
 export class FieldsComponent implements OnInit {
-	@Input() itemForm: FormGroup;
-	@Input() fields: any[];
-	@Input() parentAssociations: IAssociationEntry[];
-	@Output() onPickerScroll: EventEmitter<any> = new EventEmitter();
-	@Output() onAssociationOptionSelected: EventEmitter<any> = new EventEmitter();
-	@Output() onSelectAssociation: EventEmitter<any> = new EventEmitter();
+  @Input() itemForm: FormGroup;
+  @Input() fields: any[];
+  @Input() parentAssociations: IAssociationEntry[];
+  @Output() onPickerScroll: EventEmitter<any> = new EventEmitter();
+  @Output() onSelectAssociation: EventEmitter<any> = new EventEmitter();
 
-	@Input() childAssociations;
-	@Input() IsUpdatePermission;
-	@Input() loading;
-	@Output() onBack: EventEmitter<any> = new EventEmitter();
-	@Output() onSubmit: EventEmitter<any> = new EventEmitter();
-	@Output() openChildDetails: EventEmitter<any> = new EventEmitter();
+  @Input() childAssociations;
+  @Input() IsUpdatePermission;
+  @Input() loading;
+  @Output() onBack: EventEmitter<any> = new EventEmitter();
+  @Output() onSubmit: EventEmitter<any> = new EventEmitter();
+  @Output() openChildDetails: EventEmitter<any> = new EventEmitter();
 
-	constructor(
-		public formBuilder: FormBuilder
-	) {}
+  constructor(public formBuilder: FormBuilder) {}
 
-	ngOnInit() {
-	}
+  ngOnInit() {}
 
-	pickerScroll(association){
-		this.onPickerScroll.emit(association);
-	}
+  pickerScroll(association) {
+    this.onPickerScroll.emit(association);
+  }
 
-	selectAssociation(association){
-		this.onSelectAssociation.emit(association);
-	}
+  selectAssociation(association) {
+    this.onSelectAssociation.emit(association);
+  }
 
-	associationOptionSelected($event, association){
-		this.onAssociationOptionSelected.emit(
-			{ 
-				event: $event,
-				association: association
-			}
-		);
-	}
+  back() {
+    this.onBack.emit();
+  }
 
-	back(){
-		this.onBack.emit();
-	}
-	
-	submit(){
-		this.onSubmit.emit();
-	}
+  submit() {
+    this.onSubmit.emit();
+  }
 
-	openDetails(association){
-		this.openChildDetails.emit(association);
-	}
+  openDetails(association) {
+    this.openChildDetails.emit(association);
+  }
 }

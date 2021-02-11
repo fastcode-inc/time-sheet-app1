@@ -39,7 +39,6 @@ export class UsersNewComponent extends BaseNewComponent<IUsers> implements OnIni
 		super.ngOnInit();
     	this.setForm();
 		this.checkPassedData();
-		this.setPickerSearchListener();
     }
  		
 	setForm(){

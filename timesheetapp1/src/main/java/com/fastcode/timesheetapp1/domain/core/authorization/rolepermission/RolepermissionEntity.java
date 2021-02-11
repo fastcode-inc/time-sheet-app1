@@ -29,12 +29,12 @@ public class RolepermissionEntity extends AbstractEntity {
     private Long roleId;
     
     @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name = "role_id", insertable=false, updatable=false)
-    private RoleEntity role;
-
-    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "permission_id", insertable=false, updatable=false)
     private PermissionEntity permission;
+
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name = "role_id", insertable=false, updatable=false)
+    private RoleEntity role;
 
 
 }

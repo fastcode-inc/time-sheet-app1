@@ -832,9 +832,9 @@ body {
 	}
 	
 	.picker-modal-dialog {
+	  width: 100% !important;
+      max-width: 500px !important;
 	  min-height: 300px;
-	  min-width: 300px;
-	  width: auto !important;
 	  height: auto !important;
 	  mat-dialog-container {
 	    padding: 0;

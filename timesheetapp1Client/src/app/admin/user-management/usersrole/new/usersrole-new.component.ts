@@ -43,7 +43,6 @@ export class UsersroleNewComponent extends BaseNewComponent<IUsersrole> implemen
 		super.ngOnInit();
     	this.setForm();
 		this.checkPassedData();
-		this.setPickerSearchListener();
     }
  		
 	setForm(){

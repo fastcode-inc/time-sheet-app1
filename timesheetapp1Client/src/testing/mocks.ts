@@ -82,16 +82,20 @@ export class GlobalPermissionServiceMock {
   }
 }
 
-export const dialogRefMock = {
+export const MatDialogRefMock = {
   afterClosed: () => of(true),
   close: (dialogResult: any) => {},
-  updateSize: () => {}
+  updateSize: () => {},
+  componentInstance: {
+    onScroll: of(true),
+    onSearch: of(true),
+  },
 };
 
 export class MatDialogMock {
   // When the component calls this.dialog.open(...) we'll return an object
   // with an afterClosed method that allows to subscribe to the dialog result observable.
   open() {
-    return dialogRefMock;
+    return MatDialogRefMock;
   }
 }

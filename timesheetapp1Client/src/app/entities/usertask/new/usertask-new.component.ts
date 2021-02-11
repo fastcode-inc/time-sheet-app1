@@ -43,7 +43,6 @@ export class UsertaskNewComponent extends BaseNewComponent<IUsertask> implements
 		super.ngOnInit();
     	this.setForm();
 		this.checkPassedData();
-		this.setPickerSearchListener();
     }
  		
 	setForm(){

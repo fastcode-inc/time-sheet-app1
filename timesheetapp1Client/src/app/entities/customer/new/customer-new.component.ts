@@ -39,7 +39,6 @@ export class CustomerNewComponent extends BaseNewComponent<ICustomer> implements
 		super.ngOnInit();
     	this.setForm();
 		this.checkPassedData();
-		this.setPickerSearchListener();
     }
  		
 	setForm(){

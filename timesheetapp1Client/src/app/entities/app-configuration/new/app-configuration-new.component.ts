@@ -39,7 +39,6 @@ export class AppConfigurationNewComponent extends BaseNewComponent<IAppConfigura
 		super.ngOnInit();
     	this.setForm();
 		this.checkPassedData();
-		this.setPickerSearchListener();
     }
  		
 	setForm(){

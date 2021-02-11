@@ -41,7 +41,6 @@ export class UsertaskDetailsComponent extends BaseDetailsComponent<IUsertask> im
 		super.ngOnInit();
 		this.setForm();
     	this.getItem();
-    	this.setPickerSearchListener();
 	}
   
   setForm(){

@@ -42,16 +42,16 @@ public interface ITimesheetMapper {
 
 
    @Mappings({
-   @Mapping(source = "users.id", target = "id"),                  
-   @Mapping(source = "foundTimesheet.id", target = "timesheetId"),
-   })
-   GetUsersOutput usersEntityToGetUsersOutput(UsersEntity users, TimesheetEntity foundTimesheet);
-   
-   @Mappings({
    @Mapping(source = "timesheetstatus.id", target = "id"),                  
    @Mapping(source = "foundTimesheet.id", target = "timesheetId"),
    })
    GetTimesheetstatusOutput timesheetstatusEntityToGetTimesheetstatusOutput(TimesheetstatusEntity timesheetstatus, TimesheetEntity foundTimesheet);
+   
+   @Mappings({
+   @Mapping(source = "users.id", target = "id"),                  
+   @Mapping(source = "foundTimesheet.id", target = "timesheetId"),
+   })
+   GetUsersOutput usersEntityToGetUsersOutput(UsersEntity users, TimesheetEntity foundTimesheet);
    
 }
 

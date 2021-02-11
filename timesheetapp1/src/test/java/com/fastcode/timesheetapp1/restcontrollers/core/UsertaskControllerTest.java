@@ -242,10 +242,10 @@ public class UsertaskControllerTest {
 		timesheetEntity.setPeriodstartingdate(SearchUtils.stringToLocalDate("19"+countTimesheet+"-09-01"));
 		timesheetEntity.setVersiono(0L);
 		relationCount++;
-		UsersEntity users= createUsersEntity();
-		timesheetEntity.setUsers(users);
 		TimesheetstatusEntity timesheetstatus= createTimesheetstatusEntity();
 		timesheetEntity.setTimesheetstatus(timesheetstatus);
+		UsersEntity users= createUsersEntity();
+		timesheetEntity.setUsers(users);
 		if(!timesheetRepository.findAll().contains(timesheetEntity))
 		{
 			 timesheetEntity = timesheetRepository.save(timesheetEntity);

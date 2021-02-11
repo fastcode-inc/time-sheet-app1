@@ -39,7 +39,6 @@ export class TaskDetailsComponent extends BaseDetailsComponent<ITask> implements
 		super.ngOnInit();
 		this.setForm();
     	this.getItem();
-    	this.setPickerSearchListener();
 	}
   
   setForm(){

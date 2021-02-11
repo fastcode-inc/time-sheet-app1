@@ -49,11 +49,10 @@ public interface ITimesheetdetailsMapper {
 
 
    @Mappings({
-   @Mapping(source = "timesheet.id", target = "id"),                  
-   @Mapping(source = "timesheet.notes", target = "notes"),                  
+   @Mapping(source = "timeofftype.id", target = "id"),                  
    @Mapping(source = "foundTimesheetdetails.id", target = "timesheetdetailsId"),
    })
-   GetTimesheetOutput timesheetEntityToGetTimesheetOutput(TimesheetEntity timesheet, TimesheetdetailsEntity foundTimesheetdetails);
+   GetTimeofftypeOutput timeofftypeEntityToGetTimeofftypeOutput(TimeofftypeEntity timeofftype, TimesheetdetailsEntity foundTimesheetdetails);
    
    @Mappings({
    @Mapping(source = "task.id", target = "id"),                  
@@ -62,10 +61,11 @@ public interface ITimesheetdetailsMapper {
    GetTaskOutput taskEntityToGetTaskOutput(TaskEntity task, TimesheetdetailsEntity foundTimesheetdetails);
    
    @Mappings({
-   @Mapping(source = "timeofftype.id", target = "id"),                  
+   @Mapping(source = "timesheet.id", target = "id"),                  
+   @Mapping(source = "timesheet.notes", target = "notes"),                  
    @Mapping(source = "foundTimesheetdetails.id", target = "timesheetdetailsId"),
    })
-   GetTimeofftypeOutput timeofftypeEntityToGetTimeofftypeOutput(TimeofftypeEntity timeofftype, TimesheetdetailsEntity foundTimesheetdetails);
+   GetTimesheetOutput timesheetEntityToGetTimesheetOutput(TimesheetEntity timesheet, TimesheetdetailsEntity foundTimesheetdetails);
    
 }
 

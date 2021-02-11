@@ -50,7 +50,6 @@ describe('UserspermissionNewComponent', () => {
     beforeEach(() => {
       fixture = TestBed.createComponent(UserspermissionNewComponent);
       component = fixture.componentInstance;
-      spyOn(component, 'manageScreenResizing').and.returnValue();
       fixture.detectChanges();
     });
 

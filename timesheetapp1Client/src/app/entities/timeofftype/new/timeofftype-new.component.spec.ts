@@ -48,7 +48,6 @@ describe('TimeofftypeNewComponent', () => {
     beforeEach(() => {
       fixture = TestBed.createComponent(TimeofftypeNewComponent);
       component = fixture.componentInstance;
-      spyOn(component, 'manageScreenResizing').and.returnValue();
       fixture.detectChanges();
     });
 
