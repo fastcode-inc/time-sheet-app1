@@ -24,6 +24,7 @@ import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.eclipse.jdt.core.compiler.InvalidInputException;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
@@ -76,7 +77,7 @@ public class TimesheetControllerExtended extends TimesheetController {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 		LocalDate date = LocalDate.parse(workDate,formatter);
 		List<TimesheetdetailsOutput> output = _timesheetdetailsAppServiceExtended.findByWorkDate(date);
-		Optional.ofNullable(output).orElseThrow(() -> new EntityNotFoundException(String.format("Not found")));
+		//Optional.ofNullable(output).orElseThrow(() -> new EntityNotFoundException(String.format("Not found")));
 
 		return new ResponseEntity(output, HttpStatus.OK);
 	}
@@ -107,6 +108,40 @@ public class TimesheetControllerExtended extends TimesheetController {
 		Optional.ofNullable(output).orElseThrow(() -> new EntityNotFoundException(String.format("Not found")));
 
 		return new ResponseEntity(output, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/getTimesheet", method = RequestMethod.GET, consumes = {"application/json"}, produces = {"application/json"})
+	public ResponseEntity<TimesheetOutput> updateTimesheetStatus(@RequestParam("status") String status, @RequestParam(value="userId", required=false) Long userId,HttpServletRequest request) throws Exception {
+
+		if(userId !=null) {
+		String token = request.getHeader("Authorization");
+		if(token !=null && token.startsWith(SecurityConstants.TOKEN_PREFIX)) {
+			token = token.replace(SecurityConstants.TOKEN_PREFIX, "");
+		}
+		
+		if(!usersAppServiceExtended.parseTokenAndCheckIfPermissionExists(token, "TIMESHEETSTATUSENTITY_UPDATE")) {
+			throw new Exception("You don't have permission to fetch timesheet details against userid " + userId);
+		}
+		
+		if(!status.equalsIgnoreCase("Rejected") && !status.equalsIgnoreCase("Approved")) {
+			throw new InvalidInputException("Status value is not valid");
+		}
+		}
+		else
+		{
+		UsersEntity loggedInUser = usersAppServiceExtended.getUsers();
+		userId = loggedInUser.getId();
+		if(!status.equalsIgnoreCase("Submitted")) {
+			throw new InvalidInputException("Status value is not valid");
+		}
+		}
+		
+//		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+//		LocalDate datel = LocalDate.parse(date,formatter);
+//		TimesheetOutput output = _timesheetAppServiceExtended.findTimesheetByDate(datel, includeDetails, userId);
+//		Optional.ofNullable(output).orElseThrow(() -> new EntityNotFoundException(String.format("Not found")));
+
+		return new ResponseEntity(null, HttpStatus.OK);
 	}
 }
 

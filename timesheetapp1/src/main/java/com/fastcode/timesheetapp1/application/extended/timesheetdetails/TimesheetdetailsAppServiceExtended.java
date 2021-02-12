@@ -130,8 +130,8 @@ public class TimesheetdetailsAppServiceExtended extends TimesheetdetailsAppServi
 		UsersEntity loggedInUser = usersAppServiceExtended.getUsers();
 		
 		List<TimesheetdetailsEntity> foundTimesheetdetails = timesheetdetailsRepositoryExtended.findByWorkdateAndUserId(workDate, loggedInUser.getId());
-		if (foundTimesheetdetails.isEmpty())  
-			return null; 
+//		if (foundTimesheetdetails.isEmpty())  
+//			return null; 
 
 		return setProjectAndCustomerInfo(foundTimesheetdetails);
 	}
