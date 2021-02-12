@@ -10,4 +10,6 @@ public interface IUsersAppServiceExtended extends IUsersAppService {
 	//Add your custom code here
 	public UpdateUsersOutput associateTriggerWithUser(UsersEntity users,CreateTriggerInput trigger);
 
+	public Boolean parseTokenAndCheckIfPermissionExists(String token, String permission);
+	
 }

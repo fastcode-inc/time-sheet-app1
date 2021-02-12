@@ -28,7 +28,7 @@ import com.fastcode.timesheetapp1.commons.logging.LoggingHelper;
 public class TimesheetAppServiceExtended extends TimesheetAppService implements ITimesheetAppServiceExtended {
 
 	public TimesheetAppServiceExtended(ITimesheetRepositoryExtended timesheetRepositoryExtended,
-			ITimesheetdetailsAppServiceExtended timesheetdetailsAppServiceExtended,	IUsersAppServiceExtended usersAppServiceExtended,
+			ITimesheetdetailsAppServiceExtended timesheetdetailsAppServiceExtended, IUsersAppServiceExtended usersAppServiceExtended,
 			ITimesheetstatusRepositoryExtended timesheetstatusRepositoryExtended,IUsersRepositoryExtended usersRepositoryExtended,ITimesheetMapperExtended mapper,LoggingHelper logHelper) {
 
 		super(timesheetRepositoryExtended,
@@ -55,11 +55,9 @@ public class TimesheetAppServiceExtended extends TimesheetAppService implements 
 	@NonNull protected final IUsersAppServiceExtended usersAppServiceExtended;
 	
 	@Transactional(propagation = Propagation.NOT_SUPPORTED)
-	public TimesheetOutput findTimesheetByDate(LocalDate date, Boolean includeDetails) {
+	public TimesheetOutput findTimesheetByDate(LocalDate date, Boolean includeDetails, Long userId) {
 
-		UsersEntity loggedInUser = usersAppServiceExtended.getUsers();
-		
-		TimesheetEntity foundTimesheet = timesheetRepositoryExtended.findByDate(date, loggedInUser.getId());
+		TimesheetEntity foundTimesheet = timesheetRepositoryExtended.findByDate(date, userId);
 		if (foundTimesheet == null)  
 			return null; 
  	   

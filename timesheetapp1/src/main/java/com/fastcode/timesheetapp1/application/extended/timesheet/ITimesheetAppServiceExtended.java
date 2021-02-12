@@ -8,5 +8,5 @@ import com.fastcode.timesheetapp1.application.extended.timesheet.dto.TimesheetOu
 public interface ITimesheetAppServiceExtended extends ITimesheetAppService {
 
 	//Add your custom code here
-	public TimesheetOutput findTimesheetByDate(LocalDate date, Boolean includeDetails);
+	public TimesheetOutput findTimesheetByDate(LocalDate date, Boolean includeDetails, Long userId);
 }

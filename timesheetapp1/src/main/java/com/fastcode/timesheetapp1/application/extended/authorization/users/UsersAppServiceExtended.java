@@ -1,6 +1,10 @@
 package com.fastcode.timesheetapp1.application.extended.authorization.users;
 
 import org.quartz.SchedulerException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -68,6 +72,15 @@ public class UsersAppServiceExtended extends UsersAppService implements IUsersAp
 		}
 
 		_usersRepository.delete(existing);
+	}
+	
+	@Transactional(propagation = Propagation.REQUIRED)
+	public Boolean parseTokenAndCheckIfPermissionExists(String token, String permission)
+	{
+    	SecurityContext securityContext = SecurityContextHolder.getContext();
+    	Authentication auth = securityContext.getAuthentication();
+        return auth.getAuthorities().contains(new SimpleGrantedAuthority(permission));
+
 	}
 
 }

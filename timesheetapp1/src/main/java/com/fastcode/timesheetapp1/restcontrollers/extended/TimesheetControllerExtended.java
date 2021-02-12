@@ -2,6 +2,7 @@ package com.fastcode.timesheetapp1.restcontrollers.extended;
 
 import org.springframework.web.bind.annotation.*;
 import com.fastcode.timesheetapp1.restcontrollers.core.TimesheetController;
+import com.fastcode.timesheetapp1.security.SecurityConstants;
 
 import lombok.NonNull;
 
@@ -20,6 +21,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -29,12 +31,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 import com.fastcode.timesheetapp1.commons.logging.LoggingHelper;
+import com.fastcode.timesheetapp1.domain.core.authorization.users.UsersEntity;
 
 @RestController
 @RequestMapping("/timesheet/extended")
 public class TimesheetControllerExtended extends TimesheetController {
 
-	public TimesheetControllerExtended(ITimesheetAppServiceExtended timesheetAppServiceExtended, ITimesheetdetailsAppServiceExtended timesheetdetailsAppServiceExtended, ITimesheetstatusAppServiceExtended timesheetstatusAppServiceExtended, IUsersAppServiceExtended usersAppServiceExtended,
+	public TimesheetControllerExtended(ITimesheetAppServiceExtended timesheetAppServiceExtended, ITimesheetdetailsAppServiceExtended timesheetdetailsAppServiceExtended,
+			ITimesheetstatusAppServiceExtended timesheetstatusAppServiceExtended, IUsersAppServiceExtended usersAppServiceExtended,
 			LoggingHelper helper, Environment env) {
 		super(
 				timesheetAppServiceExtended,
@@ -44,6 +48,7 @@ public class TimesheetControllerExtended extends TimesheetController {
 				helper, env);
 		this._timesheetdetailsAppServiceExtended = timesheetdetailsAppServiceExtended;
 		this._timesheetAppServiceExtended = timesheetAppServiceExtended;
+		this.usersAppServiceExtended = usersAppServiceExtended;
 	}
 
 	//Add your custom code here
@@ -54,17 +59,21 @@ public class TimesheetControllerExtended extends TimesheetController {
 	@Qualifier("timesheetExtendedAppService")
 	@NonNull  protected final ITimesheetAppServiceExtended  _timesheetAppServiceExtended;
 
+	@Qualifier("usersAppServiceExtended")
+	@NonNull protected final IUsersAppServiceExtended usersAppServiceExtended;
+	
+	
 	@RequestMapping(value="/timesheetdetails", method = RequestMethod.POST, consumes = {"application/json"}, produces = {"application/json"})
 	public ResponseEntity<Map<String,String>> createMultipleDetails(@RequestBody @Valid List<TimesheetdetailsInput> inputList) {
 
 		return new ResponseEntity(_timesheetdetailsAppServiceExtended.createMultipleDetails(inputList), HttpStatus.OK);
 	}
 	
-	@PreAuthorize("hasAnyAuthority('TIMESHEETENTITY_READ')")
+	//@PreAuthorize("hasAnyAuthority('TIMESHEETENTITY_READ')")
 	@RequestMapping(value = "/timesheetdetails", method = RequestMethod.GET, consumes = {"application/json"}, produces = {"application/json"})
 	public ResponseEntity<List<TimesheetdetailsOutput>> findTimesheetdetailsByWorkDate(@RequestParam("workDate") String workDate) {
 
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 		LocalDate date = LocalDate.parse(workDate,formatter);
 		List<TimesheetdetailsOutput> output = _timesheetdetailsAppServiceExtended.findByWorkDate(date);
 		Optional.ofNullable(output).orElseThrow(() -> new EntityNotFoundException(String.format("Not found")));
@@ -72,13 +81,29 @@ public class TimesheetControllerExtended extends TimesheetController {
 		return new ResponseEntity(output, HttpStatus.OK);
 	}
 
-	@PreAuthorize("hasAnyAuthority('TIMESHEETENTITY_READ')")
+	//@PreAuthorize("hasAnyAuthority('TIMESHEETENTITY_READ')")
 	@RequestMapping(value = "/getTimesheet", method = RequestMethod.GET, consumes = {"application/json"}, produces = {"application/json"})
-	public ResponseEntity<TimesheetOutput> findTimesheetByDate(@RequestParam("date") String date, @RequestParam("includeDetails") Boolean includeDetails) {
+	public ResponseEntity<TimesheetOutput> findTimesheetByDate(@RequestParam("date") String date, @RequestParam("includeDetails") Boolean includeDetails, @RequestParam(value="userId", required=false) Long userId,HttpServletRequest request) throws Exception {
 
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-mm-yyyy");
+		if(userId !=null) {
+		String token = request.getHeader("Authorization");
+		if(token !=null && token.startsWith(SecurityConstants.TOKEN_PREFIX)) {
+			token = token.replace(SecurityConstants.TOKEN_PREFIX, "");
+		}
+		
+		if(!usersAppServiceExtended.parseTokenAndCheckIfPermissionExists(token, "TIMESHEETENTITY_READ")) {
+			throw new Exception("You don't have permission to fetch timesheet details against userid " + userId);
+		}
+		}
+		else
+		{
+		UsersEntity loggedInUser = usersAppServiceExtended.getUsers();
+		userId = loggedInUser.getId();
+		}
+		
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 		LocalDate datel = LocalDate.parse(date,formatter);
-		TimesheetOutput output = _timesheetAppServiceExtended.findTimesheetByDate(datel, includeDetails);
+		TimesheetOutput output = _timesheetAppServiceExtended.findTimesheetByDate(datel, includeDetails, userId);
 		Optional.ofNullable(output).orElseThrow(() -> new EntityNotFoundException(String.format("Not found")));
 
 		return new ResponseEntity(output, HttpStatus.OK);
