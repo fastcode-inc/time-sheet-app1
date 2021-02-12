@@ -60,7 +60,7 @@ public class UsersControllerExtended extends UsersController {
 	@NonNull protected final IUsersAppServiceExtended usersAppServiceExtended;
 
 	//Add your custom code here
-	
+
 	//@PreAuthorize("hasAnyAuthority('USERSENTITY_CREATE')")
 	@RequestMapping(value= "/reminder",method = RequestMethod.POST, consumes = {"application/json"}, produces = {"application/json"})
 	public ResponseEntity<Map<String,String>> createTriggerAndSendEmail(@RequestBody @Valid EmailTriggerInfo info) throws ClassNotFoundException, Exception {

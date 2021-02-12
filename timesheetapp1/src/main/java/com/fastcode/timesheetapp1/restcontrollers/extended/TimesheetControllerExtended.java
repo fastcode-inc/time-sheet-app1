@@ -77,7 +77,7 @@ public class TimesheetControllerExtended extends TimesheetController {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 		LocalDate date = LocalDate.parse(workDate,formatter);
 		List<TimesheetdetailsOutput> output = _timesheetdetailsAppServiceExtended.findByWorkDate(date);
-		
+
 		return new ResponseEntity(output, HttpStatus.OK);
 	}
 
@@ -141,7 +141,7 @@ public class TimesheetControllerExtended extends TimesheetController {
 		if(output == null) {
 			throw new InvalidInputException("Status is not open or rejected, can't submit");
 		}
-		
+
 		return new ResponseEntity(output, HttpStatus.OK);
 	}
 }

@@ -12,8 +12,6 @@ import com.fastcode.timesheetapp1.application.core.timesheet.TimesheetAppService
 import com.fastcode.timesheetapp1.application.core.timesheet.dto.CreateTimesheetInput;
 import com.fastcode.timesheetapp1.application.core.timesheet.dto.CreateTimesheetOutput;
 import com.fastcode.timesheetapp1.application.core.timesheet.dto.UpdateTimesheetOutput;
-import com.fastcode.timesheetapp1.application.core.timesheetdetails.TimesheetdetailsAppService;
-import com.fastcode.timesheetapp1.application.core.timesheetstatus.dto.UpdateTimesheetstatusOutput;
 import com.fastcode.timesheetapp1.application.extended.authorization.users.IUsersAppServiceExtended;
 import com.fastcode.timesheetapp1.application.extended.timesheet.dto.TimesheetOutput;
 import com.fastcode.timesheetapp1.application.extended.timesheetdetails.ITimesheetdetailsAppServiceExtended;
@@ -37,49 +35,49 @@ public class TimesheetAppServiceExtended extends TimesheetAppService implements 
 			ITimesheetstatusRepositoryExtended timesheetstatusRepositoryExtended,IUsersRepositoryExtended usersRepositoryExtended,ITimesheetMapperExtended mapper,LoggingHelper logHelper) {
 
 		super(timesheetRepositoryExtended,
-		timesheetstatusRepositoryExtended,usersRepositoryExtended,mapper,logHelper);
+				timesheetstatusRepositoryExtended,usersRepositoryExtended,mapper,logHelper);
 
 		this.extendedMapper = mapper;
 		this.timesheetRepositoryExtended = timesheetRepositoryExtended;
 		this.timesheetdetailsAppServiceExtended = timesheetdetailsAppServiceExtended;
 		this.usersAppServiceExtended = usersAppServiceExtended;
 		this.timesheetstatusRepositoryExtended = timesheetstatusRepositoryExtended;
-		}
+	}
 
-	 	//Add your custom code here
-		
+	//Add your custom code here
+
 	@Qualifier("ITimesheetdetailsMapperExtendedImpl")
 	@NonNull protected final ITimesheetMapperExtended extendedMapper;
-	
+
 	@Qualifier("timesheetRepositoryExtended")
 	@NonNull protected final ITimesheetRepositoryExtended timesheetRepositoryExtended;
-	 
+
 	@Qualifier("timesheetdetailsAppServiceExtended")
 	@NonNull protected final ITimesheetdetailsAppServiceExtended timesheetdetailsAppServiceExtended;
- 	
+
 	@Qualifier("usersAppServiceExtended")
 	@NonNull protected final IUsersAppServiceExtended usersAppServiceExtended;
-	
+
 	@Qualifier("timesheetstatusRepositoryExtended")
 	@NonNull protected final ITimesheetstatusRepositoryExtended timesheetstatusRepositoryExtended;
-	
+
 	@Transactional(propagation = Propagation.NOT_SUPPORTED)
 	public TimesheetOutput findTimesheetByDate(LocalDate date, Boolean includeDetails, Long userId) {
 
 		TimesheetEntity foundTimesheet = timesheetRepositoryExtended.findByDate(date, userId);
 		if (foundTimesheet == null)  
 			return null; 
- 	   
+
 		TimesheetOutput timesheet = extendedMapper.timesheetEntityToTimesheetOutput(foundTimesheet);
 		if(includeDetails) {
-		List<TimesheetdetailsOutput> detailsList = timesheetdetailsAppServiceExtended.findByTimesheetId(foundTimesheet.getId());
-		timesheet.setTimesheetdetailsList(detailsList);
+			List<TimesheetdetailsOutput> detailsList = timesheetdetailsAppServiceExtended.findByTimesheetId(foundTimesheet.getId());
+			timesheet.setTimesheetdetailsList(detailsList);
 		}
-		return timesheet;
 		
- 	   // return mapper.timesheetEntityToFindTimesheetByIdOutput(foundTimesheet);
+		return timesheet;
+
 	}
-	
+
 	@Transactional(propagation = Propagation.REQUIRED)
 	public UpdateTimesheetOutput updateTimesheetStatus(Long timesheetId, String status) {
 
@@ -92,30 +90,29 @@ public class TimesheetAppServiceExtended extends TimesheetAppService implements 
 			return null;
 		}
 		timesheet.setTimesheetstatus(timesheetstatus);
-		
+
 		TimesheetEntity updatedTimesheet = _timesheetRepository.save(timesheet);
 		return extendedMapper.timesheetEntityToUpdateTimesheetOutput(updatedTimesheet);
 	}
-	
+
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public CreateTimesheetOutput create(CreateTimesheetInput input) {
 
 		UsersEntity loggedInUser = usersAppServiceExtended.getUsers();
 		input.setUserid(loggedInUser.getId());
-		
+
 		TimesheetstatusEntity timesheetstatus = timesheetstatusRepositoryExtended.findByStatusnameIgnoreCase("Open");
 		input.setTimesheetstatusid(timesheetstatus.getId());
-		
+
 		TimesheetEntity timesheet = mapper.createTimesheetInputToTimesheetEntity(input);
 		TimesheetstatusEntity foundTimesheetstatus = null;
 		UsersEntity foundUsers = null;
-	  	if(input.getTimesheetstatusid()!=null) {
+		if(input.getTimesheetstatusid()!=null) {
 			foundTimesheetstatus = _timesheetstatusRepository.findById(input.getTimesheetstatusid()).orElse(null);
-			
+
 			if(foundTimesheetstatus!=null) {
 				foundTimesheetstatus.addTimesheets(timesheet);
-				//timesheet.setTimesheetstatus(foundTimesheetstatus);
 			}
 			else {
 				return null;
@@ -124,12 +121,11 @@ public class TimesheetAppServiceExtended extends TimesheetAppService implements 
 		else {
 			return null;
 		}
-	  	if(input.getUserid()!=null) {
+		if(input.getUserid()!=null) {
 			foundUsers = _usersRepository.findById(input.getUserid()).orElse(null);
-			
+
 			if(foundUsers!=null) {
 				foundUsers.addTimesheets(timesheet);
-				//timesheet.setUsers(foundUsers);
 			}
 			else {
 				return null;
@@ -142,6 +138,6 @@ public class TimesheetAppServiceExtended extends TimesheetAppService implements 
 		TimesheetEntity createdTimesheet = _timesheetRepository.save(timesheet);
 		return mapper.timesheetEntityToCreateTimesheetOutput(createdTimesheet);
 	}
- 
+
 }
 
