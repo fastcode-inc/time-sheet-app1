@@ -29,10 +29,16 @@ import javax.validation.Valid;
 import org.eclipse.jdt.core.compiler.InvalidInputException;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.env.Environment;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import com.fastcode.timesheetapp1.commons.logging.LoggingHelper;
+import com.fastcode.timesheetapp1.commons.search.OffsetBasedPageRequest;
+import com.fastcode.timesheetapp1.commons.search.SearchCriteria;
+import com.fastcode.timesheetapp1.commons.search.SearchUtils;
 import com.fastcode.timesheetapp1.domain.core.authorization.users.UsersEntity;
 
 @RestController
@@ -108,8 +114,8 @@ public class TimesheetControllerExtended extends TimesheetController {
 		return new ResponseEntity(output, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/{id}/updateTimesheetStatus", method = RequestMethod.PUT, consumes = {"application/json"}, produces = {"application/json"})
-	public ResponseEntity<UpdateTimesheetOutput> updateTimesheetStatus(@PathVariable Long id, @RequestParam("status") String status, @RequestParam(value="userId", required=false) Long userId,HttpServletRequest request) throws Exception {
+	@RequestMapping(value = "/{id}/updateTimesheetStatus/{status}", method = RequestMethod.PUT, consumes = {"application/json"}, produces = {"application/json"})
+	public ResponseEntity<UpdateTimesheetOutput> updateTimesheetStatus(@PathVariable Long id, @PathVariable String status, @RequestParam(value="userId", required=false) Long userId,HttpServletRequest request) throws Exception {
 
 		FindTimesheetByIdOutput timesheet = _timesheetAppService.findById(id);
 		Optional.ofNullable(timesheet).orElseThrow(() -> new EntityNotFoundException(String.format("Timesheet not found with id " + id)));
@@ -143,6 +149,23 @@ public class TimesheetControllerExtended extends TimesheetController {
 		}
 		
 		return new ResponseEntity(output, HttpStatus.OK);
+	}
+
+    @PreAuthorize("hasAnyAuthority('TIMESHEETENTITY_READ')")
+	@RequestMapping(method = RequestMethod.GET, consumes = {"application/json"}, produces = {"application/json"})
+	public ResponseEntity find(@RequestParam(value="search", required=false) String search, @RequestParam(value = "offset", required=false) String offset, @RequestParam(value = "limit", required=false) String limit, Sort sort) throws Exception {
+
+		if (offset == null) { offset = env.getProperty("fastCode.offset.default"); }
+		if (limit == null) { limit = env.getProperty("fastCode.limit.default"); }
+
+		if(sort == null || sort.isEmpty()) {
+			sort = Sort.by(Sort.Direction.ASC, "periodstartingdate");
+		}
+		
+		Pageable Pageable = new OffsetBasedPageRequest(Integer.parseInt(offset), Integer.parseInt(limit), sort);
+		SearchCriteria searchCriteria = SearchUtils.generateSearchCriteriaObject(search);
+
+		return ResponseEntity.ok(_timesheetAppServiceExtended.findWithHours(searchCriteria,Pageable));
 	}
 }
 

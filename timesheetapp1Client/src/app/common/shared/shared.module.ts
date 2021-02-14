@@ -24,6 +24,7 @@ import { MaterialModule } from '../material.module';
 import { CommonModule } from '@angular/common';
 import { ToolTipRendererDirective } from './directives/tool-tip-renderer.directive';
 import { CustomToolTipComponent } from './components/custom-tool-tip/custom-tool-tip.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 export function HttpLoaderFactory(httpClient: HttpClient) {
   return new TranslateHttpLoader(httpClient);
@@ -38,7 +39,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     FormsModule,
     ReactiveFormsModule,
     NgxMaterialTimepickerModule,
-	TranslateModule.forChild({
+    FlexLayoutModule,
+	  TranslateModule.forChild({
       loader: {
         provide: TranslateLoader,
         useFactory: HttpLoaderFactory,
@@ -85,7 +87,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     FormsModule,
     ReactiveFormsModule,
     NgxMaterialTimepickerModule,
-	TranslateModule
+    TranslateModule,
+    FlexLayoutModule
     
   ],
   entryComponents: [

@@ -198,10 +198,6 @@
         }
     }
 
-    .mat-raised-button.mat-warn {
-        background-color: mat-color($fc-accent-color) !important;
-    }
-
     .mat-nav-list .mat-list-item {
         text-transform: capitalize;
     }
@@ -275,6 +271,7 @@
 
     .spinner-container {
         background: mat-color($background, background);
+        z-index: 999;
     }
 
     .time-container .lable-inline {

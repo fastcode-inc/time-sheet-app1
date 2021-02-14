@@ -7,6 +7,7 @@ import com.fastcode.timesheetapp1.addons.scheduler.application.job.dto.CreateJob
 import com.fastcode.timesheetapp1.addons.scheduler.application.trigger.ITriggerAppService;
 import com.fastcode.timesheetapp1.addons.scheduler.application.trigger.dto.CreateTriggerInput;
 import com.fastcode.timesheetapp1.addons.scheduler.application.trigger.dto.EmailTriggerInfo;
+import com.fastcode.timesheetapp1.addons.scheduler.application.trigger.dto.GetTriggerOutput;
 import com.fastcode.timesheetapp1.application.extended.authorization.users.IUsersAppServiceExtended;
 import com.fastcode.timesheetapp1.application.extended.timesheet.ITimesheetAppServiceExtended;
 import com.fastcode.timesheetapp1.application.extended.authorization.userspermission.IUserspermissionAppServiceExtended;
@@ -61,6 +62,21 @@ public class UsersControllerExtended extends UsersController {
 
 	//Add your custom code here
 	
+	@RequestMapping(value= "/getReminderDetails",method = RequestMethod.GET, consumes = {"application/json"}, produces = {"application/json"})
+	public ResponseEntity<Map<String,String>> getReminderDetails() throws ClassNotFoundException, Exception {
+		UsersEntity loggedInUser = usersAppServiceExtended.getUsers();
+		
+		GetTriggerOutput trigger = triggerApp.returnTrigger(loggedInUser.getUsername() + "trigger10", "emailTriggerGroup10");
+		Map<String,String> output = new HashMap<String, String>();
+		try {
+			if(trigger != null) {
+				String[] cronData = trigger.getCronExpression().split(" ");
+				output.put("days", cronData[5]);
+				output.put("time", cronData[2] + ":" + cronData[1]);	
+			}
+		} catch(Exception e) {}
+		return new ResponseEntity(output, HttpStatus.OK);
+	}
 	//@PreAuthorize("hasAnyAuthority('USERSENTITY_CREATE')")
 	@RequestMapping(value= "/reminder",method = RequestMethod.POST, consumes = {"application/json"}, produces = {"application/json"})
 	public ResponseEntity<Map<String,String>> createTriggerAndSendEmail(@RequestBody @Valid EmailTriggerInfo info) throws ClassNotFoundException, Exception {
@@ -79,6 +95,9 @@ public class UsersControllerExtended extends UsersController {
 
 		}
 
+		if(triggerApp.returnTrigger(loggedInUser.getUsername() + "trigger10", "emailTriggerGroup10") != null) {
+			triggerApp.cancelTrigger(loggedInUser.getUsername() + "trigger10", "emailTriggerGroup10");
+		}
 		CreateTriggerInput triggerInput = new CreateTriggerInput();
 		String cronExpression = "0 " + info.getTime().getMinute() + " " + info.getTime().getHour() + " ? * " + info.getDays() +" *";
 

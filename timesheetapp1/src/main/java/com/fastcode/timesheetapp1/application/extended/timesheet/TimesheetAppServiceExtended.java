@@ -1,9 +1,14 @@
 package com.fastcode.timesheetapp1.application.extended.timesheet;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.fastcode.timesheetapp1.application.core.timesheet.TimesheetAppService;
 import com.fastcode.timesheetapp1.application.core.timesheet.dto.CreateTimesheetInput;
 import com.fastcode.timesheetapp1.application.core.timesheet.dto.CreateTimesheetOutput;
+import com.fastcode.timesheetapp1.application.core.timesheet.dto.FindTimesheetByIdOutput;
 import com.fastcode.timesheetapp1.application.core.timesheet.dto.UpdateTimesheetOutput;
 import com.fastcode.timesheetapp1.application.core.timesheetdetails.TimesheetdetailsAppService;
 import com.fastcode.timesheetapp1.application.core.timesheetstatus.dto.UpdateTimesheetstatusOutput;
@@ -25,9 +31,11 @@ import lombok.NonNull;
 
 import com.fastcode.timesheetapp1.domain.core.authorization.users.UsersEntity;
 import com.fastcode.timesheetapp1.domain.core.timesheet.TimesheetEntity;
+import com.fastcode.timesheetapp1.domain.core.timesheetdetails.TimesheetdetailsEntity;
 import com.fastcode.timesheetapp1.domain.core.timesheetstatus.TimesheetstatusEntity;
 import com.fastcode.timesheetapp1.domain.extended.authorization.users.IUsersRepositoryExtended;
 import com.fastcode.timesheetapp1.commons.logging.LoggingHelper;
+import com.fastcode.timesheetapp1.commons.search.SearchCriteria;
 
 @Service("timesheetAppServiceExtended")
 public class TimesheetAppServiceExtended extends TimesheetAppService implements ITimesheetAppServiceExtended {
@@ -141,6 +149,27 @@ public class TimesheetAppServiceExtended extends TimesheetAppService implements 
 
 		TimesheetEntity createdTimesheet = _timesheetRepository.save(timesheet);
 		return mapper.timesheetEntityToCreateTimesheetOutput(createdTimesheet);
+	}
+	
+    @Transactional(propagation = Propagation.NOT_SUPPORTED)
+	public List<TimesheetOutput> findWithHours(SearchCriteria search, Pageable pageable) throws Exception  {
+
+		Page<TimesheetEntity> foundTimesheet = _timesheetRepository.findAll(search(search), pageable);
+		List<TimesheetEntity> timesheetList = foundTimesheet.getContent();
+		Iterator<TimesheetEntity> timesheetIterator = timesheetList.iterator(); 
+		List<TimesheetOutput> output = new ArrayList<>();
+
+		while (timesheetIterator.hasNext()) {
+			TimesheetEntity timesheet = timesheetIterator.next();
+			BigDecimal hours = BigDecimal.ZERO;
+			for(TimesheetdetailsEntity td: timesheet.getTimesheetdetailsSet()) {
+				hours = hours.add(td.getHours());
+			}
+			TimesheetOutput t = extendedMapper.timesheetEntityToTimesheetOutput(timesheet);
+			t.setHours(hours);
+	 	    output.add(t);
+		}
+		return output;
 	}
  
 }

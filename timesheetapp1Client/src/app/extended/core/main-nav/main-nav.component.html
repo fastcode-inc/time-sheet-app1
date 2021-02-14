@@ -25,6 +25,10 @@
       <button mat-menu-item routerLink="/update-profile">
         <mat-icon class="menu-item">person</mat-icon>
         &nbsp; Update Profile</button>
+      <button mat-menu-item routerLink="/notifications">
+        <mat-icon class="menu-item">notifications</mat-icon>
+        &nbsp; Notifications
+      </button>
       <button mat-menu-item (click)="logout()">
         <mat-icon color="warn" class="menu-item">power_settings_new</mat-icon>
         &nbsp; Logout
@@ -41,6 +45,18 @@
     <mat-nav-list class="nav-list">
       <a mat-list-item class="sidenav-list-item" routerLinkActive="active"  [routerLink]="['/dashboard']"><i class="material-icons">home</i> &nbsp;{{'MainNav.Home' | translate }}</a>
       
+      <a mat-list-item class="sidenav-list-item" routerLink="timesheet">
+        <i class="material-icons">
+          more_time
+        </i> &nbsp; Timesheet</a>
+      <a mat-list-item class="sidenav-list-item" routerLink="timesheet-details">
+        <i class="material-icons">
+          access_time
+        </i> &nbsp; Timesheet Details</a>
+      <a mat-list-item class="sidenav-list-item" routerLink="managersheet">
+        <i class="material-icons">
+          reviews
+        </i> &nbsp; Review timesheets</a>
 
       <mat-expansion-panel class="expansion-panel">
         <mat-expansion-panel-header class="subnav-header">

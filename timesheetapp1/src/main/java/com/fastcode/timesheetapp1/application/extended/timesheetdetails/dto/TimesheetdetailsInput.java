@@ -18,4 +18,5 @@ public class TimesheetdetailsInput {
   	@NotNull(message = "workdate Should not be null")
   	private LocalDate workdate;
   	private BigDecimal hours;
+  	private String notes;
 }
