@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityNotFoundException;
 import org.springframework.transaction.annotation.Propagation;
@@ -22,6 +23,7 @@ import com.fastcode.timesheetapp1.application.extended.timesheetdetails.dto.Time
 import com.fastcode.timesheetapp1.application.extended.timesheetdetails.dto.TimesheetdetailsOutput;
 import com.fastcode.timesheetapp1.domain.extended.timesheetdetails.ITimesheetdetailsRepositoryExtended;
 
+import liquibase.pro.license.keymgr.e;
 import lombok.NonNull;
 
 import com.fastcode.timesheetapp1.domain.core.authorization.users.UsersEntity;
@@ -71,6 +73,7 @@ public class TimesheetdetailsAppServiceExtended extends TimesheetdetailsAppServi
 	@Transactional(propagation = Propagation.NOT_SUPPORTED)
 	public Map<String, String> createMultipleDetails(List<TimesheetdetailsInput> timesheetdetailsList) {
 
+		deleteIfInputNotContainsEntity(timesheetdetailsList);
 		for(TimesheetdetailsInput input : timesheetdetailsList) {
 			TaskEntity taskEntity = null;
 			TimeofftypeEntity timeoffEntity = null;
@@ -99,7 +102,7 @@ public class TimesheetdetailsAppServiceExtended extends TimesheetdetailsAppServi
 			details.setTimesheet(timesheetEntity);
 
 			if(details.getId() != null) {
-				TimesheetdetailsEntity entity = _timesheetdetailsRepository.findById(details.getId()).get();
+				TimesheetdetailsEntity entity = _timesheetdetailsRepository.findById(details.getId()).orElse(null);
 				if(entity !=null) {
 					details.setVersiono(entity.getVersiono());
 				}
@@ -112,6 +115,25 @@ public class TimesheetdetailsAppServiceExtended extends TimesheetdetailsAppServi
 		response.put("msg", "Timesheet details Successfully added");
 
 		return response;
+	}
+	
+	public void deleteIfInputNotContainsEntity (List<TimesheetdetailsInput> timesheetdetailsList) {
+		
+		List<TimesheetdetailsOutput> detailsList = new ArrayList<TimesheetdetailsOutput>();
+		
+		if(timesheetdetailsList !=null && !timesheetdetailsList.isEmpty()) {
+			detailsList = findByWorkDate(timesheetdetailsList.stream().findFirst().get().getWorkdate());
+		
+			for(TimesheetdetailsOutput output : detailsList) {
+				TimesheetdetailsInput input = timesheetdetailsList.stream()
+				  .filter(customer -> !output.getId().equals(customer.getId()))
+				  .findAny()
+				  .orElse(null);
+				if(input !=null) {
+					delete(output.getId());
+				}
+			}
+		}
 	}
 
 	@Transactional(propagation = Propagation.NOT_SUPPORTED)

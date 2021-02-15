@@ -145,7 +145,7 @@ public class TimesheetdetailsAppService implements ITimesheetdetailsAppService {
 
 		TimesheetdetailsEntity existing = _timesheetdetailsRepository.findById(timesheetdetailsId).orElse(null); 
 	 	
-        if(existing.getTask() !=null)
+        if(existing.getTask() != null)
         {
         existing.getTask().removeTimesheetdetails(existing);
         }

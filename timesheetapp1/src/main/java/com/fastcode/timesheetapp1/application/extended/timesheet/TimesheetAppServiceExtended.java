@@ -20,6 +20,7 @@ import com.fastcode.timesheetapp1.application.core.timesheet.dto.FindTimesheetBy
 import com.fastcode.timesheetapp1.application.core.timesheet.dto.UpdateTimesheetOutput;
 import com.fastcode.timesheetapp1.application.extended.authorization.users.IUsersAppServiceExtended;
 import com.fastcode.timesheetapp1.application.extended.timesheet.dto.TimesheetOutput;
+import com.fastcode.timesheetapp1.application.extended.timesheet.dto.UpdateStatus;
 import com.fastcode.timesheetapp1.application.extended.timesheetdetails.ITimesheetdetailsAppServiceExtended;
 import com.fastcode.timesheetapp1.application.extended.timesheetdetails.dto.TimesheetdetailsOutput;
 import com.fastcode.timesheetapp1.domain.extended.timesheet.ITimesheetRepositoryExtended;
@@ -87,16 +88,18 @@ public class TimesheetAppServiceExtended extends TimesheetAppService implements 
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
-	public UpdateTimesheetOutput updateTimesheetStatus(Long timesheetId, String status) {
+	public UpdateTimesheetOutput updateTimesheetStatus(Long timesheetId, UpdateStatus input) {
 
-		TimesheetstatusEntity timesheetstatus = timesheetstatusRepositoryExtended.findByStatusnameIgnoreCase(status);
+		TimesheetstatusEntity timesheetstatus = timesheetstatusRepositoryExtended.findByStatusnameIgnoreCase(input.getStatus());
 
 		TimesheetEntity timesheet = timesheetRepositoryExtended.findById(timesheetId).orElse(null);
 		if(!(timesheet.getTimesheetstatus().getStatusname().equalsIgnoreCase("Open") || 
 				timesheet.getTimesheetstatus().getStatusname().equals("Rejected")) 
-				&& status.equalsIgnoreCase("Submitted")) {
+				&& input.getStatus().equalsIgnoreCase("Submitted")) {
 			return null;
 		}
+		
+		timesheet.setNotes(input.getNotes());
 		timesheet.setTimesheetstatus(timesheetstatus);
 
 		TimesheetEntity updatedTimesheet = _timesheetRepository.save(timesheet);
