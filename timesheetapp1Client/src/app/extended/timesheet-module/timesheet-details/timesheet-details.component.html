@@ -120,7 +120,7 @@
     </div>
     <div class="notes">
       <mat-label>{{'TIMESHEET.NOTES' | translate}}:</mat-label>
-      <textarea class="notes" rows="4" [(ngModel)]="notes">{{notes}}
+      <textarea [readonly]="!userid || !editable" class="notes" rows="4" [(ngModel)]="notes">{{notes}}
       </textarea>
     </div>
 

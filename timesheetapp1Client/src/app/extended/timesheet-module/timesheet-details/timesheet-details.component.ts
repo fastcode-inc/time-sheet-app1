@@ -64,12 +64,14 @@ export class TimesheetDetailsComponent implements OnInit {
       this.timesheetService.getByDate(this.timesheetDate, true, this.userid).subscribe(res => {
         this.timesheet = res;
         this.timesheetDetails = this.timesheet.timesheetdetailsList;
+        this.notes = this.timesheet.notes;
         this.setTimesheetDetailsData();
       }, err => this.setTimesheetDetailsData());
     } else {
       this.timesheetService.getByDate(this.timesheetDate, true).subscribe(res => {
         this.timesheet = res;
         this.timesheetDetails = this.timesheet.timesheetdetailsList;
+        this.notes = this.timesheet.notes;
         this.setTimesheetDetailsData();
       }, err => this.setTimesheetDetailsData());
     }
@@ -211,14 +213,17 @@ export class TimesheetDetailsComponent implements OnInit {
 
   changeTimeSheetStatus(status: string) {
     this.loading = true;
+    let input: any = {
+      status: status,
+      notes: this.notes
+    }
     if(this.userid) {
-      this.timesheetService.setTimesheetStatus(this.timesheet.id, status, this.userid).subscribe(res => {
-        console.log(status);
+      input.userId = this.userid;
+      this.timesheetService.setTimesheetStatus(this.timesheet.id, input).subscribe(res => {
         this.loading = false;
       });
     } else {
-      this.timesheetService.setTimesheetStatus(this.timesheet.id, status).subscribe(res => {
-        console.log(status);
+      this.timesheetService.setTimesheetStatus(this.timesheet.id, input).subscribe(res => {
         this.loading = false;
       });
     }

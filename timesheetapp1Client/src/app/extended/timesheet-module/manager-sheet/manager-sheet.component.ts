@@ -62,8 +62,12 @@ export class ManagerSheetComponent implements OnInit {
   }
 
   changeTimeSheetStatus(timesheet, userid: number, status: string) {
+    let input: any = {
+      status: status,
+      userId: userid
+    }
     this.loading = true;
-    this.timesheetService.setTimesheetStatus(timesheet.id, status, userid).subscribe(res => {
+    this.timesheetService.setTimesheetStatus(timesheet.id, input).subscribe(res => {
       this.loading = false;
       this.getTimeSheets();
     });
@@ -73,7 +77,11 @@ export class ManagerSheetComponent implements OnInit {
     this.loading = true;
     const observables = [];
     this.selection.selected.forEach(timesheet => {
-      observables.push(this.timesheetService.setTimesheetStatus(timesheet.id, status, timesheet.userid));
+      let input: any = {
+        status: status,
+        userId: timesheet.userid
+      }
+      observables.push(this.timesheetService.setTimesheetStatus(timesheet.id, input));
     });
     concat(...observables).subscribe(res => {
       this.loading = false;
