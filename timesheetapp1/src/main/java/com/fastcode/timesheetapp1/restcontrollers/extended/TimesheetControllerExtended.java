@@ -142,6 +142,7 @@ public class TimesheetControllerExtended extends TimesheetController {
 			if(!input.getStatus().equalsIgnoreCase("Submitted")) {
 				throw new InvalidInputException("Status value is not valid");
 			}
+			input.setNotes(timesheet.getNotes());
 		}
 
 		UpdateTimesheetOutput output = _timesheetAppServiceExtended.updateTimesheetStatus(id, input);
