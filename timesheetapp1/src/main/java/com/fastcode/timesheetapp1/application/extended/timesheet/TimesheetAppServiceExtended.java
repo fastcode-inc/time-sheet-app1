@@ -147,13 +147,14 @@ public class TimesheetAppServiceExtended extends TimesheetAppService implements 
 		return mapper.timesheetEntityToCreateTimesheetOutput(createdTimesheet);
 	}
 	
+	@Override
     @Transactional(propagation = Propagation.NOT_SUPPORTED)
-	public List<TimesheetOutput> findWithHours(SearchCriteria search, Pageable pageable) throws Exception  {
+	public List<FindTimesheetByIdOutput> find(SearchCriteria search, Pageable pageable) throws Exception  {
 
 		Page<TimesheetEntity> foundTimesheet = _timesheetRepository.findAll(search(search), pageable);
 		List<TimesheetEntity> timesheetList = foundTimesheet.getContent();
 		Iterator<TimesheetEntity> timesheetIterator = timesheetList.iterator(); 
-		List<TimesheetOutput> output = new ArrayList<>();
+		List<FindTimesheetByIdOutput> output = new ArrayList<>();
 
 		while (timesheetIterator.hasNext()) {
 			TimesheetEntity timesheet = timesheetIterator.next();

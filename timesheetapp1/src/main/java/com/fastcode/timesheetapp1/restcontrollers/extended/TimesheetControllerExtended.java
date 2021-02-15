@@ -151,21 +151,21 @@ public class TimesheetControllerExtended extends TimesheetController {
 		return new ResponseEntity(output, HttpStatus.OK);
 	}
 
-    @PreAuthorize("hasAnyAuthority('TIMESHEETENTITY_READ')")
-	@RequestMapping(method = RequestMethod.GET, consumes = {"application/json"}, produces = {"application/json"})
-	public ResponseEntity find(@RequestParam(value="search", required=false) String search, @RequestParam(value = "offset", required=false) String offset, @RequestParam(value = "limit", required=false) String limit, Sort sort) throws Exception {
-
-		if (offset == null) { offset = env.getProperty("fastCode.offset.default"); }
-		if (limit == null) { limit = env.getProperty("fastCode.limit.default"); }
-
-		if(sort == null || sort.isEmpty()) {
-			sort = Sort.by(Sort.Direction.ASC, "periodstartingdate");
-		}
-		
-		Pageable Pageable = new OffsetBasedPageRequest(Integer.parseInt(offset), Integer.parseInt(limit), sort);
-		SearchCriteria searchCriteria = SearchUtils.generateSearchCriteriaObject(search);
-
-		return ResponseEntity.ok(_timesheetAppServiceExtended.findWithHours(searchCriteria,Pageable));
-	}
+//    @PreAuthorize("hasAnyAuthority('TIMESHEETENTITY_READ')")
+//	@RequestMapping(method = RequestMethod.GET, consumes = {"application/json"}, produces = {"application/json"})
+//	public ResponseEntity find(@RequestParam(value="search", required=false) String search, @RequestParam(value = "offset", required=false) String offset, @RequestParam(value = "limit", required=false) String limit, Sort sort) throws Exception {
+//
+//		if (offset == null) { offset = env.getProperty("fastCode.offset.default"); }
+//		if (limit == null) { limit = env.getProperty("fastCode.limit.default"); }
+//
+//		if(sort == null || sort.isEmpty()) {
+//			sort = Sort.by(Sort.Direction.ASC, "periodstartingdate");
+//		}
+//		
+//		Pageable Pageable = new OffsetBasedPageRequest(Integer.parseInt(offset), Integer.parseInt(limit), sort);
+//		SearchCriteria searchCriteria = SearchUtils.generateSearchCriteriaObject(search);
+//
+//		return ResponseEntity.ok(_timesheetAppServiceExtended.findWithHours(searchCriteria,Pageable));
+//	}
 }
 
