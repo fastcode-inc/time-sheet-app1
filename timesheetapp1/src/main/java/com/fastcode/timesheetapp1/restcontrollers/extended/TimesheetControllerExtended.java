@@ -8,6 +8,7 @@ import lombok.NonNull;
 
 import com.fastcode.timesheetapp1.application.extended.timesheet.ITimesheetAppServiceExtended;
 import com.fastcode.timesheetapp1.application.extended.timesheet.dto.TimesheetOutput;
+import com.fastcode.timesheetapp1.application.extended.timesheet.dto.UpdateStatus;
 import com.fastcode.timesheetapp1.application.extended.timesheetdetails.ITimesheetdetailsAppServiceExtended;
 import com.fastcode.timesheetapp1.application.extended.timesheetdetails.dto.TimesheetdetailsInput;
 import com.fastcode.timesheetapp1.application.extended.timesheetdetails.dto.TimesheetdetailsOutput;
@@ -114,36 +115,36 @@ public class TimesheetControllerExtended extends TimesheetController {
 		return new ResponseEntity(output, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/{id}/updateTimesheetStatus/{status}", method = RequestMethod.PUT, consumes = {"application/json"}, produces = {"application/json"})
-	public ResponseEntity<UpdateTimesheetOutput> updateTimesheetStatus(@PathVariable Long id, @PathVariable String status, @RequestParam(value="userId", required=false) Long userId,HttpServletRequest request) throws Exception {
+	@RequestMapping(value = "/{id}/updateTimesheetStatus", method = RequestMethod.PUT, consumes = {"application/json"}, produces = {"application/json"})
+	public ResponseEntity<UpdateTimesheetOutput> updateTimesheetStatus(@PathVariable Long id, @RequestBody UpdateStatus input,HttpServletRequest request) throws Exception {
 
 		FindTimesheetByIdOutput timesheet = _timesheetAppService.findById(id);
 		Optional.ofNullable(timesheet).orElseThrow(() -> new EntityNotFoundException(String.format("Timesheet not found with id " + id)));
 
-		if(userId !=null) {
+		if(input.getUserId() !=null) {
 			String token = request.getHeader("Authorization");
 			if(token !=null && token.startsWith(SecurityConstants.TOKEN_PREFIX)) {
 				token = token.replace(SecurityConstants.TOKEN_PREFIX, "");
 			}
 
 			if(!usersAppServiceExtended.parseTokenAndCheckIfPermissionExists(token, "TIMESHEETSTATUSENTITY_UPDATE")) {
-				throw new Exception("You don't have permission to fetch timesheet details against userid " + userId);
+				throw new Exception("You don't have permission to fetch timesheet details against userid " + input.getUserId());
 			}
 
-			if(!status.equalsIgnoreCase("Rejected") && !status.equalsIgnoreCase("Approved")) {
+			if(!input.getStatus().equalsIgnoreCase("Rejected") && !input.getStatus().equalsIgnoreCase("Approved")) {
 				throw new InvalidInputException("Status value is not valid");
 			}
 		}
 		else
 		{
 			UsersEntity loggedInUser = usersAppServiceExtended.getUsers();
-			userId = loggedInUser.getId();
-			if(!status.equalsIgnoreCase("Submitted")) {
+			input.setUserId(loggedInUser.getId());
+			if(!input.getStatus().equalsIgnoreCase("Submitted")) {
 				throw new InvalidInputException("Status value is not valid");
 			}
 		}
 
-		UpdateTimesheetOutput output = _timesheetAppServiceExtended.updateTimesheetStatus(id, status);
+		UpdateTimesheetOutput output = _timesheetAppServiceExtended.updateTimesheetStatus(id, input);
 		if(output == null) {
 			throw new InvalidInputException("Status is not open or rejected, can't submit");
 		}
