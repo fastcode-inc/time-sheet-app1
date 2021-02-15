@@ -9,7 +9,7 @@
 				<ul class="breadcrumb">
 					<li><a [routerLink]="['/dashboard']"><i class="material-icons">
 								home
-							</i> &nbsp;Dashboard</a></li>
+							</i> &nbsp;{{'HOME' | translate}}</a></li>
 					<li><a>{{title}}</a></li>
 				</ul>
 			</div>
@@ -32,7 +32,7 @@
           <div>
             <button mat-raised-button color="primary" (click)="setTimesheet('back')"><mat-icon>keyboard_arrow_left</mat-icon></button>
 
-            <span class="datepickerdiv"><span>Choose Date</span>
+            <span class="datepickerdiv"><span>{{'TIMESHEET.CHOOSE-DATE-LABEL' | translate}}</span>
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker #picker ></mat-datepicker>
             </span>
@@ -57,7 +57,7 @@
             mat-raised-button 
             color="primary"
           >
-            Submit
+          {{'TIMESHEET.SUBMIT' | translate}}
           </button>
           <button 
             *ngIf="userid"
@@ -66,7 +66,7 @@
             class="timesheetbutton"
             mat-raised-button color="primary"
             >
-            Approve
+            {{'TIMESHEET.APPROVE' | translate}}
           </button>
           <button
             *ngIf="userid"
@@ -76,7 +76,7 @@
             mat-raised-button
             color="warn"
           >
-            Reject
+          {{'TIMESHEET.REJECT' | translate}}
           </button>
         </div>
       </div>
@@ -86,13 +86,13 @@
       <div class="sheetmonth"><b>{{month}}</b></div>
       <table>
         <thead>
-            <th>Customer</th>
-            <th>Project</th>
-            <th>Task/Timeoff</th>
+            <th>{{'TIMESHEET.CUSTOMER' | translate}}</th>
+            <th>{{'TIMESHEET.PROJECT' | translate}}</th>
+            <th>{{'TIMESHEET.TASK' | translate}}/{{'TIMESHEET.TIME-OFF' | translate}}</th>
             <ng-container *ngFor="let dd of dayList">
               <th>{{dd}}</th>
             </ng-container>
-            <th>Total</th>
+            <th>{{'TIMESHEET.TOTAL' | translate}}</th>
 
         </thead>
 
@@ -109,7 +109,7 @@
             </tr>
           </ng-container>
           <tr>
-            <td colspan="3">Total</td>
+            <td colspan="3">{{'TIMESHEET.TOTAL' | translate}}</td>
             <ng-container *ngFor="let dd of dayList; let idx = index">
               <td class="col-4">{{columnWiseSumMap[dateList[idx]]}}</td>
             </ng-container>
@@ -119,7 +119,7 @@
       </table>
     </div>
     <div class="notes">
-      <mat-label>Notes:</mat-label>
+      <mat-label>{{'TIMESHEET.NOTES' | translate}}:</mat-label>
       <textarea class="notes" rows="4" [(ngModel)]="notes">{{notes}}
       </textarea>
     </div>

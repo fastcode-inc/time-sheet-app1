@@ -9,6 +9,10 @@ import * as moment from 'moment';
 import { TimeofftypeExtendedService } from 'src/app/extended/entities/timeofftype';
 import { ITimeofftype } from 'src/app/entities/timeofftype';
 import { ErrorService } from 'src/app/common/shared';
+import { AppConfigurationExtendedService } from '../../entities/app-configuration';
+import { config } from 'process';
+import { UsersExtendedService } from '../../admin/user-management/users';
+import { TranslateService } from '@ngx-translate/core';
 
 interface ITimeofftypeOption extends ITimeofftype{
   disabled?: boolean;
@@ -43,15 +47,11 @@ export class TimesheetComponent implements OnInit {
 		public timesheetService: TimesheetExtendedService,
 		public timeofftypeService: TimeofftypeExtendedService,
 		public errorService: ErrorService,
+		public translateService: TranslateService,
 	) { }
 
 	ngOnInit() {
     this.timesheetDate = new Date();
-    let timesheet = {
-      periodstartingdate: this.getStartDateOfPeriod().getTime(),
-      periodendingdate: this.getEndingDateOfPeriod().getTime(),
-    }
-    console.log(timesheet)
     this.getTimesheet();
     this.getTimesheetDetails();
   }
@@ -203,7 +203,7 @@ export class TimesheetComponent implements OnInit {
     if(this.totalhours > 8 && event) {
       this.totalhours = this.totalhours - event.target.value;
       event.target.value = 0;
-      this.errorService.showError('Total hours cannot be more than 8.')
+      this.errorService.showError(this.translateService.instant('TIMESHEET.ERRORS.HOURS-LIMIT-EXCEEDS'));
     } 
   }
 

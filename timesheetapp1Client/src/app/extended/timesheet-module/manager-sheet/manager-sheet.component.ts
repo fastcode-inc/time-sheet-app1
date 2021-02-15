@@ -38,7 +38,6 @@ export class ManagerSheetComponent implements OnInit {
 
 	ngOnInit() {
     this.timesheetDate = new Date();
-    this.timesheetDate.setDate(this.timesheetDate.getUTCDate());
     this.setTimesheet('current');
   }
 
@@ -94,7 +93,7 @@ export class ManagerSheetComponent implements OnInit {
     var firstDate = new Date (this.timesheetDate);
     var lastDate = new Date (this.timesheetDate);
     if (state == 'current') {
-      if (day < 15 ) {
+      if (day <= 15 ) {
         var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
         var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
         this.timesheetDate = firstDay;
@@ -108,7 +107,7 @@ export class ManagerSheetComponent implements OnInit {
         this.timesheettilldate = lastDay;
       }
     } else if (state == 'next') {
-      if (day < 15 ) {
+      if (day <= 15 ) {
         var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
         var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
         firstDate.setDate(firstDay.getDate() + 15);
@@ -126,7 +125,7 @@ export class ManagerSheetComponent implements OnInit {
       }
     } else {
         console.log('back');
-        if (day < 15 ) {
+        if (day <= 15 ) {
           var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
           var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
           lastDate.setDate(firstDay.getDate() - 1 );

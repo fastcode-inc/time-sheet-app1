@@ -9,7 +9,7 @@
 				<ul class="breadcrumb">
 					<li><a [routerLink]="['/dashboard']"><i class="material-icons">
 								home
-							</i> &nbsp;Dashboard</a></li>
+							</i> &nbsp;{{'HOME' | translate}}</a></li>
 					<li><a>{{title}}</a></li>
 				</ul>
 			</div>
@@ -29,7 +29,7 @@
 
           <button mat-raised-button color="primary" (click)="backDate()"><mat-icon>keyboard_arrow_left</mat-icon></button>
 
-          <span class="datepickerdiv"><span>Choose Date</span>
+          <span class="datepickerdiv"><span>{{'TIMESHEET.CHOOSE-DATE-LABEL' | translate}}</span>
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
           </span>
@@ -52,11 +52,11 @@
       <table>
         <thead>
             <th></th>
-            <th>Cutomer</th>
-            <th>Project</th>
-            <th>Task</th>
-            <th>Hours</th>
-            <th>Notes</th>
+            <th>{{'TIMESHEET.CUSTOMER' | translate}}</th>
+            <th>{{'TIMESHEET.PROJECT' | translate}}</th>
+            <th>{{'TIMESHEET.TASK' | translate}}</th>
+            <th>{{'TIMESHEET.HOURS' | translate}}</th>
+            <th>{{'TIMESHEET.NOTES' | translate}}</th>
         </thead>
 
         <tbody>
@@ -120,7 +120,7 @@
     <div class="addRow">
       <button [disabled]="!editable" name="add" mat-raised-button color="primary" (click)="addTimesheetDetails()">
         <mat-icon>add_circle_outline</mat-icon>
-        &nbsp; Add Row
+        &nbsp; {{'TIMESHEET.ADD-ROW' | translate}}
       </button>
     </div>
 
@@ -129,9 +129,9 @@
       <table>
         <thead>
             <th></th>
-            <th>Time Off</th>
-            <th>Hours</th>
-            <th>Notes</th>
+            <th>{{'TIMESHEET.TIME-OFF' | translate}}</th>
+            <th>{{'TIMESHEET.HOURS' | translate}}</th>
+            <th>{{'TIMESHEET.NOTES' | translate}}</th>
         </thead>
 
         <tbody>
@@ -175,15 +175,15 @@
     <div class="addRow">
       <button [disabled]="!editable" name="add" mat-raised-button color="primary" (click)="addTimeOff()">
         <mat-icon>add_circle_outline</mat-icon>
-        &nbsp; Add Row
+        &nbsp; {{'TIMESHEET.ADD-ROW' | translate}}
       </button>
     </div>
     <div>
 
-    <div class="totalhours"><b>Total Hours: </b> {{totalhours}}</div>
+    <div class="totalhours"><b>{{'TIMESHEET.TOTAL-HOURS' | translate}}: </b> {{totalhours}}</div>
     <div class="savetimesheet">
       <button [disabled]="!editable" (click)="save()" mat-raised-button color="primary">
-        Save
+        {{'GENERAL.ACTIONS.SAVE' | translate}}
       </button>
     </div>
     </div>
