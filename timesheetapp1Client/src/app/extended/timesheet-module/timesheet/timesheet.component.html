@@ -62,7 +62,11 @@
         <tbody>
           <ng-container *ngFor="let dsheet of daysheet; let idx = index">
             <tr *ngIf="dsheet.type !== 'timeoff' && !dsheet.timeofftypeid">
-              <td class="col-1"><mat-icon class="cursor" (click)="deleteRow(idx)">delete</mat-icon></td>
+              <td class="col-1">
+                <button mat-icon-button [disabled]="!editable" (click)="deleteRow(idx)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </td>
               <td class="col-2">
                 <mat-form-field class="customers" *ngIf="editable">
                   <mat-select name="customer" placeholder="Select a customer.." [(ngModel)]="dsheet.customerid">
@@ -85,8 +89,8 @@
               </td>
               <td class="col-4">
                 <mat-form-field class="tasks" *ngIf="editable">
-                  <mat-select placeholder="Select a task.." name="task" [(ngModel)]="dsheet.taskid">
-                      <mat-option *ngFor="let task of (tasksMap[dsheet.projectid] || [])" [value]="task.id">{{task.name}}</mat-option>
+                  <mat-select placeholder="Select a task.." name="task" [(ngModel)]="dsheet.taskid" (selectionChange)="taskSelected(dsheet.taskid, dsheet.projectid)">
+                      <mat-option [disabled]="task.disabled" *ngFor="let task of (tasksMap[dsheet.projectid] || [])" [value]="task.id">{{task.name}}</mat-option>
                   </mat-select>
                 </mat-form-field>
                 <span *ngIf="!editable">
@@ -95,7 +99,7 @@
               </td>
               <td class="col-1">
                 <mat-form-field class="hours" *ngIf="editable">
-                  <input name="hours" (focusout)="totalDayHours($event)"  [(ngModel)]="dsheet.hours" matInput placeholder="">
+                  <input name="hours" (input)="totalDayHours($event)"  [(ngModel)]="dsheet.hours" matInput placeholder="">
                 </mat-form-field>
                 <span *ngIf="!editable">
                   {{dsheet.hours}}
@@ -133,11 +137,15 @@
         <tbody>
           <ng-container *ngFor="let dsheet of daysheet; let idx = index">
             <tr *ngIf="dsheet.type === 'timeoff' || dsheet.timeofftypeid">
-              <td class="col-1"><mat-icon class="cursor" (click)="deleteRow(idx)">delete</mat-icon></td>
+              <td class="col-1">
+                <button mat-icon-button [disabled]="!editable" (click)="deleteRow(idx)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </td>
               <td class="col-6">
                 <mat-form-field *ngIf="editable" class="timeoff">
-                  <mat-select placeholder="Select timeoff type.." name="timeoff" [(ngModel)]="dsheet.timeofftypeid">
-                      <mat-option  *ngFor="let tot of timeOffTypes" [value]="tot.id">{{tot.typename}}</mat-option>
+                  <mat-select placeholder="Select timeoff type.." name="timeoff" [(ngModel)]="dsheet.timeofftypeid" (selectionChange)="timeofftypeSelected(dsheet.timeofftypeid)">
+                      <mat-option [disabled]="tot.disabled" *ngFor="let tot of timeOffTypes" [value]="tot.id">{{tot.typename}}</mat-option>
                   </mat-select>
                 </mat-form-field>
                 <span *ngIf="!editable">
@@ -146,7 +154,7 @@
               </td>
               <td class="col-1">
                 <mat-form-field *ngIf="editable" class="hours">
-                  <input name="hours" (focusout)="totalDayHours($event)" [(ngModel)]="dsheet.hours" matInput placeholder="">
+                  <input name="hours" (input)="totalDayHours($event)" [(ngModel)]="dsheet.hours" matInput placeholder="">
                 </mat-form-field>
                 <span *ngIf="!editable">
                   {{dsheet.hours}}
