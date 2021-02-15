@@ -18,5 +18,5 @@ public interface ITimesheetAppServiceExtended extends ITimesheetAppService {
 
 	public UpdateTimesheetOutput updateTimesheetStatus(Long timesheetId, UpdateStatus input);
 	
-	public List<TimesheetOutput> findWithHours(SearchCriteria search, Pageable pageable) throws Exception;
+//	public List<TimesheetOutput> findWithHours(SearchCriteria search, Pageable pageable) throws Exception;
 }
