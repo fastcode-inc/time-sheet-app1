@@ -216,6 +216,7 @@ public class TimesheetAppService implements ITimesheetAppService {
 		for (int i = 0; i < list.size(); i++) {
 			if(!(
 				list.get(i).replace("%20","").trim().equals("timesheetstatus") ||
+				list.get(i).replace("%20","").trim().equals("timesheetstatusid") ||
 		        list.get(i).replace("%20","").trim().equals("statusname") ||
 				list.get(i).replace("%20","").trim().equals("userid") ||
 		        list.get(i).replace("%20","").trim().equals("lastname") ||
