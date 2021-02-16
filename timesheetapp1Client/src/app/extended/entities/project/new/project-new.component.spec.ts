@@ -33,7 +33,6 @@ describe('ProjectNewExtendedComponent', () => {
     beforeEach(() => {
       fixture = TestBed.createComponent(ProjectNewExtendedComponent);
       component = fixture.componentInstance;
-      spyOn(component, 'manageScreenResizing').and.returnValue();
       fixture.detectChanges();
     });
 

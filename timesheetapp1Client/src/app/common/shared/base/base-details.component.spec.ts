@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material';
 import { of, Observable } from 'rxjs';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { Router } from '@angular/router';
@@ -9,6 +9,7 @@ import { Location } from '@angular/common';
 import { TestingModule } from 'src/testing/utils';
 import { IDummy, DummyService, DummyDetailsComponent, DummyListComponent } from './dummy/index';
 import { ISearchField, operatorType } from '../components/list-filters/ISearchCriteria';
+import { MatDialogRefMock } from 'src/testing/mocks';
 
 describe('BaseDetailsComponent', () => {
   let component: DummyDetailsComponent;
@@ -33,7 +34,8 @@ describe('BaseDetailsComponent', () => {
         ]),
       ],
       providers: [
-        DummyService
+        DummyService,
+        { provide: MatDialogRef, useValue: MatDialogRefMock },
       ],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
@@ -243,8 +245,6 @@ describe('BaseDetailsComponent', () => {
     });
     spyOn(component, 'updatePickerPageInfo').and.returnValue();
     spyOn(association.service, 'getAll').and.returnValue(of(parentData));
-    spyOn(association.service, 'getById').and.returnValue(of(parentData[0]));
-    spyOn(component, 'getParentId').and.returnValue('1');
 
     component.selectAssociation(association);
 
@@ -261,8 +261,6 @@ describe('BaseDetailsComponent', () => {
       component.currentPickerPage = 0;
     });
     spyOn(component.errorService, 'showError').and.returnValue();
-    spyOn(component, 'getParentId').and.returnValue('1');
-    spyOn(association.service, 'getById').and.returnValue(of(parentData[0]));
     spyOn(association.service, 'getAll').and.returnValue(
       Observable.create((observer) => {
         observer.error(new Error('an error occurred'));
