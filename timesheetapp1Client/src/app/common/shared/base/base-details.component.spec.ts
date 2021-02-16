@@ -1,5 +1,4 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatDialog, MatDialogRef } from '@angular/material';
 import { of, Observable } from 'rxjs';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { Router } from '@angular/router';
@@ -9,7 +8,6 @@ import { Location } from '@angular/common';
 import { TestingModule } from 'src/testing/utils';
 import { IDummy, DummyService, DummyDetailsComponent, DummyListComponent } from './dummy/index';
 import { ISearchField, operatorType } from '../components/list-filters/ISearchCriteria';
-import { MatDialogRefMock } from 'src/testing/mocks';
 
 describe('BaseDetailsComponent', () => {
   let component: DummyDetailsComponent;
@@ -34,8 +32,7 @@ describe('BaseDetailsComponent', () => {
         ]),
       ],
       providers: [
-        DummyService,
-        { provide: MatDialogRef, useValue: MatDialogRefMock },
+        DummyService
       ],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();

@@ -319,11 +319,14 @@ describe('DummyListComponent', () => {
 
 	it('should not be able to deactivate', async () => {
 		await component.addNew();
-		component.dialogRef["componentInstance"] = { 
-			itemForm: new FormBuilder().group({
-				id: ''
-			})
-		}
+		component.dialogRef = {
+			...Object.create(component.dialogRef),
+			componentInstance: { 
+				itemForm: new FormBuilder().group({
+					id: ''
+				})
+			}
+		};
 		component.dialogRef.componentInstance.itemForm.markAsDirty();
 		expect(component.canDeactivate()).toBe(false);
 	});

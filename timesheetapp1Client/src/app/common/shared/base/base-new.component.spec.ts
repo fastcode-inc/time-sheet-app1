@@ -1,6 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatDialogRef, MAT_DIALOG_DATA, MatOption } from '@angular/material';
-import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { MAT_DIALOG_DATA } from '@angular/material';
 import { of, Observable } from 'rxjs';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -8,7 +7,6 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { TestingModule, checkValues } from 'src/testing/utils';
 import { IDummy, DummyService, DummyNewComponent, DummyListComponent } from './dummy/index';
 import { ISearchField, operatorType } from '../components/list-filters/ISearchCriteria';
-import { MatDialogMock, MatDialogRefMock } from 'src/testing/mocks';
 
 describe('BaseNewComponent', () => {
   let component: DummyNewComponent;
@@ -53,8 +51,7 @@ describe('BaseNewComponent', () => {
         imports: [TestingModule, RouterTestingModule.withRoutes([{ path: 'dummy', component: DummyListComponent }])],
         providers: [
           DummyService,
-          { provide: MAT_DIALOG_DATA, useValue: {} },
-        { provide: MatDialogRef, useValue: MatDialogRefMock },
+          { provide: MAT_DIALOG_DATA, useValue: {} }
         ],
         schemas: [NO_ERRORS_SCHEMA],
       }).compileComponents();
