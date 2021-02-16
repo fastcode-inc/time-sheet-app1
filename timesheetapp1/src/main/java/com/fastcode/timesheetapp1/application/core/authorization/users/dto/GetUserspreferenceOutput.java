@@ -15,7 +15,6 @@ public class GetUserspreferenceOutput {
  	private String password;
  	private LocalDate joinDate;
  	private String triggerGroup;
- 	private Boolean isemailconfirmed;
  	private Long id;
  	private String username;
   	private Long usersId;

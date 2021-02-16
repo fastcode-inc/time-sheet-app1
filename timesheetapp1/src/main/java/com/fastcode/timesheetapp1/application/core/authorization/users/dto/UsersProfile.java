@@ -22,17 +22,10 @@ public class UsersProfile {
     @NotNull(message = "firstname Should not be null")
   	private String firstname;
   	
-    @NotNull(message = "isemailconfirmed Should not be null")
-  	private Boolean isemailconfirmed;
-  	
   	private LocalDate joinDate;
   	
     @NotNull(message = "lastname Should not be null")
   	private String lastname;
-  	
-  	private String triggerGroup;
-  	
-  	private String triggerName;
   	
 	
 	private String theme;

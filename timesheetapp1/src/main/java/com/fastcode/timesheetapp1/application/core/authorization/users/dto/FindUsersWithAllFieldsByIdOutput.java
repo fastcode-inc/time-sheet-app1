@@ -11,7 +11,6 @@ public class FindUsersWithAllFieldsByIdOutput {
 	private String firstname;
 	private Long id;
 	private Boolean isactive;
-	private Boolean isemailconfirmed;
 	private LocalDate joinDate;
 	private String lastname;
 	private String password;

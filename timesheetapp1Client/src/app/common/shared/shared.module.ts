@@ -40,7 +40,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     ReactiveFormsModule,
     NgxMaterialTimepickerModule,
     FlexLayoutModule,
-	  TranslateModule.forChild({
+	TranslateModule.forChild({
       loader: {
         provide: TranslateLoader,
         useFactory: HttpLoaderFactory,
@@ -87,8 +87,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     FormsModule,
     ReactiveFormsModule,
     NgxMaterialTimepickerModule,
-    TranslateModule,
-    FlexLayoutModule
+	TranslateModule,
+	FlexLayoutModule
     
   ],
   entryComponents: [

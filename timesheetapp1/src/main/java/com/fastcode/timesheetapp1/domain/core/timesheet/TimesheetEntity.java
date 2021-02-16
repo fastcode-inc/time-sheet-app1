@@ -21,24 +21,24 @@ import org.javers.core.metamodel.annotation.ShallowReference;
 @NoArgsConstructor
 public class TimesheetEntity extends AbstractEntity {
 
-    @Basic
-    @Column(name = "periodendingdate", nullable = false)
-    private LocalDate periodendingdate;
-
-    @Basic
-    @Column(name = "notes", nullable = true)
-    private String notes;
-
-    @Basic
-    @Column(name = "periodstartingdate", nullable = false)
-    private LocalDate periodstartingdate;
-
     @Id
     @EqualsAndHashCode.Include()
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
     
+    @Basic
+    @Column(name = "notes", nullable = true)
+    private String notes;
+
+    @Basic
+    @Column(name = "periodendingdate", nullable = false)
+    private LocalDate periodendingdate;
+
+    @Basic
+    @Column(name = "periodstartingdate", nullable = false)
+    private LocalDate periodstartingdate;
+
 	@ShallowReference
     @OneToMany(mappedBy = "timesheet", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<TimesheetdetailsEntity> timesheetdetailsSet = new HashSet<TimesheetdetailsEntity>();

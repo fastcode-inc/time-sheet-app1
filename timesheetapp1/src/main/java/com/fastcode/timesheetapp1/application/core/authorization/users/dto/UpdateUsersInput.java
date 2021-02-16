@@ -25,9 +25,6 @@ public class UpdateUsersInput {
   	@NotNull(message = "isactive Should not be null")
   	private Boolean isactive = false;
   	
-  	@NotNull(message = "isemailconfirmed Should not be null")
-  	private Boolean isemailconfirmed;
-  	
   	private LocalDate joinDate;
   	
   	@NotNull(message = "lastname Should not be null")
@@ -36,12 +33,6 @@ public class UpdateUsersInput {
   	
  	@Length(max = 255, message = "password must be less than 255 characters")
   	private String password;
-  	
- 	@Length(max = 200, message = "triggerGroup must be less than 200 characters")
-  	private String triggerGroup;
-  	
- 	@Length(max = 200, message = "triggerName must be less than 200 characters")
-  	private String triggerName;
   	
   	@NotNull(message = "username Should not be null")
  	@Length(max = 255, message = "username must be less than 255 characters")

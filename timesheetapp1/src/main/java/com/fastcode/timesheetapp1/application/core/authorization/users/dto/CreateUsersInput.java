@@ -19,8 +19,6 @@ public class CreateUsersInput {
   
   	private Boolean isactive = false;
   
-  	private Boolean isemailconfirmed;
-  
   	private LocalDate joinDate;
   
   	@Length(max = 255, message = "lastname must be less than 255 characters")
@@ -28,12 +26,6 @@ public class CreateUsersInput {
   
   	@Length(max = 255, message = "password must be less than 255 characters")
   	private String password;
-  
-  	@Length(max = 200, message = "triggerGroup must be less than 200 characters")
-  	private String triggerGroup;
-  
-  	@Length(max = 200, message = "triggerName must be less than 200 characters")
-  	private String triggerName;
   
   	@Length(max = 255, message = "username must be less than 255 characters")
   	private String username;

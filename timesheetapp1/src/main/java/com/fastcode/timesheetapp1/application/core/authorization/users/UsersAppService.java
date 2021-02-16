@@ -219,7 +219,6 @@ public class UsersAppService implements IUsersAppService {
 				list.get(i).replace("%20","").trim().equals("firstname") ||
 				list.get(i).replace("%20","").trim().equals("id") ||
 				list.get(i).replace("%20","").trim().equals("isactive") ||
-				list.get(i).replace("%20","").trim().equals("isemailconfirmed") ||
 				list.get(i).replace("%20","").trim().equals("joinDate") ||
 				list.get(i).replace("%20","").trim().equals("lastname") ||
 				list.get(i).replace("%20","").trim().equals("password") ||
@@ -276,12 +275,6 @@ public class UsersAppService implements IUsersAppService {
 					builder.and(users.isactive.eq(Boolean.parseBoolean(details.getValue().getSearchValue())));
 				else if(details.getValue().getOperator().equals("notEqual") && (details.getValue().getSearchValue().equalsIgnoreCase("true") || details.getValue().getSearchValue().equalsIgnoreCase("false")))
 					builder.and(users.isactive.ne(Boolean.parseBoolean(details.getValue().getSearchValue())));
-			}
-			if(details.getKey().replace("%20","").trim().equals("isemailconfirmed")) {
-				if(details.getValue().getOperator().equals("equals") && (details.getValue().getSearchValue().equalsIgnoreCase("true") || details.getValue().getSearchValue().equalsIgnoreCase("false")))
-					builder.and(users.isemailconfirmed.eq(Boolean.parseBoolean(details.getValue().getSearchValue())));
-				else if(details.getValue().getOperator().equals("notEqual") && (details.getValue().getSearchValue().equalsIgnoreCase("true") || details.getValue().getSearchValue().equalsIgnoreCase("false")))
-					builder.and(users.isemailconfirmed.ne(Boolean.parseBoolean(details.getValue().getSearchValue())));
 			}
 			if(details.getKey().replace("%20","").trim().equals("joinDate")) {
 				if(details.getValue().getOperator().equals("equals") && SearchUtils.stringToLocalDate(details.getValue().getSearchValue()) !=null)

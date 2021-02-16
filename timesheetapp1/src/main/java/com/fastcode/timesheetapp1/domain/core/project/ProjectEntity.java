@@ -21,16 +21,12 @@ import org.javers.core.metamodel.annotation.ShallowReference;
 public class ProjectEntity extends AbstractEntity {
 
     @Basic
-    @Column(name = "enddate", nullable = false)
-    private LocalDate enddate;
-
-    @Basic
-    @Column(name = "name", nullable = false,length =255)
-    private String name;
-
-    @Basic
     @Column(name = "description", nullable = true)
     private String description;
+
+    @Basic
+    @Column(name = "enddate", nullable = false)
+    private LocalDate enddate;
 
     @Id
     @EqualsAndHashCode.Include()
@@ -39,8 +35,16 @@ public class ProjectEntity extends AbstractEntity {
     private Long id;
     
     @Basic
+    @Column(name = "name", nullable = false,length =255)
+    private String name;
+
+    @Basic
     @Column(name = "startdate", nullable = false)
     private LocalDate startdate;
+
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name = "customerid")
+    private CustomerEntity customer;
 
 	@ShallowReference
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -55,10 +59,6 @@ public class ProjectEntity extends AbstractEntity {
         tasks.setProject(null);
     }
     
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name = "customerid")
-    private CustomerEntity customer;
-
 
 }
 

@@ -5,8 +5,8 @@ import java.util.HashSet;
 import java.util.Set;
 import java.time.*;
 import com.fastcode.timesheetapp1.domain.core.project.ProjectEntity;
-import com.fastcode.timesheetapp1.domain.core.usertask.UsertaskEntity;
 import com.fastcode.timesheetapp1.domain.core.timesheetdetails.TimesheetdetailsEntity;
+import com.fastcode.timesheetapp1.domain.core.usertask.UsertaskEntity;
 import com.fastcode.timesheetapp1.domain.core.abstractentity.AbstractEntity;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,14 +22,6 @@ import org.javers.core.metamodel.annotation.ShallowReference;
 public class TaskEntity extends AbstractEntity {
 
     @Basic
-    @Column(name = "isactive", nullable = false)
-    private Boolean isactive;
-    
-    @Basic
-    @Column(name = "name", nullable = false,length =255)
-    private String name;
-
-    @Basic
     @Column(name = "description", nullable = true)
     private String description;
 
@@ -39,6 +31,18 @@ public class TaskEntity extends AbstractEntity {
     @Column(name = "id", nullable = false)
     private Long id;
     
+    @Basic
+    @Column(name = "isactive", nullable = false)
+    private Boolean isactive;
+    
+    @Basic
+    @Column(name = "name", nullable = false,length =255)
+    private String name;
+
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name = "projectid")
+    private ProjectEntity project;
+
 	@ShallowReference
     @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<TimesheetdetailsEntity> timesheetdetailsSet = new HashSet<TimesheetdetailsEntity>();
@@ -52,10 +56,6 @@ public class TaskEntity extends AbstractEntity {
         timesheetdetails.setTask(null);
     }
     
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name = "projectid")
-    private ProjectEntity project;
-
 	@ShallowReference
     @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<UsertaskEntity> usertasksSet = new HashSet<UsertaskEntity>();

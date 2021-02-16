@@ -19,6 +19,10 @@ describe('UpdateProfileComponent', () => {
   let t = DateUtils.formatDateStringToAMPM(d);
   let data = {
 		emailaddress: 'emailAddress1@test.com',
+	    firstname: 'firstname1',
+	    joinDate: d,
+	    lastname: 'lastname1',
+	    username: 'username1',
   };
   
   describe('Unit Tests', () => {

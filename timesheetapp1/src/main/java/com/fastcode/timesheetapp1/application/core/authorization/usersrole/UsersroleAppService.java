@@ -226,8 +226,10 @@ public class UsersroleAppService implements IUsersroleAppService {
 	protected void checkProperties(List<String> list) throws Exception  {
 		for (int i = 0; i < list.size(); i++) {
 			if(!(
-		        list.get(i).replace("%20","").trim().equals("displayName") ||
-		        list.get(i).replace("%20","").trim().equals("lastname") ||
+		        list.get(i).replace("%20","").trim().equals("role") ||
+//		        list.get(i).replace("%20","").trim().equals("displayName") ||
+		        list.get(i).replace("%20","").trim().equals("users") ||
+//		        list.get(i).replace("%20","").trim().equals("lastname") ||
 				list.get(i).replace("%20","").trim().equals("roleId") ||
 				list.get(i).replace("%20","").trim().equals("usersId")
 			)) 

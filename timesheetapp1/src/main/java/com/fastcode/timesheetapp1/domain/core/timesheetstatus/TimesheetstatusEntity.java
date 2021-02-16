@@ -19,16 +19,16 @@ import org.javers.core.metamodel.annotation.ShallowReference;
 @NoArgsConstructor
 public class TimesheetstatusEntity extends AbstractEntity {
 
-    @Basic
-    @Column(name = "statusname", nullable = false,length =255)
-    private String statusname;
-
     @Id
     @EqualsAndHashCode.Include()
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
     
+    @Basic
+    @Column(name = "statusname", nullable = false,length =255)
+    private String statusname;
+
 	@ShallowReference
     @OneToMany(mappedBy = "timesheetstatus", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<TimesheetEntity> timesheetsSet = new HashSet<TimesheetEntity>();

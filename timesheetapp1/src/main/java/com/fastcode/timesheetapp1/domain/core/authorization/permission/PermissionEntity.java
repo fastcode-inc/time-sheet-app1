@@ -24,16 +24,16 @@ public class PermissionEntity extends AbstractEntity {
     @Column(name = "display_name", nullable = false,length =255)
     private String displayName;
 
-    @Basic
-    @Column(name = "name", nullable = false,length =255)
-    private String name;
-
     @Id
     @EqualsAndHashCode.Include()
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
     
+    @Basic
+    @Column(name = "name", nullable = false,length =255)
+    private String name;
+
 	@ShallowReference
     @OneToMany(mappedBy = "permission", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<RolepermissionEntity> rolepermissionsSet = new HashSet<RolepermissionEntity>();

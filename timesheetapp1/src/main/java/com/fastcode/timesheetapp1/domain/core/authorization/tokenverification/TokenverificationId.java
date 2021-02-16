@@ -13,12 +13,12 @@ public class TokenverificationId implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-    private Long usersId;
     private String tokenType;
+    private Long usersId;
     
     public TokenverificationId(String tokenType,Long usersId) {
- 	this.usersId = usersId;
  	this.tokenType = tokenType;
+ 	this.usersId = usersId;
     }
     
 }

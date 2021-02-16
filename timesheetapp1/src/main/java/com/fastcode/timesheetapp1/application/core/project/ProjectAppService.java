@@ -161,6 +161,7 @@ public class ProjectAppService implements IProjectAppService {
 	protected void checkProperties(List<String> list) throws Exception  {
 		for (int i = 0; i < list.size(); i++) {
 			if(!(
+		        list.get(i).replace("%20","").trim().equals("customer") ||
 				list.get(i).replace("%20","").trim().equals("customerid") ||
 				list.get(i).replace("%20","").trim().equals("description") ||
 				list.get(i).replace("%20","").trim().equals("enddate") ||

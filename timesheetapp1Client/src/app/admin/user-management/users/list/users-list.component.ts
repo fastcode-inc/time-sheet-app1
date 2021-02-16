@@ -73,14 +73,6 @@ export class UsersListComponent extends BaseListComponent<IUsers> implements OnI
 				type: listColumnType.Boolean
 			},
     		{
-				column: 'isemailconfirmed',
-				searchColumn: 'isemailconfirmed',
-				label: 'isemailconfirmed',
-				sort: true,
-				filter: true,
-				type: listColumnType.Boolean
-			},
-    		{
 				column: 'joinDate',
 				searchColumn: 'joinDate',
 				label: 'join Date',
@@ -92,22 +84,6 @@ export class UsersListComponent extends BaseListComponent<IUsers> implements OnI
 				column: 'lastname',
 				searchColumn: 'lastname',
 				label: 'lastname',
-				sort: true,
-				filter: true,
-				type: listColumnType.String
-			},
-    		{
-				column: 'triggerGroup',
-				searchColumn: 'triggerGroup',
-				label: 'trigger Group',
-				sort: true,
-				filter: true,
-				type: listColumnType.String
-			},
-    		{
-				column: 'triggerName',
-				searchColumn: 'triggerName',
-				label: 'trigger Name',
 				sort: true,
 				filter: true,
 				type: listColumnType.String
