@@ -9,7 +9,7 @@
 				<ul class="breadcrumb">
 					<li><a [routerLink]="['/dashboard']"><i class="material-icons">
 								home
-							</i> &nbsp;Home</a></li>
+							</i> &nbsp;{{'HOME' | translate}}</a></li>
 					<li><a>{{title}}</a></li>
 				</ul>
 			</div>
@@ -30,7 +30,7 @@
           <div >
             <button mat-raised-button color="primary" (click)="setTimesheet('back')"><mat-icon>keyboard_arrow_left</mat-icon></button>
 
-            <span class="datepickerdiv"><span>Choose Date</span>
+            <span class="datepickerdiv"><span>{{'TIMESHEET.CHOOSE-DATE-LABEL' | translate}}</span>
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
             </span>
@@ -53,7 +53,7 @@
               mat-flat-button 
               color="primary"
               >
-              Approve selected
+              {{'TIMESHEET.APPROVE-SELECTED' | translate}}
             </button>
             <button
               [disabled]="selection.selected?.length <= 0"
@@ -62,7 +62,7 @@
               mat-flat-button
               color="warn"
             >
-              Reject selected
+            {{'TIMESHEET.REJECT-SELECTED' | translate}}
             </button>
           </div>
         </div>
@@ -91,7 +91,7 @@
   
         <ng-container matColumnDef="employees">
           <mat-header-cell *matHeaderCellDef>
-            Employees
+            {{'TIMESHEET.EMPLOYEES' | translate}}
           </mat-header-cell>
           <mat-cell *matCellDef="let timesheet" >
             <a href="/timesheet-details?userid={{timesheet.userid}}&timesheetDate={{timesheet.periodstartingdate}}">{{timesheet.usersDescriptiveField}}</a>
@@ -100,14 +100,14 @@
         </ng-container>
   
         <ng-container matColumnDef="hours">
-          <mat-header-cell *matHeaderCellDef> Total Hours </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef> {{'TIMESHEET.TOTAL-HOURS' | translate}} </mat-header-cell>
           <mat-cell *matCellDef="let timesheet" >
             {{timesheet.hours}}
           </mat-cell>
         </ng-container>
   
         <ng-container matColumnDef="actions">
-          <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef> {{'GENERAL.ACTIONS.ACTIONS' | translate}} </mat-header-cell>
           <mat-cell *matCellDef="let timesheet">
             <button
               [disabled]="timesheet.timesheetstatusDescriptiveField !== 'Submitted'"
@@ -116,7 +116,7 @@
               mat-flat-button 
               color="primary"
               >
-              Approve
+              {{'TIMESHEET.APPROVE' | translate}}
             </button>
             <button
               [disabled]="timesheet.timesheetstatusDescriptiveField !== 'Submitted'"
@@ -125,7 +125,7 @@
               mat-flat-button
               color="warn"
             >
-              Reject
+            {{'TIMESHEET.REJECT' | translate}}
             </button>
           </mat-cell>
         </ng-container>
@@ -133,51 +133,6 @@
         <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
         <mat-row  *matRowDef="let myRowData; columns: columnsToDisplay"></mat-row>
       </mat-table>
-
-      <!-- <table>
-        <thead>
-            <th>
-              <mat-checkbox color="primary" (change)="selectall()" [value]="selectAll" [(ngModel)]="selectAll" name="slectAll">
-              </mat-checkbox>
-            </th>
-            <th>Employees</th>
-            <th>Total Hours</th>
-            <th>Actions</th>
-
-        </thead>
-
-        <tbody>
-          <tr *ngFor="let timesheet of timesheets">
-            <td>
-              <mat-checkbox value="timesheet.selected" color="primary" [(ngModel)]="timesheet.selected">
-              </mat-checkbox>
-            </td>
-            <td><a href="/timesheet-details?userid={{timesheet.userid}}&timesheetDate={{timesheet.periodstartingdate}}">{{timesheet.usersDescriptiveField}}</a></td>
-            <td>{{timesheet.totalhours}}</td>
-            <td>
-              <button
-                [disabled]="timesheet.timesheetstatusDescriptiveField !== 'Submitted'"
-                (click)="changeTimeSheetStatus(timesheet, timesheet.userid, 'Approved')"
-                class="actionbutton"
-                mat-flat-button 
-                color="primary"
-                >
-                Approve
-              </button>
-              <button
-                [disabled]="timesheet.timesheetstatusDescriptiveField !== 'Submitted'"
-                (click)="changeTimeSheetStatus(timesheet, timesheet.userid, 'Rejected')"
-                class="actionbutton"
-                mat-flat-button
-                color="warn"
-              >
-                Reject
-              </button>
-            </td>
-          </tr>
-
-        </tbody>
-      </table> -->
     </div>
 	</mat-card>
 </div>

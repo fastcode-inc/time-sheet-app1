@@ -49,7 +49,7 @@ public class UsertaskControllerExtended extends UsertaskController {
 	@NonNull protected final IUsertaskAppServiceExtended userstaskAppServiceExtended;
 	
 	//Add your custom code here
-	@PreAuthorize("hasAnyAuthority('USERTASKENTITY_READ')")
+//	@PreAuthorize("hasAnyAuthority('USERTASKENTITY_READ')")
 	@RequestMapping(value = "/taskList", method = RequestMethod.GET, consumes = {"application/json"}, produces = {"application/json"})
 	public ResponseEntity<List<UsertaskOutput>> getTaskAgainstUser() {
 		

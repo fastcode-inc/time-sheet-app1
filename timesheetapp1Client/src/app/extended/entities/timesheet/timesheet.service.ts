@@ -45,12 +45,8 @@ export class TimesheetExtendedService extends TimesheetService {
     return this.http.get(`${this.url}/getTimesheet`, {params: params}).pipe(catchError(this.handleError));
   }
 
-  setTimesheetStatus(timesheetid:number, status: string, userId?: number) {
-    let params = {};
-    if(userId) {
-      params = {userId}
-    }
-    return this.http.put(`${this.url}/${timesheetid}/updateTimesheetStatus/${status}`, null, {params: params}).pipe(catchError(this.handleError));
+  setTimesheetStatus(timesheetid:number, input) {
+    return this.http.put(`${this.url}/${timesheetid}/updateTimesheetStatus`, input).pipe(catchError(this.handleError));
   }
 
   /**

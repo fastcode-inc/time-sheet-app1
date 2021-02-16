@@ -27,7 +27,7 @@
         &nbsp; Update Profile</button>
       <button mat-menu-item routerLink="/notifications">
         <mat-icon class="menu-item">notifications</mat-icon>
-        &nbsp; Notifications
+        &nbsp; {{'TIMESHEET.NOTIFICATIONS' | translate}}
       </button>
       <button mat-menu-item (click)="logout()">
         <mat-icon color="warn" class="menu-item">power_settings_new</mat-icon>
@@ -48,15 +48,15 @@
       <a mat-list-item class="sidenav-list-item" routerLink="timesheet">
         <i class="material-icons">
           more_time
-        </i> &nbsp; Timesheet</a>
+        </i> &nbsp; {{'TIMESHEET.TIMESHEET' | translate}}</a>
       <a mat-list-item class="sidenav-list-item" routerLink="timesheet-details">
         <i class="material-icons">
           access_time
-        </i> &nbsp; Timesheet Details</a>
-      <a mat-list-item class="sidenav-list-item" routerLink="managersheet">
+        </i> &nbsp; {{'TIMESHEET.TIMESHEET-DETAILS' | translate}}</a>
+      <a mat-list-item class="sidenav-list-item" routerLink="managersheet" *ngIf="permissions['TIMESHEETSTATUSENTITY_UPDATE']">
         <i class="material-icons">
           reviews
-        </i> &nbsp; Review timesheets</a>
+        </i> &nbsp; {{'TIMESHEET.REVIEW-TIMESHEETS' | translate}}</a>
 
       <mat-expansion-panel class="expansion-panel">
         <mat-expansion-panel-header class="subnav-header">

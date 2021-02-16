@@ -103,7 +103,36 @@
       "ExecutingJobs":"Executing Jobs",
       "Triggers":"Triggers",
       "ExecutionHistory":"Execution History"
-    }  },
+    }
+  },
+  "TIMESHEET": {
+    "TIMESHEET": "Timesheet",
+    "TIMESHEET-DETAILS": "Timesheet Details",
+    "REVIEW-TIMESHEETS": "Review Timesheets",
+    "ERRORS" : {
+      "HOURS-LIMIT-EXCEEDS": "Total hours cannot be more than 8."
+    },
+    "CUSTOMER": "Customer",
+    "PROJECT": "Project",
+    "TASK": "Task",
+    "TIME-OFF": "Time off",
+    "HOURS": "Hours",
+    "NOTES": "Notes",
+    "EMPLOYEES": "Employees",
+    "CHOOSE-DATE-LABEL": "Choose Date",
+    "TOTAL": "Total",
+    "SUBMIT": "Submit",
+    "APPROVE": "Approve",
+    "REJECT": "Reject",
+    "APPROVE-SELECTED": "Approve selected",
+    "REJECT-SELECTED": "Reject selected",
+    "TOTAL-HOURS": "Total hours",
+    "ADD-ROW": "Add row",
+    "TIME-TRACKING-REMINDERS-HEADING": "Time Tracking Reminders",
+    "NOTIFICATIONS": "Notifications",
+    "TIME-TRACKING-REMINDERS-DESCRIPTION-1": "Email me if I havn't tracked any time by",
+    "TIME-TRACKING-REMINDERS-DESCRIPTION-2": "on the selected days"
+  },
   "CONFIRM-DIALOG": {
     "TITLE":"Confirm",
     "MESSAGE": "Are you sure you want to proceed?",

@@ -9,7 +9,7 @@
 				<ul class="breadcrumb">
 					<li><a [routerLink]="['/dashboard']"><i class="material-icons">
 								home
-							</i> &nbsp;Dashboard</a></li>
+							</i> &nbsp; {{'HOME' | translate}}</a></li>
 					<li><a>{{title}}</a></li>
 				</ul>
 			</div>
@@ -20,20 +20,16 @@
 	</div>
 	<mat-card>
     <div>
-      <h3>Time Tracking Reminders</h3>
+      <h3>{{'TIMESHEET.TIME-TRACKING-REMINDERS-HEADING' | translate}}</h3>
       <div class="notifiyChart" fxLayout="column" fxLayoutAlign="center center">
         <div fxFlex>
-          <div>Email me if I havn't tracked any time by</div>
+          <div>{{'TIMESHEET.TIME-TRACKING-REMINDERS-DESCRIPTION-1' | translate}}</div>
             <div fxFlex=37 class="time-container">
-              <!-- <div class="time-container mat-form-field" > -->
-                <!-- <mat-label class="lable-inline">Time Picker</mat-label> -->
-                <ngx-timepicker-field #timePicker [(ngModel)]="time" name='timepicker'>
-                </ngx-timepicker-field>
-              <!-- </div> -->
+              <ngx-timepicker-field #timePicker [(ngModel)]="time" name='timepicker'>
+              </ngx-timepicker-field>
             </div>
-            <div fxFlex>on the selected days</div>
+            <div fxFlex>{{'TIMESHEET.TIME-TRACKING-REMINDERS-DESCRIPTION-2' | translate}}</div>
         </div>
-        <!-- <div>{{time}}</div> -->
 
         <div class="notify" fxFlex>
           <ng-container *ngFor="let day of weekday">
@@ -41,18 +37,11 @@
               {{day | titlecase}}
             </div>
           </ng-container>
-          <!-- <div fxFlex (click)="select(d)" [ngStyle]="{'background-color': bgColor}" class="notifyday">Mon</div>
-          <div fxFlex class="notifyday">Tue</div>
-          <div fxFlex class="notifyday">Wed</div>
-          <div fxFlex class="notifyday">Thu</div>
-          <div fxFlex class="notifyday">Fri</div>
-          <div fxFlex class="notifyday">Sat</div>
-          <div fxFlex class="notifyday">Sun</div> -->
         </div>
 
         <div fxFlex class="action">
-          <button class="actionbtn" mat-raised-button color="primary" (click)="update()">Update Notification</button>
-          <button class="actionbtn" mat-raised-button color="accent" (click)="cancel()">Cancel</button>
+          <button class="actionbtn" mat-raised-button color="primary" (click)="update()">{{'GENERAL.ACTIONS.UPDATE' | translate}}</button>
+          <button class="actionbtn" mat-raised-button color="accent" (click)="cancel()">{{'GENERAL.ACTIONS.CANCEL' | translate}}</button>
 
         </div>
 

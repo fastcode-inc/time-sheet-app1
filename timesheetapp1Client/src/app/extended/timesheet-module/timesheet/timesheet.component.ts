@@ -8,6 +8,15 @@ import { TimesheetExtendedService } from 'src/app/extended/entities/timesheet';
 import * as moment from 'moment';
 import { TimeofftypeExtendedService } from 'src/app/extended/entities/timeofftype';
 import { ITimeofftype } from 'src/app/entities/timeofftype';
+import { ErrorService } from 'src/app/common/shared';
+import { AppConfigurationExtendedService } from '../../entities/app-configuration';
+import { config } from 'process';
+import { UsersExtendedService } from '../../admin/user-management/users';
+import { TranslateService } from '@ngx-translate/core';
+
+interface ITimeofftypeOption extends ITimeofftype{
+  disabled?: boolean;
+}
 
 @Component({
   selector: 'app-timesheet',
@@ -27,7 +36,7 @@ export class TimesheetComponent implements OnInit {
   timesheetDate: Date;
   daysheet = [];
   timesheet: ITimesheet;
-  timeOffTypes: ITimeofftype[];
+  timeOffTypes: ITimeofftypeOption[];
   editable = true;
 
 	constructor(
@@ -37,19 +46,14 @@ export class TimesheetComponent implements OnInit {
 		public usertaskService: UsertaskExtendedService,
 		public timesheetService: TimesheetExtendedService,
 		public timeofftypeService: TimeofftypeExtendedService,
+		public errorService: ErrorService,
+		public translateService: TranslateService,
 	) { }
 
 	ngOnInit() {
     this.timesheetDate = new Date();
-    let timesheet = {
-      periodstartingdate: this.getStartDateOfPeriod().getTime(),
-      periodendingdate: this.getEndingDateOfPeriod().getTime(),
-    }
-    console.log(timesheet)
     this.getTimesheet();
     this.getTimesheetDetails();
-    this.getUserTasks();
-    this.getTimeOff();
   }
 
   getTimesheet() {
@@ -66,6 +70,13 @@ export class TimesheetComponent implements OnInit {
   getTimeOff() {
     this.timeofftypeService.getAll().subscribe(res => {
       this.timeOffTypes = res;
+      this.timeOffTypes.forEach(type => {
+        if(this.daysheet.findIndex(sheetDetails => sheetDetails.timehssettypeofid === type.id) > -1) {
+          type.disabled = true;
+        } else {
+          type.disabled = false;
+        }
+      });
     });
   }
 
@@ -73,6 +84,8 @@ export class TimesheetComponent implements OnInit {
     this.timesheetService.getTimesheetDetails(this.timesheetDate).subscribe(res => {
       this.daysheet = res;
       this.totalDayHours();
+      this.getUserTasks();
+      this.getTimeOff();
     })
   }
 
@@ -101,7 +114,11 @@ export class TimesheetComponent implements OnInit {
           this.tasksMap[task.projectid] = [];
         }
         if(this.tasksMap[task.projectid].findIndex(t => t.id === task.taskid) === -1) {
-          this.tasksMap[task.projectid].push({id: task.taskid, name: task.taskDescriptiveField});
+          this.tasksMap[task.projectid].push({id: task.taskid, name: task.taskDescriptiveField, disabled: false});
+        }
+
+        if(this.daysheet.findIndex(sheetDetails => sheetDetails.taskid === task.taskid) > -1) {
+          this.taskSelected(task.taskid, task.projectid);
         }
       })
     })
@@ -146,14 +163,28 @@ export class TimesheetComponent implements OnInit {
       notes: '',
       hours: 0,
       timesheetid: this.timesheet ? this.timesheet.id : undefined,
-      workdate: this.timesheetDate
+      workdate: this.timesheetService.getFormattedDate(this.timesheetDate, 'yyyy-mm-dd')
     };
     this.daysheet.push(timeoff);
   }
 
   deleteRow(idx) {
-    this.totalDayHours();
+    let sheetDetails = this.daysheet[idx];
+    if(sheetDetails.projectid) {
+      let selectedTaskidx = this.tasksMap[sheetDetails.projectid].findIndex(t => t.id === sheetDetails.taskid);
+      if(selectedTaskidx > -1) {
+        this.tasksMap[sheetDetails.projectid][selectedTaskidx].disabled = false;
+      }
+    } else if (sheetDetails.timeofftypeid) {
+      this.timeOffTypes.forEach(tot => { 
+        if(tot.id === sheetDetails.timeofftypeid){
+          tot.disabled = false;
+        }
+      });
+    }
+
     this.daysheet.splice(idx, 1);
+    this.totalDayHours();
   }
 
   addNotes(idx) {
@@ -164,15 +195,21 @@ export class TimesheetComponent implements OnInit {
     }
   }
 
-  totalDayHours() {
+  totalDayHours(event?) {
     this.totalhours = 0;
     for (let i=0; i < this.daysheet.length; i++ ) {
       this.totalhours = this.totalhours + parseInt(this.daysheet[i].hours);
     }
+    if(this.totalhours > 8 && event) {
+      this.totalhours = this.totalhours - event.target.value;
+      event.target.value = 0;
+      this.errorService.showError(this.translateService.instant('TIMESHEET.ERRORS.HOURS-LIMIT-EXCEEDS'));
+    } 
   }
 
   save() {
     this.loading = true;
+    this.daysheet = this.daysheet.filter(sheet => sheet.hours && sheet.hours > 0)
     if(this.timesheet) {
       this.timesheetService.createTimesheetDetails(this.daysheet).subscribe(res => {
         this.loading = false;
@@ -211,6 +248,19 @@ export class TimesheetComponent implements OnInit {
       lastDate = new Date(this.timesheetDate.getFullYear(), this.timesheetDate.getMonth(), 15);
     }
     return lastDate;
+  }
+
+  taskSelected(taskid, projectid) {
+    let selectedTaskidx = this.tasksMap[projectid].findIndex(t => t.id === taskid);
+    this.tasksMap[projectid][selectedTaskidx].disabled = true;
+  }
+
+  timeofftypeSelected(timeofftypeid) {
+    this.timeOffTypes.forEach(tot => { 
+      if(tot.id === timeofftypeid){
+        tot.disabled = true;
+      }
+    });
   }
 
 }
