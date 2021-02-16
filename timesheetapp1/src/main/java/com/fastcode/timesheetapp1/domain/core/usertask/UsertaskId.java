@@ -13,12 +13,12 @@ public class UsertaskId implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-    private Long userid;
     private Long taskid;
+    private Long userid;
     
     public UsertaskId(Long taskid,Long userid) {
- 	this.userid = userid;
  	this.taskid = taskid;
+ 	this.userid = userid;
     }
     
 }

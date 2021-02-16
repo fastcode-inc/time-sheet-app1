@@ -51,6 +51,11 @@ export class UpdateProfileComponent implements OnInit {
 
 	setForm() {
 		this.userForm = this.formBuilder.group({
+	    emailaddress: ['', Validators.required],
+	    firstname: ['', Validators.required],
+	    joinDate: [''],
+	    lastname: ['', Validators.required],
+	    username: ['', Validators.required],
 		});
 	}
 

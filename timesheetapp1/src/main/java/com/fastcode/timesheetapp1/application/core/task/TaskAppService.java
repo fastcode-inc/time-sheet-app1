@@ -150,6 +150,7 @@ public class TaskAppService implements ITaskAppService {
 	protected void checkProperties(List<String> list) throws Exception  {
 		for (int i = 0; i < list.size(); i++) {
 			if(!(
+		        list.get(i).replace("%20","").trim().equals("project") ||
 				list.get(i).replace("%20","").trim().equals("projectid") ||
 				list.get(i).replace("%20","").trim().equals("description") ||
 				list.get(i).replace("%20","").trim().equals("id") ||

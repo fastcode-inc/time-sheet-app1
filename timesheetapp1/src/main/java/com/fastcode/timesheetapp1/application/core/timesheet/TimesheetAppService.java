@@ -215,10 +215,12 @@ public class TimesheetAppService implements ITimesheetAppService {
 	protected void checkProperties(List<String> list) throws Exception  {
 		for (int i = 0; i < list.size(); i++) {
 			if(!(
+		        list.get(i).replace("%20","").trim().equals("timesheetstatus") ||
 				list.get(i).replace("%20","").trim().equals("timesheetstatusid") ||
-		        list.get(i).replace("%20","").trim().equals("statusname") ||
+//		        list.get(i).replace("%20","").trim().equals("statusname") ||
+		        list.get(i).replace("%20","").trim().equals("users") ||
 				list.get(i).replace("%20","").trim().equals("userid") ||
-		        list.get(i).replace("%20","").trim().equals("lastname") ||
+//		        list.get(i).replace("%20","").trim().equals("lastname") ||
 				list.get(i).replace("%20","").trim().equals("id") ||
 				list.get(i).replace("%20","").trim().equals("notes") ||
 				list.get(i).replace("%20","").trim().equals("periodendingdate") ||

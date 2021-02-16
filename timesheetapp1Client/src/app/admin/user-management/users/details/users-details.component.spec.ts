@@ -26,7 +26,6 @@ describe('UsersDetailsComponent', () => {
     firstname: 'firstname1',
     id: 1,
     isactive: true,
-    isemailconfirmed: true,
     joinDate: d,
     lastname: 'lastname1',
     triggerGroup: 'triggerGroup1',

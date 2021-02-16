@@ -12,7 +12,6 @@ public class GetUsersOutput {
  	private String emailaddress;
  	private String lastname;
  	private String password;
- 	private Boolean isemailconfirmed;
  	private Long id;
  	private String username;
   	private Long userspermissionPermissionId;

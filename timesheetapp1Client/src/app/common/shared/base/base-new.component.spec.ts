@@ -54,6 +54,7 @@ describe('BaseNewComponent', () => {
         providers: [
           DummyService,
           { provide: MAT_DIALOG_DATA, useValue: {} },
+        { provide: MatDialogRef, useValue: MatDialogRefMock },
         ],
         schemas: [NO_ERRORS_SCHEMA],
       }).compileComponents();

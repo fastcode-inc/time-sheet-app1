@@ -166,7 +166,7 @@ export class GenericApiService<T> {
     let hours: number = parseInt(time.substring(0, 2));
     let minutes = parseInt(time.substring(3, 5));
     let ampm = time.substring(6, 8)? time.substring(6, 8): "am";
-    if (ampm.toLocaleLowerCase() == "pm") {
+    if (ampm.toLocaleLowerCase() == "pm" && hours < 12) {
       hours = hours + 12;
     } else if (ampm.toLocaleLowerCase() == "am" && hours === 12) {
       hours = 0;
@@ -192,7 +192,7 @@ export class GenericApiService<T> {
   getFormattedTime(time: string, withOffset: boolean) {
     let ham = this.getHoursAndMinutes(time);
     let hours = ham.hours > 9 ? ham.hours.toString() : '0' + ham.hours.toString();
-    let minutes = ham.hours > 9 ? ham.minutes.toString() : '0' + ham.minutes.toString();
+    let minutes = ham.minutes > 9 ? ham.minutes.toString() : '0' + ham.minutes.toString();
     let timeStr = `${hours}:${minutes}:00`;
     if (withOffset) {
       timeStr += this.getOffset();

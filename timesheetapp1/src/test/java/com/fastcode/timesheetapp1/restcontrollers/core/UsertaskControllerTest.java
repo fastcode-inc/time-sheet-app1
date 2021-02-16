@@ -264,7 +264,6 @@ public class UsertaskControllerTest {
   		usersEntity.setFirstname(String.valueOf(relationCount));
 		usersEntity.setId(Long.valueOf(relationCount));
 		usersEntity.setIsactive(false);
-		usersEntity.setIsemailconfirmed(false);
 		usersEntity.setJoinDate(SearchUtils.stringToLocalDate("19"+countUsers+"-09-01"));
   		usersEntity.setLastname(String.valueOf(relationCount));
   		usersEntity.setPassword(String.valueOf(relationCount));

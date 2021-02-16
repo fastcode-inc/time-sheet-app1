@@ -13,12 +13,12 @@ public class UsersroleId implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-    private Long usersId;
     private Long roleId;
+    private Long usersId;
     
     public UsersroleId(Long roleId,Long usersId) {
- 	this.usersId = usersId;
  	this.roleId = roleId;
+ 	this.usersId = usersId;
     }
     
 }

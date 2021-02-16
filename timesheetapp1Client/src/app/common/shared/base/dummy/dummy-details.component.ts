@@ -93,7 +93,7 @@ export class DummyDetailsComponent extends BaseDetailsComponent<IDummy> implemen
 		isParent: true,
 		table: 'oneChild',
 		type: 'OneToOne',
-	    associatedPrimaryKeys: [ 'id', ]
+	    associatedPrimaryKeys: [ 'id', ],
         data: []
 	  },
     ];

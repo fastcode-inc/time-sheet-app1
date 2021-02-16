@@ -246,12 +246,15 @@ public class TimesheetdetailsAppService implements ITimesheetdetailsAppService {
 	protected void checkProperties(List<String> list) throws Exception  {
 		for (int i = 0; i < list.size(); i++) {
 			if(!(
+		        list.get(i).replace("%20","").trim().equals("task") ||
 				list.get(i).replace("%20","").trim().equals("taskid") ||
-		        list.get(i).replace("%20","").trim().equals("name") ||
+//		        list.get(i).replace("%20","").trim().equals("name") ||
+		        list.get(i).replace("%20","").trim().equals("timeofftype") ||
 				list.get(i).replace("%20","").trim().equals("timeofftypeid") ||
-		        list.get(i).replace("%20","").trim().equals("typename") ||
+//		        list.get(i).replace("%20","").trim().equals("typename") ||
+		        list.get(i).replace("%20","").trim().equals("timesheet") ||
 				list.get(i).replace("%20","").trim().equals("timesheetid") ||
-		        list.get(i).replace("%20","").trim().equals("periodstartingdate") ||
+//		        list.get(i).replace("%20","").trim().equals("periodstartingdate") ||
 				list.get(i).replace("%20","").trim().equals("hours") ||
 				list.get(i).replace("%20","").trim().equals("id") ||
 				list.get(i).replace("%20","").trim().equals("notes") ||

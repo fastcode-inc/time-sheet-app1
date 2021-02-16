@@ -26,10 +26,6 @@ public class CustomerEntity extends AbstractEntity {
     private Long customerid;
     
     @Basic
-    @Column(name = "name", nullable = false,length =255)
-    private String name;
-
-    @Basic
     @Column(name = "description", nullable = true)
     private String description;
 
@@ -37,6 +33,10 @@ public class CustomerEntity extends AbstractEntity {
     @Column(name = "isactive", nullable = false)
     private Boolean isactive;
     
+    @Basic
+    @Column(name = "name", nullable = false,length =255)
+    private String name;
+
 	@ShallowReference
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ProjectEntity> projectsSet = new HashSet<ProjectEntity>();

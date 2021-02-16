@@ -50,7 +50,6 @@ describe('EntityHistoryComponent', () => {
 	    firstname: 'firstname1',
 	    id: 1,
 	    isactive: true,
-	    isemailconfirmed: true,
 	    joinDate: new Date(),
 	    lastname: 'lastname1',
 	    password: 'password1',

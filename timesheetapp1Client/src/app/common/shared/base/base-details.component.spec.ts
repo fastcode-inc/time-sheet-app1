@@ -33,7 +33,8 @@ describe('BaseDetailsComponent', () => {
         ]),
       ],
       providers: [
-        DummyService
+        DummyService,
+        { provide: MatDialogRef, useValue: MatDialogRefMock },
       ],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
@@ -243,8 +244,6 @@ describe('BaseDetailsComponent', () => {
     });
     spyOn(component, 'updatePickerPageInfo').and.returnValue();
     spyOn(association.service, 'getAll').and.returnValue(of(parentData));
-    spyOn(association.service, 'getById').and.returnValue(of(parentData[0]));
-    spyOn(component, 'getParentId').and.returnValue('1');
 
     component.selectAssociation(association);
 
@@ -261,8 +260,6 @@ describe('BaseDetailsComponent', () => {
       component.currentPickerPage = 0;
     });
     spyOn(component.errorService, 'showError').and.returnValue();
-    spyOn(component, 'getParentId').and.returnValue('1');
-    spyOn(association.service, 'getById').and.returnValue(of(parentData[0]));
     spyOn(association.service, 'getAll').and.returnValue(
       Observable.create((observer) => {
         observer.error(new Error('an error occurred'));

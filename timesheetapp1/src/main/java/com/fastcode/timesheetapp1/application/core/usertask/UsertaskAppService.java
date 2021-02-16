@@ -191,8 +191,10 @@ public class UsertaskAppService implements IUsertaskAppService {
 	protected void checkProperties(List<String> list) throws Exception  {
 		for (int i = 0; i < list.size(); i++) {
 			if(!(
-		        list.get(i).replace("%20","").trim().equals("name") ||
-		        list.get(i).replace("%20","").trim().equals("lastname") ||
+		        list.get(i).replace("%20","").trim().equals("task") ||
+//		        list.get(i).replace("%20","").trim().equals("name") ||
+		        list.get(i).replace("%20","").trim().equals("users") ||
+//		        list.get(i).replace("%20","").trim().equals("lastname") ||
 				list.get(i).replace("%20","").trim().equals("taskid") ||
 				list.get(i).replace("%20","").trim().equals("userid")
 			)) 

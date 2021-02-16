@@ -16,6 +16,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserspreferenceEntity extends AbstractEntity {
 
+    @Id
+    @EqualsAndHashCode.Include()
+    @Column(name = "id", nullable = false)
+    private Long id;
+    
     @Basic
     @Column(name = "language", nullable = false,length =256)
     private String language;
@@ -24,11 +29,6 @@ public class UserspreferenceEntity extends AbstractEntity {
     @Column(name = "theme", nullable = false,length =256)
     private String theme;
 
-    @Id
-    @EqualsAndHashCode.Include()
-    @Column(name = "id", nullable = false)
-    private Long id;
-    
     @OneToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "id")
     private UsersEntity users;

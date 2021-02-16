@@ -20,11 +20,8 @@ public interface IUsersMapper {
    
     @Mappings({
     @Mapping(source = "usersProfile.firstname", target = "firstname"),
-    @Mapping(source = "usersProfile.isemailconfirmed", target = "isemailconfirmed"),
     @Mapping(source = "usersProfile.joinDate", target = "joinDate"),
     @Mapping(source = "usersProfile.lastname", target = "lastname"),
-    @Mapping(source = "usersProfile.triggerGroup", target = "triggerGroup"),
-    @Mapping(source = "usersProfile.triggerName", target = "triggerName"),
     @Mapping(source = "usersProfile.username", target = "username"),
     @Mapping(source = "usersProfile.emailaddress", target = "emailaddress")
     })

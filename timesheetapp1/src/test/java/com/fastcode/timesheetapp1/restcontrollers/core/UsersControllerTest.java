@@ -217,7 +217,6 @@ public class UsersControllerTest {
   		usersEntity.setFirstname(String.valueOf(relationCount));
 		usersEntity.setId(Long.valueOf(relationCount));
 		usersEntity.setIsactive(false);
-		usersEntity.setIsemailconfirmed(false);
 		usersEntity.setJoinDate(SearchUtils.stringToLocalDate("19"+countUsers+"-09-01"));
   		usersEntity.setLastname(String.valueOf(relationCount));
   		usersEntity.setPassword(String.valueOf(relationCount));
@@ -241,7 +240,6 @@ public class UsersControllerTest {
   		usersEntity.setFirstname("1");
 		usersEntity.setId(1L);
 		usersEntity.setIsactive(false);
-		usersEntity.setIsemailconfirmed(false);
     	usersEntity.setJoinDate(SearchUtils.stringToLocalDate("1996-09-01"));
   		usersEntity.setLastname("1");
   		usersEntity.setPassword("1");
@@ -259,12 +257,9 @@ public class UsersControllerTest {
         usersInput.setEmailaddress("abc@d.c");
   		usersInput.setFirstname("5");
 		usersInput.setIsactive(false);
-		usersInput.setIsemailconfirmed(false);
     	usersInput.setJoinDate(SearchUtils.stringToLocalDate("1996-08-10"));
   		usersInput.setLastname("5");
   		usersInput.setPassword("5");
-  		usersInput.setTriggerGroup("5");
-  		usersInput.setTriggerName("5");
   		usersInput.setUsername("5");
 		
 		return usersInput;
@@ -276,7 +271,6 @@ public class UsersControllerTest {
 		users.setFirstname("3");
 		users.setId(3L);
 		users.setIsactive(false);
-		users.setIsemailconfirmed(false);
     	users.setJoinDate(SearchUtils.stringToLocalDate("1996-08-11"));
 		users.setLastname("3");
 		users.setPassword("3");
@@ -293,7 +287,6 @@ public class UsersControllerTest {
 		users.setFirstname("4");
 		users.setId(4L);
 		users.setIsactive(false);
-		users.setIsemailconfirmed(false);
     	users.setJoinDate(SearchUtils.stringToLocalDate("1996-09-09"));
 		users.setLastname("4");
 		users.setPassword("4");
@@ -368,7 +361,6 @@ public class UsersControllerTest {
         output.setEmailaddress("bpc@g.c");
   		output.setFirstname("1");
 		output.setIsactive(false);
-		output.setIsemailconfirmed(false);
   		output.setLastname("1");
   		output.setUsername("1");
 
@@ -416,7 +408,6 @@ public class UsersControllerTest {
 		output.setFirstname(entity.getFirstname());
 		output.setId(entity.getId());
 		output.setIsactive(entity.getIsactive());
-		output.setIsemailconfirmed(entity.getIsemailconfirmed());
 		output.setLastname(entity.getLastname());
 		output.setUsername(entity.getUsername());
 		
@@ -440,11 +431,8 @@ public class UsersControllerTest {
   		users.setFirstname("999");
 		users.setId(999L);
 		users.setIsactive(false);
-		users.setIsemailconfirmed(false);
 		users.setJoinDate(SearchUtils.stringToLocalDate("1996-09-28"));
   		users.setLastname("999");
-  		users.setTriggerGroup("999");
-  		users.setTriggerName("999");
   		users.setUsername("999");
 
 		ObjectWriter ow = new ObjectMapper().registerModule(new JavaTimeModule()).disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS).writer().withDefaultPrettyPrinter();
@@ -465,7 +453,6 @@ public class UsersControllerTest {
 		output.setFirstname(entity.getFirstname());
 		output.setId(entity.getId());
 		output.setIsactive(entity.getIsactive());
-		output.setIsemailconfirmed(entity.getIsemailconfirmed());
 		output.setJoinDate(entity.getJoinDate());
 		output.setLastname(entity.getLastname());
 		output.setPassword(entity.getPassword());
@@ -480,7 +467,6 @@ public class UsersControllerTest {
 		usersInput.setFirstname(entity.getFirstname());
 		usersInput.setId(entity.getId());
 		usersInput.setIsactive(entity.getIsactive());
-		usersInput.setIsemailconfirmed(entity.getIsemailconfirmed());
 		usersInput.setLastname(entity.getLastname());
 		usersInput.setPassword(entity.getPassword());
 		usersInput.setUsername(entity.getUsername());

@@ -3,7 +3,6 @@ export interface IUsers {
 	firstname?: string;
 	id?: number;
 	isactive?: boolean;
-	isemailconfirmed?: boolean;
 	joinDate?: Date;
 	lastname?: string;
 	password?: string;

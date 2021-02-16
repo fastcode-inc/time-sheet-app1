@@ -16,6 +16,10 @@ import lombok.NoArgsConstructor;
 public class JwtEntity extends AbstractEntity {
 
     @Basic
+    @Column(name = "authentication_token", nullable = true)
+    private String authenticationToken;
+
+    @Basic
     @Column(name = "authorization_token", nullable = false)
     private String authorizationToken;
 
@@ -28,10 +32,6 @@ public class JwtEntity extends AbstractEntity {
     @Basic
     @Column(name = "user_name", nullable = false,length =32)
     private String userName;
-
-    @Basic
-    @Column(name = "authentication_token", nullable = true)
-    private String authenticationToken;
 
 
 }
