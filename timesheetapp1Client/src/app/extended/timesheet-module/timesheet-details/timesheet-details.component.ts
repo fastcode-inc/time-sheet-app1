@@ -220,13 +220,14 @@ export class TimesheetDetailsComponent implements OnInit {
     if(this.userid) {
       input.userId = this.userid;
       this.timesheetService.setTimesheetStatus(this.timesheet.id, input).subscribe(res => {
+        this.setTimesheet('current');
         this.loading = false;
       });
     } else {
       this.timesheetService.setTimesheetStatus(this.timesheet.id, input).subscribe(res => {
+        this.setTimesheet('current');
         this.loading = false;
       });
     }
-    this.setTimesheet('current');
   }
 }
