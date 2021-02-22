@@ -9,7 +9,7 @@
         
             <column name="bcc" type="VARCHAR(256)"/>
             <column name="body" type="TEXT"/>              
-             <column name="cc" type="VARCHAR(256)"/>
+            <column name="cc" type="VARCHAR(256)"/>
             <column name="subject" type="VARCHAR(255)"/>
             <column name="to_" type="VARCHAR(256)">
                 <constraints nullable="false"/>

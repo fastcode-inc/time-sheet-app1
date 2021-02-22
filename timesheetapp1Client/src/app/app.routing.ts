@@ -24,6 +24,11 @@ const routes: Routes = [
 		loadChildren: './extended/account/account.module#AccountExtendedModule'
 	},
 	{
+		path: 'reporting',
+		loadChildren: './reporting-module/reporting.module#ReportingModule',
+		canActivate: [AuthGuard]
+	},
+	{
 		path: 'project',
 		loadChildren: './extended/entities/project/project.module#ProjectExtendedModule',
 		canActivate: [AuthGuard]

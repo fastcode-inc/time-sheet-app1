@@ -1,4 +1,4 @@
-<mat-toolbar class="fc-tool-bar" color="primary" *ngIf="authenticationService.token">
+<mat-toolbar class="fc-tool-bar" color="primary" *ngIf="authenticationService.token && !isResourceViewer">
   <figure class="logo">
     <img src="../../../../assets/images/logo.png" alt="logo" />
   </figure>
@@ -41,6 +41,23 @@
     <mat-nav-list class="nav-list">
       <a mat-list-item class="sidenav-list-item" routerLinkActive="active"  [routerLink]="['/dashboard']"><i class="material-icons">home</i> &nbsp;{{'MainNav.Home' | translate }}</a>
       
+      <mat-expansion-panel class="expansion-panel">
+        <mat-expansion-panel-header class="subnav-header">
+          <i class="material-icons">
+            g_translate
+            </i> &nbsp;{{'MainNav.Language' | translate}}
+        </mat-expansion-panel-header>
+
+        <mat-nav-list class="subnav">
+          <mat-radio-group class="radio-group" [(ngModel)]="selectedLanguage">
+            <mat-radio-button class="radio-button" *ngFor="let lang of translate.getLangs()"
+              (click)="switchLanguage(lang)" [value]="lang">
+             {{lang | translate}}
+            </mat-radio-button>
+          </mat-radio-group>
+
+        </mat-nav-list>
+      </mat-expansion-panel>
 
       <mat-expansion-panel class="expansion-panel">
         <mat-expansion-panel-header class="subnav-header">
@@ -70,6 +87,19 @@
 
         <mat-nav-list class="subnav">
           
+          	<mat-expansion-panel class="expansion-panel" *ngIf="permissions['showReport']">
+	            <mat-expansion-panel-header class="subnav-header">
+	              &nbsp;{{'MainNav.AdhocReports' | translate }}
+	            </mat-expansion-panel-header>
+	
+	            <mat-nav-list class="subnav">
+	
+	              <a mat-list-item class="sidenav-sub-list-item" routerLinkActive="active" [routerLink]="'/reporting/schema'"> Generate Schema </a>
+	              <a mat-list-item class="sidenav-sub-list-item" routerLinkActive="active" [routerLink]="'/reporting/myreports'"> My Reports </a>
+	              <a mat-list-item class="sidenav-sub-list-item" routerLinkActive="active" [routerLink]="'/reporting/dashboard'"> My Dashboards </a>
+	
+	            </mat-nav-list>
+	          </mat-expansion-panel>
           <mat-expansion-panel class="expansion-panel" *ngIf="permissions['showScheduler']">
             <mat-expansion-panel-header class="subnav-header">
               {{'MainNav.JobScheduling.Title' | translate }}

@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
-import { Router, Event } from '@angular/router';
+import { Router, Event, RouterEvent, NavigationEnd } from '@angular/router';
 import { MatSidenav, MatSidenavContent } from '@angular/material';
 import {
 	Entities,
@@ -37,7 +37,7 @@ export class MainNavComponent {
 	
 	themes = ['default-theme', 'alt-theme'];
 	username = "";
-
+	isResourceViewer: boolean = false;
 	
 	permissions = {};
 	authEntityList = AuthEntities;
@@ -46,12 +46,12 @@ export class MainNavComponent {
 		...Entities,
 		...SchedulerEntities,
 
-
+		"report"
 	];
 	modules = {
 
 		scheduler: SchedulerEntities,
-
+		report: ["report"]
 	}
 	
 	constructor(
@@ -78,9 +78,21 @@ export class MainNavComponent {
 		});
 		this.setPreferences();
 		
+		this.checkForResourceViewer();
 	
 	}
 	
+	checkForResourceViewer() {
+		this.router.events.subscribe((event: RouterEvent) => {
+			if (event instanceof NavigationEnd) {
+				if (event.url.indexOf('resourceView') > -1) {
+					this.isResourceViewer = true;
+				} else {
+					this.isResourceViewer = false;
+				}
+			}
+		});
+	}
 	
 	isActive(url): boolean {
 		return this.router.url.split('/').includes(url);
