@@ -266,55 +266,55 @@ public class RolepermissionAppService implements IRolepermissionAppService {
 			 if(details.getKey().replace("%20","").trim().equals("permissionId")) {
 			 	if(details.getValue().getOperator().equals("contains")) {
 					builder.and(rolepermission.permissionId.like(details.getValue().getSearchValue() + "%"));
-				}
-				else if(details.getValue().getOperator().equals("equals") && StringUtils.isNumeric(details.getValue().getSearchValue()))
+				} else if(details.getValue().getOperator().equals("equals") && StringUtils.isNumeric(details.getValue().getSearchValue())) {
 					builder.and(rolepermission.permissionId.eq(Long.valueOf(details.getValue().getSearchValue())));
-				else if(details.getValue().getOperator().equals("notEqual") && StringUtils.isNumeric(details.getValue().getSearchValue()))
+				} else if(details.getValue().getOperator().equals("notEqual") && StringUtils.isNumeric(details.getValue().getSearchValue())) {
 					builder.and(rolepermission.permissionId.ne(Long.valueOf(details.getValue().getSearchValue())));
-				else if(details.getValue().getOperator().equals("range"))
-				{
-				   if(StringUtils.isNumeric(details.getValue().getStartingValue()) && StringUtils.isNumeric(details.getValue().getEndingValue()))
+				} else if(details.getValue().getOperator().equals("range")) {
+				  	if(StringUtils.isNumeric(details.getValue().getStartingValue()) && StringUtils.isNumeric(details.getValue().getEndingValue())) {
                 	   builder.and(rolepermission.permissionId.between(Long.valueOf(details.getValue().getStartingValue()), Long.valueOf(details.getValue().getEndingValue())));
-                   else if(StringUtils.isNumeric(details.getValue().getStartingValue()))
-                	   builder.and(rolepermission.permissionId.goe(Long.valueOf(details.getValue().getStartingValue())));
-                   else if(StringUtils.isNumeric(details.getValue().getEndingValue()))
-                	   builder.and(rolepermission.permissionId.loe(Long.valueOf(details.getValue().getEndingValue())));
+                   	} else if(StringUtils.isNumeric(details.getValue().getStartingValue())) {
+                	  	builder.and(rolepermission.permissionId.goe(Long.valueOf(details.getValue().getStartingValue())));
+                   	} else if(StringUtils.isNumeric(details.getValue().getEndingValue())) {
+                	  	builder.and(rolepermission.permissionId.loe(Long.valueOf(details.getValue().getEndingValue())));
+					}
 				}
 			}
 			 if(details.getKey().replace("%20","").trim().equals("roleId")) {
 			 	if(details.getValue().getOperator().equals("contains")) {
 					builder.and(rolepermission.roleId.like(details.getValue().getSearchValue() + "%"));
-				}
-				else if(details.getValue().getOperator().equals("equals") && StringUtils.isNumeric(details.getValue().getSearchValue()))
+				} else if(details.getValue().getOperator().equals("equals") && StringUtils.isNumeric(details.getValue().getSearchValue())) {
 					builder.and(rolepermission.roleId.eq(Long.valueOf(details.getValue().getSearchValue())));
-				else if(details.getValue().getOperator().equals("notEqual") && StringUtils.isNumeric(details.getValue().getSearchValue()))
+				} else if(details.getValue().getOperator().equals("notEqual") && StringUtils.isNumeric(details.getValue().getSearchValue())) {
 					builder.and(rolepermission.roleId.ne(Long.valueOf(details.getValue().getSearchValue())));
-				else if(details.getValue().getOperator().equals("range"))
-				{
-				   if(StringUtils.isNumeric(details.getValue().getStartingValue()) && StringUtils.isNumeric(details.getValue().getEndingValue()))
+				} else if(details.getValue().getOperator().equals("range")) {
+				  	if(StringUtils.isNumeric(details.getValue().getStartingValue()) && StringUtils.isNumeric(details.getValue().getEndingValue())) {
                 	   builder.and(rolepermission.roleId.between(Long.valueOf(details.getValue().getStartingValue()), Long.valueOf(details.getValue().getEndingValue())));
-                   else if(StringUtils.isNumeric(details.getValue().getStartingValue()))
-                	   builder.and(rolepermission.roleId.goe(Long.valueOf(details.getValue().getStartingValue())));
-                   else if(StringUtils.isNumeric(details.getValue().getEndingValue()))
-                	   builder.and(rolepermission.roleId.loe(Long.valueOf(details.getValue().getEndingValue())));
+                   	} else if(StringUtils.isNumeric(details.getValue().getStartingValue())) {
+                	  	builder.and(rolepermission.roleId.goe(Long.valueOf(details.getValue().getStartingValue())));
+                   	} else if(StringUtils.isNumeric(details.getValue().getEndingValue())) {
+                	  	builder.and(rolepermission.roleId.loe(Long.valueOf(details.getValue().getEndingValue())));
+					}
 				}
 			}
 	    
 		    if(details.getKey().replace("%20","").trim().equals("permission")) {
-				if(details.getValue().getOperator().equals("contains"))
+				if(details.getValue().getOperator().equals("contains")) {
 					builder.and(rolepermission.permission.displayName.likeIgnoreCase("%"+ details.getValue().getSearchValue() + "%"));
-				else if(details.getValue().getOperator().equals("equals"))
+				} else if(details.getValue().getOperator().equals("equals")) {
 					builder.and(rolepermission.permission.displayName.eq(details.getValue().getSearchValue()));
-				else if(details.getValue().getOperator().equals("notEqual"))
+				} else if(details.getValue().getOperator().equals("notEqual")) {
 					builder.and(rolepermission.permission.displayName.ne(details.getValue().getSearchValue()));
+				}
 			}
 		    if(details.getKey().replace("%20","").trim().equals("role")) {
-				if(details.getValue().getOperator().equals("contains"))
+				if(details.getValue().getOperator().equals("contains")) {
 					builder.and(rolepermission.role.displayName.likeIgnoreCase("%"+ details.getValue().getSearchValue() + "%"));
-				else if(details.getValue().getOperator().equals("equals"))
+				} else if(details.getValue().getOperator().equals("equals")) {
 					builder.and(rolepermission.role.displayName.eq(details.getValue().getSearchValue()));
-				else if(details.getValue().getOperator().equals("notEqual"))
+				} else if(details.getValue().getOperator().equals("notEqual")) {
 					builder.and(rolepermission.role.displayName.ne(details.getValue().getSearchValue()));
+				}
 			}
 		}
 		

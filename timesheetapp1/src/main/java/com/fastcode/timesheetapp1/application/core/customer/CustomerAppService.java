@@ -125,42 +125,44 @@ public class CustomerAppService implements ICustomerAppService {
 			 if(details.getKey().replace("%20","").trim().equals("customerid")) {
 			 	if(details.getValue().getOperator().equals("contains")) {
 					builder.and(customer.customerid.like(details.getValue().getSearchValue() + "%"));
-				}
-				else if(details.getValue().getOperator().equals("equals") && StringUtils.isNumeric(details.getValue().getSearchValue()))
+				} else if(details.getValue().getOperator().equals("equals") && StringUtils.isNumeric(details.getValue().getSearchValue())) {
 					builder.and(customer.customerid.eq(Long.valueOf(details.getValue().getSearchValue())));
-				else if(details.getValue().getOperator().equals("notEqual") && StringUtils.isNumeric(details.getValue().getSearchValue()))
+				} else if(details.getValue().getOperator().equals("notEqual") && StringUtils.isNumeric(details.getValue().getSearchValue())) {
 					builder.and(customer.customerid.ne(Long.valueOf(details.getValue().getSearchValue())));
-				else if(details.getValue().getOperator().equals("range"))
-				{
-				   if(StringUtils.isNumeric(details.getValue().getStartingValue()) && StringUtils.isNumeric(details.getValue().getEndingValue()))
+				} else if(details.getValue().getOperator().equals("range")) {
+				  	if(StringUtils.isNumeric(details.getValue().getStartingValue()) && StringUtils.isNumeric(details.getValue().getEndingValue())) {
                 	   builder.and(customer.customerid.between(Long.valueOf(details.getValue().getStartingValue()), Long.valueOf(details.getValue().getEndingValue())));
-                   else if(StringUtils.isNumeric(details.getValue().getStartingValue()))
-                	   builder.and(customer.customerid.goe(Long.valueOf(details.getValue().getStartingValue())));
-                   else if(StringUtils.isNumeric(details.getValue().getEndingValue()))
-                	   builder.and(customer.customerid.loe(Long.valueOf(details.getValue().getEndingValue())));
+                   	} else if(StringUtils.isNumeric(details.getValue().getStartingValue())) {
+                	  	builder.and(customer.customerid.goe(Long.valueOf(details.getValue().getStartingValue())));
+                   	} else if(StringUtils.isNumeric(details.getValue().getEndingValue())) {
+                	  	builder.and(customer.customerid.loe(Long.valueOf(details.getValue().getEndingValue())));
+					}
 				}
 			}
             if(details.getKey().replace("%20","").trim().equals("description")) {
-				if(details.getValue().getOperator().equals("contains"))
+				if(details.getValue().getOperator().equals("contains")) {
 					builder.and(customer.description.likeIgnoreCase("%"+ details.getValue().getSearchValue() + "%"));
-				else if(details.getValue().getOperator().equals("equals"))
+				} else if(details.getValue().getOperator().equals("equals")) {
 					builder.and(customer.description.eq(details.getValue().getSearchValue()));
-				else if(details.getValue().getOperator().equals("notEqual"))
+				} else if(details.getValue().getOperator().equals("notEqual")) {
 					builder.and(customer.description.ne(details.getValue().getSearchValue()));
+				}
 			}
 			if(details.getKey().replace("%20","").trim().equals("isactive")) {
-				if(details.getValue().getOperator().equals("equals") && (details.getValue().getSearchValue().equalsIgnoreCase("true") || details.getValue().getSearchValue().equalsIgnoreCase("false")))
+				if(details.getValue().getOperator().equals("equals") && (details.getValue().getSearchValue().equalsIgnoreCase("true") || details.getValue().getSearchValue().equalsIgnoreCase("false"))) {
 					builder.and(customer.isactive.eq(Boolean.parseBoolean(details.getValue().getSearchValue())));
-				else if(details.getValue().getOperator().equals("notEqual") && (details.getValue().getSearchValue().equalsIgnoreCase("true") || details.getValue().getSearchValue().equalsIgnoreCase("false")))
+				} else if(details.getValue().getOperator().equals("notEqual") && (details.getValue().getSearchValue().equalsIgnoreCase("true") || details.getValue().getSearchValue().equalsIgnoreCase("false"))) {
 					builder.and(customer.isactive.ne(Boolean.parseBoolean(details.getValue().getSearchValue())));
+				}
 			}
             if(details.getKey().replace("%20","").trim().equals("name")) {
-				if(details.getValue().getOperator().equals("contains"))
+				if(details.getValue().getOperator().equals("contains")) {
 					builder.and(customer.name.likeIgnoreCase("%"+ details.getValue().getSearchValue() + "%"));
-				else if(details.getValue().getOperator().equals("equals"))
+				} else if(details.getValue().getOperator().equals("equals")) {
 					builder.and(customer.name.eq(details.getValue().getSearchValue()));
-				else if(details.getValue().getOperator().equals("notEqual"))
+				} else if(details.getValue().getOperator().equals("notEqual")) {
 					builder.and(customer.name.ne(details.getValue().getSearchValue()));
+				}
 			}
 	    
 		}

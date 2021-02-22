@@ -10,6 +10,10 @@ import com.fastcode.timesheetapp1.domain.core.authorization.userspermission.User
 import com.fastcode.timesheetapp1.domain.core.authorization.userspreference.UserspreferenceEntity;
 import com.fastcode.timesheetapp1.domain.core.authorization.usersrole.UsersroleEntity;
 import com.fastcode.timesheetapp1.domain.core.usertask.UsertaskEntity;
+import com.fastcode.timesheetapp1.addons.reporting.domain.report.ReportEntity;
+import com.fastcode.timesheetapp1.addons.reporting.domain.reportversion.ReportversionEntity;
+import com.fastcode.timesheetapp1.addons.reporting.domain.dashboard.DashboardEntity;
+import com.fastcode.timesheetapp1.addons.reporting.domain.dashboardversion.DashboardversionEntity;
 import com.fastcode.timesheetapp1.domain.core.abstractentity.AbstractEntity;
 import lombok.Getter;
 import lombok.Setter;
@@ -66,6 +70,58 @@ public class UsersEntity extends AbstractEntity {
     @Column(name = "username", nullable = false,length =255)
     private String username;
 
+	@ShallowReference
+    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<DashboardEntity> dashboardsSet = new HashSet<DashboardEntity>();
+    
+    public void addDashboards(DashboardEntity dashboards) {        
+    	dashboardsSet.add(dashboards);
+        dashboards.setUsers(this);
+    }
+    public void removeDashboards(DashboardEntity dashboards) {
+        dashboardsSet.remove(dashboards);
+        dashboards.setUsers(null);
+    }
+    
+	@ShallowReference
+    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<DashboardversionEntity> dashboardversionsSet = new HashSet<DashboardversionEntity>();
+    
+    public void addDashboardversions(DashboardversionEntity dashboardversions) {        
+    	dashboardversionsSet.add(dashboardversions);
+        dashboardversions.setUsers(this);
+    }
+    public void removeDashboardversions(DashboardversionEntity dashboardversions) {
+        dashboardversionsSet.remove(dashboardversions);
+        dashboardversions.setUsers(null);
+    }
+    
+	@ShallowReference
+    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<ReportEntity> reportsSet = new HashSet<ReportEntity>();
+    
+    public void addReports(ReportEntity reports) {        
+    	reportsSet.add(reports);
+        reports.setUsers(this);
+    }
+    public void removeReports(ReportEntity reports) {
+        reportsSet.remove(reports);
+        reports.setUsers(null);
+    }
+    
+	@ShallowReference
+    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<ReportversionEntity> reportversionsSet = new HashSet<ReportversionEntity>();
+    
+    public void addReportversions(ReportversionEntity reportversions) {        
+    	reportversionsSet.add(reportversions);
+        reportversions.setUsers(this);
+    }
+    public void removeReportversions(ReportversionEntity reportversions) {
+        reportversionsSet.remove(reportversions);
+        reportversions.setUsers(null);
+    }
+    
 	@ShallowReference
     @OneToMany(mappedBy = "users", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<TimesheetEntity> timesheetsSet = new HashSet<TimesheetEntity>();

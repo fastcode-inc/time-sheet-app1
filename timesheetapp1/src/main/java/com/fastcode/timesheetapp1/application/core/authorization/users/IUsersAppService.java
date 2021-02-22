@@ -44,6 +44,14 @@ public interface IUsersAppService {
     
     //Join Column Parsers
 
+	Map<String,String> parseDashboardsJoinColumn(String keysString);
+
+	Map<String,String> parseDashboardversionsJoinColumn(String keysString);
+
+	Map<String,String> parseReportsJoinColumn(String keysString);
+
+	Map<String,String> parseReportversionsJoinColumn(String keysString);
+
 	Map<String,String> parseTimesheetsJoinColumn(String keysString);
 
 	Map<String,String> parseUserspermissionsJoinColumn(String keysString);

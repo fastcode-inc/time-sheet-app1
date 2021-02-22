@@ -239,81 +239,81 @@ public class TimesheetAppService implements ITimesheetAppService {
 			 if(details.getKey().replace("%20","").trim().equals("id")) {
 			 	if(details.getValue().getOperator().equals("contains")) {
 					builder.and(timesheet.id.like(details.getValue().getSearchValue() + "%"));
-				}
-				else if(details.getValue().getOperator().equals("equals") && StringUtils.isNumeric(details.getValue().getSearchValue()))
+				} else if(details.getValue().getOperator().equals("equals") && StringUtils.isNumeric(details.getValue().getSearchValue())) {
 					builder.and(timesheet.id.eq(Long.valueOf(details.getValue().getSearchValue())));
-				else if(details.getValue().getOperator().equals("notEqual") && StringUtils.isNumeric(details.getValue().getSearchValue()))
+				} else if(details.getValue().getOperator().equals("notEqual") && StringUtils.isNumeric(details.getValue().getSearchValue())) {
 					builder.and(timesheet.id.ne(Long.valueOf(details.getValue().getSearchValue())));
-				else if(details.getValue().getOperator().equals("range"))
-				{
-				   if(StringUtils.isNumeric(details.getValue().getStartingValue()) && StringUtils.isNumeric(details.getValue().getEndingValue()))
+				} else if(details.getValue().getOperator().equals("range")) {
+				  	if(StringUtils.isNumeric(details.getValue().getStartingValue()) && StringUtils.isNumeric(details.getValue().getEndingValue())) {
                 	   builder.and(timesheet.id.between(Long.valueOf(details.getValue().getStartingValue()), Long.valueOf(details.getValue().getEndingValue())));
-                   else if(StringUtils.isNumeric(details.getValue().getStartingValue()))
-                	   builder.and(timesheet.id.goe(Long.valueOf(details.getValue().getStartingValue())));
-                   else if(StringUtils.isNumeric(details.getValue().getEndingValue()))
-                	   builder.and(timesheet.id.loe(Long.valueOf(details.getValue().getEndingValue())));
+                   	} else if(StringUtils.isNumeric(details.getValue().getStartingValue())) {
+                	  	builder.and(timesheet.id.goe(Long.valueOf(details.getValue().getStartingValue())));
+                   	} else if(StringUtils.isNumeric(details.getValue().getEndingValue())) {
+                	  	builder.and(timesheet.id.loe(Long.valueOf(details.getValue().getEndingValue())));
+					}
 				}
 			}
             if(details.getKey().replace("%20","").trim().equals("notes")) {
-				if(details.getValue().getOperator().equals("contains"))
+				if(details.getValue().getOperator().equals("contains")) {
 					builder.and(timesheet.notes.likeIgnoreCase("%"+ details.getValue().getSearchValue() + "%"));
-				else if(details.getValue().getOperator().equals("equals"))
+				} else if(details.getValue().getOperator().equals("equals")) {
 					builder.and(timesheet.notes.eq(details.getValue().getSearchValue()));
-				else if(details.getValue().getOperator().equals("notEqual"))
+				} else if(details.getValue().getOperator().equals("notEqual")) {
 					builder.and(timesheet.notes.ne(details.getValue().getSearchValue()));
+				}
 			}
 			if(details.getKey().replace("%20","").trim().equals("periodendingdate")) {
-				if(details.getValue().getOperator().equals("equals") && SearchUtils.stringToLocalDate(details.getValue().getSearchValue()) !=null)
+				if(details.getValue().getOperator().equals("equals") && SearchUtils.stringToLocalDate(details.getValue().getSearchValue()) !=null) {
 					builder.and(timesheet.periodendingdate.eq(SearchUtils.stringToLocalDate(details.getValue().getSearchValue())));
-				else if(details.getValue().getOperator().equals("notEqual") && SearchUtils.stringToLocalDate(details.getValue().getSearchValue()) !=null)
+				} else if(details.getValue().getOperator().equals("notEqual") && SearchUtils.stringToLocalDate(details.getValue().getSearchValue()) !=null) {
 					builder.and(timesheet.periodendingdate.ne(SearchUtils.stringToLocalDate(details.getValue().getSearchValue())));
-				else if(details.getValue().getOperator().equals("range"))
-				{
+				} else if(details.getValue().getOperator().equals("range")) {
 				   LocalDate startLocalDate= SearchUtils.stringToLocalDate(details.getValue().getStartingValue());
 				   LocalDate endLocalDate= SearchUtils.stringToLocalDate(details.getValue().getEndingValue());
-				   if(startLocalDate!=null && endLocalDate!=null)	 
+				   if(startLocalDate!=null && endLocalDate!=null) {
 					   builder.and(timesheet.periodendingdate.between(startLocalDate,endLocalDate));
-				   else if(endLocalDate!=null)
+				   } else if(endLocalDate!=null) {
 					   builder.and(timesheet.periodendingdate.loe(endLocalDate));
-                   else if(startLocalDate!=null)
+                   } else if(startLocalDate!=null) {
                 	   builder.and(timesheet.periodendingdate.goe(startLocalDate));  
-                 }
-                   
+                   }
+                }     
 			}
 			if(details.getKey().replace("%20","").trim().equals("periodstartingdate")) {
-				if(details.getValue().getOperator().equals("equals") && SearchUtils.stringToLocalDate(details.getValue().getSearchValue()) !=null)
+				if(details.getValue().getOperator().equals("equals") && SearchUtils.stringToLocalDate(details.getValue().getSearchValue()) !=null) {
 					builder.and(timesheet.periodstartingdate.eq(SearchUtils.stringToLocalDate(details.getValue().getSearchValue())));
-				else if(details.getValue().getOperator().equals("notEqual") && SearchUtils.stringToLocalDate(details.getValue().getSearchValue()) !=null)
+				} else if(details.getValue().getOperator().equals("notEqual") && SearchUtils.stringToLocalDate(details.getValue().getSearchValue()) !=null) {
 					builder.and(timesheet.periodstartingdate.ne(SearchUtils.stringToLocalDate(details.getValue().getSearchValue())));
-				else if(details.getValue().getOperator().equals("range"))
-				{
+				} else if(details.getValue().getOperator().equals("range")) {
 				   LocalDate startLocalDate= SearchUtils.stringToLocalDate(details.getValue().getStartingValue());
 				   LocalDate endLocalDate= SearchUtils.stringToLocalDate(details.getValue().getEndingValue());
-				   if(startLocalDate!=null && endLocalDate!=null)	 
+				   if(startLocalDate!=null && endLocalDate!=null) {
 					   builder.and(timesheet.periodstartingdate.between(startLocalDate,endLocalDate));
-				   else if(endLocalDate!=null)
+				   } else if(endLocalDate!=null) {
 					   builder.and(timesheet.periodstartingdate.loe(endLocalDate));
-                   else if(startLocalDate!=null)
+                   } else if(startLocalDate!=null) {
                 	   builder.and(timesheet.periodstartingdate.goe(startLocalDate));  
-                 }
-                   
+                   }
+                }     
 			}
 	    
 		    if(details.getKey().replace("%20","").trim().equals("timesheetstatus")) {
-				if(details.getValue().getOperator().equals("contains"))
+				if(details.getValue().getOperator().equals("contains")) {
 					builder.and(timesheet.timesheetstatus.statusname.likeIgnoreCase("%"+ details.getValue().getSearchValue() + "%"));
-				else if(details.getValue().getOperator().equals("equals"))
+				} else if(details.getValue().getOperator().equals("equals")) {
 					builder.and(timesheet.timesheetstatus.statusname.eq(details.getValue().getSearchValue()));
-				else if(details.getValue().getOperator().equals("notEqual"))
+				} else if(details.getValue().getOperator().equals("notEqual")) {
 					builder.and(timesheet.timesheetstatus.statusname.ne(details.getValue().getSearchValue()));
+				}
 			}
 		    if(details.getKey().replace("%20","").trim().equals("users")) {
-				if(details.getValue().getOperator().equals("contains"))
+				if(details.getValue().getOperator().equals("contains")) {
 					builder.and(timesheet.users.lastname.likeIgnoreCase("%"+ details.getValue().getSearchValue() + "%"));
-				else if(details.getValue().getOperator().equals("equals"))
+				} else if(details.getValue().getOperator().equals("equals")) {
 					builder.and(timesheet.users.lastname.eq(details.getValue().getSearchValue()));
-				else if(details.getValue().getOperator().equals("notEqual"))
+				} else if(details.getValue().getOperator().equals("notEqual")) {
 					builder.and(timesheet.users.lastname.ne(details.getValue().getSearchValue()));
+				}
 			}
 		}
 		

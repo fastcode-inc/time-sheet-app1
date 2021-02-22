@@ -211,55 +211,55 @@ public class UsertaskAppService implements IUsertaskAppService {
 			 if(details.getKey().replace("%20","").trim().equals("taskid")) {
 			 	if(details.getValue().getOperator().equals("contains")) {
 					builder.and(usertask.taskid.like(details.getValue().getSearchValue() + "%"));
-				}
-				else if(details.getValue().getOperator().equals("equals") && StringUtils.isNumeric(details.getValue().getSearchValue()))
+				} else if(details.getValue().getOperator().equals("equals") && StringUtils.isNumeric(details.getValue().getSearchValue())) {
 					builder.and(usertask.taskid.eq(Long.valueOf(details.getValue().getSearchValue())));
-				else if(details.getValue().getOperator().equals("notEqual") && StringUtils.isNumeric(details.getValue().getSearchValue()))
+				} else if(details.getValue().getOperator().equals("notEqual") && StringUtils.isNumeric(details.getValue().getSearchValue())) {
 					builder.and(usertask.taskid.ne(Long.valueOf(details.getValue().getSearchValue())));
-				else if(details.getValue().getOperator().equals("range"))
-				{
-				   if(StringUtils.isNumeric(details.getValue().getStartingValue()) && StringUtils.isNumeric(details.getValue().getEndingValue()))
+				} else if(details.getValue().getOperator().equals("range")) {
+				  	if(StringUtils.isNumeric(details.getValue().getStartingValue()) && StringUtils.isNumeric(details.getValue().getEndingValue())) {
                 	   builder.and(usertask.taskid.between(Long.valueOf(details.getValue().getStartingValue()), Long.valueOf(details.getValue().getEndingValue())));
-                   else if(StringUtils.isNumeric(details.getValue().getStartingValue()))
-                	   builder.and(usertask.taskid.goe(Long.valueOf(details.getValue().getStartingValue())));
-                   else if(StringUtils.isNumeric(details.getValue().getEndingValue()))
-                	   builder.and(usertask.taskid.loe(Long.valueOf(details.getValue().getEndingValue())));
+                   	} else if(StringUtils.isNumeric(details.getValue().getStartingValue())) {
+                	  	builder.and(usertask.taskid.goe(Long.valueOf(details.getValue().getStartingValue())));
+                   	} else if(StringUtils.isNumeric(details.getValue().getEndingValue())) {
+                	  	builder.and(usertask.taskid.loe(Long.valueOf(details.getValue().getEndingValue())));
+					}
 				}
 			}
 			 if(details.getKey().replace("%20","").trim().equals("userid")) {
 			 	if(details.getValue().getOperator().equals("contains")) {
 					builder.and(usertask.userid.like(details.getValue().getSearchValue() + "%"));
-				}
-				else if(details.getValue().getOperator().equals("equals") && StringUtils.isNumeric(details.getValue().getSearchValue()))
+				} else if(details.getValue().getOperator().equals("equals") && StringUtils.isNumeric(details.getValue().getSearchValue())) {
 					builder.and(usertask.userid.eq(Long.valueOf(details.getValue().getSearchValue())));
-				else if(details.getValue().getOperator().equals("notEqual") && StringUtils.isNumeric(details.getValue().getSearchValue()))
+				} else if(details.getValue().getOperator().equals("notEqual") && StringUtils.isNumeric(details.getValue().getSearchValue())) {
 					builder.and(usertask.userid.ne(Long.valueOf(details.getValue().getSearchValue())));
-				else if(details.getValue().getOperator().equals("range"))
-				{
-				   if(StringUtils.isNumeric(details.getValue().getStartingValue()) && StringUtils.isNumeric(details.getValue().getEndingValue()))
+				} else if(details.getValue().getOperator().equals("range")) {
+				  	if(StringUtils.isNumeric(details.getValue().getStartingValue()) && StringUtils.isNumeric(details.getValue().getEndingValue())) {
                 	   builder.and(usertask.userid.between(Long.valueOf(details.getValue().getStartingValue()), Long.valueOf(details.getValue().getEndingValue())));
-                   else if(StringUtils.isNumeric(details.getValue().getStartingValue()))
-                	   builder.and(usertask.userid.goe(Long.valueOf(details.getValue().getStartingValue())));
-                   else if(StringUtils.isNumeric(details.getValue().getEndingValue()))
-                	   builder.and(usertask.userid.loe(Long.valueOf(details.getValue().getEndingValue())));
+                   	} else if(StringUtils.isNumeric(details.getValue().getStartingValue())) {
+                	  	builder.and(usertask.userid.goe(Long.valueOf(details.getValue().getStartingValue())));
+                   	} else if(StringUtils.isNumeric(details.getValue().getEndingValue())) {
+                	  	builder.and(usertask.userid.loe(Long.valueOf(details.getValue().getEndingValue())));
+					}
 				}
 			}
 	    
 		    if(details.getKey().replace("%20","").trim().equals("task")) {
-				if(details.getValue().getOperator().equals("contains"))
+				if(details.getValue().getOperator().equals("contains")) {
 					builder.and(usertask.task.name.likeIgnoreCase("%"+ details.getValue().getSearchValue() + "%"));
-				else if(details.getValue().getOperator().equals("equals"))
+				} else if(details.getValue().getOperator().equals("equals")) {
 					builder.and(usertask.task.name.eq(details.getValue().getSearchValue()));
-				else if(details.getValue().getOperator().equals("notEqual"))
+				} else if(details.getValue().getOperator().equals("notEqual")) {
 					builder.and(usertask.task.name.ne(details.getValue().getSearchValue()));
+				}
 			}
 		    if(details.getKey().replace("%20","").trim().equals("users")) {
-				if(details.getValue().getOperator().equals("contains"))
+				if(details.getValue().getOperator().equals("contains")) {
 					builder.and(usertask.users.lastname.likeIgnoreCase("%"+ details.getValue().getSearchValue() + "%"));
-				else if(details.getValue().getOperator().equals("equals"))
+				} else if(details.getValue().getOperator().equals("equals")) {
 					builder.and(usertask.users.lastname.eq(details.getValue().getSearchValue()));
-				else if(details.getValue().getOperator().equals("notEqual"))
+				} else if(details.getValue().getOperator().equals("notEqual")) {
 					builder.and(usertask.users.lastname.ne(details.getValue().getSearchValue()));
+				}
 			}
 		}
 		

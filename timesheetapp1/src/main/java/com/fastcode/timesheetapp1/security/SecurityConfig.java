@@ -46,7 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	    .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).and()
 	    .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 	    .authorizeRequests()
-	    .antMatchers("/auth","/password/forgot","/password/reset","/v2/api-docs", "/actuator/**", "/configuration/ui", "/swagger-resources", "/configuration/security", "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html", "/webjars/**", "/swagger-resources/configuration/ui", "/swagger-resources/configuration/security", "/browser/index.html#", "/browser/**").permitAll()
+	    .antMatchers("/auth","/reporting/viewResource/**","/password/forgot","/password/reset","/v2/api-docs", "/actuator/**", "/configuration/ui", "/swagger-resources", "/configuration/security", "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html", "/webjars/**", "/swagger-resources/configuration/ui", "/swagger-resources/configuration/security", "/browser/index.html#", "/browser/**").permitAll()
 	    .antMatchers(HttpMethod.POST, REGISTER).permitAll()
 	    .antMatchers(HttpMethod.POST, CONFIRM).permitAll()
 	    .anyRequest().authenticated()

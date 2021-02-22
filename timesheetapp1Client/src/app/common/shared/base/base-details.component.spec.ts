@@ -1,5 +1,4 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatDialog } from '@angular/material';
 import { of, Observable } from 'rxjs';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { Router } from '@angular/router';
@@ -33,8 +32,7 @@ describe('BaseDetailsComponent', () => {
         ]),
       ],
       providers: [
-        DummyService,
-        { provide: MatDialogRef, useValue: MatDialogRefMock },
+        DummyService
       ],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();

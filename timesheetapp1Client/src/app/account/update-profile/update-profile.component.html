@@ -22,7 +22,6 @@
 			  			</mat-form-field>
 			  		 
 			  		 
-			  		 
 			  			<mat-form-field>
 			  				<input formControlName="joinDate" matInput [matDatepicker]="joinDatePicker" placeholder="Enter joinDate">
 			  				<mat-datepicker-toggle matSuffix [for]="joinDatePicker"></mat-datepicker-toggle>
@@ -34,14 +33,6 @@
 			  				<mat-error *ngIf="!userForm.get('lastname').valid && userForm.get('lastname').touched">{{'GENERAL.ERRORS.REQUIRED' | translate}}</mat-error>
 			  			</mat-form-field>
 			  		 
-			  		 
-			  			<mat-form-field>
-			  				<input formControlName="triggerGroup" matInput placeholder="Enter triggerGroup">
-			  			</mat-form-field>
-			  		 
-			  			<mat-form-field>
-			  				<input formControlName="triggerName" matInput placeholder="Enter triggerName">
-			  			</mat-form-field>
 			  		 
 			  			<mat-form-field>
 			  				<input formControlName="username" matInput placeholder="Enter username">

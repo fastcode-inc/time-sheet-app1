@@ -180,83 +180,83 @@ public class ProjectAppService implements IProjectAppService {
         
 		for (Map.Entry<String, SearchFields> details : map.entrySet()) {
             if(details.getKey().replace("%20","").trim().equals("description")) {
-				if(details.getValue().getOperator().equals("contains"))
+				if(details.getValue().getOperator().equals("contains")) {
 					builder.and(project.description.likeIgnoreCase("%"+ details.getValue().getSearchValue() + "%"));
-				else if(details.getValue().getOperator().equals("equals"))
+				} else if(details.getValue().getOperator().equals("equals")) {
 					builder.and(project.description.eq(details.getValue().getSearchValue()));
-				else if(details.getValue().getOperator().equals("notEqual"))
+				} else if(details.getValue().getOperator().equals("notEqual")) {
 					builder.and(project.description.ne(details.getValue().getSearchValue()));
+				}
 			}
 			if(details.getKey().replace("%20","").trim().equals("enddate")) {
-				if(details.getValue().getOperator().equals("equals") && SearchUtils.stringToLocalDate(details.getValue().getSearchValue()) !=null)
+				if(details.getValue().getOperator().equals("equals") && SearchUtils.stringToLocalDate(details.getValue().getSearchValue()) !=null) {
 					builder.and(project.enddate.eq(SearchUtils.stringToLocalDate(details.getValue().getSearchValue())));
-				else if(details.getValue().getOperator().equals("notEqual") && SearchUtils.stringToLocalDate(details.getValue().getSearchValue()) !=null)
+				} else if(details.getValue().getOperator().equals("notEqual") && SearchUtils.stringToLocalDate(details.getValue().getSearchValue()) !=null) {
 					builder.and(project.enddate.ne(SearchUtils.stringToLocalDate(details.getValue().getSearchValue())));
-				else if(details.getValue().getOperator().equals("range"))
-				{
+				} else if(details.getValue().getOperator().equals("range")) {
 				   LocalDate startLocalDate= SearchUtils.stringToLocalDate(details.getValue().getStartingValue());
 				   LocalDate endLocalDate= SearchUtils.stringToLocalDate(details.getValue().getEndingValue());
-				   if(startLocalDate!=null && endLocalDate!=null)	 
+				   if(startLocalDate!=null && endLocalDate!=null) {
 					   builder.and(project.enddate.between(startLocalDate,endLocalDate));
-				   else if(endLocalDate!=null)
+				   } else if(endLocalDate!=null) {
 					   builder.and(project.enddate.loe(endLocalDate));
-                   else if(startLocalDate!=null)
+                   } else if(startLocalDate!=null) {
                 	   builder.and(project.enddate.goe(startLocalDate));  
-                 }
-                   
+                   }
+                }     
 			}
 			 if(details.getKey().replace("%20","").trim().equals("id")) {
 			 	if(details.getValue().getOperator().equals("contains")) {
 					builder.and(project.id.like(details.getValue().getSearchValue() + "%"));
-				}
-				else if(details.getValue().getOperator().equals("equals") && StringUtils.isNumeric(details.getValue().getSearchValue()))
+				} else if(details.getValue().getOperator().equals("equals") && StringUtils.isNumeric(details.getValue().getSearchValue())) {
 					builder.and(project.id.eq(Long.valueOf(details.getValue().getSearchValue())));
-				else if(details.getValue().getOperator().equals("notEqual") && StringUtils.isNumeric(details.getValue().getSearchValue()))
+				} else if(details.getValue().getOperator().equals("notEqual") && StringUtils.isNumeric(details.getValue().getSearchValue())) {
 					builder.and(project.id.ne(Long.valueOf(details.getValue().getSearchValue())));
-				else if(details.getValue().getOperator().equals("range"))
-				{
-				   if(StringUtils.isNumeric(details.getValue().getStartingValue()) && StringUtils.isNumeric(details.getValue().getEndingValue()))
+				} else if(details.getValue().getOperator().equals("range")) {
+				  	if(StringUtils.isNumeric(details.getValue().getStartingValue()) && StringUtils.isNumeric(details.getValue().getEndingValue())) {
                 	   builder.and(project.id.between(Long.valueOf(details.getValue().getStartingValue()), Long.valueOf(details.getValue().getEndingValue())));
-                   else if(StringUtils.isNumeric(details.getValue().getStartingValue()))
-                	   builder.and(project.id.goe(Long.valueOf(details.getValue().getStartingValue())));
-                   else if(StringUtils.isNumeric(details.getValue().getEndingValue()))
-                	   builder.and(project.id.loe(Long.valueOf(details.getValue().getEndingValue())));
+                   	} else if(StringUtils.isNumeric(details.getValue().getStartingValue())) {
+                	  	builder.and(project.id.goe(Long.valueOf(details.getValue().getStartingValue())));
+                   	} else if(StringUtils.isNumeric(details.getValue().getEndingValue())) {
+                	  	builder.and(project.id.loe(Long.valueOf(details.getValue().getEndingValue())));
+					}
 				}
 			}
             if(details.getKey().replace("%20","").trim().equals("name")) {
-				if(details.getValue().getOperator().equals("contains"))
+				if(details.getValue().getOperator().equals("contains")) {
 					builder.and(project.name.likeIgnoreCase("%"+ details.getValue().getSearchValue() + "%"));
-				else if(details.getValue().getOperator().equals("equals"))
+				} else if(details.getValue().getOperator().equals("equals")) {
 					builder.and(project.name.eq(details.getValue().getSearchValue()));
-				else if(details.getValue().getOperator().equals("notEqual"))
+				} else if(details.getValue().getOperator().equals("notEqual")) {
 					builder.and(project.name.ne(details.getValue().getSearchValue()));
+				}
 			}
 			if(details.getKey().replace("%20","").trim().equals("startdate")) {
-				if(details.getValue().getOperator().equals("equals") && SearchUtils.stringToLocalDate(details.getValue().getSearchValue()) !=null)
+				if(details.getValue().getOperator().equals("equals") && SearchUtils.stringToLocalDate(details.getValue().getSearchValue()) !=null) {
 					builder.and(project.startdate.eq(SearchUtils.stringToLocalDate(details.getValue().getSearchValue())));
-				else if(details.getValue().getOperator().equals("notEqual") && SearchUtils.stringToLocalDate(details.getValue().getSearchValue()) !=null)
+				} else if(details.getValue().getOperator().equals("notEqual") && SearchUtils.stringToLocalDate(details.getValue().getSearchValue()) !=null) {
 					builder.and(project.startdate.ne(SearchUtils.stringToLocalDate(details.getValue().getSearchValue())));
-				else if(details.getValue().getOperator().equals("range"))
-				{
+				} else if(details.getValue().getOperator().equals("range")) {
 				   LocalDate startLocalDate= SearchUtils.stringToLocalDate(details.getValue().getStartingValue());
 				   LocalDate endLocalDate= SearchUtils.stringToLocalDate(details.getValue().getEndingValue());
-				   if(startLocalDate!=null && endLocalDate!=null)	 
+				   if(startLocalDate!=null && endLocalDate!=null) {
 					   builder.and(project.startdate.between(startLocalDate,endLocalDate));
-				   else if(endLocalDate!=null)
+				   } else if(endLocalDate!=null) {
 					   builder.and(project.startdate.loe(endLocalDate));
-                   else if(startLocalDate!=null)
+                   } else if(startLocalDate!=null) {
                 	   builder.and(project.startdate.goe(startLocalDate));  
-                 }
-                   
+                   }
+                }     
 			}
 	    
 		    if(details.getKey().replace("%20","").trim().equals("customer")) {
-				if(details.getValue().getOperator().equals("contains"))
+				if(details.getValue().getOperator().equals("contains")) {
 					builder.and(project.customer.name.likeIgnoreCase("%"+ details.getValue().getSearchValue() + "%"));
-				else if(details.getValue().getOperator().equals("equals"))
+				} else if(details.getValue().getOperator().equals("equals")) {
 					builder.and(project.customer.name.eq(details.getValue().getSearchValue()));
-				else if(details.getValue().getOperator().equals("notEqual"))
+				} else if(details.getValue().getOperator().equals("notEqual")) {
 					builder.and(project.customer.name.ne(details.getValue().getSearchValue()));
+				}
 			}
 		}
 		
