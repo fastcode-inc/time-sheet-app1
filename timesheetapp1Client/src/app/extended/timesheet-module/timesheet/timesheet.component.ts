@@ -95,7 +95,7 @@ export class TimesheetComponent implements OnInit {
   }
 
   getUserTasks() {
-    
+    this.tasksMap = {};
     this.usertaskService.getTasks().subscribe(res => {
       res.forEach(task => {
         var i = this.customers.findIndex(customer => customer.id == task.customerid);
