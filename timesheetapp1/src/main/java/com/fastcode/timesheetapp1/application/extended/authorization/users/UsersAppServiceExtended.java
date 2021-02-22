@@ -9,10 +9,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.fastcode.timesheetapp1.addons.reporting.domain.dashboardversion.IDashboardversionRepository;
+import com.fastcode.timesheetapp1.addons.reporting.domain.dashboardversionreport.IDashboardversionreportRepository;
+import com.fastcode.timesheetapp1.addons.reporting.domain.reportversion.IReportversionRepository;
 import com.fastcode.timesheetapp1.addons.scheduler.application.trigger.ITriggerAppService;
 import com.fastcode.timesheetapp1.addons.scheduler.application.trigger.dto.CreateTriggerInput;
 import com.fastcode.timesheetapp1.application.core.authorization.users.UsersAppService;
-import com.fastcode.timesheetapp1.application.core.authorization.users.dto.UpdateUsersInput;
 import com.fastcode.timesheetapp1.application.core.authorization.users.dto.UpdateUsersOutput;
 import com.fastcode.timesheetapp1.domain.extended.authorization.users.IUsersRepositoryExtended;
 
@@ -26,11 +28,11 @@ import com.fastcode.timesheetapp1.commons.logging.LoggingHelper;
 @Service("usersAppServiceExtended")
 public class UsersAppServiceExtended extends UsersAppService implements IUsersAppServiceExtended {
 
-	public UsersAppServiceExtended(IUsersRepositoryExtended usersRepositoryExtended,
+	public UsersAppServiceExtended(IDashboardversionRepository _dashboardversionRepository, IReportversionRepository _reportversionRepository, IDashboardversionreportRepository _reportDashboardRepository, IUsersRepositoryExtended usersRepositoryExtended,
 			IUserspreferenceRepository userspreferenceRepository,IUsersMapperExtended mapper,LoggingHelper logHelper, ITriggerAppService triggerApp) {
 
-		super(usersRepositoryExtended,
-				userspreferenceRepository,mapper,logHelper);
+		super(_dashboardversionRepository, _reportversionRepository, _reportDashboardRepository, usersRepositoryExtended,
+				userspreferenceRepository, mapper, logHelper);
 
 		this.triggerApp = triggerApp;
 	}

@@ -99,7 +99,8 @@ public class DashboardversionreportAppService implements IDashboardversionreport
 			reportdashboard.setDashboardId(dashboardrunningVersion.getDashboardId());
 			reportdashboard.setDashboardVersion(dashboardrunningVersion.getDashboardVersion());
 			reportdashboard.setUserId(dashboardrunningVersion.getUserId()); 
-			dashboardrunningVersion.addDashboardversionreport(reportdashboard);
+			//reportdashboard.setDashboardversionEntity(dashboardrunningVersion);
+//			dashboardrunningVersion.addDashboardversionreport(reportdashboard);
 		}
 
 		List<DashboardversionreportEntity> list = _reportdashboardRepository.findByDashboardIdAndVersionAndUsersIdInDesc(reportdashboard.getDashboardId(), "running", dashboard.getOwnerId() );
@@ -114,17 +115,23 @@ public class DashboardversionreportAppService implements IDashboardversionreport
 		for(CreateReportOutput report : reportsList)
 		{
 			ReportEntity foundReport = _reportRepository.findById(report.getId()).orElse(null);
-			if(foundReport !=null) {
-				foundReport.addDashboardversionreport(reportdashboard);
-				reportdashboard.setReportId(foundReport.getId());
-			}
-
+			
 			reportdashboard.setReportWidth(report.getReportWidth());
 			reportdashboard.setOrderId(count);
-			DashboardversionreportEntity createdReportdashboard = _reportdashboardRepository.save(reportdashboard);
+			
+			if(foundReport !=null) {
+				//reportdashboard.setReport(foundReport);
+				reportdashboard.setReportId(foundReport.getId());
+				foundReport.addDashboardversionreport(reportdashboard);
+			}
 
-			if(createdReportdashboard == null)
-			{
+			if(dashboardrunningVersion !=null) {
+				dashboardrunningVersion.addDashboardversionreport(reportdashboard);
+			}
+			
+			DashboardversionreportEntity createdReportdashboard = _reportdashboardRepository.save(reportdashboard);
+			
+			if(createdReportdashboard == null) {
 				status = false;	
 			}
 			count++;
@@ -142,7 +149,7 @@ public class DashboardversionreportAppService implements IDashboardversionreport
 			reportdashboard.setDashboardId(dashboardPublishedVersion.getDashboardId());
 			reportdashboard.setDashboardVersion(dashboardPublishedVersion.getDashboardVersion());
 			reportdashboard.setUserId(dashboardPublishedVersion.getUserId()); 
-			dashboardPublishedVersion.addDashboardversionreport(reportdashboard);
+			//reportdashboard.setDashboardversionEntity(dashboardPublishedVersion);
 		}
 
 		List<DashboardversionreportEntity> list = _reportdashboardRepository.findByDashboardIdAndVersionAndUsersIdInDesc(reportdashboard.getDashboardId(),"published", dashboard.getOwnerId() );
@@ -157,15 +164,22 @@ public class DashboardversionreportAppService implements IDashboardversionreport
 		for(CreateReportOutput report : reportsList)
 		{
 			ReportEntity foundReport = _reportRepository.findById(report.getId()).orElse(null);
-			if(foundReport !=null) {
-				foundReport.addDashboardversionreport(reportdashboard);
-				reportdashboard.setReportId(foundReport.getId());
-			}
-
+			
 			reportdashboard.setReportWidth(report.getReportWidth());
 			reportdashboard.setOrderId(count);
-			DashboardversionreportEntity createdReportdashboard = _reportdashboardRepository.save(reportdashboard);
+			
+			if(foundReport !=null) {
+				//reportdashboard.setReport(foundReport);
+				reportdashboard.setReportId(foundReport.getId());
+				foundReport.addDashboardversionreport(reportdashboard);
+			}
 
+			DashboardversionreportEntity createdReportdashboard = _reportdashboardRepository.save(reportdashboard);
+			
+			if(dashboardPublishedVersion != null) {
+				dashboardPublishedVersion.addDashboardversionreport(reportdashboard);
+			}
+			
 			if(createdReportdashboard == null)
 			{
 				status = false;	

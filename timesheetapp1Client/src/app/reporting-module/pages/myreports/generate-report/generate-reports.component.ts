@@ -697,7 +697,7 @@ export class GenerateReportComponent implements OnInit, OnDestroy {
           this.reportService.update(this.report, this.report_id).subscribe(res => {
             this.report = res;
             this.updateReportInfo();
-        	this.loading = false;
+        	  this.loading = false;
             this.showMessage(this.translate.instant('REPORTING.MESSAGES.REPORT.UPDATED'));
           });
         }
@@ -708,6 +708,7 @@ export class GenerateReportComponent implements OnInit, OnDestroy {
               this.report = res;
               this.report_id = res.id;
               this.updateReportInfo();
+              this.loading = false;
             }
           });
         }

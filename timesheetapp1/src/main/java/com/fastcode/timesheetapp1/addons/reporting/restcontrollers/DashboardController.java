@@ -177,7 +177,7 @@ public class DashboardController {
 
 	@PreAuthorize("hasAnyAuthority('DASHBOARDENTITY_CREATE')")
 	@RequestMapping(value = "/addNewReportToNewDashboard", method = RequestMethod.POST, consumes = {"application/json"}, produces = {"application/json"})
-	public ResponseEntity<FindDashboardByIdOutput> addNewReportsToNewDasboard(@RequestBody AddNewReportToNewDashboardInput input) {
+	public ResponseEntity<FindDashboardByIdOutput> addNewReportsToNewDashboard(@RequestBody AddNewReportToNewDashboardInput input) {
 		
 		UsersEntity users = _usersAppService.getUsers();
 
@@ -190,7 +190,7 @@ public class DashboardController {
 	
 	@PreAuthorize("hasAnyAuthority('DASHBOARDENTITY_UPDATE')")
 	@RequestMapping(value = "/addNewReportToExistingDashboard", method = RequestMethod.PUT, consumes = {"application/json"}, produces = {"application/json"})
-	public ResponseEntity<FindDashboardByIdOutput> addNewReportsToExistingDasboard(@RequestBody AddNewReportToExistingDashboardInput input) {
+	public ResponseEntity<FindDashboardByIdOutput> addNewReportsToExistingDashboard(@RequestBody AddNewReportToExistingDashboardInput input) {
 		
 		FindDashboardByIdOutput dashboard = _dashboardAppService.findById(input.getId());
     	Optional.ofNullable(dashboard).orElseThrow(() -> new EntityNotFoundException(String.format("There does not exist a dashboard with a id=%s", input.getId())));
@@ -211,7 +211,7 @@ public class DashboardController {
 	
 	@PreAuthorize("hasAnyAuthority('DASHBOARDENTITY_CREATE')")
 	@RequestMapping(value = "/addExistingReportToNewDashboard", method = RequestMethod.POST, consumes = {"application/json"}, produces = {"application/json"})
-	public ResponseEntity<FindDashboardByIdOutput> addExistingReportsToNewDasboard(@RequestBody AddExistingReportToNewDashboardInput input) {
+	public ResponseEntity<FindDashboardByIdOutput> addExistingReportsToNewDashboard(@RequestBody AddExistingReportToNewDashboardInput input) {
 		
 		for(ExistingReportInput reportInput : input.getReportDetails())
 		{
@@ -230,7 +230,7 @@ public class DashboardController {
 	
 	@PreAuthorize("hasAnyAuthority('DASHBOARDENTITY_UPDATE')")
 	@RequestMapping(value = "/addExistingReportToExistingDashboard", method = RequestMethod.PUT, consumes = {"application/json"}, produces = {"application/json"})
-	public ResponseEntity<FindDashboardByIdOutput> addExistingReportsToExistingDasboard(@RequestBody AddExistingReportToExistingDashboardInput input) {
+	public ResponseEntity<FindDashboardByIdOutput> addExistingReportsToExistingDashboard(@RequestBody AddExistingReportToExistingDashboardInput input) {
 		
 		FindDashboardByIdOutput dashboard = _dashboardAppService.findById(input.getId());
     	Optional.ofNullable(dashboard).orElseThrow(() -> new EntityNotFoundException(String.format("There does not exist a dashboard with a id=%s", input.getId())));
@@ -249,7 +249,7 @@ public class DashboardController {
         {
         	 if(input.getReportDetails().stream().filter(o -> o.getId().equals(reportInput.getId())).findFirst().isPresent()) {
             	logHelper.getLogger().error("Report already exist in dashboard with a id=%s", input.getId());
-    			throw new EntityNotFoundException(
+    			throw new EntityExistsException(
     					String.format("Report already exist in dashboard with a id=%s", input.getId()));
             }
         
