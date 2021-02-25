@@ -34,6 +34,9 @@ export class MainNavExtendedComponent extends MainNavComponent {
 		usersExtendedService
 		)
 
-		this.permissions['TIMESHEETSTATUSENTITY_UPDATE'] = this.globalPermissionService.hasPermissionOnEntity('TIMESHEETSTATUS', 'update')
+		this.permissions['TIMESHEETSTATUSENTITY_UPDATE'] = this.globalPermissionService.hasPermissionOnEntity('TIMESHEETSTATUS', 'update');
+		this.authenticationService.permissionsChange.subscribe(() => {
+			this.permissions['TIMESHEETSTATUSENTITY_UPDATE'] = this.globalPermissionService.hasPermissionOnEntity('TIMESHEETSTATUS', 'update')
+		});
 	}
 }
