@@ -13,6 +13,8 @@ import com.fastcode.timesheetapp1.application.extended.timesheetdetails.ITimeshe
 import com.fastcode.timesheetapp1.application.extended.timesheetdetails.dto.TimesheetdetailsInput;
 import com.fastcode.timesheetapp1.application.extended.timesheetdetails.dto.TimesheetdetailsOutput;
 import com.fastcode.timesheetapp1.application.extended.timesheetstatus.ITimesheetstatusAppServiceExtended;
+import com.fastcode.timesheetapp1.application.core.timesheet.dto.CreateTimesheetInput;
+import com.fastcode.timesheetapp1.application.core.timesheet.dto.CreateTimesheetOutput;
 import com.fastcode.timesheetapp1.application.core.timesheet.dto.FindTimesheetByIdOutput;
 import com.fastcode.timesheetapp1.application.core.timesheet.dto.UpdateTimesheetOutput;
 import com.fastcode.timesheetapp1.application.extended.authorization.users.IUsersAppServiceExtended;
@@ -23,6 +25,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import javax.annotation.security.PermitAll;
 import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -71,6 +74,17 @@ public class TimesheetControllerExtended extends TimesheetController {
 	@Qualifier("usersAppServiceExtended")
 	@NonNull protected final IUsersAppServiceExtended usersAppServiceExtended;
 
+	@Override
+	@PreAuthorize("permitAll()")
+	@RequestMapping(method = RequestMethod.POST, consumes = {"application/json"}, produces = {"application/json"})
+	public ResponseEntity<CreateTimesheetOutput> create(@RequestBody @Valid CreateTimesheetInput timesheet) {
+		CreateTimesheetOutput output=_timesheetAppService.create(timesheet);
+		Optional.ofNullable(output).orElseThrow(() -> new EntityNotFoundException(String.format("No record found")));
+
+		Optional.ofNullable(output).orElseThrow(() -> new EntityNotFoundException(String.format("No record found")));
+
+		return new ResponseEntity(output, HttpStatus.OK);
+	}
 
 	@RequestMapping(value="/timesheetdetails", method = RequestMethod.POST, consumes = {"application/json"}, produces = {"application/json"})
 	public ResponseEntity<Map<String,String>> createMultipleDetails(@RequestBody @Valid List<TimesheetdetailsInput> inputList) {
