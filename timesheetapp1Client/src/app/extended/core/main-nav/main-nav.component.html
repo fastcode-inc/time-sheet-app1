@@ -66,35 +66,16 @@
       <a mat-list-item class="sidenav-list-item" routerLink="timesheet">
         <i class="material-icons">
           more_time
-        </i> &nbsp; {{'TIMESHEET.TIMESHEET' | translate}}</a>
+        </i> &nbsp; {{'TIMESHEET.DAY_VIEW' | translate}}</a>
       <a mat-list-item class="sidenav-list-item" routerLink="timesheet-details">
         <i class="material-icons">
           access_time
-        </i> &nbsp; {{'TIMESHEET.TIMESHEET-DETAILS' | translate}}</a>
+        </i> &nbsp; {{'TIMESHEET.TIMESHEET_VIEW' | translate}}</a>
       <a mat-list-item class="sidenav-list-item" routerLink="managersheet" *ngIf="permissions['TIMESHEETSTATUSENTITY_UPDATE']">
         <i class="material-icons">
           reviews
         </i> &nbsp; {{'TIMESHEET.REVIEW-TIMESHEETS' | translate}}</a>
-
-      <mat-expansion-panel class="expansion-panel">
-        <mat-expansion-panel-header class="subnav-header">
-          <i class="material-icons">
-            dvr
-            </i> &nbsp;{{'MainNav.Entities' | translate }}
-        </mat-expansion-panel-header>
-
-        <mat-nav-list class="subnav">
-
-          <ng-container *ngFor="let entity of entityList">
-            <a *ngIf="permissions[entity]" mat-list-item class="mat-sub-list-item" [class.active]="isActive(entity)" [routerLink]="[entity]">
-             {{entity}}
-            </a>
-          </ng-container>
-
-        </mat-nav-list>
-      </mat-expansion-panel>
 	 
-
 			<mat-expansion-panel class="expansion-panel" *ngIf="permissions['showTools']">
         <mat-expansion-panel-header class="subnav-header">
           <i class="material-icons">
@@ -145,6 +126,24 @@
             account_box
             </i> &nbsp;{{'MainNav.Administration' | translate }}
         </mat-expansion-panel-header>
+
+        <mat-expansion-panel class="expansion-panel" *ngIf="permissions['showEntities']">
+          <mat-expansion-panel-header class="subnav-header">
+            <i class="material-icons">
+              dvr
+              </i> &nbsp;{{'MainNav.Entities' | translate }}
+          </mat-expansion-panel-header>
+  
+          <mat-nav-list class="subnav">
+  
+            <ng-container *ngFor="let entity of entityList">
+              <a *ngIf="permissions[entity]" mat-list-item class="mat-sub-list-item" [class.active]="isActive(entity)" [routerLink]="[entity]">
+               {{entity}}
+              </a>
+            </ng-container>
+  
+          </mat-nav-list>
+        </mat-expansion-panel>
 
         <mat-expansion-panel class="expansion-panel">
           <mat-expansion-panel-header class="subnav-header">

@@ -24,8 +24,6 @@ interface ITimeofftypeOption extends ITimeofftype{
   styleUrls: ['./timesheet.component.scss']
 })
 export class TimesheetComponent implements OnInit {
-  title:string='Timesheet';
-  parentUrl:string='timesheet';
 
   loading = false;
   customers = [];

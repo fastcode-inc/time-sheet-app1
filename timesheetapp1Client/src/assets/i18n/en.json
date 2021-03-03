@@ -107,6 +107,8 @@
   },
   "TIMESHEET": {
     "TIMESHEET": "Timesheet",
+    "TIMESHEET_VIEW": "Timesheet view",
+    "DAY_VIEW": "Day view",
     "TIMESHEET-DETAILS": "Timesheet Details",
     "REVIEW-TIMESHEETS": "Review Timesheets",
     "ERRORS" : {
