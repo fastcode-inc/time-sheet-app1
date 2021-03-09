@@ -1,6 +1,6 @@
 {
   "projects": {
-    "timesheetapp1Client": {
+    "timesheetClient": {
       "sourceRoot": "src",
       "prefix": "app",
       "schematics": {},
@@ -74,7 +74,7 @@
               "src/favicon.ico",
               "src/assets"
             ],
-            "outputPath": "dist/timesheetapp1Client",
+            "outputPath": "dist/timesheetClient",
             "aot": false,
             "tsConfig": "tsconfig.app.json",
             "index": "src/index.html",
@@ -90,30 +90,30 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "timesheetapp1Client:build"
+            "browserTarget": "timesheetClient:build"
           }
         },
         "e2e": {
           "configurations": {
             "production": {
-              "devServerTarget": "timesheetapp1Client:serve:production"
+              "devServerTarget": "timesheetClient:serve:production"
             }
           },
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "timesheetapp1Client:serve"
+            "devServerTarget": "timesheetClient:serve"
           }
         },
         "serve": {
           "configurations": {
             "production": {
-              "browserTarget": "timesheetapp1Client:build:production"
+              "browserTarget": "timesheetClient:build:production"
             }
           },
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "timesheetapp1Client:build"
+            "browserTarget": "timesheetClient:build"
           }
         }
       },
@@ -121,7 +121,7 @@
     }
   },
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-  "defaultProject": "timesheetapp1Client",
+  "defaultProject": "timesheetClient",
   "version": 1,
   "newProjectRoot": "projects"
 }
