@@ -28,35 +28,16 @@ ENV DEBIAN_FRONTEND noninteractive
 #Build
 RUN mkdir /build
 
-ARG SERVER_DIR
+COPY timesheet/ /build/timesheet/
 
-RUN echo $SERVER_DIR
-
-#We need to explicitly set this again so that it will work with WORKDIR (and possibly COPY commands)
-
-ARG S_DIR=$SERVER_DIR
-
-RUN echo $S_DIR
-
-COPY $S_DIR/ /build/$S_DIR/
-
-RUN ls -lt /build
-
-WORKDIR /build/$S_DIR
+WORKDIR /build/timesheet
 
 RUN mvn clean package -Dmaven.test.skip=true
 
 #expose port
 EXPOSE 5555
 
-WORKDIR /build/$S_DIR/target
+WORKDIR /build/timesheet/target
 
-RUN echo $PWD
-
-RUN ls -lt
-
-ARG WAR_FILE
-ENV APP_WAR=$WAR_FILE
-
-#Use the exec form of ENTRYPOINT so that it expands the shell variables
-ENTRYPOINT java -jar $APP_WAR
+#cmd to execute
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","timesheet-0.0.1-SNAPSHOT.war"]

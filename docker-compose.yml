@@ -3,23 +3,20 @@ services:
   ui:
     build:
       context: .
-      args:
-        CLIENT_DIR: "${CLIENT_DIR}"
       dockerfile: UIDockerfile
-    container_name: ui
+    container_name: ui_timesheet
     ports:
       - '4700:443'
     networks:
       - samplenet
     links:
       - 'api:api'
+      - 'reports:reports'
   reports:
     build:
-      context: 
-      args:
-        CLIENT_DIR: "${CLIENT_DIR}"
+      context: .
       dockerfile: ReportsDockerfile
-    container_name: reports
+    container_name: reports_timesheet
     ports:
       - '5556:5556'
     networks:
@@ -27,13 +24,36 @@ services:
   api:
     build:
       context: .
-      args:
-        SERVER_DIR: "${SERVER_DIR}"
-        WAR_FILE: "${WAR_FILE}"
       dockerfile: AppDockerfile
-    container_name: api
+    container_name: api_timesheet
     ports:
       - '5555:5555'
+    depends_on:
+      - db
+    networks:
+      - samplenet
+    links:
+      - 'db:db'
+  db: 
+    build:
+      context: .
+      dockerfile: DBDockerfile
+    container_name: db_timesheet
+    volumes:
+      - postgresdb:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: fastcode
+      POSTGRES_DB: timesheet
+    ports:
+      - '5433:5432'
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - 'pg_isready -U postgres'
+      interval: 10s
+      timeout: 5s
+      retries: 5
     networks:
       - samplenet
 networks:
