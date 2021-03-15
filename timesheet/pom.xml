@@ -8,11 +8,11 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.fastcode</groupId>
-	<artifactId>timesheetapp1</artifactId>
+	<artifactId>timesheet</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<name>timesheetapp1</name>
-	<description>timesheetapp1</description>
+	<name>timesheet</name>
+	<description>timesheet</description>
 
 	<properties>
 		<java.version>1.8</java.version>

@@ -6,8 +6,8 @@ const fs = require("fs");
 const cors = require("cors");
 
 var https = require('https');
-var privateKey  = fs.readFileSync('../../server.key', 'utf8');
-var certificate = fs.readFileSync('../../server.crt', 'utf8');
+var privateKey  = fs.readFileSync('./server.key', 'utf8');
+var certificate = fs.readFileSync('./server.crt', 'utf8');
 
 var credentials = {key: privateKey, cert: certificate};
 
