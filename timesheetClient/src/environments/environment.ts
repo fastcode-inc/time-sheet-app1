@@ -4,8 +4,8 @@
 
 export const environment = {
 	production: false,
-	apiUrl: 'https://localhost:5555',
-	reportingUrl: 'https://localhost:5556',
+	apiUrl: 'https://127.0.0.1:5555',
+	reportingUrl: 'https://127.0.0.1:5556',
 
 
 };
