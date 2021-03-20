@@ -75,23 +75,22 @@ public class TimesheetControllerExtended extends TimesheetController {
 	@NonNull protected final IUsersAppServiceExtended usersAppServiceExtended;
 
 	@Override
-	@PreAuthorize("permitAll()")
+	@PreAuthorize("hasAnyAuthority('FILL_TIMESHEET')")
 	@RequestMapping(method = RequestMethod.POST, consumes = {"application/json"}, produces = {"application/json"})
 	public ResponseEntity<CreateTimesheetOutput> create(@RequestBody @Valid CreateTimesheetInput timesheet) {
 		CreateTimesheetOutput output=_timesheetAppService.create(timesheet);
 		Optional.ofNullable(output).orElseThrow(() -> new EntityNotFoundException(String.format("No record found")));
-
-		Optional.ofNullable(output).orElseThrow(() -> new EntityNotFoundException(String.format("No record found")));
-
 		return new ResponseEntity(output, HttpStatus.OK);
 	}
 
+	@PreAuthorize("hasAnyAuthority('FILL_TIMESHEET')")
 	@RequestMapping(value="/timesheetdetails", method = RequestMethod.POST, consumes = {"application/json"}, produces = {"application/json"})
 	public ResponseEntity<Map<String,String>> createMultipleDetails(@RequestBody @Valid List<TimesheetdetailsInput> inputList) {
 
 		return new ResponseEntity(_timesheetdetailsAppServiceExtended.createMultipleDetails(inputList), HttpStatus.OK);
 	}
 
+	@PreAuthorize("hasAnyAuthority('FILL_TIMESHEET')")
 	@RequestMapping(value = "/timesheetdetails", method = RequestMethod.GET, consumes = {"application/json"}, produces = {"application/json"})
 	public ResponseEntity<List<TimesheetdetailsOutput>> findTimesheetdetailsByWorkDate(@RequestParam("workDate") String workDate) {
 
@@ -105,18 +104,20 @@ public class TimesheetControllerExtended extends TimesheetController {
 	@RequestMapping(value = "/getTimesheet", method = RequestMethod.GET, consumes = {"application/json"}, produces = {"application/json"})
 	public ResponseEntity<TimesheetOutput> findTimesheetByDate(@RequestParam("date") String date, @RequestParam("includeDetails") Boolean includeDetails, @RequestParam(value="userId", required=false) Long userId,HttpServletRequest request) throws Exception {
 
-		if(userId !=null) {
-			String token = request.getHeader("Authorization");
-			if(token !=null && token.startsWith(SecurityConstants.TOKEN_PREFIX)) {
-				token = token.replace(SecurityConstants.TOKEN_PREFIX, "");
-			}
+		String token = request.getHeader("Authorization");
+		if(token !=null && token.startsWith(SecurityConstants.TOKEN_PREFIX)) {
+			token = token.replace(SecurityConstants.TOKEN_PREFIX, "");
+		}
 
+		if(userId !=null) {
 			if(!usersAppServiceExtended.parseTokenAndCheckIfPermissionExists(token, "TIMESHEETENTITY_READ")) {
 				throw new Exception("You don't have permission to fetch timesheet details against userid " + userId);
 			}
 		}
-		else
-		{
+		else {
+			if(!usersAppServiceExtended.parseTokenAndCheckIfPermissionExists(token, "FILL_TIMESHEET")) {
+				throw new Exception("You don't have permission to fetch timesheet details. " + userId);
+			}
 			UsersEntity loggedInUser = usersAppServiceExtended.getUsers();
 			userId = loggedInUser.getId();
 		}
@@ -134,12 +135,11 @@ public class TimesheetControllerExtended extends TimesheetController {
 
 		FindTimesheetByIdOutput timesheet = _timesheetAppService.findById(id);
 		Optional.ofNullable(timesheet).orElseThrow(() -> new EntityNotFoundException(String.format("Timesheet not found with id " + id)));
-
+		String token = request.getHeader("Authorization");
+		if(token !=null && token.startsWith(SecurityConstants.TOKEN_PREFIX)) {
+			token = token.replace(SecurityConstants.TOKEN_PREFIX, "");
+		}
 		if(input.getUserId() !=null) {
-			String token = request.getHeader("Authorization");
-			if(token !=null && token.startsWith(SecurityConstants.TOKEN_PREFIX)) {
-				token = token.replace(SecurityConstants.TOKEN_PREFIX, "");
-			}
 
 			if(!usersAppServiceExtended.parseTokenAndCheckIfPermissionExists(token, "TIMESHEETSTATUSENTITY_UPDATE")) {
 				throw new Exception("You don't have permission to fetch timesheet details against userid " + input.getUserId());
@@ -151,6 +151,9 @@ public class TimesheetControllerExtended extends TimesheetController {
 		}
 		else
 		{
+			if(!usersAppServiceExtended.parseTokenAndCheckIfPermissionExists(token, "FILL_TIMESHEET")) {
+				throw new Exception("You don't have permission to submit timesheet.");
+			}
 			UsersEntity loggedInUser = usersAppServiceExtended.getUsers();
 			input.setUserId(loggedInUser.getId());
 			if(!input.getStatus().equalsIgnoreCase("Submitted")) {

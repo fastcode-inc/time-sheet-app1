@@ -3,7 +3,7 @@ import { UsertaskExtendedService } from '../usertask.service';
 
 import { ActivatedRoute, Router } from "@angular/router";
 import { FormBuilder, Validators } from '@angular/forms';
-import { Globals, PickerDialogService, ErrorService, IAssociationEntry, IFCDialogConfig } from 'src/app/common/shared';
+import { Globals, PickerDialogService, ErrorService, IAssociationEntry, IFCDialogConfig, ISearchField, operatorType } from 'src/app/common/shared';
 import { MatDialogRef, MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import { TaskExtendedService } from 'src/app/extended/entities/task/task.service';
@@ -71,16 +71,28 @@ export class UsertaskNewExtendedComponent extends UsertaskNewComponent implement
     this.pickerDialogRef = this.pickerDialogService.open(dialogConfig);
 
     this.initializePickerPageInfo();
-    association.service.getAll(this.searchValuePicker, this.currentPickerPage * this.pickerPageSize, this.pickerPageSize).subscribe(items => {
-      this.isLoadingPickerResults = false;
-      this.pickerDialogRef.componentInstance.items = items;
-      association.data = items;
-      this.updatePickerPageInfo(items);
-    }, (error) => {
-      this.errorMessage = <any>error;
-      this.errorService.showError(this.errorMessage);
+    if (association.table === 'users') {
+      this.usersExtendedService.getEmployees(this.searchValuePicker, this.currentPickerPage * this.pickerPageSize, this.pickerPageSize).subscribe(items => {
+        this.isLoadingPickerResults = false;
+        this.pickerDialogRef.componentInstance.items = items;
+        association.data = items;
+        this.updatePickerPageInfo(items);
+      }, (error) => {
+        this.errorMessage = <any>error;
+        this.errorService.showError(this.errorMessage);
+      }); 
+    } else {
+      association.service.getAll(this.searchValuePicker, this.currentPickerPage * this.pickerPageSize, this.pickerPageSize).subscribe(items => {
+        this.isLoadingPickerResults = false;
+        this.pickerDialogRef.componentInstance.items = items;
+        association.data = items;
+        this.updatePickerPageInfo(items);
+      }, (error) => {
+        this.errorMessage = <any>error;
+        this.errorService.showError(this.errorMessage);
+      }
+      ); 
     }
-    );
 
     this.pickerDialogRef.componentInstance.onScroll.subscribe(data => {
       this.onPickerScroll(association);

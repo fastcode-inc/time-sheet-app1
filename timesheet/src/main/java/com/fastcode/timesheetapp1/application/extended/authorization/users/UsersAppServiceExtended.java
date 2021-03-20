@@ -1,6 +1,13 @@
 package com.fastcode.timesheetapp1.application.extended.authorization.users;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import org.quartz.SchedulerException;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
@@ -15,29 +22,38 @@ import com.fastcode.timesheetapp1.addons.reporting.domain.reportversion.IReportv
 import com.fastcode.timesheetapp1.addons.scheduler.application.trigger.ITriggerAppService;
 import com.fastcode.timesheetapp1.addons.scheduler.application.trigger.dto.CreateTriggerInput;
 import com.fastcode.timesheetapp1.application.core.authorization.users.UsersAppService;
+import com.fastcode.timesheetapp1.application.core.authorization.users.dto.FindUsersByIdOutput;
 import com.fastcode.timesheetapp1.application.core.authorization.users.dto.UpdateUsersOutput;
+import com.fastcode.timesheetapp1.domain.extended.authorization.users.IUserRepositoryCustom;
+import com.fastcode.timesheetapp1.domain.extended.authorization.users.IUsersRepositoryCustomImpl;
 import com.fastcode.timesheetapp1.domain.extended.authorization.users.IUsersRepositoryExtended;
 
 import lombok.NonNull;
 
+import com.fastcode.timesheetapp1.domain.core.authorization.users.IUsersRepository;
 import com.fastcode.timesheetapp1.domain.core.authorization.users.UsersEntity;
 import com.fastcode.timesheetapp1.domain.core.authorization.userspreference.IUserspreferenceRepository;
 import com.fastcode.timesheetapp1.domain.core.authorization.userspreference.UserspreferenceEntity;
 import com.fastcode.timesheetapp1.commons.logging.LoggingHelper;
+import com.fastcode.timesheetapp1.commons.search.SearchCriteria;
 
 @Service("usersAppServiceExtended")
 public class UsersAppServiceExtended extends UsersAppService implements IUsersAppServiceExtended {
+	
+	@Qualifier("usersRepositoryExtended")
+	@NonNull protected final IUserRepositoryCustom usersRepositoryCustom;
 
+	@NonNull protected final ITriggerAppService triggerApp;
+	
 	public UsersAppServiceExtended(IDashboardversionRepository _dashboardversionRepository, IReportversionRepository _reportversionRepository, IDashboardversionreportRepository _reportDashboardRepository, IUsersRepositoryExtended usersRepositoryExtended,
-			IUserspreferenceRepository userspreferenceRepository,IUsersMapperExtended mapper,LoggingHelper logHelper, ITriggerAppService triggerApp) {
+			IUserspreferenceRepository userspreferenceRepository,IUsersMapperExtended mapper,LoggingHelper logHelper, ITriggerAppService triggerApp, IUserRepositoryCustom usersRepositoryCustom) {
 
 		super(_dashboardversionRepository, _reportversionRepository, _reportDashboardRepository, usersRepositoryExtended,
 				userspreferenceRepository, mapper, logHelper);
-
+		this.usersRepositoryCustom = usersRepositoryCustom;
+		
 		this.triggerApp = triggerApp;
 	}
-	
-	@NonNull protected final ITriggerAppService triggerApp;
 
 	//Add your custom code here
 	@Transactional(propagation = Propagation.REQUIRED)
@@ -84,6 +100,14 @@ public class UsersAppServiceExtended extends UsersAppService implements IUsersAp
         return auth.getAuthorities().contains(new SimpleGrantedAuthority(permission));
 
 	}
+	
+	
+    @Transactional(propagation = Propagation.NOT_SUPPORTED)
+    public List<FindUsersByIdOutput> findEmployees(String search, Pageable pageable) throws Exception  {
+    	
+    	Page<FindUsersByIdOutput> foundUsers = usersRepositoryCustom.findEmployees(search, pageable);
+    	return foundUsers.getContent();
+    }
 
 }
 

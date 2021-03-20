@@ -14,6 +14,7 @@ import com.fastcode.timesheetapp1.application.extended.authorization.userspermis
 import com.fastcode.timesheetapp1.application.extended.authorization.usersrole.IUsersroleAppServiceExtended;
 import com.fastcode.timesheetapp1.application.extended.usertask.IUsertaskAppServiceExtended;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import com.fastcode.timesheetapp1.security.JWTAppService;
 
@@ -26,10 +27,15 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.env.Environment;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import com.fastcode.timesheetapp1.commons.logging.LoggingHelper;
+import com.fastcode.timesheetapp1.commons.search.OffsetBasedPageRequest;
+import com.fastcode.timesheetapp1.commons.search.SearchCriteria;
+import com.fastcode.timesheetapp1.commons.search.SearchUtils;
 import com.fastcode.timesheetapp1.domain.core.authorization.users.UsersEntity;
 
 @RestController
@@ -62,6 +68,23 @@ public class UsersControllerExtended extends UsersController {
 
 	//Add your custom code here
 	
+    @PreAuthorize("hasAnyAuthority('USERSENTITY_READ')")
+	@RequestMapping(value= "/getEmployees", method = RequestMethod.GET, consumes = {"application/json"}, produces = {"application/json"})
+	public ResponseEntity getEmployees(@RequestParam(value="search", required=false) String search, @RequestParam(value = "offset", required=false) String offset, @RequestParam(value = "limit", required=false) String limit, Sort sort) throws Exception {
+
+		if (offset == null) { offset = env.getProperty("fastCode.offset.default"); }
+		if (limit == null) { limit = env.getProperty("fastCode.limit.default"); }
+
+		if(sort == null || sort.isEmpty()) {
+			sort = Sort.by(Sort.Direction.ASC, "firstname");
+		}
+		
+		Pageable Pageable = new OffsetBasedPageRequest(Integer.parseInt(offset), Integer.parseInt(limit), sort);
+
+		return ResponseEntity.ok(usersAppServiceExtended.findEmployees(search,Pageable));
+	}
+	
+	@PreAuthorize("hasAnyAuthority('SET_REMINDER')")
 	@RequestMapping(value= "/getReminderDetails",method = RequestMethod.GET, consumes = {"application/json"}, produces = {"application/json"})
 	public ResponseEntity<Map<String,String>> getReminderDetails() throws ClassNotFoundException, Exception {
 		UsersEntity loggedInUser = usersAppServiceExtended.getUsers();
@@ -78,7 +101,7 @@ public class UsersControllerExtended extends UsersController {
 		return new ResponseEntity(output, HttpStatus.OK);
 	}
 
-	//@PreAuthorize("hasAnyAuthority('USERSENTITY_CREATE')")
+	@PreAuthorize("hasAnyAuthority('SET_REMINDER')")
 	@RequestMapping(value= "/reminder",method = RequestMethod.POST, consumes = {"application/json"}, produces = {"application/json"})
 	public ResponseEntity<Map<String,String>> createTriggerAndSendEmail(@RequestBody @Valid EmailTriggerInfo info) throws ClassNotFoundException, Exception {
 
