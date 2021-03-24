@@ -50,9 +50,9 @@ export class TimesheetDetailsComponent implements OnInit {
   ngOnInit() {
     this.userid = this.route.snapshot.queryParamMap.get('userid');
     if (this.userid && this.route.snapshot.queryParamMap.get('timesheetDate')) {
-      this.timesheetDate = new Date(this.route.snapshot.queryParamMap.get('timesheetDate'));
+      this.timesheetDate = moment(this.route.snapshot.queryParamMap.get('timesheetDate'));
     } else {
-      this.timesheetDate = new Date();
+      this.timesheetDate = moment();
     }
 
     this.setTimesheet('current');
@@ -146,6 +146,7 @@ export class TimesheetDetailsComponent implements OnInit {
         var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
         var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
         firstDate.setDate(firstDay.getDate() + 15);
+        firstDate.setHours(0,0,0,0);
         this.timesheetDate = firstDate;
         this.timesheettilldate = lastDay;
         this.getdateList(this.timesheetDate, this.timesheettilldate);

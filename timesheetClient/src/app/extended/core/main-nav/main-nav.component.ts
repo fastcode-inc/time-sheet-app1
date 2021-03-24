@@ -36,6 +36,11 @@ export class MainNavExtendedComponent extends MainNavComponent {
 
 		let perms = ["showEntities", "SET_REMINDER", "FILL_TIMESHEET"]
 		this.permissions['TIMESHEETSTATUSENTITY_UPDATE'] = this.globalPermissionService.hasPermissionOnEntity('TIMESHEETSTATUS', 'update');
+		this.authEntityList.forEach(entity => {
+			if(this.permissions[entity]) {
+				this.permissions['authEntities'] = true;
+			}
+		});
 		perms.forEach( perm => {
 			this.permissions[perm] = this.globalPermissionService.hasPermission(perm);
 		});

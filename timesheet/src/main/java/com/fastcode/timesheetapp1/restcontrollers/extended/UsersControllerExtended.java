@@ -20,6 +20,9 @@ import com.fastcode.timesheetapp1.security.JWTAppService;
 
 import lombok.NonNull;
 
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.temporal.TemporalAmount;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -123,6 +126,7 @@ public class UsersControllerExtended extends UsersController {
 			triggerApp.cancelTrigger(loggedInUser.getUsername() + "trigger10", "emailTriggerGroup10");
 		}
 		CreateTriggerInput triggerInput = new CreateTriggerInput();
+//		info.setTime(info.getTime().withOffsetSameInstant(ZoneOffset.UTC));
 		String cronExpression = "0 " + info.getTime().getMinute() + " " + info.getTime().getHour() + " ? * " + info.getDays() +" *";
 
 		// 0 30 4 ? * MON,TUE,WED,THU,FRI *
@@ -137,6 +141,7 @@ public class UsersControllerExtended extends UsersController {
 
 		Map<String, String> mapData = new HashMap<String, String>();
 		mapData.put("email", loggedInUser.getEmailaddress());
+		mapData.put("userId", loggedInUser.getId().toString());
 		triggerInput.setTriggerMapData(mapData);
 
 		Boolean status = triggerApp.createTrigger(triggerInput);

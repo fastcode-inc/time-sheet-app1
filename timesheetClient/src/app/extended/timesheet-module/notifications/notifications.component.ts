@@ -65,10 +65,11 @@ export class NotificationsComponent implements OnInit {
 
   update() {
     this.loading = true;
-    console.log(this.time)
+    let zone = new Date().toString().match(/([-\+][0-9]+)\s/)[1];
+    zone = zone.slice(0, 3) + ":" + zone.slice(3);
     var data= {
       days: this.selectedDays.join(','),
-      time: this.usersService.getFormattedTime(this.time, false).substring(0,5)
+      time: this.usersService.getFormattedTime(this.time, false).substring(0,5) + zone
     }
     this.usersService.setReminder(data).subscribe(res => {
       this.loading = false;

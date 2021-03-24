@@ -120,7 +120,8 @@
         </mat-nav-list>
       </mat-expansion-panel>
       
-      <mat-expansion-panel class="expansion-panel">
+      <mat-expansion-panel class="expansion-panel" 
+        *ngIf="permissions['authEntities'] || permissions['showEntities'] || permissions['ENTITYHISTORY']">
         <mat-expansion-panel-header class="subnav-header">
           <i class="material-icons">
             account_box
@@ -161,10 +162,6 @@
 		<a mat-list-item class="sidenav-list-item" routerLinkActive="active" [routerLink]="['entityHistory']" *ngIf="permissions['ENTITYHISTORY']">{{'MainNav.EntityHistory' | translate }}
         </a>
       </mat-expansion-panel>
-			<a mat-list-item class="sidenav-list-item" routerLink="swagger-ui">
-        <i class="material-icons">
-          settings
-        </i> &nbsp;{{'MainNav.API' | translate }}</a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content #navContent class="fc-sidenav-content">

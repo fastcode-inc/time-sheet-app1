@@ -105,7 +105,7 @@
         </tbody>
       </table>
     </div>
-    <div class="notes">
+    <div class="notes" *ngIf="timesheet?.timesheetstatusDescriptiveField !== 'Open'">
       <mat-label>{{'TIMESHEET.NOTES' | translate}}:</mat-label>
       <textarea [readonly]="!userid || !editable" class="notes" rows="4" [(ngModel)]="notes">{{notes}}
       </textarea>

@@ -1,6 +1,6 @@
 package com.fastcode.timesheetapp1.addons.scheduler.application.trigger.dto;
 
-import java.time.LocalTime;
+import java.time.OffsetTime;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -9,6 +9,6 @@ import lombok.Setter;
 public class EmailTriggerInfo {
 	
 	String days;
-	LocalTime time;
+	OffsetTime time;
 
 }
