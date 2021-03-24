@@ -3,8 +3,7 @@ import { IFCDialogConfig } from './ifc-dialog-config';
 import { Router } from "@angular/router";
 import { Globals } from '../../globals';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatSelectionList, MatListOption } from '@angular/material';
-import { SelectionModel } from '@angular/cdk/collections';
+import { MatSelectionList } from '@angular/material';
 @Component({
 	selector: 'app-picker',
 	templateUrl: './picker.component.html',
@@ -19,7 +18,7 @@ export class PickerComponent implements OnInit {
 	submitted = false;
 	title: string;
 	items: any[] = [];
-	@ViewChild(MatSelectionList,{ static: true }) selectionList: MatSelectionList;
+	@ViewChild(MatSelectionList,{ static: false }) selectionList: MatSelectionList;
 
 	selectedItem: any;
 	selectedItems: any[] = [];
@@ -32,19 +31,21 @@ export class PickerComponent implements OnInit {
 	) { }
 
 	ngOnInit() {
-		if (this.data.IsSingleSelection)
-			this.selectionList.selectedOptions = new SelectionModel<MatListOption>(false);
 		this.title = this.data.Title;
 		this.displayField = this.data.DisplayField;
 	}
 
 	onOk() {
-		let selectedOptions = this.selectionList.selectedOptions.selected;
-		if (selectedOptions.length > 0) {
-			for (let option of selectedOptions) {
-				this.selectedItems.push(option.value);
+		if (!this.data.IsSingleSelection) {
+			let selectedOptions = this.selectionList.selectedOptions.selected;
+			if (selectedOptions.length > 0) {
+				for (let option of selectedOptions) {
+					this.selectedItems.push(option.value);
+				}
+				this.dialogRef.close(this.selectedItems);
 			}
-			this.dialogRef.close(this.data.IsSingleSelection ? this.selectedItems[0] : this.selectedItems);
+		} else {
+			this.dialogRef.close(this.selectedItem);
 		}
 	}
 	onCancel(): void {
