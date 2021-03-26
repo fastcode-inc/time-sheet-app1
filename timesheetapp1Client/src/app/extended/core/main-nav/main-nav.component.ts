@@ -34,6 +34,11 @@ export class MainNavExtendedComponent extends MainNavComponent {
 		usersExtendedService
 		)
 
+	}
+
+	setPermissions() {
+		super.setPermissions();
+		this.permissions['authEntities'] = false;
 		let perms = ["showEntities", "SET_REMINDER", "FILL_TIMESHEET"]
 		this.permissions['TIMESHEETSTATUSENTITY_UPDATE'] = this.globalPermissionService.hasPermissionOnEntity('TIMESHEETSTATUS', 'update');
 		this.authEntityList.forEach(entity => {
@@ -43,12 +48,6 @@ export class MainNavExtendedComponent extends MainNavComponent {
 		});
 		perms.forEach( perm => {
 			this.permissions[perm] = this.globalPermissionService.hasPermission(perm);
-		});
-		this.authenticationService.permissionsChange.subscribe(() => {
-			perms.forEach( perm => {
-				this.permissions[perm] = this.globalPermissionService.hasPermission(perm);
-			});
-			this.permissions['TIMESHEETSTATUSENTITY_UPDATE'] = this.globalPermissionService.hasPermissionOnEntity('TIMESHEETSTATUS', 'update')
 		});
 	}
 }

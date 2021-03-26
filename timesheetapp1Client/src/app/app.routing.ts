@@ -11,6 +11,10 @@ const routes: Routes = [
   },
   { path: 'swagger-ui', component: SwaggerComponent, canActivate: [AuthGuard] },
   {
+		path: '',
+		loadChildren: './extended/timesheet-module/timesheet.module#TimesheetModule'
+	},
+  {
     path: '',
     loadChildren: './extended/admin/admin.module#AdminExtendedModule',
   },

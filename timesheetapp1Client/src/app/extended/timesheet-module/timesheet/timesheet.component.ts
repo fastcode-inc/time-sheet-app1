@@ -9,7 +9,6 @@ import * as moment from 'moment';
 import { TimeofftypeExtendedService } from 'src/app/extended/entities/timeofftype';
 import { ITimeofftype } from 'src/app/entities/timeofftype';
 import { ErrorService } from 'src/app/common/shared';
-import { AppConfigurationExtendedService } from '../../entities/app-configuration';
 import { config } from 'process';
 import { UsersExtendedService } from '../../admin/user-management/users';
 import { TranslateService } from '@ngx-translate/core';

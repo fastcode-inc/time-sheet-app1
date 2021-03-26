@@ -116,6 +116,7 @@ export class MainNavComponent {
   }
 
   setModulesVisibility() {
+    this.permissions['showTools'] = false;
     Object.keys(this.modules).forEach((module) => {
       let modulePermission = `show${module[0].toUpperCase() + module.slice(1)}`;
       this.permissions[modulePermission] = false;
