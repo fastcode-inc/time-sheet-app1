@@ -1,5 +1,5 @@
 .sidenav-container {
-  height: calc(100% - 64px);  
+  height: calc(100% - 64px);
 }
 
 .sidenav {
@@ -43,7 +43,7 @@
     padding: 0 24px 0 16px;
     font-size: 18px;
     font-weight: 500;
-    font-family: "Futura PT";
+    font-family: 'Futura PT';
     @media screen and (max-width: 1200px) {
       height: 45px !important;
       padding: 0 24px 0 16px;
@@ -142,7 +142,7 @@ mat-expansion-panel-header .material-icons {
   padding-left: 12px;
 }
 
-.profile-menu{
+.profile-menu {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -156,16 +156,16 @@ mat-expansion-panel-header .material-icons {
   }
 }
 
-@media (hover: none){
+@media (hover: none) {
   .mat-expansion-panel:not(.mat-expanded):not([aria-disabled='true']) .mat-expansion-panel-header:hover {
     background: none;
   }
 }
 
-.mat-toolbar-row, .mat-toolbar-single-row{
+.mat-toolbar-row,
+.mat-toolbar-single-row {
   padding: 0px !important;
 }
-
 
 @media (max-width: 599px) {
   .sidenav-container {
@@ -178,7 +178,7 @@ mat-expansion-panel-header .material-icons {
   }
 }
 
-@media(max-width: 768px){
+@media (max-width: 768px) {
   .sidenav {
     top: 0px !important;
   }

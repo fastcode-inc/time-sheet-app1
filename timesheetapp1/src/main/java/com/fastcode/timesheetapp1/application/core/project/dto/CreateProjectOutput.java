@@ -4,7 +4,8 @@ import java.time.*;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter @Setter
+@Getter
+@Setter
 public class CreateProjectOutput {
 
     private String description;
@@ -12,8 +13,6 @@ public class CreateProjectOutput {
     private Long id;
     private String name;
     private LocalDate startdate;
-	private Long customerid;
-	private String customerDescriptiveField;
-
+    private Long customerid;
+    private String customerDescriptiveField;
 }
-

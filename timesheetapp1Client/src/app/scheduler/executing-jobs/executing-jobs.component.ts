@@ -6,11 +6,18 @@ import { JobService } from '../jobs/job.service';
 @Component({
   selector: 'app-executing-jobs',
   templateUrl: './executing-jobs.component.html',
-  styleUrls: ['./executing-jobs.component.scss']
+  styleUrls: ['./executing-jobs.component.scss'],
 })
 export class ExecutingJobsComponent implements OnInit {
-
-  displayedColumnsExecutingJobs: string[] = ['triggerName', 'triggerGroup', 'jobName', 'jobGroup', 'jobClass', 'fireTime', 'nextExecutionTime']
+  displayedColumnsExecutingJobs: string[] = [
+    'triggerName',
+    'triggerGroup',
+    'jobName',
+    'jobGroup',
+    'jobClass',
+    'fireTime',
+    'nextExecutionTime',
+  ];
 
   userId: number;
   executingJobs: IExecutingJob[] = [];
@@ -20,11 +27,11 @@ export class ExecutingJobsComponent implements OnInit {
 
   ngOnInit() {
     this.jobService.getExecutingJobs().subscribe(
-      perms => {
+      (perms) => {
         this.loading = false;
         this.executingJobs = perms;
       },
-      error => {
+      (error) => {
         this.loading = false;
         this.errorMessage = <any>error;
       }

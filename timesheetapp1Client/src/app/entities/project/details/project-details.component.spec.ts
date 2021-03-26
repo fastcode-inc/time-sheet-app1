@@ -15,38 +15,33 @@ describe('ProjectDetailsComponent', () => {
   let component: ProjectDetailsComponent;
   let fixture: ComponentFixture<ProjectDetailsComponent>;
   let el: HTMLElement;
-  
+
   let d = new Date();
   let t = DateUtils.formatDateStringToAMPM(d);
-  
+
   let relationData: any = {
     customerid: 1,
     customerDescriptiveField: 'name1',
-  }
-  let data:IProject = {
+  };
+  let data: IProject = {
     description: 'description1',
     enddate: d,
     id: 1,
     name: 'name1',
     startdate: d,
-    ... relationData
+    ...relationData,
   };
-  
+
   describe('Unit Tests', () => {
     beforeEach(async(() => {
       TestBed.configureTestingModule({
-        declarations: [
-          ProjectDetailsComponent,
-          DetailsComponent
-        ],
+        declarations: [ProjectDetailsComponent, DetailsComponent],
         imports: [TestingModule],
-        providers: [
-          ProjectService,
-        ],
-        schemas: [NO_ERRORS_SCHEMA]  
+        providers: [ProjectService],
+        schemas: [NO_ERRORS_SCHEMA],
       }).compileComponents();
     }));
-  
+
     beforeEach(() => {
       fixture = TestBed.createComponent(ProjectDetailsComponent);
       component = fixture.componentInstance;
@@ -91,34 +86,29 @@ describe('ProjectDetailsComponent', () => {
       spyOn(component, 'onBack').and.returnValue();
       el = fixture.debugElement.query(By.css('button[name=back]')).nativeElement;
       el.click();
-      
+
       expect(component.onBack).toHaveBeenCalled();
     });
-
   });
-  
+
   describe('Integration Tests', () => {
     beforeEach(async(() => {
-
       TestBed.configureTestingModule({
         declarations: [
           ProjectDetailsComponent,
           ProjectListComponent,
           DetailsComponent,
           ListComponent,
-          FieldsComp
+          FieldsComp,
         ].concat(EntryComponents),
         imports: [
           TestingModule,
           RouterTestingModule.withRoutes([
             { path: 'project', component: ProjectDetailsComponent },
-            { path: 'project/:id', component: ProjectListComponent }
-          ])
+            { path: 'project/:id', component: ProjectListComponent },
+          ]),
         ],
-        providers: [
-          ProjectService
-        ]
-
+        providers: [ProjectService],
       }).compileComponents();
     }));
 
@@ -160,7 +150,6 @@ describe('ProjectDetailsComponent', () => {
       el.click();
 
       expect(component.errorService.showError).toHaveBeenCalled();
-
     });
 
     it('should go back to list component when back button is clicked', async () => {
@@ -176,9 +165,6 @@ describe('ProjectDetailsComponent', () => {
       let responsePromise = navigationSpy.calls.mostRecent().returnValue;
       await responsePromise;
       expect(location.path()).toBe('/project');
-
     });
-
   });
-  
 });

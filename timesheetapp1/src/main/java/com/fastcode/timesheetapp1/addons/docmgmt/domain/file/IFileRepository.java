@@ -6,7 +6,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.versions.LockingAndVersioningRepository;
 
 @Repository("fileRepository")
-public interface IFileRepository extends JpaRepository<FileEntity, Long>,QuerydslPredicateExecutor<FileEntity>, LockingAndVersioningRepository<FileEntity, String> {
-
-}
-
+public interface IFileRepository
+    extends
+        JpaRepository<FileEntity, Long>,
+        QuerydslPredicateExecutor<FileEntity>,
+        LockingAndVersioningRepository<FileEntity, String> {}

@@ -6,7 +6,8 @@ import java.util.Map;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter @Setter
+@Getter
+@Setter
 public class GetJobOutput {
 
     private Long id;
@@ -25,6 +26,4 @@ public class GetJobOutput {
     public GetJobOutput() {
         super();
     }
-    
 }
-

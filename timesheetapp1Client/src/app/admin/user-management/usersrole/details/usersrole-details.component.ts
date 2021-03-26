@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from "@angular/router";
-import { FormBuilder, Validators} from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
 import { UsersroleService } from '../usersrole.service';
@@ -14,104 +14,98 @@ import { UsersService } from 'src/app/admin/user-management/users/users.service'
 @Component({
   selector: 'app-usersrole-details',
   templateUrl: './usersrole-details.component.html',
-  styleUrls: ['./usersrole-details.component.scss']
+  styleUrls: ['./usersrole-details.component.scss'],
 })
 export class UsersroleDetailsComponent extends BaseDetailsComponent<IUsersrole> implements OnInit {
-	title = 'Usersrole';
-	parentUrl = 'usersrole';
-	constructor(
-		public formBuilder: FormBuilder,
-		public router: Router,
-		public route: ActivatedRoute,
-		public dialog: MatDialog,
-		public global: Globals,
-		public usersroleService: UsersroleService,
-		public pickerDialogService: PickerDialogService,
-		public errorService: ErrorService,
-		public roleService: RoleService,
-		public usersService: UsersService,
-		public globalPermissionService: GlobalPermissionService,
-	) {
-		super(formBuilder, router, route, dialog, global, pickerDialogService, usersroleService, errorService);
+  title = 'Usersrole';
+  parentUrl = 'usersrole';
+  constructor(
+    public formBuilder: FormBuilder,
+    public router: Router,
+    public route: ActivatedRoute,
+    public dialog: MatDialog,
+    public global: Globals,
+    public usersroleService: UsersroleService,
+    public pickerDialogService: PickerDialogService,
+    public errorService: ErrorService,
+    public roleService: RoleService,
+    public usersService: UsersService,
+    public globalPermissionService: GlobalPermissionService
+  ) {
+    super(formBuilder, router, route, dialog, global, pickerDialogService, usersroleService, errorService);
   }
 
-	ngOnInit() {
-		this.entityName = 'Usersrole';
-		this.setAssociations();
-		super.ngOnInit();
-		this.setForm();
-    	this.getItem();
-	}
-  
-  setForm(){
+  ngOnInit() {
+    this.entityName = 'Usersrole';
+    this.setAssociations();
+    super.ngOnInit();
+    this.setForm();
+    this.getItem();
+  }
+
+  setForm() {
     this.itemForm = this.formBuilder.group({
       roleId: ['', Validators.required],
       usersId: ['', Validators.required],
-      roleDescriptiveField : [''],
-      usersDescriptiveField : [''],
-      
+      roleDescriptiveField: [''],
+      usersDescriptiveField: [''],
     });
-    
-    this.fields = [
-			
-			
-      ];
-      
+
+    this.fields = [];
   }
-  
+
   onItemFetched(item: IUsersrole) {
     this.item = item;
     this.itemForm.patchValue(item);
   }
-  
-  setAssociations(){
+
+  setAssociations() {
     this.associations = [
       {
         column: [
-	        {
-	          key: 'roleId',
-	          value: undefined,
-	          referencedkey: 'id'
-			},
-		],
-		isParent: false,
-		table: 'role',
-		type: 'ManyToOne',
-		label: 'role',
-		service: this.roleService,
-		descriptiveField: 'roleDescriptiveField',
-	    referencedDescriptiveField: 'displayName',
-		},
+          {
+            key: 'roleId',
+            value: undefined,
+            referencedkey: 'id',
+          },
+        ],
+        isParent: false,
+        table: 'role',
+        type: 'ManyToOne',
+        label: 'role',
+        service: this.roleService,
+        descriptiveField: 'roleDescriptiveField',
+        referencedDescriptiveField: 'displayName',
+      },
       {
         column: [
-	        {
-	          key: 'usersId',
-	          value: undefined,
-	          referencedkey: 'id'
-			},
-		],
-		isParent: false,
-		table: 'users',
-		type: 'ManyToOne',
-		label: 'users',
-		service: this.usersService,
-		descriptiveField: 'usersDescriptiveField',
-	    referencedDescriptiveField: 'lastname',
-		},
-		];
-		
-		this.childAssociations = this.associations.filter(association => {
-			return (association.isParent);
-		});
+          {
+            key: 'usersId',
+            value: undefined,
+            referencedkey: 'id',
+          },
+        ],
+        isParent: false,
+        table: 'users',
+        type: 'ManyToOne',
+        label: 'users',
+        service: this.usersService,
+        descriptiveField: 'usersDescriptiveField',
+        referencedDescriptiveField: 'lastname',
+      },
+    ];
 
-		this.parentAssociations = this.associations.filter(association => {
-			return (!association.isParent);
-		});
-	}
-	
-	onSubmit() {
-		let usersrole = this.itemForm.getRawValue();
-		super.onSubmit(usersrole);
-		
-	}
+    this.childAssociations = this.associations.filter((association) => {
+      return association.isParent;
+    });
+
+    this.parentAssociations = this.associations.filter((association) => {
+      return !association.isParent;
+    });
+  }
+
+  onSubmit() {
+    let usersrole = this.itemForm.getRawValue();
+    super.onSubmit(usersrole);
+  }
 }

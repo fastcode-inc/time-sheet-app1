@@ -7,7 +7,12 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { Location } from '@angular/common';
 
 import { TestingModule, EntryComponents } from 'src/testing/utils';
-import { ITimesheetstatus, TimesheetstatusService, TimesheetstatusDetailsComponent, TimesheetstatusListComponent } from '../';
+import {
+  ITimesheetstatus,
+  TimesheetstatusService,
+  TimesheetstatusDetailsComponent,
+  TimesheetstatusListComponent,
+} from '../';
 import { DateUtils } from 'src/app/common/shared';
 import { ListComponent, DetailsComponent, FieldsComp } from 'src/app/common/general-components';
 
@@ -15,33 +20,27 @@ describe('TimesheetstatusDetailsComponent', () => {
   let component: TimesheetstatusDetailsComponent;
   let fixture: ComponentFixture<TimesheetstatusDetailsComponent>;
   let el: HTMLElement;
-  
+
   let d = new Date();
   let t = DateUtils.formatDateStringToAMPM(d);
-  
-  let relationData: any = {
-  }
-  let data:ITimesheetstatus = {
+
+  let relationData: any = {};
+  let data: ITimesheetstatus = {
     id: 1,
     statusname: 'statusname1',
-    ... relationData
+    ...relationData,
   };
-  
+
   describe('Unit Tests', () => {
     beforeEach(async(() => {
       TestBed.configureTestingModule({
-        declarations: [
-          TimesheetstatusDetailsComponent,
-          DetailsComponent
-        ],
+        declarations: [TimesheetstatusDetailsComponent, DetailsComponent],
         imports: [TestingModule],
-        providers: [
-          TimesheetstatusService,
-        ],
-        schemas: [NO_ERRORS_SCHEMA]  
+        providers: [TimesheetstatusService],
+        schemas: [NO_ERRORS_SCHEMA],
       }).compileComponents();
     }));
-  
+
     beforeEach(() => {
       fixture = TestBed.createComponent(TimesheetstatusDetailsComponent);
       component = fixture.componentInstance;
@@ -86,34 +85,29 @@ describe('TimesheetstatusDetailsComponent', () => {
       spyOn(component, 'onBack').and.returnValue();
       el = fixture.debugElement.query(By.css('button[name=back]')).nativeElement;
       el.click();
-      
+
       expect(component.onBack).toHaveBeenCalled();
     });
-
   });
-  
+
   describe('Integration Tests', () => {
     beforeEach(async(() => {
-
       TestBed.configureTestingModule({
         declarations: [
           TimesheetstatusDetailsComponent,
           TimesheetstatusListComponent,
           DetailsComponent,
           ListComponent,
-          FieldsComp
+          FieldsComp,
         ].concat(EntryComponents),
         imports: [
           TestingModule,
           RouterTestingModule.withRoutes([
             { path: 'timesheetstatus', component: TimesheetstatusDetailsComponent },
-            { path: 'timesheetstatus/:id', component: TimesheetstatusListComponent }
-          ])
+            { path: 'timesheetstatus/:id', component: TimesheetstatusListComponent },
+          ]),
         ],
-        providers: [
-          TimesheetstatusService
-        ]
-
+        providers: [TimesheetstatusService],
       }).compileComponents();
     }));
 
@@ -155,7 +149,6 @@ describe('TimesheetstatusDetailsComponent', () => {
       el.click();
 
       expect(component.errorService.showError).toHaveBeenCalled();
-
     });
 
     it('should go back to list component when back button is clicked', async () => {
@@ -171,9 +164,6 @@ describe('TimesheetstatusDetailsComponent', () => {
       let responsePromise = navigationSpy.calls.mostRecent().returnValue;
       await responsePromise;
       expect(location.path()).toBe('/timesheetstatus');
-
     });
-
   });
-  
 });

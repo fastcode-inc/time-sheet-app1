@@ -3,14 +3,11 @@ package com.fastcode.timesheetapp1.application.core.authorization.tokenverificat
 import com.fastcode.timesheetapp1.domain.core.authorization.tokenverification.TokenverificationEntity;
 
 public interface ITokenVerificationAppService {
-	
-	TokenverificationEntity findByTokenAndType(String token, String type);
+    TokenverificationEntity findByTokenAndType(String token, String type);
 
-	TokenverificationEntity generateToken(String type,Long usersId);
+    TokenverificationEntity generateToken(String type, Long usersId);
 
-	TokenverificationEntity findByUsersIdAndType(Long usersId, String type);
+    TokenverificationEntity findByUsersIdAndType(Long usersId, String type);
 
-	void deleteToken(TokenverificationEntity entity);
-
+    void deleteToken(TokenverificationEntity entity);
 }
-

@@ -1,18 +1,16 @@
 package com.fastcode.timesheetapp1.addons.scheduler.domain.jobhistory;
 
+import com.fastcode.timesheetapp1.addons.scheduler.BeanUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fastcode.timesheetapp1.addons.scheduler.BeanUtil;
-
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.quartz.JobListener;
 import org.springframework.stereotype.Component;
-
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 @Component
 public class JobsListener implements JobListener {
@@ -23,64 +21,52 @@ public class JobsListener implements JobListener {
     }
 
     @Override
-    public void jobToBeExecuted(JobExecutionContext context) {
-
-    }
+    public void jobToBeExecuted(JobExecutionContext context) {}
 
     @Override
-    public void jobExecutionVetoed(JobExecutionContext context) {
-        
-    }
+    public void jobExecutionVetoed(JobExecutionContext context) {}
 
     @Override
     public void jobWasExecuted(JobExecutionContext context, JobExecutionException jobException) {
+        Date finishTime = new Date(context.getJobRunTime() + context.getFireTime().getTime());
 
-    	Date finishTime = new Date(context.getJobRunTime() + context.getFireTime().getTime());
+        JobHistoryEntity jobentity = new JobHistoryEntity();
 
-         JobHistoryEntity jobentity = new JobHistoryEntity();
+        JobDataMap jobMapData = context.getJobDetail().getJobDataMap();
+        String[] keys = jobMapData.getKeys();
+        Map<String, String> map = new HashMap<String, String>();
+        for (int i = 0; i < keys.length; i++) {
+            String st = jobMapData.getString(keys[i]);
+            map.put(keys[i], st);
+        }
 
-         JobDataMap jobMapData = context.getJobDetail().getJobDataMap();
-         String[] keys = jobMapData.getKeys();
-         Map<String, String> map = new HashMap<String, String>();
-         for (int i = 0; i < keys.length; i++) {
-             String st = jobMapData.getString(keys[i]);
-             map.put(keys[i], st);
-         }
+        String mapDataJson = null;
+        try {
+            mapDataJson = new ObjectMapper().writeValueAsString(map);
+        } catch (JsonProcessingException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        jobentity.setJobName(context.getJobDetail().getKey().getName());
+        jobentity.setJobGroup(context.getJobDetail().getKey().getGroup());
+        jobentity.setJobClass(context.getJobDetail().getKey().getClass().toString());
+        jobentity.setTriggerName(context.getTrigger().getKey().getName());
+        jobentity.setTriggerGroup(context.getTrigger().getKey().getGroup());
+        jobentity.setDuration(timeDifference(context.getJobRunTime()));
+        jobentity.setJobMapData(mapDataJson);
+        jobentity.setFiredTime(context.getFireTime());
+        jobentity.setFinishedTime(finishTime);
+        jobentity.setJobDescription(context.getJobDetail().getDescription());
 
-         String mapDataJson = null;
-         try {
-             mapDataJson = new ObjectMapper().writeValueAsString(map);
+        if (jobException == null) {
+            jobentity.setJobStatus("Success");
+        } else jobentity.setJobStatus("Failure");
 
-         } catch (JsonProcessingException e) {
-             // TODO Auto-generated catch block
-             e.printStackTrace();
-         }
-           jobentity.setJobName(context.getJobDetail().getKey().getName());
-           jobentity.setJobGroup(context.getJobDetail().getKey().getGroup());
-           jobentity.setJobClass(context.getJobDetail().getKey().getClass().toString());
-           jobentity.setTriggerName(context.getTrigger().getKey().getName());
-           jobentity.setTriggerGroup(context.getTrigger().getKey().getGroup());
-           jobentity.setDuration(timeDifference(context.getJobRunTime()));
-           jobentity.setJobMapData(mapDataJson);
-           jobentity.setFiredTime(context.getFireTime());
-           jobentity.setFinishedTime(finishTime);
-           jobentity.setJobDescription(context.getJobDetail().getDescription());
-           
-           if(jobException == null)
-           {
-           jobentity.setJobStatus("Success");
-           }
-           else
-           jobentity.setJobStatus("Failure");
-
-
-           IJobHistoryRepository jobHistoryRepository = BeanUtil.getBean(IJobHistoryRepository.class);
-           jobHistoryRepository.save(jobentity);
-
+        IJobHistoryRepository jobHistoryRepository = BeanUtil.getBean(IJobHistoryRepository.class);
+        jobHistoryRepository.save(jobentity);
     }
 
     public static String timeDifference(long durationInMillis) {
-
         long millis = durationInMillis % 1000;
         long second = (durationInMillis / 1000) % 60;
         long minute = (durationInMillis / (1000 * 60)) % 60;
@@ -89,9 +75,5 @@ public class JobsListener implements JobListener {
         String time = String.format("%02d:%02d:%02d.%d", hour, minute, second, millis);
 
         return time;
-
-
     }
-
 }
-

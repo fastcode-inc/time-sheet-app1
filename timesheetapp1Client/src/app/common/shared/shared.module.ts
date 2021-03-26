@@ -40,14 +40,14 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     ReactiveFormsModule,
     NgxMaterialTimepickerModule,
     FlexLayoutModule,
-	TranslateModule.forChild({
+    TranslateModule.forChild({
       loader: {
         provide: TranslateLoader,
         useFactory: HttpLoaderFactory,
-        deps: [HttpClient]
+        deps: [HttpClient],
       },
-      isolate: false
-    })
+      isolate: false,
+    }),
   ],
   declarations: [
     ConfirmDialogComponent,
@@ -62,8 +62,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     PickerComponent,
     MatFormFieldRequiredDirective,
     ToolTipRendererDirective,
-    CustomToolTipComponent
-    
+    CustomToolTipComponent,
   ],
   exports: [
     ConfirmDialogComponent,
@@ -79,7 +78,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     MatFormFieldRequiredDirective,
     ToolTipRendererDirective,
     CustomToolTipComponent,
-    
+
     CommonModule,
     LayoutModule,
     RouterModule,
@@ -87,16 +86,10 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     FormsModule,
     ReactiveFormsModule,
     NgxMaterialTimepickerModule,
-	TranslateModule,
-	FlexLayoutModule
-    
+    TranslateModule,
+    FlexLayoutModule,
   ],
-  entryComponents: [
-    PickerComponent,
-    ConfirmDialogComponent,
-    IconComponent,
-    CustomToolTipComponent
-  ],
-  providers: [Globals,CanDeactivateGuard]
+  entryComponents: [PickerComponent, ConfirmDialogComponent, IconComponent, CustomToolTipComponent],
+  providers: [Globals, CanDeactivateGuard],
 })
-export class SharedModule { }
+export class SharedModule {}

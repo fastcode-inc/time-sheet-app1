@@ -8,48 +8,46 @@ describe('ConfirmDialogComponent', () => {
   let component: ConfirmDialogComponent;
   let fixture: ComponentFixture<ConfirmDialogComponent>;
 
-  describe('', ()=>{
+  describe('', () => {
     beforeEach(async(() => {
       TestBed.configureTestingModule({
-        declarations: [ ConfirmDialogComponent ],
+        declarations: [ConfirmDialogComponent],
         imports: [TestingModule],
         providers: [
           { provide: MAT_DIALOG_DATA, useValue: {} },
-          { provide: MatDialogRef, useValue: { close: (dialogResult: any) => { } } },
-        ]
-      })
-      .compileComponents();
+          { provide: MatDialogRef, useValue: { close: (dialogResult: any) => {} } },
+        ],
+      }).compileComponents();
     }));
-  
+
     beforeEach(() => {
       fixture = TestBed.createComponent(ConfirmDialogComponent);
       component = fixture.componentInstance;
       fixture.detectChanges();
     });
-  
+
     it('should create', () => {
       expect(component).toBeTruthy();
     });
   });
-  describe('', ()=>{
+  describe('', () => {
     beforeEach(async(() => {
       TestBed.configureTestingModule({
-        declarations: [ ConfirmDialogComponent ],
+        declarations: [ConfirmDialogComponent],
         imports: [TestingModule],
         providers: [
-          { provide: MAT_DIALOG_DATA, useValue: {confirmationType: "delete"} },
+          { provide: MAT_DIALOG_DATA, useValue: { confirmationType: 'delete' } },
           { provide: MatDialogRef, useValue: { close: (dialogResult: any) => {} } },
-        ]
-      })
-      .compileComponents();
+        ],
+      }).compileComponents();
     }));
-  
+
     beforeEach(() => {
       fixture = TestBed.createComponent(ConfirmDialogComponent);
       component = fixture.componentInstance;
       fixture.detectChanges();
     });
-  
+
     it('should be created with confirmation type delete', () => {
       expect(component).toBeTruthy();
     });

@@ -1,9 +1,9 @@
-export interface ITask {  
-	description?: string;
-	id: number;
-	isactive: boolean;
-	name: string;
+export interface ITask {
+  description?: string;
+  id: number;
+  isactive: boolean;
+  name: string;
 
-	projectDescriptiveField?: string;
-	projectid?: number;
+  projectDescriptiveField?: string;
+  projectid?: number;
 }

@@ -21,7 +21,6 @@ import { MyreportsComponent } from './pages/myreports/myreports.component';
 import { SaveReportsComponent } from './modalDialogs/saveReports/saveReports.component';
 import { AddExReportsToDashboardComponent } from './modalDialogs/addExReportsToDashboard/addExReportsToDashboard.component';
 
-
 import { MatSlideToggleModule, MatMenuModule } from '@angular/material';
 import { DashboardMainComponent } from './pages/dashboard/dashboard-main/dashboard-main.component';
 import { MyreportsMainComponent } from './pages/myreports/myreports-main/myreports-main.component';
@@ -33,10 +32,10 @@ import { ChartComponent } from './pages/chart/chart.component';
 import { ChartsModule } from 'ng2-charts';
 
 const cubejsOptions = {
-  token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.K9PiJkjegbhnw4Ca5pPlkTmZihoOm42w8bja9Qs2qJg",
+  token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.K9PiJkjegbhnw4Ca5pPlkTmZihoOm42w8bja9Qs2qJg',
   options: {
-    apiUrl: environment.reportingUrl + "/cubejs-api/v1"
-  }
+    apiUrl: environment.reportingUrl + '/cubejs-api/v1',
+  },
 };
 
 @NgModule({
@@ -57,7 +56,7 @@ const cubejsOptions = {
     MyreportsMainComponent,
     ReportDetailsComponent,
     UpdateDashboardComponent,
-    ChartComponent
+    ChartComponent,
   ],
   imports: [
     ChartsModule,
@@ -79,7 +78,6 @@ const cubejsOptions = {
     AddExReportsToDashboardComponent,
     SaveReportsComponent,
     UpdateDashboardComponent,
-
-  ]
+  ],
 })
-export class ReportingModule { }
+export class ReportingModule {}

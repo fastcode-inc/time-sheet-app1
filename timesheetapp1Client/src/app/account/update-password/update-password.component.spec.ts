@@ -15,16 +15,15 @@ describe('UpdatePasswordComponent', () => {
   let data = {
     oldPassword: 'oldPassword',
     newPassword: 'newPassword',
-    confirmPassword: 'newPassword'
+    confirmPassword: 'newPassword',
   };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UpdatePasswordComponent ],
+      declarations: [UpdatePasswordComponent],
       imports: [TestingModule],
-      providers: [AuthenticationService]
-    })
-    .compileComponents();
+      providers: [AuthenticationService],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -72,5 +71,4 @@ describe('UpdatePasswordComponent', () => {
     expect(component.passwordUpdated).toBe(false);
     expect(component.disabled).toBe(false);
   });
-
 });

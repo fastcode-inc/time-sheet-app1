@@ -7,7 +7,12 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { Location } from '@angular/common';
 
 import { TestingModule, EntryComponents } from 'src/testing/utils';
-import { IUserspermission, UserspermissionService, UserspermissionDetailsComponent, UserspermissionListComponent } from '../';
+import {
+  IUserspermission,
+  UserspermissionService,
+  UserspermissionDetailsComponent,
+  UserspermissionListComponent,
+} from '../';
 import { DateUtils } from 'src/app/common/shared';
 import { ListComponent, DetailsComponent, FieldsComp } from 'src/app/common/general-components';
 
@@ -15,36 +20,31 @@ describe('UserspermissionDetailsComponent', () => {
   let component: UserspermissionDetailsComponent;
   let fixture: ComponentFixture<UserspermissionDetailsComponent>;
   let el: HTMLElement;
-  
+
   let d = new Date();
   let t = DateUtils.formatDateStringToAMPM(d);
-  
+
   let relationData: any = {
     permissionDescriptiveField: 'displayName1',
     usersDescriptiveField: 'lastname1',
-  }
-  let data:IUserspermission = {
+  };
+  let data: IUserspermission = {
     permissionId: 1,
     revoked: true,
     usersId: 1,
-    ... relationData
+    ...relationData,
   };
-  
+
   describe('Unit Tests', () => {
     beforeEach(async(() => {
       TestBed.configureTestingModule({
-        declarations: [
-          UserspermissionDetailsComponent,
-          DetailsComponent
-        ],
+        declarations: [UserspermissionDetailsComponent, DetailsComponent],
         imports: [TestingModule],
-        providers: [
-          UserspermissionService,
-        ],
-        schemas: [NO_ERRORS_SCHEMA]  
+        providers: [UserspermissionService],
+        schemas: [NO_ERRORS_SCHEMA],
       }).compileComponents();
     }));
-  
+
     beforeEach(() => {
       fixture = TestBed.createComponent(UserspermissionDetailsComponent);
       component = fixture.componentInstance;
@@ -89,34 +89,29 @@ describe('UserspermissionDetailsComponent', () => {
       spyOn(component, 'onBack').and.returnValue();
       el = fixture.debugElement.query(By.css('button[name=back]')).nativeElement;
       el.click();
-      
+
       expect(component.onBack).toHaveBeenCalled();
     });
-
   });
-  
+
   describe('Integration Tests', () => {
     beforeEach(async(() => {
-
       TestBed.configureTestingModule({
         declarations: [
           UserspermissionDetailsComponent,
           UserspermissionListComponent,
           DetailsComponent,
           ListComponent,
-          FieldsComp
+          FieldsComp,
         ].concat(EntryComponents),
         imports: [
           TestingModule,
           RouterTestingModule.withRoutes([
             { path: 'userspermission', component: UserspermissionDetailsComponent },
-            { path: 'userspermission/:id', component: UserspermissionListComponent }
-          ])
+            { path: 'userspermission/:id', component: UserspermissionListComponent },
+          ]),
         ],
-        providers: [
-          UserspermissionService
-        ]
-
+        providers: [UserspermissionService],
       }).compileComponents();
     }));
 
@@ -158,7 +153,6 @@ describe('UserspermissionDetailsComponent', () => {
       el.click();
 
       expect(component.errorService.showError).toHaveBeenCalled();
-
     });
 
     it('should go back to list component when back button is clicked', async () => {
@@ -174,9 +168,6 @@ describe('UserspermissionDetailsComponent', () => {
       let responsePromise = navigationSpy.calls.mostRecent().returnValue;
       await responsePromise;
       expect(location.path()).toBe('/userspermission');
-
     });
-
   });
-  
 });

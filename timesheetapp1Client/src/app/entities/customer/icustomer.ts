@@ -1,7 +1,6 @@
-export interface ICustomer {  
-	customerid: number;
-	description?: string;
-	isactive: boolean;
-	name: string;
-
+export interface ICustomer {
+  customerid: number;
+  description?: string;
+  isactive: boolean;
+  name: string;
 }

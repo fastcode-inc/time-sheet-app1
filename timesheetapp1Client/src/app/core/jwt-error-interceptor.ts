@@ -7,21 +7,23 @@ import { AuthenticationService } from './authentication.service';
 
 @Injectable()
 export class JwtErrorInterceptor implements HttpInterceptor {
-    constructor(private authenticationService: AuthenticationService) {}
+  constructor(private authenticationService: AuthenticationService) {}
 
-    intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        return next.handle(request).pipe(catchError(err => {
-            if (err.status === 401) {
-                // auto logout if 401 response returned from api
-                this.authenticationService.logout();
+  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    return next.handle(request).pipe(
+      catchError((err) => {
+        if (err.status === 401) {
+          // auto logout if 401 response returned from api
+          this.authenticationService.logout();
 
-                                if (!request.url.includes("login")) {
-                	location.reload(true);
-                }
-            }
-            
-            const error = err.error.message || err.statusText;
-            return throwError(error);
-        }))
-    }
+          if (!request.url.includes('login')) {
+            location.reload(true);
+          }
+        }
+
+        const error = err.error.message || err.statusText;
+        return throwError(error);
+      })
+    );
+  }
 }

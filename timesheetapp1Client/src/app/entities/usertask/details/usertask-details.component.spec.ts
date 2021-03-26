@@ -15,35 +15,30 @@ describe('UsertaskDetailsComponent', () => {
   let component: UsertaskDetailsComponent;
   let fixture: ComponentFixture<UsertaskDetailsComponent>;
   let el: HTMLElement;
-  
+
   let d = new Date();
   let t = DateUtils.formatDateStringToAMPM(d);
-  
+
   let relationData: any = {
     taskDescriptiveField: 'name1',
     usersDescriptiveField: 'lastname1',
-  }
-  let data:IUsertask = {
+  };
+  let data: IUsertask = {
     taskid: 1,
     userid: 1,
-    ... relationData
+    ...relationData,
   };
-  
+
   describe('Unit Tests', () => {
     beforeEach(async(() => {
       TestBed.configureTestingModule({
-        declarations: [
-          UsertaskDetailsComponent,
-          DetailsComponent
-        ],
+        declarations: [UsertaskDetailsComponent, DetailsComponent],
         imports: [TestingModule],
-        providers: [
-          UsertaskService,
-        ],
-        schemas: [NO_ERRORS_SCHEMA]  
+        providers: [UsertaskService],
+        schemas: [NO_ERRORS_SCHEMA],
       }).compileComponents();
     }));
-  
+
     beforeEach(() => {
       fixture = TestBed.createComponent(UsertaskDetailsComponent);
       component = fixture.componentInstance;
@@ -88,34 +83,29 @@ describe('UsertaskDetailsComponent', () => {
       spyOn(component, 'onBack').and.returnValue();
       el = fixture.debugElement.query(By.css('button[name=back]')).nativeElement;
       el.click();
-      
+
       expect(component.onBack).toHaveBeenCalled();
     });
-
   });
-  
+
   describe('Integration Tests', () => {
     beforeEach(async(() => {
-
       TestBed.configureTestingModule({
         declarations: [
           UsertaskDetailsComponent,
           UsertaskListComponent,
           DetailsComponent,
           ListComponent,
-          FieldsComp
+          FieldsComp,
         ].concat(EntryComponents),
         imports: [
           TestingModule,
           RouterTestingModule.withRoutes([
             { path: 'usertask', component: UsertaskDetailsComponent },
-            { path: 'usertask/:id', component: UsertaskListComponent }
-          ])
+            { path: 'usertask/:id', component: UsertaskListComponent },
+          ]),
         ],
-        providers: [
-          UsertaskService
-        ]
-
+        providers: [UsertaskService],
       }).compileComponents();
     }));
 
@@ -157,7 +147,6 @@ describe('UsertaskDetailsComponent', () => {
       el.click();
 
       expect(component.errorService.showError).toHaveBeenCalled();
-
     });
 
     it('should go back to list component when back button is clicked', async () => {
@@ -173,9 +162,6 @@ describe('UsertaskDetailsComponent', () => {
       let responsePromise = navigationSpy.calls.mostRecent().returnValue;
       await responsePromise;
       expect(location.path()).toBe('/usertask');
-
     });
-
   });
-  
 });

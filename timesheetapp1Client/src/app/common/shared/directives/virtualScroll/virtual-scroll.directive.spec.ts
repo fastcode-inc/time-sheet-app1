@@ -1,13 +1,12 @@
 import { VirtualScrollDirective } from './virtual-scroll.directive';
-import {TestBed, ComponentFixture} from '@angular/core/testing';
-import {Component, DebugElement} from "@angular/core";
-import {By} from "@angular/platform-browser";
+import { TestBed, ComponentFixture } from '@angular/core/testing';
+import { Component, DebugElement } from '@angular/core';
+import { By } from '@angular/platform-browser';
 
 @Component({
-  template: `<ul type="text" appVirtualScroll></ul>`
+  template: `<ul type="text" appVirtualScroll></ul>`,
 })
-class TestVirtualScrollComponent {
-}
+class TestVirtualScrollComponent {}
 describe('VirtualScrollDirective', () => {
   let component: TestVirtualScrollComponent;
   let fixture: ComponentFixture<TestVirtualScrollComponent>;
@@ -17,7 +16,7 @@ describe('VirtualScrollDirective', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [TestVirtualScrollComponent, VirtualScrollDirective]
+      declarations: [TestVirtualScrollComponent, VirtualScrollDirective],
     });
     fixture = TestBed.createComponent(TestVirtualScrollComponent);
     component = fixture.componentInstance;
@@ -27,15 +26,13 @@ describe('VirtualScrollDirective', () => {
   });
 
   it('should emit scroll event', () => {
-    
     let e = {
-      target :{
+      target: {
         offsetHeight: 250,
         scrollHeight: 300,
-        scrollTop: 50
-        
-      }
-    }
+        scrollTop: 50,
+      },
+    };
 
     inputEl.triggerEventHandler('scroll', e);
     directive.scrollEventHandler(e);
@@ -44,15 +41,13 @@ describe('VirtualScrollDirective', () => {
   });
 
   it('should not emit scroll event', () => {
-    
     let e = {
-      target :{
+      target: {
         offsetHeight: 200,
         scrollHeight: 350,
-        scrollTop: 50
-        
-      }
-    }
+        scrollTop: 50,
+      },
+    };
 
     inputEl.triggerEventHandler('scroll', e);
     directive.scrollEventHandler(e);

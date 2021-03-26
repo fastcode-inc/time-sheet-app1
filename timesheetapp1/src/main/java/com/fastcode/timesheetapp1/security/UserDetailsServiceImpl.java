@@ -1,8 +1,8 @@
 package com.fastcode.timesheetapp1.security;
 
-import com.fastcode.timesheetapp1.domain.core.authorization.users.UsersEntity;
 import com.fastcode.timesheetapp1.domain.core.authorization.users.IUsersRepository;
-
+import com.fastcode.timesheetapp1.domain.core.authorization.users.UsersEntity;
+import java.util.List;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -14,34 +14,29 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-
 @Component
 @RequiredArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
 
+    @Qualifier("usersRepository")
+    @NonNull
+    private final IUsersRepository usersRepository;
 
-	@Qualifier("usersRepository")
-	@NonNull private final IUsersRepository usersRepository;
+    @NonNull
+    private final SecurityUtils securityUtils;
 
-	@NonNull private final SecurityUtils securityUtils;
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        UsersEntity applicationUser = usersRepository.findByUsername(username);
 
-	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        if (applicationUser == null) {
+            throw new UsernameNotFoundException(username);
+        }
 
-    UsersEntity applicationUser = usersRepository.findByUsername(username);       
+        List<String> permissions = securityUtils.getAllPermissionsFromUserAndRole(applicationUser);
+        String[] groupsArray = new String[permissions.size()];
+        List<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList(permissions.toArray(groupsArray));
 
-	if (applicationUser == null) {
-		throw new UsernameNotFoundException(username);
-	}
-
-	List<String> permissions = securityUtils.getAllPermissionsFromUserAndRole(applicationUser);
-	String[] groupsArray = new String[permissions.size()];
-   	List<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList(permissions.toArray(groupsArray));
-
-	return new User(applicationUser.getUsername(), applicationUser.getPassword(), authorities); // User class implements UserDetails Interface
-	}
-
-
+        return new User(applicationUser.getUsername(), applicationUser.getPassword(), authorities); // User class implements UserDetails Interface
+    }
 }
-

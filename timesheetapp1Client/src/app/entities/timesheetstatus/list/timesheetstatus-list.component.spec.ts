@@ -9,51 +9,47 @@ import { ListFiltersComponent, ServiceUtils, DateUtils } from 'src/app/common/sh
 import { ListComponent, DetailsComponent, NewComponent, FieldsComp } from 'src/app/common/general-components';
 
 import { EntryComponents, TestingModule } from 'src/testing/utils';
-import { ITimesheetstatus, TimesheetstatusService, TimesheetstatusDetailsComponent, TimesheetstatusListComponent,
-	TimesheetstatusNewComponent } from '../';
+import {
+  ITimesheetstatus,
+  TimesheetstatusService,
+  TimesheetstatusDetailsComponent,
+  TimesheetstatusListComponent,
+  TimesheetstatusNewComponent,
+} from '../';
 
 describe('TimesheetstatusListComponent', () => {
-  let fixture:ComponentFixture<TimesheetstatusListComponent>;
-  let component:TimesheetstatusListComponent;
+  let fixture: ComponentFixture<TimesheetstatusListComponent>;
+  let component: TimesheetstatusListComponent;
   let el: HTMLElement;
-  
+
   let d = new Date();
   let t = DateUtils.formatDateStringToAMPM(d);
-  let constData:ITimesheetstatus[] = [
-    {   
+  let constData: ITimesheetstatus[] = [
+    {
       id: 1,
       statusname: 'statusname1',
     },
-    {   
+    {
       id: 2,
       statusname: 'statusname2',
     },
   ];
-  let data: ITimesheetstatus[] = [... constData];
+  let data: ITimesheetstatus[] = [...constData];
 
   describe('Unit tests', () => {
-  
     beforeEach(async(() => {
-      
       TestBed.configureTestingModule({
-        declarations: [
-          TimesheetstatusListComponent,
-          ListComponent
-        ],
+        declarations: [TimesheetstatusListComponent, ListComponent],
         imports: [TestingModule],
-        providers: [
-          TimesheetstatusService,      
-          ChangeDetectorRef,
-        ],
-        schemas: [NO_ERRORS_SCHEMA]   
+        providers: [TimesheetstatusService, ChangeDetectorRef],
+        schemas: [NO_ERRORS_SCHEMA],
       }).compileComponents();
-
     }));
-    
+
     beforeEach(() => {
       fixture = TestBed.createComponent(TimesheetstatusListComponent);
       component = fixture.componentInstance;
-      data = [... constData];
+      data = [...constData];
       fixture.detectChanges();
     });
 
@@ -62,7 +58,6 @@ describe('TimesheetstatusListComponent', () => {
     });
 
     it('should run #ngOnInit()', async () => {
-
       spyOn(component.dataService, 'getAll').and.returnValue(of(data));
       component.ngOnInit();
 
@@ -77,7 +72,6 @@ describe('TimesheetstatusListComponent', () => {
       expect(component.columns.length).toBeGreaterThan(0);
       expect(component.selectedColumns.length).toBeGreaterThan(0);
       expect(component.displayedColumns.length).toBeGreaterThan(0);
-
     });
 
     it('should run #addNew()', async () => {
@@ -86,13 +80,12 @@ describe('TimesheetstatusListComponent', () => {
       el.click();
       expect(component.addNew).toHaveBeenCalled();
     });
-    
-    it('should run #delete()', async () => {
 
+    it('should run #delete()', async () => {
       component.items = data;
       fixture.detectChanges();
 
-      let tableRows = fixture.nativeElement.querySelectorAll('mat-row')
+      let tableRows = fixture.nativeElement.querySelectorAll('mat-row');
       let firstRowCells = tableRows[0].querySelectorAll('mat-cell');
       let editButtonCell = firstRowCells[firstRowCells.length - 1];
       let editButton = editButtonCell.querySelectorAll('button')[1];
@@ -100,14 +93,13 @@ describe('TimesheetstatusListComponent', () => {
       spyOn(component, 'delete').and.returnValue();
       editButton.click();
       expect(component.delete).toHaveBeenCalledWith(data[0]);
-
     });
 
     it('should call openDetails function when edit button is clicked', async () => {
       component.items = data;
       fixture.detectChanges();
 
-      let tableRows = fixture.nativeElement.querySelectorAll('mat-row')
+      let tableRows = fixture.nativeElement.querySelectorAll('mat-row');
       let firstRowCells = tableRows[0].querySelectorAll('mat-cell');
       let editButtonCell = firstRowCells[firstRowCells.length - 1];
       let editButton = editButtonCell.querySelectorAll('button')[0];
@@ -120,27 +112,24 @@ describe('TimesheetstatusListComponent', () => {
 
     it('should call applyFilter function in case of onSearch event of list-filter-component', async () => {
       fixture.detectChanges();
-      
+
       spyOn(component, 'applyFilter');
       fixture.debugElement.query(By.css('app-list-filters')).triggerEventHandler('onSearch', null);
-      
+
       expect(component.applyFilter).toHaveBeenCalled();
     });
 
     it('should pass the selected columns list as input to app list filters', async () => {
       fixture.detectChanges();
-      
+
       let listFilterElement: DebugElement = fixture.debugElement.query(By.css('app-list-filters'));
-      
+
       expect(listFilterElement.properties.columnsList).toBe(component.selectedColumns);
     });
-  
   });
-  
+
   describe('Integration tests', () => {
-
     beforeEach(async(() => {
-
       TestBed.configureTestingModule({
         declarations: [
           TimesheetstatusListComponent,
@@ -149,28 +138,23 @@ describe('TimesheetstatusListComponent', () => {
           TimesheetstatusDetailsComponent,
           ListComponent,
           DetailsComponent,
-          FieldsComp
+          FieldsComp,
         ].concat(EntryComponents),
         imports: [
           TestingModule,
           RouterTestingModule.withRoutes([
             { path: 'timesheetstatus', component: TimesheetstatusListComponent },
-            { path: 'timesheetstatus/:id', component: TimesheetstatusDetailsComponent }
-          ])
+            { path: 'timesheetstatus/:id', component: TimesheetstatusDetailsComponent },
+          ]),
         ],
-        providers: [
-          TimesheetstatusService,
-          ChangeDetectorRef,
-        ]
-
+        providers: [TimesheetstatusService, ChangeDetectorRef],
       }).compileComponents();
-
     }));
 
     beforeEach(() => {
       fixture = TestBed.createComponent(TimesheetstatusListComponent);
       component = fixture.componentInstance;
-      data = [... constData];
+      data = [...constData];
       fixture.detectChanges();
     });
 
@@ -204,12 +188,12 @@ describe('TimesheetstatusListComponent', () => {
 
       expect(component.dialog.open).toHaveBeenCalled();
     });
-    
+
     it('should delete the item from list', async () => {
       component.items = data;
       fixture.detectChanges();
 
-      let tableRows = fixture.nativeElement.querySelectorAll('mat-row')
+      let tableRows = fixture.nativeElement.querySelectorAll('mat-row');
       let firstRowCells = tableRows[0].querySelectorAll('mat-cell');
       let deleteButtonCell = firstRowCells[firstRowCells.length - 1];
       let deleteButton = deleteButtonCell.querySelectorAll('button[name="delete"]')[0];
@@ -222,7 +206,7 @@ describe('TimesheetstatusListComponent', () => {
 
     it('should set the columns list in app list filters component', async () => {
       let listFilters: ListFiltersComponent = fixture.debugElement.query(By.css('app-list-filters')).componentInstance;
-      
+
       expect(listFilters.columnsList).toEqual(component.selectedColumns);
     });
 
@@ -232,7 +216,7 @@ describe('TimesheetstatusListComponent', () => {
       component.items = data;
       fixture.detectChanges();
 
-      let tableRows = fixture.nativeElement.querySelectorAll('mat-row')
+      let tableRows = fixture.nativeElement.querySelectorAll('mat-row');
       let firstRowCells = tableRows[0].querySelectorAll('mat-cell');
       let editButtonCell = firstRowCells[firstRowCells.length - 1];
       let editButton = editButtonCell.querySelectorAll('button[name="edit"]')[0];
@@ -243,8 +227,10 @@ describe('TimesheetstatusListComponent', () => {
 
       let responsePromise = navigationSpy.calls.mostRecent().returnValue;
       await responsePromise;
-      
-      expect(decodeURIComponent(location.path())).toBe(`/timesheetstatus/${ServiceUtils.encodeIdByObject(data[0], component.primaryKeys)}`);
+
+      expect(decodeURIComponent(location.path())).toBe(
+        `/timesheetstatus/${ServiceUtils.encodeIdByObject(data[0], component.primaryKeys)}`
+      );
     });
 
     it('should emit onSearch event of list-filter-component and call applyFilter function', async () => {
@@ -252,7 +238,7 @@ describe('TimesheetstatusListComponent', () => {
       spyOn(component.dataService, 'getAssociations').and.returnValue(of(filteredArray));
       spyOn(component.dataService, 'getAll').and.returnValue(of(filteredArray));
 
-      let filterableColumns = component.columns.filter(x => x.filter)
+      let filterableColumns = component.columns.filter((x) => x.filter);
       if (filterableColumns.length > 0) {
         let searchButton = fixture.debugElement.query(By.css('app-list-filters')).query(By.css('button')).nativeElement;
         searchButton.click();
@@ -260,7 +246,5 @@ describe('TimesheetstatusListComponent', () => {
         expect(component.items).toEqual(filteredArray);
       }
     });
-
   });
-        
 });

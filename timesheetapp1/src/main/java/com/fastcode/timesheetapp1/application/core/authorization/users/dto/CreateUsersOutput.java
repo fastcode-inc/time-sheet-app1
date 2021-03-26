@@ -4,7 +4,8 @@ import java.time.*;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter @Setter
+@Getter
+@Setter
 public class CreateUsersOutput {
 
     private String emailaddress;
@@ -16,8 +17,6 @@ public class CreateUsersOutput {
     private String triggerGroup;
     private String triggerName;
     private String username;
-	private String theme;
+    private String theme;
     private String language;
-
 }
-

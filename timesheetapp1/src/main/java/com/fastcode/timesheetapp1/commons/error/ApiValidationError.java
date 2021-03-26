@@ -3,7 +3,8 @@ package com.fastcode.timesheetapp1.commons.error;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter @Setter
+@Getter
+@Setter
 public class ApiValidationError extends ApiSubError {
 
     private String object;
@@ -13,12 +14,21 @@ public class ApiValidationError extends ApiSubError {
 
     @Override
     public String toString() {
-        return "ApiValidationError{" +
-                "object='" + object + '\'' +
-                ", field='" + field + '\'' +
-                ", rejectedValue=" + rejectedValue +
-                ", message='" + message + '\'' +
-                '}';
+        return (
+            "ApiValidationError{" +
+            "object='" +
+            object +
+            '\'' +
+            ", field='" +
+            field +
+            '\'' +
+            ", rejectedValue=" +
+            rejectedValue +
+            ", message='" +
+            message +
+            '\'' +
+            '}'
+        );
     }
 
     public ApiValidationError(String object, String field, Object rejectedValue, String message) {
@@ -32,7 +42,4 @@ public class ApiValidationError extends ApiSubError {
         this.object = object;
         this.message = message;
     }
-
-
 }
-

@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { ITrigger } from './trigger';
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { of as observableOf } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
@@ -16,10 +16,10 @@ import { IListColumn, listColumnType, ISearchField } from 'src/app/common/shared
 @Component({
   selector: 'app-triggers',
   templateUrl: './triggers.component.html',
-  styleUrls: ['./triggers.component.scss']
+  styleUrls: ['./triggers.component.scss'],
 })
 export class TriggersComponent implements OnInit {
-  @ViewChild(MatSort,{ static: true }) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   // table data for triggers
   columns: IListColumn[] = [
@@ -28,72 +28,83 @@ export class TriggersComponent implements OnInit {
       label: this.translate.instant('TRIGGERS.FIELDS.NAME'),
       sort: true,
       filter: true,
-      type: listColumnType.String
+      type: listColumnType.String,
     },
     {
       column: 'type',
       label: this.translate.instant('TRIGGERS.FIELDS.TYPE'),
       sort: true,
       filter: true,
-      type: listColumnType.String
+      type: listColumnType.String,
     },
     {
       column: 'triggerGroup',
       label: this.translate.instant('TRIGGERS.FIELDS.GROUP'),
       sort: false,
       filter: true,
-      type: listColumnType.String
+      type: listColumnType.String,
     },
     {
       column: 'jobName',
       label: this.translate.instant('TRIGGERS.FIELDS.JOB-NAME'),
       sort: false,
       filter: true,
-      type: listColumnType.String
+      type: listColumnType.String,
     },
     {
       column: 'jobGroup',
       label: this.translate.instant('TRIGGERS.FIELDS.JOB-GROUP'),
       sort: false,
       filter: true,
-      type: listColumnType.String
+      type: listColumnType.String,
     },
     {
       column: 'startTime',
       label: this.translate.instant('TRIGGERS.FIELDS.START-TIME'),
       sort: false,
       filter: true,
-      type: listColumnType.Date
+      type: listColumnType.Date,
     },
     {
       column: 'endTime',
       label: this.translate.instant('TRIGGERS.FIELDS.END-TIME'),
       sort: false,
       filter: true,
-      type: listColumnType.Date
+      type: listColumnType.Date,
     },
     {
       column: 'lastExecutionTime',
       label: this.translate.instant('TRIGGERS.FIELDS.LAST-EXECUTION-TIME'),
       sort: false,
       filter: true,
-      type: listColumnType.Date
+      type: listColumnType.Date,
     },
     {
       column: 'nextExecutionTime',
       label: this.translate.instant('TRIGGERS.FIELDS.NEXT-EXECUTION-TIME'),
       sort: false,
       filter: true,
-      type: listColumnType.Date
+      type: listColumnType.Date,
     },
-  ]
+  ];
   selectedColumns = this.columns;
-  allDisplayedColumns: string[] = ['triggerName', 'triggerGroup', 'type', 'jobName', 'jobGroup', 'startTime', 'endTime', 'lastExecutionTime', 'nextExecutionTime', 'actions']
+  allDisplayedColumns: string[] = [
+    'triggerName',
+    'triggerGroup',
+    'type',
+    'jobName',
+    'jobGroup',
+    'startTime',
+    'endTime',
+    'lastExecutionTime',
+    'nextExecutionTime',
+    'actions',
+  ];
   displayedColumns: string[] = this.allDisplayedColumns;
   userId: number;
   triggers: ITrigger[] = [];
   errorMessage = '';
-  filterSelect:string='';
+  filterSelect: string = '';
   isLoadingResults = true;
 
   currentPage: number;
@@ -105,7 +116,7 @@ export class TriggersComponent implements OnInit {
   filterForm: FormGroup;
   loading = false;
   submitted = false;
-  filterList:any={};
+  filterList: any = {};
   dataSource;
   sortedData: ITrigger[];
 
@@ -113,9 +124,9 @@ export class TriggersComponent implements OnInit {
   dialogRef: MatDialogRef<any>;
   confirmDialogRef: MatDialogRef<any>;
 
-  mediumDeviceOrLessDialogSize: string = "100%";
-  largerDeviceDialogWidthSize: string = "75%";
-  largerDeviceDialogHeightSize: string = "90%";
+  mediumDeviceOrLessDialogSize: string = '100%';
+  largerDeviceDialogWidthSize: string = '75%';
+  largerDeviceDialogHeightSize: string = '90%';
 
   constructor(
     private global: Globals,
@@ -123,63 +134,60 @@ export class TriggersComponent implements OnInit {
     public dialog: MatDialog,
     private changeDetectorRefs: ChangeDetectorRef,
     private translate: TranslateService,
-    private errorService: ErrorService,
-  ) {
-
-  }
-
+    private errorService: ErrorService
+  ) {}
 
   ngOnInit() {
     this.manageScreenResizing();
     this.setSort();
-    this.filterList = this.selectedColumns.filter(items => {
-			if (items.filter) {
-				return items
-			}
-		});
-  }
-
-  selectedFilter: String;
-	selctFilter(event) {
-		this.filterSelect = event;
-		this.selectedFilter = event;
-
-	}
-	applyFilter1(filterValue: string) {
-		if (filterValue !== '') {
-    }
-	}
-
-
-  setSort() {
-    this.sort.sortChange.pipe(
-      startWith({}),
-      switchMap(() => {
-        console.log("DFS");
-        this.isLoadingResults = true;
-        this.initializePageInfo();
-        return this.triggerService.getAll(this.searchValue, 0, this.pageSize, this.getSortValue());
-      }),
-      map(data => {
-        // Flip flag to show that loading has finished.
-        this.isLoadingResults = false;
-        return data;
-      }),
-      catchError(() => {
-        this.isLoadingResults = false;
-        // Catch if some error occurred. Return empty data.
-        return observableOf([]);
-      })
-    ).subscribe(data => {
-      this.triggers = data;
-      this.dataSource = new MatTableDataSource(this.triggers);
-      //manage pages for virtual scrolling
-      this.updatePageInfo(data);
+    this.filterList = this.selectedColumns.filter((items) => {
+      if (items.filter) {
+        return items;
+      }
     });
   }
 
+  selectedFilter: String;
+  selctFilter(event) {
+    this.filterSelect = event;
+    this.selectedFilter = event;
+  }
+  applyFilter1(filterValue: string) {
+    if (filterValue !== '') {
+    }
+  }
+
+  setSort() {
+    this.sort.sortChange
+      .pipe(
+        startWith({}),
+        switchMap(() => {
+          console.log('DFS');
+          this.isLoadingResults = true;
+          this.initializePageInfo();
+          return this.triggerService.getAll(this.searchValue, 0, this.pageSize, this.getSortValue());
+        }),
+        map((data) => {
+          // Flip flag to show that loading has finished.
+          this.isLoadingResults = false;
+          return data;
+        }),
+        catchError(() => {
+          this.isLoadingResults = false;
+          // Catch if some error occurred. Return empty data.
+          return observableOf([]);
+        })
+      )
+      .subscribe((data) => {
+        this.triggers = data;
+        this.dataSource = new MatTableDataSource(this.triggers);
+        //manage pages for virtual scrolling
+        this.updatePageInfo(data);
+      });
+  }
+
   manageScreenResizing() {
-    this.global.isMediumDeviceOrLess$.subscribe(value => {
+    this.global.isMediumDeviceOrLess$.subscribe((value) => {
       this.isMediumDeviceOrLess = value;
       // if (value) {
       //   this.selectedColumns = this.columns.slice(0, 3);
@@ -191,9 +199,10 @@ export class TriggersComponent implements OnInit {
       // }
 
       if (this.dialogRef)
-        this.dialogRef.updateSize(value ? this.mediumDeviceOrLessDialogSize : this.largerDeviceDialogWidthSize,
-          value ? this.mediumDeviceOrLessDialogSize : this.largerDeviceDialogHeightSize);
-
+        this.dialogRef.updateSize(
+          value ? this.mediumDeviceOrLessDialogSize : this.largerDeviceDialogWidthSize,
+          value ? this.mediumDeviceOrLessDialogSize : this.largerDeviceDialogHeightSize
+        );
     });
   }
   add() {
@@ -201,15 +210,14 @@ export class TriggersComponent implements OnInit {
   }
 
   openDialog() {
-
     this.dialogRef = this.dialog.open(TriggerNewComponent, {
       disableClose: true,
       height: this.isMediumDeviceOrLess ? this.mediumDeviceOrLessDialogSize : this.largerDeviceDialogHeightSize,
       width: this.isMediumDeviceOrLess ? this.mediumDeviceOrLessDialogSize : this.largerDeviceDialogWidthSize,
-      maxWidth: "none",
-      panelClass: 'fc-modal-dialog'
+      maxWidth: 'none',
+      panelClass: 'fc-modal-dialog',
     });
-    this.dialogRef.afterClosed().subscribe(result => {
+    this.dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);
       if (result) {
         this.errorService.showError(this.translate.instant('TRIGGERS.MESSAGES.CREATED'));
@@ -219,63 +227,75 @@ export class TriggersComponent implements OnInit {
   }
 
   pauseTrigger(trigger): void {
-    this.openConfirmMessage(this.translate.instant('TRIGGERS.MESSAGES.CONFIRM.PAUSE'), this.pauseTriggerActionResult, trigger)
+    this.openConfirmMessage(
+      this.translate.instant('TRIGGERS.MESSAGES.CONFIRM.PAUSE'),
+      this.pauseTriggerActionResult,
+      trigger
+    );
   }
 
   pauseTriggerActionResult = (action, trigger) => {
     if (action) {
-      this.triggerService.pauseTrigger(trigger.triggerName, trigger.triggerGroup).subscribe( resp => {
-        if(resp){
-          trigger.triggerState = "PAUSED";
+      this.triggerService.pauseTrigger(trigger.triggerName, trigger.triggerGroup).subscribe((resp) => {
+        if (resp) {
+          trigger.triggerState = 'PAUSED';
           this.errorService.showError(this.translate.instant('TRIGGERS.MESSAGES.PAUSED'));
         }
-      })
-      console.log(trigger, "trigger paused");
+      });
+      console.log(trigger, 'trigger paused');
     }
-  }
-  
+  };
+
   resumeTrigger(trigger): void {
-    this.openConfirmMessage(this.translate.instant('TRIGGERS.MESSAGES.CONFIRM.RESUME'), this.resumeTriggerActionResult, trigger)
+    this.openConfirmMessage(
+      this.translate.instant('TRIGGERS.MESSAGES.CONFIRM.RESUME'),
+      this.resumeTriggerActionResult,
+      trigger
+    );
   }
 
   resumeTriggerActionResult = (action, trigger) => {
     if (action) {
-      this.triggerService.resumeTrigger(trigger.triggerName, trigger.triggerGroup).subscribe( resp => {
-        if(resp){
-          trigger.triggerState = "NORMAL";
+      this.triggerService.resumeTrigger(trigger.triggerName, trigger.triggerGroup).subscribe((resp) => {
+        if (resp) {
+          trigger.triggerState = 'NORMAL';
           this.errorService.showError(this.translate.instant('TRIGGERS.MESSAGES.RESUMED'));
         }
-      })
-      console.log(trigger, "trigger paused");
+      });
+      console.log(trigger, 'trigger paused');
     }
-  }
+  };
 
   deleteTrigger(trigger): void {
-    this.openConfirmMessage(this.translate.instant('TRIGGERS.MESSAGES.CONFIRM.DELETE'), this.deleteTriggerActionResult, trigger)
+    this.openConfirmMessage(
+      this.translate.instant('TRIGGERS.MESSAGES.CONFIRM.DELETE'),
+      this.deleteTriggerActionResult,
+      trigger
+    );
   }
 
   deleteTriggerActionResult = (action, trigger) => {
     if (action) {
       this.triggerService.delete(trigger.triggerName, trigger.triggerGroup).subscribe(
-        resp => {
+        (resp) => {
           this.triggers.splice(this.triggers.indexOf(trigger), 1);
           this.errorService.showError(this.translate.instant('TRIGGERS.MESSAGES.DELETED'));
           this.dataSource = new MatTableDataSource(this.triggers);
           this.changeDetectorRefs.detectChanges();
         },
-        error => this.errorMessage = <any>error
+        (error) => (this.errorMessage = <any>error)
       );
     }
-  }
+  };
 
   openConfirmMessage(message, callback, trigger): void {
     this.confirmDialogRef = this.dialog.open(ConfirmDialogComponent, {
       disableClose: true,
       data: {
-        "message": message
-      }
+        message: message,
+      },
     });
-    this.confirmDialogRef.afterClosed().subscribe(action => {
+    this.confirmDialogRef.afterClosed().subscribe((action) => {
       if (action) {
         callback(action, trigger);
       }
@@ -286,20 +306,17 @@ export class TriggersComponent implements OnInit {
     this.initializePageInfo();
     this.searchValue = searchValue;
     this.isLoadingResults = true;
-    this.triggerService.getAll(
-      this.searchValue,
-      this.currentPage * this.pageSize,
-      this.pageSize,
-      this.getSortValue()
-    ).subscribe(
-      data => {
-        this.isLoadingResults = false;
-        this.triggers = data;
-        this.dataSource = new MatTableDataSource(this.triggers);
-        this.updatePageInfo(data);
-      },
-      error => this.errorMessage = <any>error
-    );
+    this.triggerService
+      .getAll(this.searchValue, this.currentPage * this.pageSize, this.pageSize, this.getSortValue())
+      .subscribe(
+        (data) => {
+          this.isLoadingResults = false;
+          this.triggers = data;
+          this.dataSource = new MatTableDataSource(this.triggers);
+          this.updatePageInfo(data);
+        },
+        (error) => (this.errorMessage = <any>error)
+      );
   }
 
   initializePageInfo() {
@@ -313,41 +330,34 @@ export class TriggersComponent implements OnInit {
     if (data.length > 0) {
       this.currentPage++;
       this.lastProcessedOffset += data.length;
-    }
-    else {
+    } else {
       this.hasMoreRecords = false;
     }
   }
 
   onTableScroll() {
-
     if (!this.isLoadingResults && this.hasMoreRecords && this.lastProcessedOffset < this.triggers.length) {
       this.isLoadingResults = true;
-      this.triggerService.getAll(
-        this.searchValue,
-        this.currentPage * this.pageSize,
-        this.pageSize,
-        this.getSortValue()
-      ).subscribe(
-        data => {
-          this.isLoadingResults = false;
-          this.triggers = this.triggers.concat(data);
-          this.dataSource = new MatTableDataSource(this.triggers);
+      this.triggerService
+        .getAll(this.searchValue, this.currentPage * this.pageSize, this.pageSize, this.getSortValue())
+        .subscribe(
+          (data) => {
+            this.isLoadingResults = false;
+            this.triggers = this.triggers.concat(data);
+            this.dataSource = new MatTableDataSource(this.triggers);
 
-          this.updatePageInfo(data);
-        },
-        error => this.errorMessage = <any>error
-      );
+            this.updatePageInfo(data);
+          },
+          (error) => (this.errorMessage = <any>error)
+        );
     }
   }
 
   getSortValue(): string {
     let sortVal = '';
     if (this.sort.active && this.sort.direction) {
-      sortVal = this.sort.active + "," + this.sort.direction;
+      sortVal = this.sort.active + ',' + this.sort.direction;
     }
     return sortVal;
   }
-  
-
 }

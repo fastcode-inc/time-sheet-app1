@@ -1,11 +1,11 @@
 package com.fastcode.timesheetapp1.addons.docmgmt.application.file.dto;
 
+import java.util.Date;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Date;
-
-@Getter @Setter
+@Getter
+@Setter
 public class CreateFileOutput {
 
     private Long ancestorId;
@@ -20,6 +20,4 @@ public class CreateFileOutput {
     private String name;
     private Long successorId;
     private String summary;
-
 }
-

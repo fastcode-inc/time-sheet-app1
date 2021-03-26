@@ -1,4 +1,3 @@
-
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -22,5 +21,4 @@ export class ShareApiService<T> extends GenericApiService<T> {
   refresh(id: number): Observable<any> {
     return this.http.put(`${this.url}/${id}/refresh`, {}).pipe(catchError(this.handleError));
   }
-
 }

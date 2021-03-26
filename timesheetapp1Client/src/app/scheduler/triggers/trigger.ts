@@ -19,5 +19,4 @@ export interface ITrigger {
   repeatCount?: number;
   jobMapData?: Map<string, string>;
   executionHistory?: Array<ExecutionHistory>;
-
 }

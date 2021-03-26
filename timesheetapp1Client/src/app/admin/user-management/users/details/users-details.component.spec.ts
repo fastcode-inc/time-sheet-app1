@@ -15,13 +15,12 @@ describe('UsersDetailsComponent', () => {
   let component: UsersDetailsComponent;
   let fixture: ComponentFixture<UsersDetailsComponent>;
   let el: HTMLElement;
-  
+
   let d = new Date();
   let t = DateUtils.formatDateStringToAMPM(d);
-  
-  let relationData: any = {
-  }
-  let data:IUsers = {
+
+  let relationData: any = {};
+  let data: IUsers = {
     emailaddress: 'emailaddress1',
     firstname: 'firstname1',
     id: 1,
@@ -31,24 +30,19 @@ describe('UsersDetailsComponent', () => {
     triggerGroup: 'triggerGroup1',
     triggerName: 'triggerName1',
     username: 'username1',
-    ... relationData
+    ...relationData,
   };
-  
+
   describe('Unit Tests', () => {
     beforeEach(async(() => {
       TestBed.configureTestingModule({
-        declarations: [
-          UsersDetailsComponent,
-          DetailsComponent
-        ],
+        declarations: [UsersDetailsComponent, DetailsComponent],
         imports: [TestingModule],
-        providers: [
-          UsersService,
-        ],
-        schemas: [NO_ERRORS_SCHEMA]  
+        providers: [UsersService],
+        schemas: [NO_ERRORS_SCHEMA],
       }).compileComponents();
     }));
-  
+
     beforeEach(() => {
       fixture = TestBed.createComponent(UsersDetailsComponent);
       component = fixture.componentInstance;
@@ -93,34 +87,25 @@ describe('UsersDetailsComponent', () => {
       spyOn(component, 'onBack').and.returnValue();
       el = fixture.debugElement.query(By.css('button[name=back]')).nativeElement;
       el.click();
-      
+
       expect(component.onBack).toHaveBeenCalled();
     });
-
   });
-  
+
   describe('Integration Tests', () => {
     beforeEach(async(() => {
-
       TestBed.configureTestingModule({
-        declarations: [
-          UsersDetailsComponent,
-          UsersListComponent,
-          DetailsComponent,
-          ListComponent,
-          FieldsComp
-        ].concat(EntryComponents),
+        declarations: [UsersDetailsComponent, UsersListComponent, DetailsComponent, ListComponent, FieldsComp].concat(
+          EntryComponents
+        ),
         imports: [
           TestingModule,
           RouterTestingModule.withRoutes([
             { path: 'users', component: UsersDetailsComponent },
-            { path: 'users/:id', component: UsersListComponent }
-          ])
+            { path: 'users/:id', component: UsersListComponent },
+          ]),
         ],
-        providers: [
-          UsersService
-        ]
-
+        providers: [UsersService],
       }).compileComponents();
     }));
 
@@ -162,7 +147,6 @@ describe('UsersDetailsComponent', () => {
       el.click();
 
       expect(component.errorService.showError).toHaveBeenCalled();
-
     });
 
     it('should go back to list component when back button is clicked', async () => {
@@ -178,9 +162,6 @@ describe('UsersDetailsComponent', () => {
       let responsePromise = navigationSpy.calls.mostRecent().returnValue;
       await responsePromise;
       expect(location.path()).toBe('/users');
-
     });
-
   });
-  
 });

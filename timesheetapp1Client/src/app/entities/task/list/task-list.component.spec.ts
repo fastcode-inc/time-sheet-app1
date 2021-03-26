@@ -9,18 +9,17 @@ import { ListFiltersComponent, ServiceUtils, DateUtils } from 'src/app/common/sh
 import { ListComponent, DetailsComponent, NewComponent, FieldsComp } from 'src/app/common/general-components';
 
 import { EntryComponents, TestingModule } from 'src/testing/utils';
-import { ITask, TaskService, TaskDetailsComponent, TaskListComponent,
-	TaskNewComponent } from '../';
+import { ITask, TaskService, TaskDetailsComponent, TaskListComponent, TaskNewComponent } from '../';
 
 describe('TaskListComponent', () => {
-  let fixture:ComponentFixture<TaskListComponent>;
-  let component:TaskListComponent;
+  let fixture: ComponentFixture<TaskListComponent>;
+  let component: TaskListComponent;
   let el: HTMLElement;
-  
+
   let d = new Date();
   let t = DateUtils.formatDateStringToAMPM(d);
-  let constData:ITask[] = [
-    {   
+  let constData: ITask[] = [
+    {
       description: 'description1',
       id: 1,
       isactive: true,
@@ -28,7 +27,7 @@ describe('TaskListComponent', () => {
       projectid: 1,
       projectDescriptiveField: 'name1',
     },
-    {   
+    {
       description: 'description2',
       id: 2,
       isactive: true,
@@ -37,31 +36,22 @@ describe('TaskListComponent', () => {
       projectDescriptiveField: 'name2',
     },
   ];
-  let data: ITask[] = [... constData];
+  let data: ITask[] = [...constData];
 
   describe('Unit tests', () => {
-  
     beforeEach(async(() => {
-      
       TestBed.configureTestingModule({
-        declarations: [
-          TaskListComponent,
-          ListComponent
-        ],
+        declarations: [TaskListComponent, ListComponent],
         imports: [TestingModule],
-        providers: [
-          TaskService,      
-          ChangeDetectorRef,
-        ],
-        schemas: [NO_ERRORS_SCHEMA]   
+        providers: [TaskService, ChangeDetectorRef],
+        schemas: [NO_ERRORS_SCHEMA],
       }).compileComponents();
-
     }));
-    
+
     beforeEach(() => {
       fixture = TestBed.createComponent(TaskListComponent);
       component = fixture.componentInstance;
-      data = [... constData];
+      data = [...constData];
       fixture.detectChanges();
     });
 
@@ -70,7 +60,6 @@ describe('TaskListComponent', () => {
     });
 
     it('should run #ngOnInit()', async () => {
-
       spyOn(component.dataService, 'getAll').and.returnValue(of(data));
       component.ngOnInit();
 
@@ -85,7 +74,6 @@ describe('TaskListComponent', () => {
       expect(component.columns.length).toBeGreaterThan(0);
       expect(component.selectedColumns.length).toBeGreaterThan(0);
       expect(component.displayedColumns.length).toBeGreaterThan(0);
-
     });
 
     it('should run #addNew()', async () => {
@@ -94,13 +82,12 @@ describe('TaskListComponent', () => {
       el.click();
       expect(component.addNew).toHaveBeenCalled();
     });
-    
-    it('should run #delete()', async () => {
 
+    it('should run #delete()', async () => {
       component.items = data;
       fixture.detectChanges();
 
-      let tableRows = fixture.nativeElement.querySelectorAll('mat-row')
+      let tableRows = fixture.nativeElement.querySelectorAll('mat-row');
       let firstRowCells = tableRows[0].querySelectorAll('mat-cell');
       let editButtonCell = firstRowCells[firstRowCells.length - 1];
       let editButton = editButtonCell.querySelectorAll('button')[1];
@@ -108,14 +95,13 @@ describe('TaskListComponent', () => {
       spyOn(component, 'delete').and.returnValue();
       editButton.click();
       expect(component.delete).toHaveBeenCalledWith(data[0]);
-
     });
 
     it('should call openDetails function when edit button is clicked', async () => {
       component.items = data;
       fixture.detectChanges();
 
-      let tableRows = fixture.nativeElement.querySelectorAll('mat-row')
+      let tableRows = fixture.nativeElement.querySelectorAll('mat-row');
       let firstRowCells = tableRows[0].querySelectorAll('mat-cell');
       let editButtonCell = firstRowCells[firstRowCells.length - 1];
       let editButton = editButtonCell.querySelectorAll('button')[0];
@@ -128,27 +114,24 @@ describe('TaskListComponent', () => {
 
     it('should call applyFilter function in case of onSearch event of list-filter-component', async () => {
       fixture.detectChanges();
-      
+
       spyOn(component, 'applyFilter');
       fixture.debugElement.query(By.css('app-list-filters')).triggerEventHandler('onSearch', null);
-      
+
       expect(component.applyFilter).toHaveBeenCalled();
     });
 
     it('should pass the selected columns list as input to app list filters', async () => {
       fixture.detectChanges();
-      
+
       let listFilterElement: DebugElement = fixture.debugElement.query(By.css('app-list-filters'));
-      
+
       expect(listFilterElement.properties.columnsList).toBe(component.selectedColumns);
     });
-  
   });
-  
+
   describe('Integration tests', () => {
-
     beforeEach(async(() => {
-
       TestBed.configureTestingModule({
         declarations: [
           TaskListComponent,
@@ -157,28 +140,23 @@ describe('TaskListComponent', () => {
           TaskDetailsComponent,
           ListComponent,
           DetailsComponent,
-          FieldsComp
+          FieldsComp,
         ].concat(EntryComponents),
         imports: [
           TestingModule,
           RouterTestingModule.withRoutes([
             { path: 'task', component: TaskListComponent },
-            { path: 'task/:id', component: TaskDetailsComponent }
-          ])
+            { path: 'task/:id', component: TaskDetailsComponent },
+          ]),
         ],
-        providers: [
-          TaskService,
-          ChangeDetectorRef,
-        ]
-
+        providers: [TaskService, ChangeDetectorRef],
       }).compileComponents();
-
     }));
 
     beforeEach(() => {
       fixture = TestBed.createComponent(TaskListComponent);
       component = fixture.componentInstance;
-      data = [... constData];
+      data = [...constData];
       fixture.detectChanges();
     });
 
@@ -212,12 +190,12 @@ describe('TaskListComponent', () => {
 
       expect(component.dialog.open).toHaveBeenCalled();
     });
-    
+
     it('should delete the item from list', async () => {
       component.items = data;
       fixture.detectChanges();
 
-      let tableRows = fixture.nativeElement.querySelectorAll('mat-row')
+      let tableRows = fixture.nativeElement.querySelectorAll('mat-row');
       let firstRowCells = tableRows[0].querySelectorAll('mat-cell');
       let deleteButtonCell = firstRowCells[firstRowCells.length - 1];
       let deleteButton = deleteButtonCell.querySelectorAll('button[name="delete"]')[0];
@@ -230,7 +208,7 @@ describe('TaskListComponent', () => {
 
     it('should set the columns list in app list filters component', async () => {
       let listFilters: ListFiltersComponent = fixture.debugElement.query(By.css('app-list-filters')).componentInstance;
-      
+
       expect(listFilters.columnsList).toEqual(component.selectedColumns);
     });
 
@@ -240,7 +218,7 @@ describe('TaskListComponent', () => {
       component.items = data;
       fixture.detectChanges();
 
-      let tableRows = fixture.nativeElement.querySelectorAll('mat-row')
+      let tableRows = fixture.nativeElement.querySelectorAll('mat-row');
       let firstRowCells = tableRows[0].querySelectorAll('mat-cell');
       let editButtonCell = firstRowCells[firstRowCells.length - 1];
       let editButton = editButtonCell.querySelectorAll('button[name="edit"]')[0];
@@ -251,8 +229,10 @@ describe('TaskListComponent', () => {
 
       let responsePromise = navigationSpy.calls.mostRecent().returnValue;
       await responsePromise;
-      
-      expect(decodeURIComponent(location.path())).toBe(`/task/${ServiceUtils.encodeIdByObject(data[0], component.primaryKeys)}`);
+
+      expect(decodeURIComponent(location.path())).toBe(
+        `/task/${ServiceUtils.encodeIdByObject(data[0], component.primaryKeys)}`
+      );
     });
 
     it('should emit onSearch event of list-filter-component and call applyFilter function', async () => {
@@ -260,7 +240,7 @@ describe('TaskListComponent', () => {
       spyOn(component.dataService, 'getAssociations').and.returnValue(of(filteredArray));
       spyOn(component.dataService, 'getAll').and.returnValue(of(filteredArray));
 
-      let filterableColumns = component.columns.filter(x => x.filter)
+      let filterableColumns = component.columns.filter((x) => x.filter);
       if (filterableColumns.length > 0) {
         let searchButton = fixture.debugElement.query(By.css('app-list-filters')).query(By.css('button')).nativeElement;
         searchButton.click();
@@ -268,7 +248,5 @@ describe('TaskListComponent', () => {
         expect(component.items).toEqual(filteredArray);
       }
     });
-
   });
-        
 });

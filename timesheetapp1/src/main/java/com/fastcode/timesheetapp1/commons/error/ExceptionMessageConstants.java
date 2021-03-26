@@ -8,6 +8,4 @@ public class ExceptionMessageConstants {
     public static final String TOKEN_MALFORMED = "TOKEN_MALFORMED";
     public static final String TOKEN_INCORRECT_SIGNATURE = "TOKEN_INCORRECT_SIGNATURE";
     public static final String TOKEN_ILLEGAL_ARGUMENT = "TOKEN_ILLEGAL_ARGUMENT";
-
 }
-

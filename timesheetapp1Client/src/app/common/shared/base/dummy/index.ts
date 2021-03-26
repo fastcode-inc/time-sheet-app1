@@ -1,4 +1,3 @@
-
 export { DummyListComponent } from './dummy-list.component';
 export { DummyDetailsComponent } from './dummy-details.component';
 export { DummyNewComponent } from './dummy-new.component';

@@ -7,40 +7,33 @@ import { CookieService } from 'src/app/core/cookie.service';
 @Component({
   selector: 'app-swagger',
   templateUrl: './swagger.component.html',
-  styleUrls: ['./swagger.component.css']
+  styleUrls: ['./swagger.component.css'],
 })
 export class SwaggerComponent implements OnInit, AfterViewInit {
-
   @ViewChild('swagger', { static: false }) el;
-  constructor(private authService: AuthenticationService, private cookieService: CookieService) {
+  constructor(private authService: AuthenticationService, private cookieService: CookieService) {}
 
-  }
+  ngOnInit() {}
 
-  ngOnInit() {
-  }
-	
-	ngAfterViewInit(): void {
+  ngAfterViewInit(): void {
     SwaggerUI({
       domNode: this.el.nativeElement,
-      url: environment.apiUrl + "/v3/api-docs",
+      url: environment.apiUrl + '/v3/api-docs',
       deepLinking: true,
       requestInterceptor: this.requestInterceptor,
       withCredentials: true,
-      presets: [
-        SwaggerUI.presets.apis,
-      ],
-    })
+      presets: [SwaggerUI.presets.apis],
+    });
   }
-  
-	
+
   requestInterceptor = (request) => {
-  	request.headers['content-type'] = 'application/json';
+    request.headers['content-type'] = 'application/json';
     let token = this.authService.token;
 
     if (token) {
-      request.headers["Authorization"] = token;
+      request.headers['Authorization'] = token;
       request.headers['X-XSRF-TOKEN'] = this.cookieService.get('XSRF-TOKEN');
     }
     return request;
-  }
+  };
 }

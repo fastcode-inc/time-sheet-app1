@@ -7,23 +7,31 @@ import java.util.Map;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter @Setter
+@Getter
+@Setter
 public class FindByJobOutput {
 
     private String jobName;
     private String jobGroup;
     private String jobClass;
     private String jobDescription;
-    private Boolean isDurable =false;
+    private Boolean isDurable = false;
     private Map<String, String> jobMapData = new HashMap<String, String>();
     private List<FindByTriggerOutput> triggerDetails = new ArrayList<FindByTriggerOutput>();
     private String jobStatus;
- 
-    public FindByJobOutput() {
 
-    }
+    public FindByJobOutput() {}
 
-	public FindByJobOutput(String jName, String jGroup, String jClass, String jobDescription, Map<String, String> jMapData, List<FindByTriggerOutput> triggerDetails, boolean isDurable, String jobStatus) {
+    public FindByJobOutput(
+        String jName,
+        String jGroup,
+        String jClass,
+        String jobDescription,
+        Map<String, String> jMapData,
+        List<FindByTriggerOutput> triggerDetails,
+        boolean isDurable,
+        String jobStatus
+    ) {
         super();
         this.jobName = jName;
         this.jobGroup = jGroup;
@@ -34,5 +42,4 @@ public class FindByJobOutput {
         this.jobStatus = jobStatus;
         this.setTriggerDetails(triggerDetails);
     }
-
 }

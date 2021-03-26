@@ -1,51 +1,55 @@
 package com.fastcode.timesheetapp1.security;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import com.fastcode.timesheetapp1.commons.error.ApiError;
 import com.fastcode.timesheetapp1.commons.error.ExceptionMessageConstants;
 import com.fastcode.timesheetapp1.commons.logging.LoggingHelper;
+import com.fastcode.timesheetapp1.domain.core.authorization.jwtentity.IJwtRepository;
+import com.fastcode.timesheetapp1.domain.core.authorization.jwtentity.JwtEntity;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.*;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.*;
+import java.util.stream.Collectors;
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
-import org.springframework.context.ApplicationContext;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import java.util.stream.Collectors;
-import com.fastcode.timesheetapp1.domain.core.authorization.jwtentity.JwtEntity;
-import com.fastcode.timesheetapp1.domain.core.authorization.jwtentity.IJwtRepository;
-import java.util.*;
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.OutputStream;
 
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
-    
+
     private SecurityUtils securityUtils;
     private IJwtRepository jwtRepo;
-    public JWTAuthorizationFilter(AuthenticationManager authManager,ApplicationContext ctx) {
+
+    public JWTAuthorizationFilter(AuthenticationManager authManager, ApplicationContext ctx) {
         super(authManager);
         this.securityUtils = ctx.getBean(SecurityUtils.class);
-		this.jwtRepo = ctx.getBean(IJwtRepository.class);
+        this.jwtRepo = ctx.getBean(IJwtRepository.class);
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest req,
-                                    HttpServletResponse res,
-                                    FilterChain chain) throws IOException, ServletException {
-        String authenticationToken = securityUtils.getTokenFromCookies(req.getCookies()); 
-		String authorizationToken = req.getHeader(SecurityConstants.HEADER_STRING);
+    protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain)
+        throws IOException, ServletException {
+        String authenticationToken = securityUtils.getTokenFromCookies(req.getCookies());
+        String authorizationToken = req.getHeader(SecurityConstants.HEADER_STRING);
 
-		if (authorizationToken == null || authenticationToken == null || !authorizationToken.startsWith(SecurityConstants.TOKEN_PREFIX) || !authenticationToken.startsWith(SecurityConstants.TOKEN_PREFIX)) {
-			chain.doFilter(req, res);
+        if (
+            authorizationToken == null ||
+            authenticationToken == null ||
+            !authorizationToken.startsWith(SecurityConstants.TOKEN_PREFIX) ||
+            !authenticationToken.startsWith(SecurityConstants.TOKEN_PREFIX)
+        ) {
+            chain.doFilter(req, res);
             return;
         }
 
@@ -57,7 +61,6 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
             SecurityContextHolder.getContext().setAuthentication(authentication);
             chain.doFilter(req, res);
             return;
-
         } catch (ExpiredJwtException exception) {
             apiError.setMessage(ExceptionMessageConstants.TOKEN_EXPIRED);
             logHelper.getLogger().error("An Exception Occurred:", exception);
@@ -79,11 +82,10 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
             logHelper.getLogger().error("An Exception Occurred:", exception);
             res.setStatus(401);
         } catch (JwtException exception) {
-             apiError.setMessage(ExceptionMessageConstants.TOKEN_UNAUTHORIZED);
-             logHelper.getLogger().error("An Exception Occurred:", exception);
-             res.setStatus(401);
-	    }
-
+            apiError.setMessage(ExceptionMessageConstants.TOKEN_UNAUTHORIZED);
+            logHelper.getLogger().error("An Exception Occurred:", exception);
+            res.setStatus(401);
+        }
 
         OutputStream out = res.getOutputStream();
         com.fasterxml.jackson.databind.ObjectMapper mapper = new ObjectMapper();
@@ -95,48 +97,51 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
         return new ResponseEntity<>(apiError, apiError.getStatus());
     }
 
-
     private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) throws JwtException {
-
         String authorizationToken = request.getHeader(SecurityConstants.HEADER_STRING);
         String authenticationToken = securityUtils.getTokenFromCookies(request.getCookies());
-		// Check that the token is inactive in the JwtEntity table
-		
-         // Check that the token is inactive in the JwtEntity table
-         JwtEntity jwt = jwtRepo.findByAuthorizationTokenAndAuthenticationToken(authorizationToken,authenticationToken);
-         ApiError apiError = new ApiError(HttpStatus.UNAUTHORIZED);
- 
-         if(jwt == null) {
-             throw new JwtException("Token Does Not Exist");
-         }
+        // Check that the token is inactive in the JwtEntity table
+
+        // Check that the token is inactive in the JwtEntity table
+        JwtEntity jwt = jwtRepo.findByAuthorizationTokenAndAuthenticationToken(authorizationToken, authenticationToken);
+        ApiError apiError = new ApiError(HttpStatus.UNAUTHORIZED);
+
+        if (jwt == null) {
+            throw new JwtException("Token Does Not Exist");
+        }
         Claims claims;
-       	if (StringUtils.isNotEmpty(authenticationToken) && authenticationToken.startsWith(SecurityConstants.TOKEN_PREFIX)) {
-			claims = Jwts.parser()
-					.setSigningKey(SecurityConstants.SECRET.getBytes())
-					.parseClaimsJws(authenticationToken.replace(SecurityConstants.TOKEN_PREFIX, ""))
-					.getBody();
-		}
-        
-		if (StringUtils.isNotEmpty(authorizationToken) && authorizationToken.startsWith(SecurityConstants.TOKEN_PREFIX)) {
-        	String userName = null;
+        if (
+            StringUtils.isNotEmpty(authenticationToken) &&
+            authenticationToken.startsWith(SecurityConstants.TOKEN_PREFIX)
+        ) {
+            claims =
+                Jwts
+                    .parser()
+                    .setSigningKey(SecurityConstants.SECRET.getBytes())
+                    .parseClaimsJws(authenticationToken.replace(SecurityConstants.TOKEN_PREFIX, ""))
+                    .getBody();
+        }
+
+        if (
+            StringUtils.isNotEmpty(authorizationToken) && authorizationToken.startsWith(SecurityConstants.TOKEN_PREFIX)
+        ) {
+            String userName = null;
             List<GrantedAuthority> authorities = null;
-            claims = Jwts.parser()
-                        .setSigningKey(SecurityConstants.SECRET.getBytes())
-                        .parseClaimsJws(authorizationToken.replace(SecurityConstants.TOKEN_PREFIX, ""))
-                        .getBody();
+            claims =
+                Jwts
+                    .parser()
+                    .setSigningKey(SecurityConstants.SECRET.getBytes())
+                    .parseClaimsJws(authorizationToken.replace(SecurityConstants.TOKEN_PREFIX, ""))
+                    .getBody();
             userName = claims.getSubject();
             List<String> scopes = claims.get("scopes", List.class);
-            authorities = scopes.stream()
-                        .map(authority -> new SimpleGrantedAuthority(authority))
-                        .collect(Collectors.toList());
-                        
+            authorities =
+                scopes.stream().map(authority -> new SimpleGrantedAuthority(authority)).collect(Collectors.toList());
 
-        if (StringUtils.isNotEmpty(userName)) {
-        	return new UsernamePasswordAuthenticationToken(userName, null, authorities);
-        }
+            if (StringUtils.isNotEmpty(userName)) {
+                return new UsernamePasswordAuthenticationToken(userName, null, authorities);
+            }
         }
         return null;
-
     }
-
 }

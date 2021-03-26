@@ -27,10 +27,7 @@ describe('BaseNewComponent', () => {
       TestBed.configureTestingModule({
         declarations: [DummyNewComponent, DummyListComponent],
         imports: [TestingModule, RouterTestingModule.withRoutes([{ path: 'dummy', component: DummyListComponent }])],
-        providers: [
-          DummyService,
-          { provide: MAT_DIALOG_DATA, useValue: relationData },
-        ],
+        providers: [DummyService, { provide: MAT_DIALOG_DATA, useValue: relationData }],
         schemas: [NO_ERRORS_SCHEMA],
       }).compileComponents();
 
@@ -49,10 +46,7 @@ describe('BaseNewComponent', () => {
       TestBed.configureTestingModule({
         declarations: [DummyNewComponent, DummyListComponent],
         imports: [TestingModule, RouterTestingModule.withRoutes([{ path: 'dummy', component: DummyListComponent }])],
-        providers: [
-          DummyService,
-          { provide: MAT_DIALOG_DATA, useValue: {} }
-        ],
+        providers: [DummyService, { provide: MAT_DIALOG_DATA, useValue: {} }],
         schemas: [NO_ERRORS_SCHEMA],
       }).compileComponents();
     }));
@@ -290,7 +284,7 @@ describe('BaseNewComponent', () => {
 
     it('should update the form when some option from picker is selected for association', async () => {
       let association = component.associations[0];
-      component.onPickerClose(parentData[0], association)
+      component.onPickerClose(parentData[0], association);
 
       association.column.forEach((col) => {
         expect(component.itemForm.get(col.key).value).toEqual(parentData[0][col.referencedkey]);

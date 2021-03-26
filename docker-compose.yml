@@ -1,4 +1,4 @@
-﻿version: '3.6'
+version: '3.6'
 services:
   ui:
     build:
@@ -11,16 +11,6 @@ services:
       - samplenet
     links:
       - 'api:api'
-      - 'reports:reports'
-  reports:
-    build:
-      context: .
-      dockerfile: ReportsDockerfile
-    container_name: reports_timesheet
-    ports:
-      - '5556:5556'
-    networks:
-      - samplenet
   api:
     build:
       context: .
@@ -58,5 +48,3 @@ services:
       - samplenet
 networks:
   samplenet: null
-volumes:
-  postgresdb: {}

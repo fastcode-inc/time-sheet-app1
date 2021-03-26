@@ -1,4 +1,4 @@
-export { ListFiltersComponent } from 'src/app/common/shared';;
+export { ListFiltersComponent } from 'src/app/common/shared';
 
 export { JobService } from './job.service';
 export { JobsComponent } from './jobs.component';

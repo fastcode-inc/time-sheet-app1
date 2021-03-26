@@ -2,10 +2,9 @@ import { Injectable, NgModule, Pipe, PipeTransform } from '@angular/core';
 import { TranslateLoader, TranslateModule, TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { Observable, of } from 'rxjs';
 
-
 const translations: any = {
-  'en': {},
-  'fr': {}
+  en: {},
+  fr: {},
 };
 
 export class FakeLoader implements TranslateLoader {
@@ -15,7 +14,7 @@ export class FakeLoader implements TranslateLoader {
 }
 
 @Pipe({
-  name: 'translate'
+  name: 'translate',
 })
 export class TranslatePipeMock implements PipeTransform {
   public name = 'translate';
@@ -31,35 +30,33 @@ export class TranslateServiceStub {
     return of(key);
   }
 
-  public getLangs(){
+  public getLangs() {
     return Object.keys(translations);
   }
 
-  public instant():string{
-    return '';
-  }
-  
-  public addLangs(){
+  public instant(): string {
     return '';
   }
 
-  public setDefaultLang(){
+  public addLangs() {
     return '';
   }
 
-  public getBrowserLang(){
+  public setDefaultLang() {
+    return '';
+  }
+
+  public getBrowserLang() {
     return 'en';
   }
 
-  public use(lang: string){
+  public use(lang: string) {
     return 'en';
   }
 }
 
 @NgModule({
-  declarations: [
-    TranslatePipeMock
-  ],
+  declarations: [TranslatePipeMock],
   providers: [
     { provide: TranslateService, useClass: TranslateServiceStub },
     { provide: TranslatePipe, useClass: TranslatePipeMock },
@@ -67,13 +64,8 @@ export class TranslateServiceStub {
   imports: [
     TranslateModule.forRoot({
       loader: { provide: TranslateLoader, useClass: FakeLoader },
-    })
+    }),
   ],
-  exports: [
-    TranslatePipeMock,
-    TranslateModule
-  ]
+  exports: [TranslatePipeMock, TranslateModule],
 })
-export class TranslateTestingModule {
-
-}
+export class TranslateTestingModule {}

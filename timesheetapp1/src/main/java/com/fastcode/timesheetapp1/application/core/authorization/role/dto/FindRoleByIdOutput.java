@@ -4,13 +4,12 @@ import java.time.*;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter @Setter
+@Getter
+@Setter
 public class FindRoleByIdOutput {
 
-  	private String displayName;
-  	private Long id;
-  	private String name;
-	private Long versiono;
- 
+    private String displayName;
+    private Long id;
+    private String name;
+    private Long versiono;
 }
-

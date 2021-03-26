@@ -1,7 +1,7 @@
-export interface IUsertask {  
-	taskid: number;
-	userid: number;
+export interface IUsertask {
+  taskid: number;
+  userid: number;
 
-	taskDescriptiveField?: string;
-	usersDescriptiveField?: string;
+  taskDescriptiveField?: string;
+  usersDescriptiveField?: string;
 }

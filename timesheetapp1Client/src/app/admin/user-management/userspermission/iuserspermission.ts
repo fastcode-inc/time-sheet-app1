@@ -1,8 +1,8 @@
-export interface IUserspermission {  
-	permissionId: number;
-	revoked?: boolean;
-	usersId: number;
+export interface IUserspermission {
+  permissionId: number;
+  revoked?: boolean;
+  usersId: number;
 
-	permissionDescriptiveField?: string;
-	usersDescriptiveField?: string;
+  permissionDescriptiveField?: string;
+  usersDescriptiveField?: string;
 }

@@ -6,10 +6,10 @@ RUN apt-get update
 RUN apt-get install curl
 
 #Install Node.js
-RUN curl -k -O https://nodejs.org/dist/latest-v10.x/node-v10.24.0-linux-x64.tar.gz
+RUN curl -k -O https://nodejs.org/dist/v10.23.1/node-v10.23.1-linux-x64.tar.gz
 RUN tar -xvf *.gz
 RUN rm -rf *.gz
-ENV NODEJS_HOME /node-v10.24.0-linux-x64
+ENV NODEJS_HOME /node-v10.23.1-linux-x64
 ENV PATH $NODEJS_HOME/bin:$PATH
 
 RUN npm -g config set user root

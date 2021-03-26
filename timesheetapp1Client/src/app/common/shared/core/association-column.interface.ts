@@ -1,5 +1,5 @@
 export interface AssociationColumn {
-    key: string,
-    value: string,
-    referencedkey: string
+  key: string;
+  value: string;
+  referencedkey: string;
 }

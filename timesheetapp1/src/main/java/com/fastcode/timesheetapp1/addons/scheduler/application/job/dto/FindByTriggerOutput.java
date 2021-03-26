@@ -3,11 +3,11 @@ package com.fastcode.timesheetapp1.addons.scheduler.application.job.dto;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter @Setter
+@Getter
+@Setter
 public class FindByTriggerOutput {
 
     private String triggerName;
@@ -21,13 +21,20 @@ public class FindByTriggerOutput {
     private Date lastExecutionTime;
     private Date nextExecutionTime;
 
-    public FindByTriggerOutput() {
+    public FindByTriggerOutput() {}
 
-    }
-
-    public FindByTriggerOutput(String triggerName, String triggerGroup, String triggerState, String triggerType, String triggerDescription,
-                          Map<String, String> triggerMapData, Date startTime, Date endTime,
-                          Date lastExecutionTime, Date nextExecutionTime) {
+    public FindByTriggerOutput(
+        String triggerName,
+        String triggerGroup,
+        String triggerState,
+        String triggerType,
+        String triggerDescription,
+        Map<String, String> triggerMapData,
+        Date startTime,
+        Date endTime,
+        Date lastExecutionTime,
+        Date nextExecutionTime
+    ) {
         super();
         this.triggerName = triggerName;
         this.triggerGroup = triggerGroup;
@@ -40,6 +47,4 @@ public class FindByTriggerOutput {
         this.lastExecutionTime = lastExecutionTime;
         this.nextExecutionTime = nextExecutionTime;
     }
-    
 }
-

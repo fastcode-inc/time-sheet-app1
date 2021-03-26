@@ -1,45 +1,45 @@
-@import "src/styles/base.scss";
+@import 'src/styles/base.scss';
 
 .container {
-    margin: $fc-margin3;
-    height: calc(100% - 152px);
+  margin: $fc-margin3;
+  height: calc(100% - 152px);
 }
 
 .full-width {
-    width: 100%;
+  width: 100%;
 }
 
 .medium-device-width {
-    width: 50%;
+  width: 50%;
 }
 
 .large-device-width {
-    width: 25%;
+  width: 25%;
 }
 
 .mat-table {
-    overflow: auto;
-    max-height: calc(100% - 135px);
+  overflow: auto;
+  max-height: calc(100% - 135px);
 }
 
 table {
-    width: 100%;
-  }
-  
-	.table-container{
-		overflow: auto;
-		width: 100%;
-		max-height: calc(100% - 280px);
-  }
-  
-  .mat-icon{
-    margin-right:0px;
-  }
+  width: 100%;
+}
 
-  .error-msg .mat-icon {
-    position: relative;
-    bottom: -7px;
-    margin-left: 20px;
+.table-container {
+  overflow: auto;
+  width: 100%;
+  max-height: calc(100% - 280px);
+}
+
+.mat-icon {
+  margin-right: 0px;
+}
+
+.error-msg .mat-icon {
+  position: relative;
+  bottom: -7px;
+  margin-left: 20px;
 }
 
 h2.dialog-header-title {
@@ -63,15 +63,18 @@ button.mat-icon-button.mat-button-base.mat-basic {
   opacity: 0.8;
 }
 
-@media (max-width:767px){
-  .mat-table{
-      overflow: auto;
-      min-width: 600px;
+@media (max-width: 767px) {
+  .mat-table {
+    overflow: auto;
+    min-width: 600px;
   }
 }
 
-@media (max-width:580px){
-  .create-entry{ width:100% !important; }
-  .text-right {text-align: initial;}
-
+@media (max-width: 580px) {
+  .create-entry {
+    width: 100% !important;
+  }
+  .text-right {
+    text-align: initial;
+  }
 }

@@ -9,53 +9,43 @@ import { ListFiltersComponent, ServiceUtils, DateUtils } from 'src/app/common/sh
 import { ListComponent, DetailsComponent, NewComponent, FieldsComp } from 'src/app/common/general-components';
 
 import { EntryComponents, TestingModule } from 'src/testing/utils';
-import { IRole, RoleService, RoleDetailsComponent, RoleListComponent,
-	RoleNewComponent } from '../';
+import { IRole, RoleService, RoleDetailsComponent, RoleListComponent, RoleNewComponent } from '../';
 
 describe('RoleListComponent', () => {
-  let fixture:ComponentFixture<RoleListComponent>;
-  let component:RoleListComponent;
+  let fixture: ComponentFixture<RoleListComponent>;
+  let component: RoleListComponent;
   let el: HTMLElement;
-  
+
   let d = new Date();
   let t = DateUtils.formatDateStringToAMPM(d);
-  let constData:IRole[] = [
-    {   
+  let constData: IRole[] = [
+    {
       displayName: 'displayName1',
       id: 1,
       name: 'name1',
     },
-    {   
+    {
       displayName: 'displayName2',
       id: 2,
       name: 'name2',
     },
   ];
-  let data: IRole[] = [... constData];
+  let data: IRole[] = [...constData];
 
   describe('Unit tests', () => {
-  
     beforeEach(async(() => {
-      
       TestBed.configureTestingModule({
-        declarations: [
-          RoleListComponent,
-          ListComponent
-        ],
+        declarations: [RoleListComponent, ListComponent],
         imports: [TestingModule],
-        providers: [
-          RoleService,      
-          ChangeDetectorRef,
-        ],
-        schemas: [NO_ERRORS_SCHEMA]   
+        providers: [RoleService, ChangeDetectorRef],
+        schemas: [NO_ERRORS_SCHEMA],
       }).compileComponents();
-
     }));
-    
+
     beforeEach(() => {
       fixture = TestBed.createComponent(RoleListComponent);
       component = fixture.componentInstance;
-      data = [... constData];
+      data = [...constData];
       fixture.detectChanges();
     });
 
@@ -64,7 +54,6 @@ describe('RoleListComponent', () => {
     });
 
     it('should run #ngOnInit()', async () => {
-
       spyOn(component.dataService, 'getAll').and.returnValue(of(data));
       component.ngOnInit();
 
@@ -79,7 +68,6 @@ describe('RoleListComponent', () => {
       expect(component.columns.length).toBeGreaterThan(0);
       expect(component.selectedColumns.length).toBeGreaterThan(0);
       expect(component.displayedColumns.length).toBeGreaterThan(0);
-
     });
 
     it('should run #addNew()', async () => {
@@ -88,13 +76,12 @@ describe('RoleListComponent', () => {
       el.click();
       expect(component.addNew).toHaveBeenCalled();
     });
-    
-    it('should run #delete()', async () => {
 
+    it('should run #delete()', async () => {
       component.items = data;
       fixture.detectChanges();
 
-      let tableRows = fixture.nativeElement.querySelectorAll('mat-row')
+      let tableRows = fixture.nativeElement.querySelectorAll('mat-row');
       let firstRowCells = tableRows[0].querySelectorAll('mat-cell');
       let editButtonCell = firstRowCells[firstRowCells.length - 1];
       let editButton = editButtonCell.querySelectorAll('button')[1];
@@ -102,14 +89,13 @@ describe('RoleListComponent', () => {
       spyOn(component, 'delete').and.returnValue();
       editButton.click();
       expect(component.delete).toHaveBeenCalledWith(data[0]);
-
     });
 
     it('should call openDetails function when edit button is clicked', async () => {
       component.items = data;
       fixture.detectChanges();
 
-      let tableRows = fixture.nativeElement.querySelectorAll('mat-row')
+      let tableRows = fixture.nativeElement.querySelectorAll('mat-row');
       let firstRowCells = tableRows[0].querySelectorAll('mat-cell');
       let editButtonCell = firstRowCells[firstRowCells.length - 1];
       let editButton = editButtonCell.querySelectorAll('button')[0];
@@ -122,27 +108,24 @@ describe('RoleListComponent', () => {
 
     it('should call applyFilter function in case of onSearch event of list-filter-component', async () => {
       fixture.detectChanges();
-      
+
       spyOn(component, 'applyFilter');
       fixture.debugElement.query(By.css('app-list-filters')).triggerEventHandler('onSearch', null);
-      
+
       expect(component.applyFilter).toHaveBeenCalled();
     });
 
     it('should pass the selected columns list as input to app list filters', async () => {
       fixture.detectChanges();
-      
+
       let listFilterElement: DebugElement = fixture.debugElement.query(By.css('app-list-filters'));
-      
+
       expect(listFilterElement.properties.columnsList).toBe(component.selectedColumns);
     });
-  
   });
-  
+
   describe('Integration tests', () => {
-
     beforeEach(async(() => {
-
       TestBed.configureTestingModule({
         declarations: [
           RoleListComponent,
@@ -151,28 +134,23 @@ describe('RoleListComponent', () => {
           RoleDetailsComponent,
           ListComponent,
           DetailsComponent,
-          FieldsComp
+          FieldsComp,
         ].concat(EntryComponents),
         imports: [
           TestingModule,
           RouterTestingModule.withRoutes([
             { path: 'role', component: RoleListComponent },
-            { path: 'role/:id', component: RoleDetailsComponent }
-          ])
+            { path: 'role/:id', component: RoleDetailsComponent },
+          ]),
         ],
-        providers: [
-          RoleService,
-          ChangeDetectorRef,
-        ]
-
+        providers: [RoleService, ChangeDetectorRef],
       }).compileComponents();
-
     }));
 
     beforeEach(() => {
       fixture = TestBed.createComponent(RoleListComponent);
       component = fixture.componentInstance;
-      data = [... constData];
+      data = [...constData];
       fixture.detectChanges();
     });
 
@@ -206,12 +184,12 @@ describe('RoleListComponent', () => {
 
       expect(component.dialog.open).toHaveBeenCalled();
     });
-    
+
     it('should delete the item from list', async () => {
       component.items = data;
       fixture.detectChanges();
 
-      let tableRows = fixture.nativeElement.querySelectorAll('mat-row')
+      let tableRows = fixture.nativeElement.querySelectorAll('mat-row');
       let firstRowCells = tableRows[0].querySelectorAll('mat-cell');
       let deleteButtonCell = firstRowCells[firstRowCells.length - 1];
       let deleteButton = deleteButtonCell.querySelectorAll('button[name="delete"]')[0];
@@ -224,7 +202,7 @@ describe('RoleListComponent', () => {
 
     it('should set the columns list in app list filters component', async () => {
       let listFilters: ListFiltersComponent = fixture.debugElement.query(By.css('app-list-filters')).componentInstance;
-      
+
       expect(listFilters.columnsList).toEqual(component.selectedColumns);
     });
 
@@ -234,7 +212,7 @@ describe('RoleListComponent', () => {
       component.items = data;
       fixture.detectChanges();
 
-      let tableRows = fixture.nativeElement.querySelectorAll('mat-row')
+      let tableRows = fixture.nativeElement.querySelectorAll('mat-row');
       let firstRowCells = tableRows[0].querySelectorAll('mat-cell');
       let editButtonCell = firstRowCells[firstRowCells.length - 1];
       let editButton = editButtonCell.querySelectorAll('button[name="edit"]')[0];
@@ -245,8 +223,10 @@ describe('RoleListComponent', () => {
 
       let responsePromise = navigationSpy.calls.mostRecent().returnValue;
       await responsePromise;
-      
-      expect(decodeURIComponent(location.path())).toBe(`/role/${ServiceUtils.encodeIdByObject(data[0], component.primaryKeys)}`);
+
+      expect(decodeURIComponent(location.path())).toBe(
+        `/role/${ServiceUtils.encodeIdByObject(data[0], component.primaryKeys)}`
+      );
     });
 
     it('should emit onSearch event of list-filter-component and call applyFilter function', async () => {
@@ -254,7 +234,7 @@ describe('RoleListComponent', () => {
       spyOn(component.dataService, 'getAssociations').and.returnValue(of(filteredArray));
       spyOn(component.dataService, 'getAll').and.returnValue(of(filteredArray));
 
-      let filterableColumns = component.columns.filter(x => x.filter)
+      let filterableColumns = component.columns.filter((x) => x.filter);
       if (filterableColumns.length > 0) {
         let searchButton = fixture.debugElement.query(By.css('app-list-filters')).query(By.css('button')).nativeElement;
         searchButton.click();
@@ -262,7 +242,5 @@ describe('RoleListComponent', () => {
         expect(component.items).toEqual(filteredArray);
       }
     });
-
   });
-        
 });

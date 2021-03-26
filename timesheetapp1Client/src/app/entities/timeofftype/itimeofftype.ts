@@ -1,5 +1,4 @@
-export interface ITimeofftype {  
-	id: number;
-	typename: string;
-
+export interface ITimeofftype {
+  id: number;
+  typename: string;
 }

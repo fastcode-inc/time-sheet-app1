@@ -8,10 +8,9 @@ import { takeUntil } from 'rxjs/operators';
 @Component({
   selector: 'app-reset-password',
   templateUrl: './reset-password.component.html',
-  styleUrls: ['./reset-password.component.scss']
+  styleUrls: ['./reset-password.component.scss'],
 })
 export class ResetPasswordComponent implements OnInit {
-
   resetToken: string;
   resetForm: FormGroup;
   private destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
@@ -21,10 +20,10 @@ export class ResetPasswordComponent implements OnInit {
     public activatedRoute: ActivatedRoute,
     public formBuilder: FormBuilder,
     public authenticationService: AuthenticationService
-  ) { }
+  ) {}
 
   ngOnInit() {
-    this.resetToken = this.activatedRoute.snapshot.queryParams["token"];
+    this.resetToken = this.activatedRoute.snapshot.queryParams['token'];
     this.setForm();
   }
 
@@ -36,7 +35,6 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   resetPassword() {
-
     this.disabled = true;
     if (this.resetForm.invalid) {
       this.disabled = false;
@@ -44,19 +42,19 @@ export class ResetPasswordComponent implements OnInit {
     }
     let data = {
       password: this.resetForm.value.password,
-      token: this.resetToken
-    }
+      token: this.resetToken,
+    };
 
-
-    this.authenticationService.resetPassword(data)
+    this.authenticationService
+      .resetPassword(data)
       .pipe(takeUntil(this.destroyed$))
       .subscribe(
-        data => {
+        (data) => {
           this.passwordUpdated = true;
         },
-        error => {
+        (error) => {
           this.disabled = false;
-        });
+        }
+      );
   }
-
 }

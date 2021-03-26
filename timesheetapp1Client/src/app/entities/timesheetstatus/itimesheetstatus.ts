@@ -1,5 +1,4 @@
-export interface ITimesheetstatus {  
-	id: number;
-	statusname: string;
-
+export interface ITimesheetstatus {
+  id: number;
+  statusname: string;
 }

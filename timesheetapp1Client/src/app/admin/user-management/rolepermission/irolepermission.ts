@@ -1,7 +1,7 @@
-export interface IRolepermission {  
-	permissionId: number;
-	roleId: number;
+export interface IRolepermission {
+  permissionId: number;
+  roleId: number;
 
-	permissionDescriptiveField?: string;
-	roleDescriptiveField?: string;
+  permissionDescriptiveField?: string;
+  roleDescriptiveField?: string;
 }

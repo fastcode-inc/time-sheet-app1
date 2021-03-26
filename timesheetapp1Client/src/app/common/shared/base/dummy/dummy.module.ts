@@ -5,16 +5,9 @@ import { DummyDetailsComponent } from './dummy-details.component';
 import { DummyListComponent } from './dummy-list.component';
 import { DummyNewComponent } from './dummy-new.component';
 
-const components = [
-    DummyListComponent, DummyDetailsComponent, DummyNewComponent
-  ]
+const components = [DummyListComponent, DummyDetailsComponent, DummyNewComponent];
 @NgModule({
-    declarations: components,
-    imports: [
-      GeneralComponentsModule,
-      SharedModule
-    ]
-    
+  declarations: components,
+  imports: [GeneralComponentsModule, SharedModule],
 })
-export class DummyModule {
-}
+export class DummyModule {}

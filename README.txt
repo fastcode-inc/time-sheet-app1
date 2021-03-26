@@ -6,8 +6,16 @@
 
 2. Please run the following docker command from this directory. 
 
-docker-compose up
+Windows
+=======
+PowerShell.exe -ExecutionPolicy Bypass -File install.ps1
 
-This command will create four different containers with pre-installed dependencies and run the generated application. The front-end UI will run on port 4700 and the back-end API will run on port 5555.
+Linux / Mac
+===========
+./install.sh
+
+This command will create three different containers with pre-installed dependencies and run the generated application. If you added the reporting add-on, the command will create four different containers.
+
+The front-end UI will run on port 4700 and the back-end API will run on port 5555.
 
 3. Login to the Application using the instructions provided on the following page: https://dash.readme.com/project/getfastcode/v1.0/docs/generated-app-login

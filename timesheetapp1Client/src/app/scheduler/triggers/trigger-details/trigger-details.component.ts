@@ -3,29 +3,28 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { TriggerService } from '../trigger.service';
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute, Router } from '@angular/router';
 import { of } from 'rxjs';
 import { ITrigger } from '../trigger';
 import { JobData } from '../../jobs/jobData';
 import { ExecutionHistory } from '../../execution-history/executionHistory';
-import { plainToClass } from "class-transformer";
+import { plainToClass } from 'class-transformer';
 import { TranslateService } from '@ngx-translate/core';
 import { listColumnType, IListColumn, Globals, ErrorService } from 'src/app/common/shared';
 
 @Component({
   selector: 'app-trigger-details',
   templateUrl: './trigger-details.component.html',
-  styleUrls: ['./trigger-details.component.scss']
+  styleUrls: ['./trigger-details.component.scss'],
 })
 export class TriggerDetailsComponent implements OnInit {
-
   trigger: ITrigger;
   selectJobDialogRef: MatDialogRef<any>;
 
   isMediumDeviceOrLess: boolean;
-  mediumDeviceOrLessDialogSize: string = "80%";
-  largerDeviceDialogWidthSize: string = "65%";
-  largerDeviceDialogHeightSize: string = "65%";
+  mediumDeviceOrLessDialogSize: string = '80%';
+  largerDeviceDialogWidthSize: string = '65%';
+  largerDeviceDialogHeightSize: string = '65%';
 
   errorMessage = '';
   triggerForm: FormGroup;
@@ -47,34 +46,36 @@ export class TriggerDetailsComponent implements OnInit {
       label: this.translate.instant('EXECUTION-HISTORY.FIELDS.STATUS'),
       sort: false,
       filter: true,
-      type: listColumnType.String
+      type: listColumnType.String,
     },
     {
       column: 'duration',
       label: this.translate.instant('EXECUTION-HISTORY.FIELDS.DURATION'),
       sort: false,
       filter: true,
-      type: listColumnType.String
+      type: listColumnType.String,
     },
     {
       column: 'firedTime',
       label: this.translate.instant('EXECUTION-HISTORY.FIELDS.FIRE-TIME'),
       sort: false,
       filter: true,
-      type: listColumnType.Date
+      type: listColumnType.Date,
     },
     {
       column: 'finishedTime',
       label: this.translate.instant('EXECUTION-HISTORY.FIELDS.FINISHED-TIME'),
       sort: false,
       filter: true,
-      type: listColumnType.Date
-    }
-  ]
-  displayedColumnsExecutionHistory: string[] = this.executionHistorycolumns.map((obj) => { return obj.column });
+      type: listColumnType.Date,
+    },
+  ];
+  displayedColumnsExecutionHistory: string[] = this.executionHistorycolumns.map((obj) => {
+    return obj.column;
+  });
   // displayedColumnsExecutionHistory: string[] = ['triggerName', 'triggerGroup']
   executionHistory: ExecutionHistory[] = [];
-  dataSourceExecutionHistory = of(this.executionHistory)
+  dataSourceExecutionHistory = of(this.executionHistory);
 
   constructor(
     private formBuilder: FormBuilder,
@@ -84,16 +85,17 @@ export class TriggerDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     public dialog: MatDialog,
     private translate: TranslateService,
-    private errorService: ErrorService,
-  ) { }
+    private errorService: ErrorService
+  ) {}
 
   ngOnInit() {
-    this.global.isMediumDeviceOrLess$.subscribe(value => {
+    this.global.isMediumDeviceOrLess$.subscribe((value) => {
       this.isMediumDeviceOrLess = value;
       if (this.selectJobDialogRef)
-        this.selectJobDialogRef.updateSize(value ? this.mediumDeviceOrLessDialogSize : this.largerDeviceDialogWidthSize,
-          value ? this.mediumDeviceOrLessDialogSize : this.largerDeviceDialogHeightSize);
-
+        this.selectJobDialogRef.updateSize(
+          value ? this.mediumDeviceOrLessDialogSize : this.largerDeviceDialogWidthSize,
+          value ? this.mediumDeviceOrLessDialogSize : this.largerDeviceDialogHeightSize
+        );
     });
 
     this.triggerForm = this.formBuilder.group({
@@ -103,7 +105,7 @@ export class TriggerDetailsComponent implements OnInit {
       triggerGroup: ['', Validators.required],
       triggerType: ['', Validators.required],
       startDate: [''],
-      startTime: ['',],
+      startTime: [''],
       endDate: [''],
       endTime: [''],
       lastExecutionTime: [''],
@@ -118,12 +120,11 @@ export class TriggerDetailsComponent implements OnInit {
       this.getTrigger(this.triggerNameParam, this.triggerGroupParam);
       this.getTriggerExecutionHistory(this.triggerNameParam, this.triggerGroupParam);
     }
-
   }
 
   getTrigger(triggerName: string, triggerGroup: string) {
     this.triggerService.get(triggerName, triggerGroup).subscribe(
-      trigger => {
+      (trigger) => {
         if (trigger) {
           this.trigger = trigger;
           let triggerobj = {
@@ -133,25 +134,26 @@ export class TriggerDetailsComponent implements OnInit {
             startTime: this.formatDateStringToAMPM(trigger.startTime),
             startDate: trigger.startTime ? new Date(trigger.startTime) : null,
             endTime: this.formatDateStringToAMPM(trigger.endTime),
-            endDate: trigger.endTime ? new Date(trigger.endTime) : null
-          }
+            endDate: trigger.endTime ? new Date(trigger.endTime) : null,
+          };
 
           this.triggerForm.patchValue(triggerobj);
           this.setJobData();
         }
       },
-      error => this.errorMessage = <any>error);
+      (error) => (this.errorMessage = <any>error)
+    );
   }
 
   getTriggerExecutionHistory(triggerName: string, triggerGroup: string) {
     this.triggerService.getTriggerExecutionHistoryByJob(triggerName, triggerGroup, [], 0, 30, null).subscribe(
-      executionHistory => {
+      (executionHistory) => {
         this.executionHistory = executionHistory;
         this.dataSourceExecutionHistory = of(this.executionHistory);
       },
-      error => this.errorMessage = <any>error);
+      (error) => (this.errorMessage = <any>error)
+    );
   }
-
 
   formatDateStringToAMPM(d) {
     if (d) {
@@ -169,19 +171,20 @@ export class TriggerDetailsComponent implements OnInit {
   }
 
   private setJobData() {
-    let triggerMapData = this.trigger["triggerMapData"]
+    let triggerMapData = this.trigger['triggerMapData'];
     if (triggerMapData) {
       let jobDataKeys = Object.keys(triggerMapData);
       jobDataKeys.forEach((key) => {
-        this.triggerMapData.push(plainToClass(JobData, {
-          dataKey: key,
-          dataValue: triggerMapData[key]
-        } as Object))
-      })
+        this.triggerMapData.push(
+          plainToClass(JobData, {
+            dataKey: key,
+            dataValue: triggerMapData[key],
+          } as Object)
+        );
+      });
 
       this.dataSourceJobData = of(this.triggerMapData);
     }
-
   }
 
   onSubmit() {
@@ -193,42 +196,44 @@ export class TriggerDetailsComponent implements OnInit {
     }
 
     this.loading = true;
-    console.log(this.triggerForm.value)
+    console.log(this.triggerForm.value);
     let newTrigger = {};
     newTrigger = this.triggerForm.value;
-    newTrigger["triggerMapData"] = {};
+    newTrigger['triggerMapData'] = {};
     this.triggerMapData.forEach(function (obj) {
       let tmp = {};
       tmp[obj.dataKey] = obj.dataValue;
-      newTrigger["triggerMapData"][obj.dataKey] = obj.dataValue;
-    })
+      newTrigger['triggerMapData'][obj.dataKey] = obj.dataValue;
+    });
 
     //to combine both date and time into same object for start and end times of triggers
-    newTrigger['startTime'] = this.combineDateAndTime(newTrigger['startDate'], newTrigger['startTime'])
-    newTrigger['endTime'] = this.combineDateAndTime(newTrigger['endDate'], newTrigger['endTime'])
+    newTrigger['startTime'] = this.combineDateAndTime(newTrigger['startDate'], newTrigger['startTime']);
+    newTrigger['endTime'] = this.combineDateAndTime(newTrigger['endDate'], newTrigger['endTime']);
     delete newTrigger['startDate'];
     delete newTrigger['endDate'];
 
-    this.triggerService.update(newTrigger, this.trigger.triggerName, this.trigger.triggerGroup)
+    this.triggerService
+      .update(newTrigger, this.trigger.triggerName, this.trigger.triggerGroup)
       .pipe(first())
       .subscribe(
-        data => {
+        (data) => {
           this.errorService.showError(this.translate.instant('TRIGGERS.MESSAGES.UPDATED'));
           this.router.navigate(['/scheduler/triggers']);
         },
-        error => {
+        (error) => {
           this.loading = false;
-        });
+        }
+      );
   }
 
   combineDateAndTime(date: string, time: string): Date {
-    let tmpDate = new Date(date)
+    let tmpDate = new Date(date);
     let hours: number = parseInt(time.substring(0, 2));
     let minutes = parseInt(time.substring(3, 5));
-    let ampm = time.substring(6, 8) ? time.substring(6, 8) : "am";
-    if (ampm.toLocaleLowerCase() == "pm") {
+    let ampm = time.substring(6, 8) ? time.substring(6, 8) : 'am';
+    if (ampm.toLocaleLowerCase() == 'pm') {
       hours = hours + 12;
-    } else if (ampm.toLocaleLowerCase() == "am" && hours === 12) {
+    } else if (ampm.toLocaleLowerCase() == 'am' && hours === 12) {
       hours = 0;
     }
     tmpDate.setHours(hours ? hours : 0);
@@ -240,10 +245,12 @@ export class TriggerDetailsComponent implements OnInit {
     this.router.navigate(['/triggers']);
   }
   addJobData(): void {
-    this.triggerMapData.push(plainToClass(JobData, {
-      "dataKey": "",
-      "dataValue": ""
-    }));
+    this.triggerMapData.push(
+      plainToClass(JobData, {
+        dataKey: '',
+        dataValue: '',
+      })
+    );
     this.dataSourceJobData = of(this.triggerMapData);
   }
 
@@ -251,5 +258,4 @@ export class TriggerDetailsComponent implements OnInit {
     this.triggerMapData.splice(index, 1);
     this.dataSourceJobData = of(this.triggerMapData);
   }
-
 }

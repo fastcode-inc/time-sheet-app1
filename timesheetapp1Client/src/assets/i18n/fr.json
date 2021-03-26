@@ -29,9 +29,9 @@
   },
   "HOME": "Home",
   "LOGIN": {
-  	"LOGIN": "Login",
-  	"ERRORS": {
-  		"INVALID-CREDENTIALS": "Wrong username or password."
+    "LOGIN": "Login",
+    "ERRORS": {
+      "INVALID-CREDENTIALS": "Wrong username or password."
     },
     "FIELDS": {
       "USERNAME": "Username",
@@ -44,7 +44,6 @@
     }
   },
   "ACCOUNT": {
-
     "FORGOT-PASSWORD": {
       "TITLE": "Forgot password",
       "HEADING": "Enter your user account's verified email address and we will send you a password reset link.",
@@ -83,9 +82,9 @@
     "Entities": "Entities",
     "AccessMgmt": "User Management",
     "Users": "Users",
-    "Language": "Language",   
+    "Language": "Language",
     "Monitoring": "Monitoring",
-    "Message" : "Welcome to fastcode",
+    "Message": "Welcome to fastcode",
     "Tools": "Tools",
     "Administration": "Administration",
     "About": "About",
@@ -95,49 +94,49 @@
       "UPDATE-PROFILE": "Update Profile",
       "LOGOUT": "Logout"
     },
-    "EntityHistory": "Entity Audit"
-    ,
+    "EntityHistory": "Entity Audit",
     "JobScheduling": {
-      "Title":"Jobs Scheduler",
-      "Jobs":"Jobs",
-      "ExecutingJobs":"Executing Jobs",
-      "Triggers":"Triggers",
-      "ExecutionHistory":"Execution History"
-    }  },
+      "Title": "Jobs Scheduler",
+      "Jobs": "Jobs",
+      "ExecutingJobs": "Executing Jobs",
+      "Triggers": "Triggers",
+      "ExecutionHistory": "Execution History"
+    }
+  },
   "CONFIRM-DIALOG": {
-    "TITLE":"Confirm",
+    "TITLE": "Confirm",
     "MESSAGE": "Are you sure you want to proceed?",
     "DELETE": {
       "MESSAGE": "Are you sure you want to delete this entry?",
       "TITLE": "Delete"
     }
   },
-  "LIST-FILTERS":{
-    "ADD-FILTER-FIELD":{
-      "OPERATORS":{
-        "TITLE":"Operator"
+  "LIST-FILTERS": {
+    "ADD-FILTER-FIELD": {
+      "OPERATORS": {
+        "TITLE": "Operator"
       },
       "PLACEHOLDERS": {
-        "VALUE":"Value",
-        "FROM-VALUE":"From value",
-        "TO-VALUE":"To value"
+        "VALUE": "Value",
+        "FROM-VALUE": "From value",
+        "TO-VALUE": "To value"
       }
     },
-    "FIELD-CRITERIA-DISPLAY":{
-      "CONTAINS":"contains",
-      "EQUALS":"is equal to",
-      "NOT-EQUAL":"not equal to",
-      "FROM":"from",
-      "TO":"to"
+    "FIELD-CRITERIA-DISPLAY": {
+      "CONTAINS": "contains",
+      "EQUALS": "is equal to",
+      "NOT-EQUAL": "not equal to",
+      "FROM": "from",
+      "TO": "to"
     },
-    "SEARCH-BUTTON-TEXT":"Filter",
-    "ADD-FILTER-PLACEHOLDER":"Add Filter"
+    "SEARCH-BUTTON-TEXT": "Filter",
+    "ADD-FILTER-PLACEHOLDER": "Add Filter"
   },
-  "PICKER":{
-    "TITLE":"Select a {{title}}"
+  "PICKER": {
+    "TITLE": "Select a {{title}}"
   },
-    "REPORTING": {
-    "LABELS":{
+  "REPORTING": {
+    "LABELS": {
       "ADD-TO-DASHBOARD-TITLE": "Add to Dashboard",
       "EXISTING-DASHBOARD": "Existing Dashboard",
       "NEW-DASHBOARD": "New Dashboard",
@@ -173,7 +172,7 @@
       "SET-PASSWORD": "Set Password",
       "PASSWORD-PLACEHOLDER": "Password",
       "CONFIRM-PASSWORD-PLACEHOLDER": "Confirm Password",
-      "DASHBOARD":{
+      "DASHBOARD": {
         "SAVE": "Save Dashboard",
         "TITLE": "Dashboard Title",
         "TITLE-PLACEHOLDER": "Ex. Main dashboard",
@@ -184,7 +183,7 @@
         "UNTITLED": "Untitled Dashboard",
         "SELECT-NEW-OWNER": "Select New Owner of Dashboard"
       },
-      "REPORT":{
+      "REPORT": {
         "REPORT": "Report",
         "SAVE": "Save Report",
         "TITLE": "Report Title",
@@ -247,12 +246,12 @@
           "LAST-YEAR": "Last year"
         },
         "TIME-FILTER-BY-LIST": {
-          "W-O-GROUPING":"w/o grouping",
-          "HOUR":"Hour",
-          "DAY":"Day",
-          "WEEK":"Week",
-          "MONTH":"Month",
-          "YEAR":"Year"
+          "W-O-GROUPING": "w/o grouping",
+          "HOUR": "Hour",
+          "DAY": "Day",
+          "WEEK": "Week",
+          "MONTH": "Month",
+          "YEAR": "Year"
         },
         "FILTERS-GENERAL": {
           "EQUALS": "equals",
@@ -270,7 +269,7 @@
           "CONTAINS": "contains",
           "NOT-CONTAINS": "does not contain"
         },
-        "GRAPHS":{
+        "GRAPHS": {
           "LINE": "Line",
           "AREA": "Area",
           "BAR": "Bar",
@@ -281,19 +280,19 @@
           "TABLE": "Table",
           "NUMBER": "Number"
         },
-        "WIDTH-OPTIONS":{
+        "WIDTH-OPTIONS": {
           "SMALL": "Small",
           "MEDIUM": "Medium",
           "LARGE": "Large",
-          "FULL": "Full" 
+          "FULL": "Full"
         },
-        "SHARE-OPTIONS":{
+        "SHARE-OPTIONS": {
           "NONE": "None",
           "EDIT": "Can edit",
           "VIEW": "Can view"
-        } 
+        }
       },
-      "PERMALINK":{
+      "PERMALINK": {
         "ACCESS-PERMISSION": "Access Permission",
         "ACCESS-LOGIN-DESCRIPTION": "When anyone access the URL, it will prompt for login details. Please make sure this view is shared to the user who is about to login and access.",
         "ACCESS-WITHOUT-LOGIN-DESCRIPTION": "When anyone access the URL, it will not prompt for login details. Even though this view is private.",
@@ -316,11 +315,10 @@
         "CHART-RENDERING": "Chart Rendring",
         "INTERACTIVE": "Interactive",
         "TITLE": "External Share Options"
-        
       }
     },
-    "MESSAGES":{
-      "REPORT":{
+    "MESSAGES": {
+      "REPORT": {
         "NO-REPORT-AVAILABLE": "No report available",
         "NO-REPORT-SELECTED": "No report selected",
         "REFRESHED": "Report refreshed!",
@@ -332,7 +330,7 @@
         "OWNERSHIP-TRANSFERRED": "Report ownership transferred to",
         "ADDED-TO": "Added report to"
       },
-      "DASHBOARD":{
+      "DASHBOARD": {
         "REFRESHED": "Dashboard refreshed!",
         "DELETED": "Dashboard deleted!",
         "UPDATED": "Dashboard updated!",

@@ -9,55 +9,51 @@ import { ListFiltersComponent, ServiceUtils, DateUtils } from 'src/app/common/sh
 import { ListComponent, DetailsComponent, NewComponent, FieldsComp } from 'src/app/common/general-components';
 
 import { EntryComponents, TestingModule } from 'src/testing/utils';
-import { IRolepermission, RolepermissionService, RolepermissionDetailsComponent, RolepermissionListComponent,
-	RolepermissionNewComponent } from '../';
+import {
+  IRolepermission,
+  RolepermissionService,
+  RolepermissionDetailsComponent,
+  RolepermissionListComponent,
+  RolepermissionNewComponent,
+} from '../';
 
 describe('RolepermissionListComponent', () => {
-  let fixture:ComponentFixture<RolepermissionListComponent>;
-  let component:RolepermissionListComponent;
+  let fixture: ComponentFixture<RolepermissionListComponent>;
+  let component: RolepermissionListComponent;
   let el: HTMLElement;
-  
+
   let d = new Date();
   let t = DateUtils.formatDateStringToAMPM(d);
-  let constData:IRolepermission[] = [
-    {   
+  let constData: IRolepermission[] = [
+    {
       permissionId: 1,
       roleId: 1,
       permissionDescriptiveField: 'displayName1',
       roleDescriptiveField: 'displayName1',
     },
-    {   
+    {
       permissionId: 2,
       roleId: 2,
       permissionDescriptiveField: 'displayName2',
       roleDescriptiveField: 'displayName2',
     },
   ];
-  let data: IRolepermission[] = [... constData];
+  let data: IRolepermission[] = [...constData];
 
   describe('Unit tests', () => {
-  
     beforeEach(async(() => {
-      
       TestBed.configureTestingModule({
-        declarations: [
-          RolepermissionListComponent,
-          ListComponent
-        ],
+        declarations: [RolepermissionListComponent, ListComponent],
         imports: [TestingModule],
-        providers: [
-          RolepermissionService,      
-          ChangeDetectorRef,
-        ],
-        schemas: [NO_ERRORS_SCHEMA]   
+        providers: [RolepermissionService, ChangeDetectorRef],
+        schemas: [NO_ERRORS_SCHEMA],
       }).compileComponents();
-
     }));
-    
+
     beforeEach(() => {
       fixture = TestBed.createComponent(RolepermissionListComponent);
       component = fixture.componentInstance;
-      data = [... constData];
+      data = [...constData];
       fixture.detectChanges();
     });
 
@@ -66,7 +62,6 @@ describe('RolepermissionListComponent', () => {
     });
 
     it('should run #ngOnInit()', async () => {
-
       spyOn(component.dataService, 'getAll').and.returnValue(of(data));
       component.ngOnInit();
 
@@ -81,7 +76,6 @@ describe('RolepermissionListComponent', () => {
       expect(component.columns.length).toBeGreaterThan(0);
       expect(component.selectedColumns.length).toBeGreaterThan(0);
       expect(component.displayedColumns.length).toBeGreaterThan(0);
-
     });
 
     it('should run #addNew()', async () => {
@@ -90,13 +84,12 @@ describe('RolepermissionListComponent', () => {
       el.click();
       expect(component.addNew).toHaveBeenCalled();
     });
-    
-    it('should run #delete()', async () => {
 
+    it('should run #delete()', async () => {
       component.items = data;
       fixture.detectChanges();
 
-      let tableRows = fixture.nativeElement.querySelectorAll('mat-row')
+      let tableRows = fixture.nativeElement.querySelectorAll('mat-row');
       let firstRowCells = tableRows[0].querySelectorAll('mat-cell');
       let editButtonCell = firstRowCells[firstRowCells.length - 1];
       let editButton = editButtonCell.querySelectorAll('button')[1];
@@ -104,14 +97,13 @@ describe('RolepermissionListComponent', () => {
       spyOn(component, 'delete').and.returnValue();
       editButton.click();
       expect(component.delete).toHaveBeenCalledWith(data[0]);
-
     });
 
     it('should call openDetails function when edit button is clicked', async () => {
       component.items = data;
       fixture.detectChanges();
 
-      let tableRows = fixture.nativeElement.querySelectorAll('mat-row')
+      let tableRows = fixture.nativeElement.querySelectorAll('mat-row');
       let firstRowCells = tableRows[0].querySelectorAll('mat-cell');
       let editButtonCell = firstRowCells[firstRowCells.length - 1];
       let editButton = editButtonCell.querySelectorAll('button')[0];
@@ -124,27 +116,24 @@ describe('RolepermissionListComponent', () => {
 
     it('should call applyFilter function in case of onSearch event of list-filter-component', async () => {
       fixture.detectChanges();
-      
+
       spyOn(component, 'applyFilter');
       fixture.debugElement.query(By.css('app-list-filters')).triggerEventHandler('onSearch', null);
-      
+
       expect(component.applyFilter).toHaveBeenCalled();
     });
 
     it('should pass the selected columns list as input to app list filters', async () => {
       fixture.detectChanges();
-      
+
       let listFilterElement: DebugElement = fixture.debugElement.query(By.css('app-list-filters'));
-      
+
       expect(listFilterElement.properties.columnsList).toBe(component.selectedColumns);
     });
-  
   });
-  
+
   describe('Integration tests', () => {
-
     beforeEach(async(() => {
-
       TestBed.configureTestingModule({
         declarations: [
           RolepermissionListComponent,
@@ -153,28 +142,23 @@ describe('RolepermissionListComponent', () => {
           RolepermissionDetailsComponent,
           ListComponent,
           DetailsComponent,
-          FieldsComp
+          FieldsComp,
         ].concat(EntryComponents),
         imports: [
           TestingModule,
           RouterTestingModule.withRoutes([
             { path: 'rolepermission', component: RolepermissionListComponent },
-            { path: 'rolepermission/:id', component: RolepermissionDetailsComponent }
-          ])
+            { path: 'rolepermission/:id', component: RolepermissionDetailsComponent },
+          ]),
         ],
-        providers: [
-          RolepermissionService,
-          ChangeDetectorRef,
-        ]
-
+        providers: [RolepermissionService, ChangeDetectorRef],
       }).compileComponents();
-
     }));
 
     beforeEach(() => {
       fixture = TestBed.createComponent(RolepermissionListComponent);
       component = fixture.componentInstance;
-      data = [... constData];
+      data = [...constData];
       fixture.detectChanges();
     });
 
@@ -208,12 +192,12 @@ describe('RolepermissionListComponent', () => {
 
       expect(component.dialog.open).toHaveBeenCalled();
     });
-    
+
     it('should delete the item from list', async () => {
       component.items = data;
       fixture.detectChanges();
 
-      let tableRows = fixture.nativeElement.querySelectorAll('mat-row')
+      let tableRows = fixture.nativeElement.querySelectorAll('mat-row');
       let firstRowCells = tableRows[0].querySelectorAll('mat-cell');
       let deleteButtonCell = firstRowCells[firstRowCells.length - 1];
       let deleteButton = deleteButtonCell.querySelectorAll('button[name="delete"]')[0];
@@ -226,7 +210,7 @@ describe('RolepermissionListComponent', () => {
 
     it('should set the columns list in app list filters component', async () => {
       let listFilters: ListFiltersComponent = fixture.debugElement.query(By.css('app-list-filters')).componentInstance;
-      
+
       expect(listFilters.columnsList).toEqual(component.selectedColumns);
     });
 
@@ -236,7 +220,7 @@ describe('RolepermissionListComponent', () => {
       component.items = data;
       fixture.detectChanges();
 
-      let tableRows = fixture.nativeElement.querySelectorAll('mat-row')
+      let tableRows = fixture.nativeElement.querySelectorAll('mat-row');
       let firstRowCells = tableRows[0].querySelectorAll('mat-cell');
       let editButtonCell = firstRowCells[firstRowCells.length - 1];
       let editButton = editButtonCell.querySelectorAll('button[name="edit"]')[0];
@@ -247,8 +231,10 @@ describe('RolepermissionListComponent', () => {
 
       let responsePromise = navigationSpy.calls.mostRecent().returnValue;
       await responsePromise;
-      
-      expect(decodeURIComponent(location.path())).toBe(`/rolepermission/${ServiceUtils.encodeIdByObject(data[0], component.primaryKeys)}`);
+
+      expect(decodeURIComponent(location.path())).toBe(
+        `/rolepermission/${ServiceUtils.encodeIdByObject(data[0], component.primaryKeys)}`
+      );
     });
 
     it('should emit onSearch event of list-filter-component and call applyFilter function', async () => {
@@ -256,7 +242,7 @@ describe('RolepermissionListComponent', () => {
       spyOn(component.dataService, 'getAssociations').and.returnValue(of(filteredArray));
       spyOn(component.dataService, 'getAll').and.returnValue(of(filteredArray));
 
-      let filterableColumns = component.columns.filter(x => x.filter)
+      let filterableColumns = component.columns.filter((x) => x.filter);
       if (filterableColumns.length > 0) {
         let searchButton = fixture.debugElement.query(By.css('app-list-filters')).query(By.css('button')).nativeElement;
         searchButton.click();
@@ -264,7 +250,5 @@ describe('RolepermissionListComponent', () => {
         expect(component.items).toEqual(filteredArray);
       }
     });
-
   });
-        
 });

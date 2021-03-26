@@ -1,16 +1,18 @@
 package com.fastcode.timesheetapp1.addons.email.application.mail.dto;
 
+import java.util.Date;
+import java.util.List;
+import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
-import javax.validation.constraints.NotNull;
-import java.util.List;
-import java.util.Date;
 
-@Getter @Setter
-public class CreateEmailInput{
+@Getter
+@Setter
+public class CreateEmailInput {
 
     @NotNull(message = "To: should not be null")
     private String to;
+
     private String cc;
     private String bcc;
     private String subject;
@@ -22,6 +24,4 @@ public class CreateEmailInput{
     //List of fileIds for inline images and attachments
     private List<Long> inlineImages;
     private List<Long> attachments;
-
 }
-

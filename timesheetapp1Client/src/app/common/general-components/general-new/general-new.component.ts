@@ -2,47 +2,42 @@ import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { IAssociationEntry } from 'src/app/common/shared';
 
-
 @Component({
-	selector: 'fc-general-new',
-	templateUrl: './general-new.component.html',
-	styleUrls: ['./general-new.component.scss']
+  selector: 'fc-general-new',
+  templateUrl: './general-new.component.html',
+  styleUrls: ['./general-new.component.scss'],
 })
 export class GeneralNewComponent implements OnInit {
-		@Input() IsCreatePermission;
-	@Input() itemForm: FormGroup;
-	@Input() fields: any[];
-	@Input() parentAssociations: IAssociationEntry[];
-	@Input() title;
-	@Input() loading;
-	
-	@Output() onPickerScroll: EventEmitter<any> = new EventEmitter();
-	@Output() onAssociationOptionSelected: EventEmitter<any> = new EventEmitter();
-	@Output() onSelectAssociation: EventEmitter<any> = new EventEmitter();
-	@Output() onBack: EventEmitter<any> = new EventEmitter();
-	@Output() onSubmit: EventEmitter<any> = new EventEmitter();
+  @Input() IsCreatePermission;
+  @Input() itemForm: FormGroup;
+  @Input() fields: any[];
+  @Input() parentAssociations: IAssociationEntry[];
+  @Input() title;
+  @Input() loading;
 
-	constructor(
-		public formBuilder: FormBuilder
-	) {}
+  @Output() onPickerScroll: EventEmitter<any> = new EventEmitter();
+  @Output() onAssociationOptionSelected: EventEmitter<any> = new EventEmitter();
+  @Output() onSelectAssociation: EventEmitter<any> = new EventEmitter();
+  @Output() onBack: EventEmitter<any> = new EventEmitter();
+  @Output() onSubmit: EventEmitter<any> = new EventEmitter();
 
-	ngOnInit() {
-	}
+  constructor(public formBuilder: FormBuilder) {}
 
-	pickerScroll(association){
-		this.onPickerScroll.emit(association);
-	}
+  ngOnInit() {}
 
-	selectAssociation(association){
-		this.onSelectAssociation.emit(association);
-	}
+  pickerScroll(association) {
+    this.onPickerScroll.emit(association);
+  }
 
-	back(){
-		this.onBack.emit();
-	}
-	
-	submit(){
-		this.onSubmit.emit();
-	}
+  selectAssociation(association) {
+    this.onSelectAssociation.emit(association);
+  }
 
+  back() {
+    this.onBack.emit();
+  }
+
+  submit() {
+    this.onSubmit.emit();
+  }
 }

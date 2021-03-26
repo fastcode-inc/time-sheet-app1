@@ -1,30 +1,31 @@
 package com.fastcode.timesheetapp1.domain.core.customer;
 
-import javax.persistence.*;
+import com.fastcode.timesheetapp1.domain.core.abstractentity.AbstractEntity;
+import com.fastcode.timesheetapp1.domain.core.project.ProjectEntity;
+import java.time.*;
 import java.util.HashSet;
 import java.util.Set;
-import java.time.*;
-import com.fastcode.timesheetapp1.domain.core.project.ProjectEntity;
-import com.fastcode.timesheetapp1.domain.core.abstractentity.AbstractEntity;
-import lombok.Getter;
-import lombok.Setter;
+import javax.persistence.*;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.javers.core.metamodel.annotation.ShallowReference;
 
 @Entity
 @Table(name = "customer")
-@Getter @Setter
+@Getter
+@Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
 public class CustomerEntity extends AbstractEntity {
 
     @Id
-    @EqualsAndHashCode.Include()
+    @EqualsAndHashCode.Include
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "customerid", nullable = false)
     private Long customerid;
-    
+
     @Basic
     @Column(name = "description", nullable = true)
     private String description;
@@ -32,26 +33,22 @@ public class CustomerEntity extends AbstractEntity {
     @Basic
     @Column(name = "isactive", nullable = false)
     private Boolean isactive;
-    
+
     @Basic
-    @Column(name = "name", nullable = false,length =255)
+    @Column(name = "name", nullable = false, length = 255)
     private String name;
 
-	@ShallowReference
+    @ShallowReference
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ProjectEntity> projectsSet = new HashSet<ProjectEntity>();
-    
-    public void addProjects(ProjectEntity projects) {        
-    	projectsSet.add(projects);
+
+    public void addProjects(ProjectEntity projects) {
+        projectsSet.add(projects);
         projects.setCustomer(this);
     }
+
     public void removeProjects(ProjectEntity projects) {
         projectsSet.remove(projects);
         projects.setCustomer(null);
     }
-    
-
 }
-
-
-

@@ -9,14 +9,14 @@ import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-list-filters',
   templateUrl: './list-filters.component.html',
-  styleUrls: ['./list-filters.component.scss']
+  styleUrls: ['./list-filters.component.scss'],
 })
 export class ListFiltersComponent implements OnInit {
   @Input('matChipInputAddOnBlur')
-  addOnBlur: boolean
+  addOnBlur: boolean;
 
   @Input('matChipInputSeparatorKeyCodes')
-  separatorKeysCodes: number[]
+  separatorKeysCodes: number[];
 
   @Output() onSearch: EventEmitter<any> = new EventEmitter();
   @Input() columnsList: IListColumn[];
@@ -28,7 +28,7 @@ export class ListFiltersComponent implements OnInit {
   basicFilterForm: FormGroup;
   detailsFilterForm: FormGroup;
   showFilters = false;
-  filterButtonText = "Show filters";
+  filterButtonText = 'Show filters';
 
   filterCtrl = new FormControl();
 
@@ -38,17 +38,12 @@ export class ListFiltersComponent implements OnInit {
   @ViewChild('filterInput', { read: ElementRef, static: false }) filterInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto', { read: MatAutocomplete, static: false }) matAutocomplete: MatAutocomplete;
 
-
   addFieldDialogRef: MatDialogRef<any>;
 
   mySelector: Boolean = false;
   field: IListColumn;
 
-  constructor(
-    private formBuilder: FormBuilder,
-    public dialog: MatDialog,
-    public translate: TranslateService,
-  ) { }
+  constructor(private formBuilder: FormBuilder, public dialog: MatDialog, public translate: TranslateService) {}
 
   ngOnInit() {
     this.initializeFilterForms();
@@ -63,22 +58,22 @@ export class ListFiltersComponent implements OnInit {
       endingValue: [''],
       operator: ['', Validators.required],
     });
-    this.basicFilterForm.addControl("searchText", new FormControl(''));
-    this.basicFilterForm.addControl("addFilter", new FormControl(''));
+    this.basicFilterForm.addControl('searchText', new FormControl(''));
+    this.basicFilterForm.addControl('addFilter', new FormControl(''));
   }
 
   /**
    * Filters filterable fields from
    * columns list.
    */
-  setFilterableFields(){
+  setFilterableFields() {
     this.columnsList.forEach((column) => {
       if (column.filter) {
         this.filterFields.push(column);
       }
     });
 
-    if(this.filterFields.length > 0){
+    if (this.filterFields.length > 0) {
       this.noFilterableFields = false;
     }
   }
@@ -90,7 +85,10 @@ export class ListFiltersComponent implements OnInit {
   search(): void {
     if (this.field) {
       this.selectFilterField();
-      this.filterFields.splice(this.filterFields.findIndex(filterField => filterField === this.field), 1);
+      this.filterFields.splice(
+        this.filterFields.findIndex((filterField) => filterField === this.field),
+        1
+      );
       this.filterCtrl.setValue(null);
     }
     this.onSearch.emit(this.selectedFilterFields);
@@ -103,7 +101,7 @@ export class ListFiltersComponent implements OnInit {
    * filter form and adds it to selected
    * fields list.
    */
-  selectFilterField(){
+  selectFilterField() {
     let formData = this.basicFilterForm.value;
     this.parseDateFields(formData);
     this.setSelectedDisplayFilterfield(formData);
@@ -145,23 +143,56 @@ export class ListFiltersComponent implements OnInit {
   setSelectedDisplayFilterfield(formData) {
     switch (formData.operator) {
       case operatorType.Contains:
-        this.selectedDisplayFilterFields.push(formData.fieldName + ": " + this.translate.instant('LIST-FILTERS.FIELD-CRITERIA-DISPLAY.CONTAINS') + " \"" + formData.searchValue + "\"");
+        this.selectedDisplayFilterFields.push(
+          formData.fieldName +
+            ': ' +
+            this.translate.instant('LIST-FILTERS.FIELD-CRITERIA-DISPLAY.CONTAINS') +
+            ' "' +
+            formData.searchValue +
+            '"'
+        );
         break;
       case operatorType.Equals:
-        this.selectedDisplayFilterFields.push(formData.fieldName + ": " + this.translate.instant('LIST-FILTERS.FIELD-CRITERIA-DISPLAY.EQUALS') + " \"" + formData.searchValue + "\"");
+        this.selectedDisplayFilterFields.push(
+          formData.fieldName +
+            ': ' +
+            this.translate.instant('LIST-FILTERS.FIELD-CRITERIA-DISPLAY.EQUALS') +
+            ' "' +
+            formData.searchValue +
+            '"'
+        );
         break;
       case operatorType.NotEqual:
-        this.selectedDisplayFilterFields.push(formData.fieldName + ": " + this.translate.instant('LIST-FILTERS.FIELD-CRITERIA-DISPLAY.NOT-EQUAL') + " \"" + formData.searchValue + "\"");
+        this.selectedDisplayFilterFields.push(
+          formData.fieldName +
+            ': ' +
+            this.translate.instant('LIST-FILTERS.FIELD-CRITERIA-DISPLAY.NOT-EQUAL') +
+            ' "' +
+            formData.searchValue +
+            '"'
+        );
         break;
       case operatorType.Range:
-        let displayField = formData.fieldName + ":";
+        let displayField = formData.fieldName + ':';
 
         if (formData.startingValue) {
-          displayField = displayField + " " + this.translate.instant('LIST-FILTERS.FIELD-CRITERIA-DISPLAY.FROM') + " \"" + formData.startingValue + "\"";
+          displayField =
+            displayField +
+            ' ' +
+            this.translate.instant('LIST-FILTERS.FIELD-CRITERIA-DISPLAY.FROM') +
+            ' "' +
+            formData.startingValue +
+            '"';
         }
 
         if (formData.endingValue) {
-          displayField = displayField + " " + this.translate.instant('LIST-FILTERS.FIELD-CRITERIA-DISPLAY.TO') + " \"" + formData.endingValue + "\"";
+          displayField =
+            displayField +
+            ' ' +
+            this.translate.instant('LIST-FILTERS.FIELD-CRITERIA-DISPLAY.TO') +
+            ' "' +
+            formData.endingValue +
+            '"';
         }
         this.selectedDisplayFilterFields.push(displayField);
         break;
@@ -177,27 +208,33 @@ export class ListFiltersComponent implements OnInit {
    */
   parseDateToDefaultStringFormat(date: Date): string {
     let datestring =
-    date.getFullYear() + "-" +
-      ("0" + (date.getMonth() + 1)).slice(-2) + "-" +
-      ("0" + date.getDate()).slice(-2) + " " +
-      ("0" + date.getHours()).slice(-2) + ":" +
-      ("0" + date.getMinutes()).slice(-2) + ":" +
-      ("0" + date.getSeconds()).slice(-2) + "." +
-      ("00" + date.getMilliseconds()).slice(-3);
+      date.getFullYear() +
+      '-' +
+      ('0' + (date.getMonth() + 1)).slice(-2) +
+      '-' +
+      ('0' + date.getDate()).slice(-2) +
+      ' ' +
+      ('0' + date.getHours()).slice(-2) +
+      ':' +
+      ('0' + date.getMinutes()).slice(-2) +
+      ':' +
+      ('0' + date.getSeconds()).slice(-2) +
+      '.' +
+      ('00' + date.getMilliseconds()).slice(-3);
 
     return datestring;
   }
 
   /**
    * Handler function for option selected
-   * event of autocomplete. Sets operators 
+   * event of autocomplete. Sets operators
    * and selected field in form.
    * @param event Emitted MatAutocompleteSelectedEvent object.
    */
   selected(event: MatAutocompleteSelectedEvent): void {
-    console.log("Selct Value Event :", event);
+    console.log('Selct Value Event :', event);
     //getting Icolumnfield object for selected field
-    this.field = this.filterFields.find(x => x.searchColumn == event.option.value);
+    this.field = this.filterFields.find((x) => x.searchColumn == event.option.value);
     this.basicFilterForm.controls['fieldName'].setValue(this.field.searchColumn);
     this.setOperators();
     this.mySelector = true;
@@ -209,13 +246,12 @@ export class ListFiltersComponent implements OnInit {
    * from chip, adds it back to list of
    * fields and triggers onSearch event.
    * @param field Field to be removed.
-   * @param index Index of the field in 
+   * @param index Index of the field in
    * the list of selected fields.
    */
   remove(field: string, index: number): void {
-
     // get listcolumn object from filter field
-    let filterField = this.columnsList.find(x => {
+    let filterField = this.columnsList.find((x) => {
       return x.searchColumn == field.split(':')[0];
     });
 
@@ -232,15 +268,13 @@ export class ListFiltersComponent implements OnInit {
    * field type.
    */
   setOperators() {
-    this.operators = Object.keys(operatorType).map(k => operatorType[k as any]);
+    this.operators = Object.keys(operatorType).map((k) => operatorType[k as any]);
     if (this.field.type == listColumnType.String) {
       this.operators.splice(this.operators.indexOf(operatorType.Range), 1);
-    }
-    else if (this.field.type == listColumnType.Boolean) {
+    } else if (this.field.type == listColumnType.Boolean) {
       this.operators.splice(this.operators.indexOf(operatorType.Contains), 1);
       this.operators.splice(this.operators.indexOf(operatorType.Range), 1);
-    }
-    else {
+    } else {
       this.operators.splice(this.operators.indexOf(operatorType.Contains), 1);
     }
   }

@@ -5,18 +5,10 @@ import { GeneralNewComponent } from './general-new/general-new.component';
 import { GeneralDetailsComponent } from './general-details/general-details.component';
 import { FieldsComponent } from './fields/fields.component';
 
-const components = [
-    GeneralListComponent,
-    GeneralNewComponent,
-    GeneralDetailsComponent,
-    FieldsComponent
-  ]
+const components = [GeneralListComponent, GeneralNewComponent, GeneralDetailsComponent, FieldsComponent];
 @NgModule({
-	declarations: components,
-	exports: components,
-  imports: [
-    SharedModule
-  ]
+  declarations: components,
+  exports: components,
+  imports: [SharedModule],
 })
-export class GeneralComponentsModule {
-}
+export class GeneralComponentsModule {}

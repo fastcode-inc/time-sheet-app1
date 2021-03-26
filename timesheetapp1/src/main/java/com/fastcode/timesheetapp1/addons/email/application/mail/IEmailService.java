@@ -1,15 +1,12 @@
 package com.fastcode.timesheetapp1.addons.email.application.mail;
 
-import org.springframework.mail.SimpleMailMessage;
 import com.fastcode.timesheetapp1.addons.email.application.mail.dto.CreateEmailInput;
+import org.springframework.mail.SimpleMailMessage;
 
 public interface IEmailService {
+    void sendMessage(CreateEmailInput email);
 
-	void sendMessage(CreateEmailInput email);
+    SimpleMailMessage buildEmail(String email, String subject, String emailText);
 
-	SimpleMailMessage buildEmail(String email, String subject, String emailText);
-	
-	void sendEmail(SimpleMailMessage email);
-	
+    void sendEmail(SimpleMailMessage email);
 }
-

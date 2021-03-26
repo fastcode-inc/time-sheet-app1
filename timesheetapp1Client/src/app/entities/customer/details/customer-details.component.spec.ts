@@ -15,35 +15,29 @@ describe('CustomerDetailsComponent', () => {
   let component: CustomerDetailsComponent;
   let fixture: ComponentFixture<CustomerDetailsComponent>;
   let el: HTMLElement;
-  
+
   let d = new Date();
   let t = DateUtils.formatDateStringToAMPM(d);
-  
-  let relationData: any = {
-  }
-  let data:ICustomer = {
+
+  let relationData: any = {};
+  let data: ICustomer = {
     customerid: 1,
     description: 'description1',
     isactive: true,
     name: 'name1',
-    ... relationData
+    ...relationData,
   };
-  
+
   describe('Unit Tests', () => {
     beforeEach(async(() => {
       TestBed.configureTestingModule({
-        declarations: [
-          CustomerDetailsComponent,
-          DetailsComponent
-        ],
+        declarations: [CustomerDetailsComponent, DetailsComponent],
         imports: [TestingModule],
-        providers: [
-          CustomerService,
-        ],
-        schemas: [NO_ERRORS_SCHEMA]  
+        providers: [CustomerService],
+        schemas: [NO_ERRORS_SCHEMA],
       }).compileComponents();
     }));
-  
+
     beforeEach(() => {
       fixture = TestBed.createComponent(CustomerDetailsComponent);
       component = fixture.componentInstance;
@@ -88,34 +82,29 @@ describe('CustomerDetailsComponent', () => {
       spyOn(component, 'onBack').and.returnValue();
       el = fixture.debugElement.query(By.css('button[name=back]')).nativeElement;
       el.click();
-      
+
       expect(component.onBack).toHaveBeenCalled();
     });
-
   });
-  
+
   describe('Integration Tests', () => {
     beforeEach(async(() => {
-
       TestBed.configureTestingModule({
         declarations: [
           CustomerDetailsComponent,
           CustomerListComponent,
           DetailsComponent,
           ListComponent,
-          FieldsComp
+          FieldsComp,
         ].concat(EntryComponents),
         imports: [
           TestingModule,
           RouterTestingModule.withRoutes([
             { path: 'customer', component: CustomerDetailsComponent },
-            { path: 'customer/:id', component: CustomerListComponent }
-          ])
+            { path: 'customer/:id', component: CustomerListComponent },
+          ]),
         ],
-        providers: [
-          CustomerService
-        ]
-
+        providers: [CustomerService],
       }).compileComponents();
     }));
 
@@ -157,7 +146,6 @@ describe('CustomerDetailsComponent', () => {
       el.click();
 
       expect(component.errorService.showError).toHaveBeenCalled();
-
     });
 
     it('should go back to list component when back button is clicked', async () => {
@@ -173,9 +161,6 @@ describe('CustomerDetailsComponent', () => {
       let responsePromise = navigationSpy.calls.mostRecent().returnValue;
       await responsePromise;
       expect(location.path()).toBe('/customer');
-
     });
-
   });
-  
 });

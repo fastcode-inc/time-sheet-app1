@@ -9,7 +9,7 @@ import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-schema',
   templateUrl: './schema.component.html',
-  styleUrls: ['./schema.component.scss']
+  styleUrls: ['./schema.component.scss'],
 })
 export class SchemaComponent implements OnInit {
   @ViewChild(MatAccordion, { static: false }) accordion: MatAccordion;
@@ -21,7 +21,7 @@ export class SchemaComponent implements OnInit {
   fileContent: SchemaFileData = {
     content: this.translate.instant('REPORTING.LABELS.REPORT.FILE-CONTENT-TITLE'),
     absPath: '',
-    fileName: ''
+    fileName: '',
   };
   postContent: string = '';
   schemaFormGroup: FormGroup;
@@ -34,7 +34,7 @@ export class SchemaComponent implements OnInit {
     private translate: TranslateService
   ) {
     this.schemaFormGroup = this.fb.group({
-      schemaList: this.fb.array([])
+      schemaList: this.fb.array([]),
     });
   }
 
@@ -52,7 +52,7 @@ export class SchemaComponent implements OnInit {
   }
 
   schemaTables = [
-        'task',
+    'task',
     'customer',
     'timeofftype',
     'timesheet',
@@ -61,18 +61,17 @@ export class SchemaComponent implements OnInit {
     'role',
     'project',
     'usertask',
-    'app_configuration',
     'permission',
     'usersrole',
     'timesheetstatus',
     'userspermission',
     'timesheetdetails',
-  ]
+  ];
   getAllDbTables() {
-    this.service.getDbTablesList().subscribe(res => {
-      this.allSchemas = Object.keys(res.tablesSchema).filter(schema => schema == 'timesheet');
+    this.service.getDbTablesList().subscribe((res) => {
+      this.allSchemas = Object.keys(res.tablesSchema).filter((schema) => schema == 'timesheet');
       for (const k of this.allSchemas) {
-        let tableKeys = Object.keys(res.tablesSchema[k]).filter( table => this.schemaTables.includes(table));
+        let tableKeys = Object.keys(res.tablesSchema[k]).filter((table) => this.schemaTables.includes(table));
         this.allData[k] = tableKeys;
         this.allValues.push(...tableKeys);
       }
@@ -85,7 +84,7 @@ export class SchemaComponent implements OnInit {
   }
 
   getAllSchemaFiles() {
-    this.service.getSchemaFilesList().subscribe(res => {
+    this.service.getSchemaFilesList().subscribe((res) => {
       for (let v of Object.values(res.files)) {
         this.allFiles[v.fileName] = v;
       }
@@ -102,10 +101,10 @@ export class SchemaComponent implements OnInit {
 
   onClickGenerateSchema() {
     const tablesList = {
-      tables: this.selectedSchemas
+      tables: this.selectedSchemas,
     };
-    this.service.generateSchema(tablesList).subscribe(res => {
-      this.service.generateAggregatedMeasures().subscribe(res2 => {
+    this.service.generateSchema(tablesList).subscribe((res) => {
+      this.service.generateAggregatedMeasures().subscribe((res2) => {
         for (let v of Object.values(res2.files)) {
           this.allFiles[v.fileName] = v;
         }
@@ -113,7 +112,7 @@ export class SchemaComponent implements OnInit {
       });
     });
   }
-  
+
   showFile(f: SchemaFileData) {
     this.fileContent = f;
     this.postContent = f.content;
@@ -121,7 +120,7 @@ export class SchemaComponent implements OnInit {
 
   onClickUpdateSchema() {
     this.fileContent.content = this.postContent;
-    this.service.updateSchemaFile(this.fileContent).subscribe(res => {
+    this.service.updateSchemaFile(this.fileContent).subscribe((res) => {
       this.getAllSchemaFiles();
       this.showMessage(this.translate.instant('REPORTING.MESSAGES.SCHEMA-FILE-UPDATED'));
     });
@@ -132,5 +131,4 @@ export class SchemaComponent implements OnInit {
       duration: 2000,
     });
   }
-
 }

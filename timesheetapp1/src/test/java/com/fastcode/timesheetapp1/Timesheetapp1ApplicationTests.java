@@ -5,7 +5,4 @@ import org.springframework.test.context.ActiveProfiles;
 
 @ActiveProfiles("test")
 @SpringBootTest
-class Timesheetapp1ApplicationTests {
-
-}
-
+class Timesheetapp1ApplicationTests {}

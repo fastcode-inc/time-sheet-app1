@@ -15,34 +15,28 @@ describe('RoleDetailsComponent', () => {
   let component: RoleDetailsComponent;
   let fixture: ComponentFixture<RoleDetailsComponent>;
   let el: HTMLElement;
-  
+
   let d = new Date();
   let t = DateUtils.formatDateStringToAMPM(d);
-  
-  let relationData: any = {
-  }
-  let data:IRole = {
+
+  let relationData: any = {};
+  let data: IRole = {
     displayName: 'displayName1',
     id: 1,
     name: 'name1',
-    ... relationData
+    ...relationData,
   };
-  
+
   describe('Unit Tests', () => {
     beforeEach(async(() => {
       TestBed.configureTestingModule({
-        declarations: [
-          RoleDetailsComponent,
-          DetailsComponent
-        ],
+        declarations: [RoleDetailsComponent, DetailsComponent],
         imports: [TestingModule],
-        providers: [
-          RoleService,
-        ],
-        schemas: [NO_ERRORS_SCHEMA]  
+        providers: [RoleService],
+        schemas: [NO_ERRORS_SCHEMA],
       }).compileComponents();
     }));
-  
+
     beforeEach(() => {
       fixture = TestBed.createComponent(RoleDetailsComponent);
       component = fixture.componentInstance;
@@ -87,34 +81,25 @@ describe('RoleDetailsComponent', () => {
       spyOn(component, 'onBack').and.returnValue();
       el = fixture.debugElement.query(By.css('button[name=back]')).nativeElement;
       el.click();
-      
+
       expect(component.onBack).toHaveBeenCalled();
     });
-
   });
-  
+
   describe('Integration Tests', () => {
     beforeEach(async(() => {
-
       TestBed.configureTestingModule({
-        declarations: [
-          RoleDetailsComponent,
-          RoleListComponent,
-          DetailsComponent,
-          ListComponent,
-          FieldsComp
-        ].concat(EntryComponents),
+        declarations: [RoleDetailsComponent, RoleListComponent, DetailsComponent, ListComponent, FieldsComp].concat(
+          EntryComponents
+        ),
         imports: [
           TestingModule,
           RouterTestingModule.withRoutes([
             { path: 'role', component: RoleDetailsComponent },
-            { path: 'role/:id', component: RoleListComponent }
-          ])
+            { path: 'role/:id', component: RoleListComponent },
+          ]),
         ],
-        providers: [
-          RoleService
-        ]
-
+        providers: [RoleService],
       }).compileComponents();
     }));
 
@@ -156,7 +141,6 @@ describe('RoleDetailsComponent', () => {
       el.click();
 
       expect(component.errorService.showError).toHaveBeenCalled();
-
     });
 
     it('should go back to list component when back button is clicked', async () => {
@@ -172,9 +156,6 @@ describe('RoleDetailsComponent', () => {
       let responsePromise = navigationSpy.calls.mostRecent().returnValue;
       await responsePromise;
       expect(location.path()).toBe('/role');
-
     });
-
   });
-  
 });

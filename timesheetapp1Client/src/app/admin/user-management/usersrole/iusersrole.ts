@@ -1,7 +1,7 @@
-export interface IUsersrole {  
-	roleId: number;
-	usersId: number;
+export interface IUsersrole {
+  roleId: number;
+  usersId: number;
 
-	roleDescriptiveField?: string;
-	usersDescriptiveField?: string;
+  roleDescriptiveField?: string;
+  usersDescriptiveField?: string;
 }

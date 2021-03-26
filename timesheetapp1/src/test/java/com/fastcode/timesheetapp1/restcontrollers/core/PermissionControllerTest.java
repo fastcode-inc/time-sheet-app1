@@ -10,13 +10,24 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.util.*;
+import com.fastcode.timesheetapp1.application.core.authorization.permission.PermissionAppService;
+import com.fastcode.timesheetapp1.application.core.authorization.permission.dto.*;
+import com.fastcode.timesheetapp1.application.core.authorization.rolepermission.RolepermissionAppService;
+import com.fastcode.timesheetapp1.application.core.authorization.userspermission.UserspermissionAppService;
+import com.fastcode.timesheetapp1.commons.logging.LoggingHelper;
+import com.fastcode.timesheetapp1.domain.core.authorization.permission.IPermissionRepository;
+import com.fastcode.timesheetapp1.domain.core.authorization.permission.PermissionEntity;
+import com.fastcode.timesheetapp1.security.JWTAppService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.time.*;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityNotFoundException;
+import java.util.*;
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
-
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityNotFoundException;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,7 +40,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.SpyBean;
-
 import org.springframework.core.env.Environment;
 import org.springframework.data.web.SortHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
@@ -37,348 +47,383 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.fastcode.timesheetapp1.commons.logging.LoggingHelper;
-import com.fastcode.timesheetapp1.application.core.authorization.permission.PermissionAppService;
-import com.fastcode.timesheetapp1.application.core.authorization.permission.dto.*;
-import com.fastcode.timesheetapp1.domain.core.authorization.permission.IPermissionRepository;
-import com.fastcode.timesheetapp1.domain.core.authorization.permission.PermissionEntity;
-import com.fastcode.timesheetapp1.application.core.authorization.rolepermission.RolepermissionAppService;    
-import com.fastcode.timesheetapp1.application.core.authorization.userspermission.UserspermissionAppService;    
-import com.fastcode.timesheetapp1.security.JWTAppService;
-
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
-				properties = "spring.profiles.active=test")
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, properties = "spring.profiles.active=test")
 public class PermissionControllerTest {
-	
-	@Autowired
-	protected SortHandlerMethodArgumentResolver sortArgumentResolver;
 
-	@Autowired
-	@Qualifier("permissionRepository") 
-	protected IPermissionRepository permission_repository;
-	
-	@SpyBean
-	@Qualifier("permissionAppService")
-	protected PermissionAppService permissionAppService;
-	
+    @Autowired
+    protected SortHandlerMethodArgumentResolver sortArgumentResolver;
+
+    @Autowired
+    @Qualifier("permissionRepository")
+    protected IPermissionRepository permission_repository;
+
+    @SpyBean
+    @Qualifier("permissionAppService")
+    protected PermissionAppService permissionAppService;
+
     @SpyBean
     @Qualifier("rolepermissionAppService")
-	protected RolepermissionAppService  rolepermissionAppService;
-	
+    protected RolepermissionAppService rolepermissionAppService;
+
     @SpyBean
     @Qualifier("userspermissionAppService")
-	protected UserspermissionAppService  userspermissionAppService;
-	
-	@SpyBean
-	protected JWTAppService jwtAppService;
-	
-	@SpyBean
-	protected LoggingHelper logHelper;
+    protected UserspermissionAppService userspermissionAppService;
 
-	@SpyBean
-	protected Environment env;
+    @SpyBean
+    protected JWTAppService jwtAppService;
 
-	@Mock
-	protected Logger loggerMock;
+    @SpyBean
+    protected LoggingHelper logHelper;
 
-	protected PermissionEntity permission;
+    @SpyBean
+    protected Environment env;
 
-	protected MockMvc mvc;
-	
-	@Autowired
-	EntityManagerFactory emf;
-	
+    @Mock
+    protected Logger loggerMock;
+
+    protected PermissionEntity permission;
+
+    protected MockMvc mvc;
+
+    @Autowired
+    EntityManagerFactory emf;
+
     static EntityManagerFactory emfs;
-    
+
     static int relationCount = 10;
-    
-	@PostConstruct
-	public void init() {
-	emfs = emf;
-	}
 
-	@AfterClass
-	public static void cleanup() {
-		EntityManager em = emfs.createEntityManager();
-		em.getTransaction().begin();
-		em.createNativeQuery("SET REFERENTIAL_INTEGRITY FALSE").executeUpdate();
-		em.createNativeQuery("truncate table timesheet.permission RESTART IDENTITY").executeUpdate();
-	 	em.createNativeQuery("SET REFERENTIAL_INTEGRITY TRUE").executeUpdate();
-		em.getTransaction().commit();
-	}
-	
+    @PostConstruct
+    public void init() {
+        emfs = emf;
+    }
 
-	public PermissionEntity createEntity() {
-	
-		PermissionEntity permissionEntity = new PermissionEntity();
-  		permissionEntity.setDisplayName("1");
-		permissionEntity.setId(1L);
-  		permissionEntity.setName("1");
-		permissionEntity.setVersiono(0L);
-		
-		return permissionEntity;
-	}
+    @AfterClass
+    public static void cleanup() {
+        EntityManager em = emfs.createEntityManager();
+        em.getTransaction().begin();
+        em.createNativeQuery("SET REFERENTIAL_INTEGRITY FALSE").executeUpdate();
+        em.createNativeQuery("truncate table timesheet.permission RESTART IDENTITY").executeUpdate();
+        em.createNativeQuery("SET REFERENTIAL_INTEGRITY TRUE").executeUpdate();
+        em.getTransaction().commit();
+    }
 
-	public CreatePermissionInput createPermissionInput() {
-	
-	    CreatePermissionInput permissionInput = new CreatePermissionInput();
-  		permissionInput.setDisplayName("5");
-  		permissionInput.setName("5");
-		
-		return permissionInput;
-	}
+    public PermissionEntity createEntity() {
+        PermissionEntity permissionEntity = new PermissionEntity();
+        permissionEntity.setDisplayName("1");
+        permissionEntity.setId(1L);
+        permissionEntity.setName("1");
+        permissionEntity.setVersiono(0L);
 
-	public PermissionEntity createNewEntity() {
-		PermissionEntity permission = new PermissionEntity();
-		permission.setDisplayName("3");
-		permission.setId(3L);
-		permission.setName("3");
-		
-		return permission;
-	}
-	
-	public PermissionEntity createUpdateEntity() {
-		PermissionEntity permission = new PermissionEntity();
-		permission.setDisplayName("4");
-		permission.setId(4L);
-		permission.setName("4");
-		
-		return permission;
-	}
+        return permissionEntity;
+    }
 
-	@Before
-	public void setup() {
-		MockitoAnnotations.initMocks(this);
-    
-		final PermissionController permissionController = new PermissionController(permissionAppService, rolepermissionAppService, userspermissionAppService,
-	logHelper,env);
-		when(logHelper.getLogger()).thenReturn(loggerMock);
-		doNothing().when(loggerMock).error(anyString());
+    public CreatePermissionInput createPermissionInput() {
+        CreatePermissionInput permissionInput = new CreatePermissionInput();
+        permissionInput.setDisplayName("5");
+        permissionInput.setName("5");
 
-		this.mvc = MockMvcBuilders.standaloneSetup(permissionController)
-				.setCustomArgumentResolvers(sortArgumentResolver)
-				.setControllerAdvice()
-				.build();
-	}
+        return permissionInput;
+    }
 
-	@Before
-	public void initTest() {
+    public PermissionEntity createNewEntity() {
+        PermissionEntity permission = new PermissionEntity();
+        permission.setDisplayName("3");
+        permission.setId(3L);
+        permission.setName("3");
 
-		permission= createEntity();
-		List<PermissionEntity> list= permission_repository.findAll();
-		if(!list.contains(permission)) {
-			permission=permission_repository.save(permission);
-		}
+        return permission;
+    }
 
-	}
+    public PermissionEntity createUpdateEntity() {
+        PermissionEntity permission = new PermissionEntity();
+        permission.setDisplayName("4");
+        permission.setId(4L);
+        permission.setName("4");
 
-	@Test
-	public void FindById_IdIsValid_ReturnStatusOk() throws Exception {
-	
-		mvc.perform(get("/permission/" + permission.getId()+"/")
-				.contentType(MediaType.APPLICATION_JSON))
-		.andExpect(status().isOk());
-	}  
+        return permission;
+    }
 
-	@Test
-	public void FindById_IdIsNotValid_ReturnStatusNotFound() {
+    @Before
+    public void setup() {
+        MockitoAnnotations.initMocks(this);
 
-		 org.assertj.core.api.Assertions.assertThatThrownBy(() -> mvc.perform(get("/permission/999")
-				.contentType(MediaType.APPLICATION_JSON))
-					.andExpect(status().isOk())).hasCause(new EntityNotFoundException("Not found"));
+        final PermissionController permissionController = new PermissionController(
+            permissionAppService,
+            rolepermissionAppService,
+            userspermissionAppService,
+            logHelper,
+            env
+        );
+        when(logHelper.getLogger()).thenReturn(loggerMock);
+        doNothing().when(loggerMock).error(anyString());
 
-	}
-	@Test
-	public void CreatePermission_PermissionDoesNotExist_ReturnStatusOk() throws Exception {
-		CreatePermissionInput permissionInput = createPermissionInput();	
-			
+        this.mvc =
+            MockMvcBuilders
+                .standaloneSetup(permissionController)
+                .setCustomArgumentResolvers(sortArgumentResolver)
+                .setControllerAdvice()
+                .build();
+    }
 
-		ObjectWriter ow = new ObjectMapper().registerModule(new JavaTimeModule()).disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS).writer().withDefaultPrettyPrinter();
-	
-		String json = ow.writeValueAsString(permissionInput);
+    @Before
+    public void initTest() {
+        permission = createEntity();
+        List<PermissionEntity> list = permission_repository.findAll();
+        if (!list.contains(permission)) {
+            permission = permission_repository.save(permission);
+        }
+    }
 
-		mvc.perform(post("/permission").contentType(MediaType.APPLICATION_JSON).content(json))
-		.andExpect(status().isOk());
+    @Test
+    public void FindById_IdIsValid_ReturnStatusOk() throws Exception {
+        mvc
+            .perform(get("/permission/" + permission.getId() + "/").contentType(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk());
+    }
 
-	}     
-	
-	
+    @Test
+    public void FindById_IdIsNotValid_ReturnStatusNotFound() {
+        org.assertj.core.api.Assertions
+            .assertThatThrownBy(
+                () ->
+                    mvc
+                        .perform(get("/permission/999").contentType(MediaType.APPLICATION_JSON))
+                        .andExpect(status().isOk())
+            )
+            .hasCause(new EntityNotFoundException("Not found"));
+    }
 
-	@Test
-	public void DeletePermission_IdIsNotValid_ThrowEntityNotFoundException() {
+    @Test
+    public void CreatePermission_PermissionDoesNotExist_ReturnStatusOk() throws Exception {
+        CreatePermissionInput permissionInput = createPermissionInput();
 
+        ObjectWriter ow = new ObjectMapper()
+            .registerModule(new JavaTimeModule())
+            .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
+            .writer()
+            .withDefaultPrettyPrinter();
+
+        String json = ow.writeValueAsString(permissionInput);
+
+        mvc
+            .perform(post("/permission").contentType(MediaType.APPLICATION_JSON).content(json))
+            .andExpect(status().isOk());
+    }
+
+    @Test
+    public void DeletePermission_IdIsNotValid_ThrowEntityNotFoundException() {
         doReturn(null).when(permissionAppService).findById(999L);
-        org.assertj.core.api.Assertions.assertThatThrownBy(() ->  mvc.perform(delete("/permission/999")
-				.contentType(MediaType.APPLICATION_JSON))
-				.andExpect(status().isOk())).hasCause(new EntityNotFoundException("There does not exist a permission with a id=999"));
+        org.assertj.core.api.Assertions
+            .assertThatThrownBy(
+                () ->
+                    mvc
+                        .perform(delete("/permission/999").contentType(MediaType.APPLICATION_JSON))
+                        .andExpect(status().isOk())
+            )
+            .hasCause(new EntityNotFoundException("There does not exist a permission with a id=999"));
+    }
 
-	}  
+    @Test
+    public void Delete_IdIsValid_ReturnStatusNoContent() throws Exception {
+        PermissionEntity entity = createNewEntity();
+        entity.setVersiono(0L);
+        entity = permission_repository.save(entity);
 
-	@Test
-	public void Delete_IdIsValid_ReturnStatusNoContent() throws Exception {
-	
-	 	PermissionEntity entity =  createNewEntity();
-	 	entity.setVersiono(0L);
-		entity = permission_repository.save(entity);
-		
+        FindPermissionByIdOutput output = new FindPermissionByIdOutput();
+        output.setDisplayName(entity.getDisplayName());
+        output.setId(entity.getId());
+        output.setName(entity.getName());
 
-		FindPermissionByIdOutput output= new FindPermissionByIdOutput();
-		output.setDisplayName(entity.getDisplayName());
-		output.setId(entity.getId());
-		output.setName(entity.getName());
-		
-         Mockito.doReturn(output).when(permissionAppService).findById(entity.getId());
-       
-    //    Mockito.when(permissionAppService.findById(entity.getId())).thenReturn(output);
-        
-		mvc.perform(delete("/permission/" + entity.getId()+"/")
-				.contentType(MediaType.APPLICATION_JSON))
-		.andExpect(status().isNoContent());
-	}  
+        Mockito.doReturn(output).when(permissionAppService).findById(entity.getId());
 
+        //    Mockito.when(permissionAppService.findById(entity.getId())).thenReturn(output);
 
-	@Test
-	public void UpdatePermission_PermissionDoesNotExist_ReturnStatusNotFound() throws Exception {
-   
+        mvc
+            .perform(delete("/permission/" + entity.getId() + "/").contentType(MediaType.APPLICATION_JSON))
+            .andExpect(status().isNoContent());
+    }
+
+    @Test
+    public void UpdatePermission_PermissionDoesNotExist_ReturnStatusNotFound() throws Exception {
         doReturn(null).when(permissionAppService).findById(999L);
-        
+
         UpdatePermissionInput permission = new UpdatePermissionInput();
-  		permission.setDisplayName("999");
-		permission.setId(999L);
-  		permission.setName("999");
+        permission.setDisplayName("999");
+        permission.setId(999L);
+        permission.setName("999");
 
-		ObjectWriter ow = new ObjectMapper().registerModule(new JavaTimeModule()).disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS).writer().withDefaultPrettyPrinter();
-		String json = ow.writeValueAsString(permission);
+        ObjectWriter ow = new ObjectMapper()
+            .registerModule(new JavaTimeModule())
+            .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
+            .writer()
+            .withDefaultPrettyPrinter();
+        String json = ow.writeValueAsString(permission);
 
-		 org.assertj.core.api.Assertions.assertThatThrownBy(() -> mvc.perform(put("/permission/999").contentType(MediaType.APPLICATION_JSON).content(json))
-					.andExpect(status().isOk())).hasCause(new EntityNotFoundException("Unable to update. Permission with id=999 not found."));
-	}    
+        org.assertj.core.api.Assertions
+            .assertThatThrownBy(
+                () ->
+                    mvc
+                        .perform(put("/permission/999").contentType(MediaType.APPLICATION_JSON).content(json))
+                        .andExpect(status().isOk())
+            )
+            .hasCause(new EntityNotFoundException("Unable to update. Permission with id=999 not found."));
+    }
 
-	@Test
-	public void UpdatePermission_PermissionExists_ReturnStatusOk() throws Exception {
-		PermissionEntity entity =  createUpdateEntity();
-		entity.setVersiono(0L);
-		
-		entity = permission_repository.save(entity);
-		FindPermissionByIdOutput output= new FindPermissionByIdOutput();
-		output.setDisplayName(entity.getDisplayName());
-		output.setId(entity.getId());
-		output.setName(entity.getName());
-		output.setVersiono(entity.getVersiono());
-		
+    @Test
+    public void UpdatePermission_PermissionExists_ReturnStatusOk() throws Exception {
+        PermissionEntity entity = createUpdateEntity();
+        entity.setVersiono(0L);
+
+        entity = permission_repository.save(entity);
+        FindPermissionByIdOutput output = new FindPermissionByIdOutput();
+        output.setDisplayName(entity.getDisplayName());
+        output.setId(entity.getId());
+        output.setName(entity.getName());
+        output.setVersiono(entity.getVersiono());
+
         Mockito.when(permissionAppService.findById(entity.getId())).thenReturn(output);
-        
-		UpdatePermissionInput permissionInput = new UpdatePermissionInput();
-		permissionInput.setDisplayName(entity.getDisplayName());
-		permissionInput.setId(entity.getId());
-		permissionInput.setName(entity.getName());
-		
-		
-		
-		ObjectWriter ow = new ObjectMapper().registerModule(new JavaTimeModule()).disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS).writer().withDefaultPrettyPrinter();
-		String json = ow.writeValueAsString(permissionInput);
-	
-		mvc.perform(put("/permission/" + entity.getId()+"/").contentType(MediaType.APPLICATION_JSON).content(json))
-		.andExpect(status().isOk());
 
-		PermissionEntity de = createUpdateEntity();
-		de.setId(entity.getId());
-		permission_repository.delete(de);
-		
+        UpdatePermissionInput permissionInput = new UpdatePermissionInput();
+        permissionInput.setDisplayName(entity.getDisplayName());
+        permissionInput.setId(entity.getId());
+        permissionInput.setName(entity.getName());
 
-	}    
-	@Test
-	public void FindAll_SearchIsNotNullAndPropertyIsValid_ReturnStatusOk() throws Exception {
+        ObjectWriter ow = new ObjectMapper()
+            .registerModule(new JavaTimeModule())
+            .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
+            .writer()
+            .withDefaultPrettyPrinter();
+        String json = ow.writeValueAsString(permissionInput);
 
-		mvc.perform(get("/permission?search=id[equals]=1&limit=10&offset=1")
-				.contentType(MediaType.APPLICATION_JSON))
-		.andExpect(status().isOk());
-	}    
+        mvc
+            .perform(put("/permission/" + entity.getId() + "/").contentType(MediaType.APPLICATION_JSON).content(json))
+            .andExpect(status().isOk());
 
-	@Test
-	public void FindAll_SearchIsNotNullAndPropertyIsNotValid_ThrowException() throws Exception {
+        PermissionEntity de = createUpdateEntity();
+        de.setId(entity.getId());
+        permission_repository.delete(de);
+    }
 
-		org.assertj.core.api.Assertions.assertThatThrownBy(() ->  mvc.perform(get("/permission?search=permissionid[equals]=1&limit=10&offset=1")
-				.contentType(MediaType.APPLICATION_JSON))
-				.andExpect(status().isOk())).hasCause(new Exception("Wrong URL Format: Property permissionid not found!"));
-
-	} 
-	
-	
     @Test
-	public void GetRolepermissions_searchIsNotEmptyAndPropertyIsNotValid_ThrowException() {
-	
-		Map<String,String> joinCol = new HashMap<String,String>();
-		joinCol.put("id", "1");
+    public void FindAll_SearchIsNotNullAndPropertyIsValid_ReturnStatusOk() throws Exception {
+        mvc
+            .perform(get("/permission?search=id[equals]=1&limit=10&offset=1").contentType(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk());
+    }
 
-		Mockito.when(permissionAppService.parseRolepermissionsJoinColumn("permissionid")).thenReturn(joinCol);
-		org.assertj.core.api.Assertions.assertThatThrownBy(() ->  mvc.perform(get("/permission/1/rolepermissions?search=abc[equals]=1&limit=10&offset=1")
-				.contentType(MediaType.APPLICATION_JSON))
-	    		  .andExpect(status().isOk())).hasCause(new Exception("Wrong URL Format: Property abc not found!"));
-	
-	}    
-	
-	@Test
-	public void GetRolepermissions_searchIsNotEmptyAndPropertyIsValid_ReturnList() throws Exception {
+    @Test
+    public void FindAll_SearchIsNotNullAndPropertyIsNotValid_ThrowException() throws Exception {
+        org.assertj.core.api.Assertions
+            .assertThatThrownBy(
+                () ->
+                    mvc
+                        .perform(
+                            get("/permission?search=permissionid[equals]=1&limit=10&offset=1")
+                                .contentType(MediaType.APPLICATION_JSON)
+                        )
+                        .andExpect(status().isOk())
+            )
+            .hasCause(new Exception("Wrong URL Format: Property permissionid not found!"));
+    }
 
-		Map<String,String> joinCol = new HashMap<String,String>();
-		joinCol.put("id", "1");
-		
+    @Test
+    public void GetRolepermissions_searchIsNotEmptyAndPropertyIsNotValid_ThrowException() {
+        Map<String, String> joinCol = new HashMap<String, String>();
+        joinCol.put("id", "1");
+
+        Mockito.when(permissionAppService.parseRolepermissionsJoinColumn("permissionid")).thenReturn(joinCol);
+        org.assertj.core.api.Assertions
+            .assertThatThrownBy(
+                () ->
+                    mvc
+                        .perform(
+                            get("/permission/1/rolepermissions?search=abc[equals]=1&limit=10&offset=1")
+                                .contentType(MediaType.APPLICATION_JSON)
+                        )
+                        .andExpect(status().isOk())
+            )
+            .hasCause(new Exception("Wrong URL Format: Property abc not found!"));
+    }
+
+    @Test
+    public void GetRolepermissions_searchIsNotEmptyAndPropertyIsValid_ReturnList() throws Exception {
+        Map<String, String> joinCol = new HashMap<String, String>();
+        joinCol.put("id", "1");
+
         Mockito.when(permissionAppService.parseRolepermissionsJoinColumn("permissionId")).thenReturn(joinCol);
-		mvc.perform(get("/permission/1/rolepermissions?search=permissionId[equals]=1&limit=10&offset=1")
-				.contentType(MediaType.APPLICATION_JSON))
-	    		  .andExpect(status().isOk());
-	}  
-	
-	@Test
-	public void GetRolepermissions_searchIsNotEmpty() {
-	
-		Mockito.when(permissionAppService.parseRolepermissionsJoinColumn(anyString())).thenReturn(null);
-	 		  		    		  
-	    org.assertj.core.api.Assertions.assertThatThrownBy(() -> mvc.perform(get("/permission/1/rolepermissions?search=permissionId[equals]=1&limit=10&offset=1")
-				.contentType(MediaType.APPLICATION_JSON))
-		.andExpect(status().isOk())).hasCause(new EntityNotFoundException("Invalid join column"));
-	}    
-	
+        mvc
+            .perform(
+                get("/permission/1/rolepermissions?search=permissionId[equals]=1&limit=10&offset=1")
+                    .contentType(MediaType.APPLICATION_JSON)
+            )
+            .andExpect(status().isOk());
+    }
+
     @Test
-	public void GetUserspermissions_searchIsNotEmptyAndPropertyIsNotValid_ThrowException() {
-	
-		Map<String,String> joinCol = new HashMap<String,String>();
-		joinCol.put("id", "1");
+    public void GetRolepermissions_searchIsNotEmpty() {
+        Mockito.when(permissionAppService.parseRolepermissionsJoinColumn(anyString())).thenReturn(null);
 
-		Mockito.when(permissionAppService.parseUserspermissionsJoinColumn("permissionid")).thenReturn(joinCol);
-		org.assertj.core.api.Assertions.assertThatThrownBy(() ->  mvc.perform(get("/permission/1/userspermissions?search=abc[equals]=1&limit=10&offset=1")
-				.contentType(MediaType.APPLICATION_JSON))
-	    		  .andExpect(status().isOk())).hasCause(new Exception("Wrong URL Format: Property abc not found!"));
-	
-	}    
-	
-	@Test
-	public void GetUserspermissions_searchIsNotEmptyAndPropertyIsValid_ReturnList() throws Exception {
+        org.assertj.core.api.Assertions
+            .assertThatThrownBy(
+                () ->
+                    mvc
+                        .perform(
+                            get("/permission/1/rolepermissions?search=permissionId[equals]=1&limit=10&offset=1")
+                                .contentType(MediaType.APPLICATION_JSON)
+                        )
+                        .andExpect(status().isOk())
+            )
+            .hasCause(new EntityNotFoundException("Invalid join column"));
+    }
 
-		Map<String,String> joinCol = new HashMap<String,String>();
-		joinCol.put("id", "1");
-		
+    @Test
+    public void GetUserspermissions_searchIsNotEmptyAndPropertyIsNotValid_ThrowException() {
+        Map<String, String> joinCol = new HashMap<String, String>();
+        joinCol.put("id", "1");
+
+        Mockito.when(permissionAppService.parseUserspermissionsJoinColumn("permissionid")).thenReturn(joinCol);
+        org.assertj.core.api.Assertions
+            .assertThatThrownBy(
+                () ->
+                    mvc
+                        .perform(
+                            get("/permission/1/userspermissions?search=abc[equals]=1&limit=10&offset=1")
+                                .contentType(MediaType.APPLICATION_JSON)
+                        )
+                        .andExpect(status().isOk())
+            )
+            .hasCause(new Exception("Wrong URL Format: Property abc not found!"));
+    }
+
+    @Test
+    public void GetUserspermissions_searchIsNotEmptyAndPropertyIsValid_ReturnList() throws Exception {
+        Map<String, String> joinCol = new HashMap<String, String>();
+        joinCol.put("id", "1");
+
         Mockito.when(permissionAppService.parseUserspermissionsJoinColumn("permissionId")).thenReturn(joinCol);
-		mvc.perform(get("/permission/1/userspermissions?search=permissionId[equals]=1&limit=10&offset=1")
-				.contentType(MediaType.APPLICATION_JSON))
-	    		  .andExpect(status().isOk());
-	}  
-	
-	@Test
-	public void GetUserspermissions_searchIsNotEmpty() {
-	
-		Mockito.when(permissionAppService.parseUserspermissionsJoinColumn(anyString())).thenReturn(null);
-	 		  		    		  
-	    org.assertj.core.api.Assertions.assertThatThrownBy(() -> mvc.perform(get("/permission/1/userspermissions?search=permissionId[equals]=1&limit=10&offset=1")
-				.contentType(MediaType.APPLICATION_JSON))
-		.andExpect(status().isOk())).hasCause(new EntityNotFoundException("Invalid join column"));
-	}    
-    
-}
+        mvc
+            .perform(
+                get("/permission/1/userspermissions?search=permissionId[equals]=1&limit=10&offset=1")
+                    .contentType(MediaType.APPLICATION_JSON)
+            )
+            .andExpect(status().isOk());
+    }
 
+    @Test
+    public void GetUserspermissions_searchIsNotEmpty() {
+        Mockito.when(permissionAppService.parseUserspermissionsJoinColumn(anyString())).thenReturn(null);
+
+        org.assertj.core.api.Assertions
+            .assertThatThrownBy(
+                () ->
+                    mvc
+                        .perform(
+                            get("/permission/1/userspermissions?search=permissionId[equals]=1&limit=10&offset=1")
+                                .contentType(MediaType.APPLICATION_JSON)
+                        )
+                        .andExpect(status().isOk())
+            )
+            .hasCause(new EntityNotFoundException("Invalid join column"));
+    }
+}

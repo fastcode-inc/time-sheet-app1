@@ -1,13 +1,13 @@
-export interface ITimesheetdetails {  
-	hours?: number;
-	id: number;
-	notes?: string;
-	workdate: Date;
+export interface ITimesheetdetails {
+  hours?: number;
+  id: number;
+  notes?: string;
+  workdate: Date;
 
-	taskDescriptiveField?: string;
-	taskid?: number;
-	timeofftypeDescriptiveField?: string;
-	timeofftypeid?: number;
-	timesheetDescriptiveField?: string;
-	timesheetid: number;
+  taskDescriptiveField?: string;
+  taskid?: number;
+  timeofftypeDescriptiveField?: string;
+  timeofftypeid?: number;
+  timesheetDescriptiveField?: string;
+  timesheetid: number;
 }

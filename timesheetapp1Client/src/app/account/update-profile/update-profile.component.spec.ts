@@ -18,27 +18,23 @@ describe('UpdateProfileComponent', () => {
   let d = new Date();
   let t = DateUtils.formatDateStringToAMPM(d);
   let data = {
-		emailaddress: 'emailAddress1@test.com',
-	    firstname: 'firstname1',
-	    joinDate: d,
-	    lastname: 'lastname1',
-	    username: 'username1',
+    emailaddress: 'emailAddress1@test.com',
+    firstname: 'firstname1',
+    joinDate: d,
+    lastname: 'lastname1',
+    username: 'username1',
   };
-  
+
   describe('Unit Tests', () => {
     beforeEach(async(() => {
       TestBed.configureTestingModule({
-        declarations: [
-          UpdateProfileComponent       
-        ],
+        declarations: [UpdateProfileComponent],
         imports: [TestingModule],
-        providers: [
-        	UsersService,
-        ],
-        schemas: [NO_ERRORS_SCHEMA]  
+        providers: [UsersService],
+        schemas: [NO_ERRORS_SCHEMA],
       }).compileComponents();
     }));
-  
+
     beforeEach(() => {
       fixture = TestBed.createComponent(UpdateProfileComponent);
       component = fixture.componentInstance;
@@ -77,7 +73,7 @@ describe('UpdateProfileComponent', () => {
 
       component.getItem();
       fixture.detectChanges();
-      
+
       expect(component.errorService.showError).toHaveBeenCalled();
     });
 
@@ -127,12 +123,10 @@ describe('UpdateProfileComponent', () => {
 
       el = fixture.debugElement.query(By.css('button[name=back]')).nativeElement;
       el.click();
-      
+
       let responsePromise = navigationSpy.calls.mostRecent().returnValue;
       await responsePromise;
       expect(location.path()).toBe('/');
     });
-
   });
- 
 });

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IEntityHistory } from './entityHistory';
 import { EntityHistoryService } from './entity-history.service';
-import { MatTableDataSource } from "@angular/material";
+import { MatTableDataSource } from '@angular/material';
 import { Observable } from 'rxjs';
 
 import { ErrorService, ISearchField, operatorType, Globals } from 'src/app/common/shared';
@@ -13,22 +13,30 @@ import { TranslateService } from '@ngx-translate/core';
 import { Entities, AuthEntities } from 'src/app/core/main-nav/entities';
 
 enum listProcessingType {
-  Replace = "Replace",
-  Append = "Append"
+  Replace = 'Replace',
+  Append = 'Append',
 }
 
 @Component({
   selector: 'app-entity-history',
   templateUrl: './entity-history.component.html',
-  styleUrls: ['./entity-history.component.scss']
+  styleUrls: ['./entity-history.component.scss'],
 })
-
 export class EntityHistoryComponent implements OnInit {
   title: string = this.translate.instant('MainNav.EntityHistory');
   entityHistory: IEntityHistory[] = [];
   itemsObservable: Observable<IEntityHistory[]>;
   errorMessage: '';
-  displayedColumns: string[] = ['entity', 'cdoId', 'changeType', 'author', 'commitDate', 'propertyName', 'previousValue', 'currentValue'];
+  displayedColumns: string[] = [
+    'entity',
+    'cdoId',
+    'changeType',
+    'author',
+    'commitDate',
+    'propertyName',
+    'previousValue',
+    'currentValue',
+  ];
 
   public dataSource;
   userList: IUsers[] = [];
@@ -43,8 +51,8 @@ export class EntityHistoryComponent implements OnInit {
     public errorService: ErrorService,
     public usersService: UsersExtendedService,
     public formBuilder: FormBuilder,
-    public translate: TranslateService,
-  ) { }
+    public translate: TranslateService
+  ) {}
 
   ngOnInit() {
     this.manageScreenResizing();
@@ -54,21 +62,25 @@ export class EntityHistoryComponent implements OnInit {
       author: [''],
       entity: [''],
       from: [''],
-      to: ['']
+      to: [''],
     });
 
-    this.basicFilterForm.get('author').valueChanges.subscribe(value => this.onPickerSearch(value));
+    this.basicFilterForm.get('author').valueChanges.subscribe((value) => this.onPickerSearch(value));
   }
 
   getEntityHistory() {
     this.isLoadingResults = true;
     this.initializePageInfo();
-    this.itemsObservable = this.entityHistoryService.getAll(this.searchValue, this.currentPage * this.pageSize, this.pageSize);
+    this.itemsObservable = this.entityHistoryService.getAll(
+      this.searchValue,
+      this.currentPage * this.pageSize,
+      this.pageSize
+    );
     this.processListObservable(this.itemsObservable, listProcessingType.Replace);
   }
 
   manageScreenResizing() {
-    this.global.isMediumDeviceOrLess$.subscribe(value => {
+    this.global.isMediumDeviceOrLess$.subscribe((value) => {
       // this.isMediumDeviceOrLess = value;
       // if (value)
       //   this.displayedColumns = ['entity', 'cdoId', 'commitDate', 'author'];
@@ -78,26 +90,30 @@ export class EntityHistoryComponent implements OnInit {
   }
 
   createSearchString() {
-    let searchString: string = "";
+    let searchString: string = '';
     let searchFormValue = this.basicFilterForm.getRawValue();
     if (searchFormValue.author) {
-      searchString += "author=" + searchFormValue.author;
+      searchString += 'author=' + searchFormValue.author;
     }
 
     if (searchFormValue.from) {
       if (searchString.length > 0) {
-        searchString += ";";
+        searchString += ';';
       }
       let from = new Date(searchFormValue.from);
-      searchString += `from=${from.getFullYear()}-${from.getMonth() + 1}-${from.getDate()} ${from.getHours()}:${from.getMinutes()}:${from.getSeconds()}.${from.getMilliseconds()}`;
+      searchString += `from=${from.getFullYear()}-${
+        from.getMonth() + 1
+      }-${from.getDate()} ${from.getHours()}:${from.getMinutes()}:${from.getSeconds()}.${from.getMilliseconds()}`;
     }
 
     if (searchFormValue.to) {
       if (searchString.length > 0) {
-        searchString += ";";
+        searchString += ';';
       }
       let to = new Date(searchFormValue.to);
-      searchString += `to=${to.getFullYear()}-${to.getMonth() + 1}-${to.getDate()} ${to.getHours()}:${to.getMinutes()}:${to.getSeconds()}.${to.getMilliseconds()}`;
+      searchString += `to=${to.getFullYear()}-${
+        to.getMonth() + 1
+      }-${to.getDate()} ${to.getHours()}:${to.getMinutes()}:${to.getSeconds()}.${to.getMilliseconds()}`;
     }
 
     return searchString;
@@ -112,13 +128,14 @@ export class EntityHistoryComponent implements OnInit {
         this.searchValue,
         this.currentPage * this.pageSize,
         this.pageSize
-        );
+      );
     } else {
-      this.itemsObservable = this.entityHistoryService.getByEntity(this.basicFilterForm.value.entity,
+      this.itemsObservable = this.entityHistoryService.getByEntity(
+        this.basicFilterForm.value.entity,
         this.searchValue,
         this.currentPage * this.pageSize,
         this.pageSize
-        );
+      );
     }
     this.processListObservable(this.itemsObservable, listProcessingType.Replace);
   }
@@ -129,7 +146,7 @@ export class EntityHistoryComponent implements OnInit {
   pageSize: number;
   lastProcessedOffset: number;
   hasMoreRecords: boolean;
-  searchValue: string = "";
+  searchValue: string = '';
 
   initializePageInfo() {
     this.hasMoreRecords = true;
@@ -143,8 +160,7 @@ export class EntityHistoryComponent implements OnInit {
     if (data.length > 0) {
       this.currentPage++;
       this.lastProcessedOffset += data.length;
-    }
-    else {
+    } else {
       this.hasMoreRecords = false;
     }
   }
@@ -157,13 +173,14 @@ export class EntityHistoryComponent implements OnInit {
           this.searchValue,
           this.currentPage * this.pageSize,
           this.pageSize
-          );
+        );
       } else {
-        this.itemsObservable = this.entityHistoryService.getByEntity(this.basicFilterForm.value.entity,
+        this.itemsObservable = this.entityHistoryService.getByEntity(
+          this.basicFilterForm.value.entity,
           this.searchValue,
           this.currentPage * this.pageSize,
           this.pageSize
-          );
+        );
       }
       this.processListObservable(this.itemsObservable, listProcessingType.Append);
     }
@@ -171,39 +188,41 @@ export class EntityHistoryComponent implements OnInit {
 
   processListObservable(listObservable: Observable<IEntityHistory[]>, type: listProcessingType) {
     listObservable.subscribe(
-      entityHistory => {
+      (entityHistory) => {
         this.isLoadingResults = false;
         if (type == listProcessingType.Replace) {
           this.entityHistory = entityHistory;
           this.dataSource = new MatTableDataSource(this.entityHistory);
-        }
-        else {
+        } else {
           this.entityHistory = this.entityHistory.concat(entityHistory);
           this.dataSource = new MatTableDataSource(this.entityHistory);
         }
         this.updatePageInfo(entityHistory);
       },
-      error => {
-        this.errorMessage = <any>error
+      (error) => {
+        this.errorMessage = <any>error;
         this.errorService.showError(this.translate.instant('GENERAL.ERRORS.FETCHING-RESULT'));
       }
-    )
+    );
   }
-
 
   /**
    * Author list processing
    */
 
   getUsers() {
-    this.usersService.getAll(this.searchValuePicker, this.currentPickerPage * this.pickerPageSize, this.pickerPageSize).subscribe(items => {
-      this.userList = items;
-    	this.updatePickerPageInfo(items);
-    },
-    error => {
-      this.errorMessage = <any>error;
-      this.errorService.showError(this.translate.instant('GENERAL.ERRORS.FETCHING-RESULT'));
-    })
+    this.usersService
+      .getAll(this.searchValuePicker, this.currentPickerPage * this.pickerPageSize, this.pickerPageSize)
+      .subscribe(
+        (items) => {
+          this.userList = items;
+          this.updatePickerPageInfo(items);
+        },
+        (error) => {
+          this.errorMessage = <any>error;
+          this.errorService.showError(this.translate.instant('GENERAL.ERRORS.FETCHING-RESULT'));
+        }
+      );
   }
   isLoadingPickerResults = true;
 
@@ -216,7 +235,7 @@ export class EntityHistoryComponent implements OnInit {
   pickerItemsObservable: Observable<any>;
 
   /**
-   * Initializes/Resets paging information of user data list 
+   * Initializes/Resets paging information of user data list
    * showing in autocomplete options.
    */
   initializePickerPageInfo() {
@@ -227,7 +246,7 @@ export class EntityHistoryComponent implements OnInit {
   }
 
   /**
-   * Manages paging for virtual scrolling for user data list 
+   * Manages paging for virtual scrolling for user data list
    * showing in autocomplete options.
    * @param data Item data from the last service call.
    */
@@ -235,30 +254,39 @@ export class EntityHistoryComponent implements OnInit {
     if (data.length > 0) {
       this.currentPickerPage++;
       this.lastProcessedOffsetPicker += data.length;
-    }
-    else {
+    } else {
       this.hasMoreRecordsPicker = false;
     }
   }
 
   /**
-   * Loads more user data when 
+   * Loads more user data when
    * list is scrolled to the bottom (virtual scrolling).
    */
   onPickerScroll() {
-    if (!this.isLoadingPickerResults && this.hasMoreRecordsPicker && this.lastProcessedOffsetPicker < this.userList.length) {
+    if (
+      !this.isLoadingPickerResults &&
+      this.hasMoreRecordsPicker &&
+      this.lastProcessedOffsetPicker < this.userList.length
+    ) {
       this.isLoadingPickerResults = true;
-      this.usersService.getAll(this.basicFilterForm.get('author').value, this.currentPickerPage * this.pickerPageSize, this.pickerPageSize).subscribe(
-        items => {
-          this.isLoadingPickerResults = false;
-          this.userList = this.userList.concat(items);
-          this.updatePickerPageInfo(items);
-        },
-        error => {
-          this.errorMessage = <any>error;
-          this.errorService.showError(this.translate.instant('GENERAL.ERRORS.FETCHING-RESULT'));
-        }
-      );
+      this.usersService
+        .getAll(
+          this.basicFilterForm.get('author').value,
+          this.currentPickerPage * this.pickerPageSize,
+          this.pickerPageSize
+        )
+        .subscribe(
+          (items) => {
+            this.isLoadingPickerResults = false;
+            this.userList = this.userList.concat(items);
+            this.updatePickerPageInfo(items);
+          },
+          (error) => {
+            this.errorMessage = <any>error;
+            this.errorService.showError(this.translate.instant('GENERAL.ERRORS.FETCHING-RESULT'));
+          }
+        );
     }
   }
 
@@ -267,14 +295,12 @@ export class EntityHistoryComponent implements OnInit {
    * @param searchValue Filters to be applied.
    */
   onPickerSearch(searchValue: string) {
-
     let searchField: ISearchField = {
-      fieldName: "username",
+      fieldName: 'username',
       operator: operatorType.Contains,
-      searchValue: searchValue ? searchValue : ""
-    }
+      searchValue: searchValue ? searchValue : '',
+    };
     this.searchValuePicker = [searchField];
     this.getUsers();
   }
-
 }

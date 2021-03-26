@@ -31,9 +31,7 @@ describe('BaseDetailsComponent', () => {
           { path: 'dummy/:id', component: DummyDetailsComponent },
         ]),
       ],
-      providers: [
-        DummyService
-      ],
+      providers: [DummyService],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   }));
@@ -281,7 +279,7 @@ describe('BaseDetailsComponent', () => {
     spyOn(association.service, 'getAll').and.returnValue(of(parentData));
     spyOn(component, 'updatePickerPageInfo').and.returnValue();
 
-    component.pickerDialogRef = component.pickerDialogService.open({DisplayField:'',Title:''});
+    component.pickerDialogRef = component.pickerDialogService.open({ DisplayField: '', Title: '' });
     component.onPickerScroll(association);
 
     expect(association.data.length).toEqual(parentData.length * 2);
@@ -329,11 +327,11 @@ describe('BaseDetailsComponent', () => {
       searchValue: searchValue ? searchValue : '',
     };
     association.searchValue = [searchField];
-    
+
     spyOn(component, 'updatePickerPageInfo').and.returnValue();
     spyOn(association.service, 'getAll').and.returnValue(of(parentData));
-      
-    component.pickerDialogRef = component.pickerDialogService.open({DisplayField:'',Title:''});
+
+    component.pickerDialogRef = component.pickerDialogService.open({ DisplayField: '', Title: '' });
     component.onPickerSearch(searchValue, association);
 
     expect(association.data.length).toEqual(parentData.length);
@@ -343,7 +341,7 @@ describe('BaseDetailsComponent', () => {
 
   it('should update the form when some option from picker is selected for association', async () => {
     let association = component.associations[1];
-    component.onPickerClose(parentData[0] ,association)
+    component.onPickerClose(parentData[0], association);
 
     association.column.forEach((col) => {
       expect(component.itemForm.get(col.key).value).toEqual(parentData[0][col.referencedkey]);
@@ -352,5 +350,4 @@ describe('BaseDetailsComponent', () => {
       parentData[0][association.referencedDescriptiveField]
     );
   });
-
 });

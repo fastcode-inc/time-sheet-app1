@@ -2,6 +2,6 @@
 @import './dynamic-styles.scss';
 @import './reporting-mixin.scss';
 
-@include main-nav-mixin($fc-theme,$fontConfig);
+@include main-nav-mixin($fc-theme, $fontConfig);
 @include main-style($fc-theme, $fontConfig);
 @include reporting_mixin($fc-theme, $fontConfig);

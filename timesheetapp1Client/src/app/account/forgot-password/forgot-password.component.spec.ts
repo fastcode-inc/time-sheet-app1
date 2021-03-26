@@ -13,11 +13,10 @@ describe('ForgotPasswordComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ForgotPasswordComponent ],
+      declarations: [ForgotPasswordComponent],
       imports: [TestingModule],
-      providers: [AuthenticationService]
-    })
-    .compileComponents();
+      providers: [AuthenticationService],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -36,7 +35,7 @@ describe('ForgotPasswordComponent', () => {
   });
 
   it('should call forgotPassword method and handle success response', async () => {
-    component.resetForm.patchValue({email: 'test@TestBed.com'});
+    component.resetForm.patchValue({ email: 'test@TestBed.com' });
     component.resetForm.enable();
     fixture.detectChanges();
 
@@ -49,7 +48,7 @@ describe('ForgotPasswordComponent', () => {
   });
 
   it('should call forgotPassword method and handle error response', async () => {
-    component.resetForm.patchValue({email: 'test@TestBed.com'});
+    component.resetForm.patchValue({ email: 'test@TestBed.com' });
     component.resetForm.enable();
     fixture.detectChanges();
 
@@ -63,5 +62,4 @@ describe('ForgotPasswordComponent', () => {
     expect(component.linkSent).toBe(false);
     expect(component.disabled).toBe(false);
   });
-
 });
