@@ -1,5 +1,5 @@
 import { RouterModule, Routes } from '@angular/router';
-import { ModuleWithProviders } from "@angular/core";
+import { ModuleWithProviders } from '@angular/core';
 import { CanDeactivateGuard } from 'src/app/common/shared';
 import { AuthGuard } from 'src/app/core/auth-guard';
 
@@ -8,11 +8,15 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { UpdatePasswordComponent } from './update-password/update-password.component';
 import { UpdateProfileComponent } from './update-profile/update-profile.component';
 const routes: Routes = [
-	{ path: "update-profile", component: UpdateProfileComponent, canActivate: [AuthGuard], canDeactivate: [CanDeactivateGuard] },
-	{ path: 'forgot-password', component: ForgotPasswordComponent },
-	{ path: 'reset-password', component: ResetPasswordComponent },
-	{ path: 'update-password', component: UpdatePasswordComponent, canActivate: [AuthGuard] },
-
+  {
+    path: 'update-profile',
+    component: UpdateProfileComponent,
+    canActivate: [AuthGuard],
+    canDeactivate: [CanDeactivateGuard],
+  },
+  { path: 'forgot-password', component: ForgotPasswordComponent },
+  { path: 'reset-password', component: ResetPasswordComponent },
+  { path: 'update-password', component: UpdatePasswordComponent, canActivate: [AuthGuard] },
 ];
 
 export const routingModule: ModuleWithProviders = RouterModule.forChild(routes);

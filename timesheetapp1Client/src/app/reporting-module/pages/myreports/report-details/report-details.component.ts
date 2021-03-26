@@ -1,15 +1,15 @@
-import { Component, OnInit } from "@angular/core";
-import { MatSnackBar, MatDialog, MatDialogRef } from "@angular/material";
-import { Router, ActivatedRoute } from "@angular/router";
+import { Component, OnInit } from '@angular/core';
+import { MatSnackBar, MatDialog, MatDialogRef } from '@angular/material';
+import { Router, ActivatedRoute } from '@angular/router';
 import { IReport } from 'src/app/reporting-module/pages/myreports/ireport';
 import { ReportService } from 'src/app/reporting-module/pages/myreports/report.service';
 import { ConfirmDialogComponent } from 'src/app/common/shared';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-  selector: "app-report-details",
-  templateUrl: "./report-details.component.html",
-  styleUrls: ["./report-details.component.scss"]
+  selector: 'app-report-details',
+  templateUrl: './report-details.component.html',
+  styleUrls: ['./report-details.component.scss'],
 })
 export class ReportDetailsComponent implements OnInit {
   report_id;
@@ -26,7 +26,7 @@ export class ReportDetailsComponent implements OnInit {
   items: IReport[] = [];
   selectedReport: IReport;
   reportUnderAction: IReport;
-  searchText: string = "";
+  searchText: string = '';
 
   constructor(
     private reportService: ReportService,
@@ -34,13 +34,13 @@ export class ReportDetailsComponent implements OnInit {
     public dialog: MatDialog,
     private route: ActivatedRoute,
     private router: Router,
-    private translate: TranslateService,
-  ) { }
+    private translate: TranslateService
+  ) {}
 
   ngOnInit() {
-    this.report_id = +this.route.snapshot.paramMap.get("id");
+    this.report_id = +this.route.snapshot.paramMap.get('id');
     if (this.report_id >= 0) {
-      this.reportService.getById(this.report_id).subscribe(report => {
+      this.reportService.getById(this.report_id).subscribe((report) => {
         this.report = report;
       });
     }
@@ -49,17 +49,17 @@ export class ReportDetailsComponent implements OnInit {
   editReport(id) {
     this.router.navigate([`reporting/reports/${id}`]);
   }
-	
+
   refreshReport(id) {
     this.confirmDialogRef = this.dialog.open(ConfirmDialogComponent, {
       disableClose: true,
       data: {
-        confirmationType: "confirm"
-      }
+        confirmationType: 'confirm',
+      },
     });
-    this.confirmDialogRef.afterClosed().subscribe(action => {
+    this.confirmDialogRef.afterClosed().subscribe((action) => {
       if (action) {
-        this.reportService.refresh(id).subscribe(res => {
+        this.reportService.refresh(id).subscribe((res) => {
           this.showMessage(this.translate.instant('REPORTING.MESSAGES.REPORT.REFRESHED'));
         });
       }
@@ -70,23 +70,23 @@ export class ReportDetailsComponent implements OnInit {
     this.confirmDialogRef = this.dialog.open(ConfirmDialogComponent, {
       disableClose: true,
       data: {
-        confirmationType: "delete"
-      }
+        confirmationType: 'delete',
+      },
     });
-    this.confirmDialogRef.afterClosed().subscribe(action => {
+    this.confirmDialogRef.afterClosed().subscribe((action) => {
       if (action) {
-        this.reportService.delete(report.id).subscribe(res => {
-          this.items = this.items.filter(v => v.id !== report.id);
+        this.reportService.delete(report.id).subscribe((res) => {
+          this.items = this.items.filter((v) => v.id !== report.id);
           this.showMessage(this.translate.instant('REPORTING.MESSAGES.REPORT.DELETED'));
-          this.router.navigate(['reporting/myreports'])
+          this.router.navigate(['reporting/myreports']);
         });
       }
     });
   }
 
   showMessage(msg: string): void {
-    this._snackBar.open(msg, "close", {
-      duration: 2000
+    this._snackBar.open(msg, 'close', {
+      duration: 2000,
     });
   }
 }

@@ -4,12 +4,12 @@ import java.time.*;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter @Setter
+@Getter
+@Setter
 public class UpdateUsertaskOutput {
 
-  	private Long taskid;
-  	private Long userid;
-	private String taskDescriptiveField;
-	private String usersDescriptiveField;
-
+    private Long taskid;
+    private Long userid;
+    private String taskDescriptiveField;
+    private String usersDescriptiveField;
 }

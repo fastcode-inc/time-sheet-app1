@@ -13,7 +13,7 @@ import { operatorType } from './ISearchCriteria';
 describe('ListFiltersComponent', () => {
   @Component({
     selector: `host-component`,
-    template: `<app-list-filters [columnsList]="columns" (onSearch)="applyFilter()"></app-list-filters>`
+    template: `<app-list-filters [columnsList]="columns" (onSearch)="applyFilter()"></app-list-filters>`,
   })
   class TestHostComponent {
     columns: IListColumn[] = [
@@ -22,18 +22,18 @@ describe('ListFiltersComponent', () => {
         label: 'Column 1',
         sort: true,
         filter: true,
-        type: listColumnType.String
+        type: listColumnType.String,
       },
       {
         column: 'coolumn2',
         label: 'Column 2',
         sort: true,
         filter: true,
-        type: listColumnType.String
-      }
-    ]
+        type: listColumnType.String,
+      },
+    ];
 
-    applyFilter() { }
+    applyFilter() {}
   }
 
   let testHostComponent: TestHostComponent;
@@ -41,16 +41,12 @@ describe('ListFiltersComponent', () => {
   let component: ListFiltersComponent;
   let fixture: ComponentFixture<ListFiltersComponent>;
 
-
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [TestHostComponent, ListFiltersComponent],
       imports: [TestingModule],
-      providers: [
-        ChangeDetectorRef,
-      ],
-    })
-      .compileComponents();
+      providers: [ChangeDetectorRef],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -67,52 +63,55 @@ describe('ListFiltersComponent', () => {
   it('should parse search value of date fields', () => {
     component.field = getField(listColumnType.Date);
     let formData = {
-      searchValue: (new Date()).toUTCString()
-    }
-    spyOn(component, 'parseDateToDefaultStringFormat').and.returnValue("parsed");
+      searchValue: new Date().toUTCString(),
+    };
+    spyOn(component, 'parseDateToDefaultStringFormat').and.returnValue('parsed');
     component.parseDateFields(formData);
-    expect(formData.searchValue).toEqual("parsed");
-
+    expect(formData.searchValue).toEqual('parsed');
   });
 
   it('should parse starting and ending values of date fields', () => {
     component.field = getField(listColumnType.Date);
     let formData = {
-      startingValue: (new Date()).toUTCString(),
-      endingValue: (new Date()).toUTCString()
-    }
-    spyOn(component, 'parseDateToDefaultStringFormat').and.returnValue("parsed");
+      startingValue: new Date().toUTCString(),
+      endingValue: new Date().toUTCString(),
+    };
+    spyOn(component, 'parseDateToDefaultStringFormat').and.returnValue('parsed');
     component.parseDateFields(formData);
-    expect(formData.startingValue).toEqual("parsed");
-    expect(formData.endingValue).toEqual("parsed");
-
+    expect(formData.startingValue).toEqual('parsed');
+    expect(formData.endingValue).toEqual('parsed');
   });
 
   it('should select display field with contains operator', () => {
     let formData = getFormData(operatorType.Contains);
     component.selectedDisplayFilterFields = [];
-    spyOn(component.translate, 'instant').withArgs('LIST-FILTERS.FIELD-CRITERIA-DISPLAY.CONTAINS').and.returnValue("contains");
+    spyOn(component.translate, 'instant')
+      .withArgs('LIST-FILTERS.FIELD-CRITERIA-DISPLAY.CONTAINS')
+      .and.returnValue('contains');
     component.setSelectedDisplayFilterfield(formData);
-    expect(component.selectedDisplayFilterFields[0]).toEqual("f1: contains \"searchText\"");
-
+    expect(component.selectedDisplayFilterFields[0]).toEqual('f1: contains "searchText"');
   });
 
   it('should select display field with equals operator', () => {
     let formData = getFormData();
     component.selectedDisplayFilterFields = [];
-    spyOn(component.translate, 'instant').withArgs('LIST-FILTERS.FIELD-CRITERIA-DISPLAY.EQUALS').and.returnValue("is equal to");
+    spyOn(component.translate, 'instant')
+      .withArgs('LIST-FILTERS.FIELD-CRITERIA-DISPLAY.EQUALS')
+      .and.returnValue('is equal to');
 
     component.setSelectedDisplayFilterfield(formData);
-    expect(component.selectedDisplayFilterFields[0]).toEqual("f1: is equal to \"searchText\"");
+    expect(component.selectedDisplayFilterFields[0]).toEqual('f1: is equal to "searchText"');
   });
 
   it('should select display field with not equal operator', () => {
     let formData = getFormData(operatorType.NotEqual);
     component.selectedDisplayFilterFields = [];
-    spyOn(component.translate, 'instant').withArgs('LIST-FILTERS.FIELD-CRITERIA-DISPLAY.NOT-EQUAL').and.returnValue("is not equal to");
+    spyOn(component.translate, 'instant')
+      .withArgs('LIST-FILTERS.FIELD-CRITERIA-DISPLAY.NOT-EQUAL')
+      .and.returnValue('is not equal to');
 
     component.setSelectedDisplayFilterfield(formData);
-    expect(component.selectedDisplayFilterFields[0]).toEqual("f1: is not equal to \"searchText\"");
+    expect(component.selectedDisplayFilterFields[0]).toEqual('f1: is not equal to "searchText"');
   });
 
   it('should select display field with range operator', () => {
@@ -120,15 +119,16 @@ describe('ListFiltersComponent', () => {
       startingValue: 1,
       endingValue: 2,
       operator: operatorType.Range,
-      fieldName: "f1"
-    }
+      fieldName: 'f1',
+    };
     component.selectedDisplayFilterFields = [];
     spyOn(component.translate, 'instant')
-      .withArgs('LIST-FILTERS.FIELD-CRITERIA-DISPLAY.TO').and.returnValue("to")
-      .withArgs('LIST-FILTERS.FIELD-CRITERIA-DISPLAY.FROM').and.returnValue("from");
+      .withArgs('LIST-FILTERS.FIELD-CRITERIA-DISPLAY.TO')
+      .and.returnValue('to')
+      .withArgs('LIST-FILTERS.FIELD-CRITERIA-DISPLAY.FROM')
+      .and.returnValue('from');
     component.setSelectedDisplayFilterfield(formData);
-    expect(component.selectedDisplayFilterFields[0]).toEqual("f1: from \"1\" to \"2\"");
-
+    expect(component.selectedDisplayFilterFields[0]).toEqual('f1: from "1" to "2"');
   });
 
   it('should set filter fields', () => {
@@ -136,8 +136,8 @@ describe('ListFiltersComponent', () => {
     component.basicFilterForm.reset();
     component.basicFilterForm.patchValue(formData);
     testHostFixture.detectChanges();
-    spyOn(component, "parseDateFields").and.returnValue();
-    spyOn(component, "setSelectedDisplayFilterfield").and.returnValue();
+    spyOn(component, 'parseDateFields').and.returnValue();
+    spyOn(component, 'setSelectedDisplayFilterfield').and.returnValue();
 
     component.selectFilterField();
     expect(checkValues(component.basicFilterForm.value, formData)).toEqual(true);
@@ -149,8 +149,8 @@ describe('ListFiltersComponent', () => {
     component.filterFields = [field];
     let formData = getFormData();
     component.selectedFilterFields = [formData];
-    spyOn(component, "selectFilterField").and.returnValue();
-    spyOn(component.onSearch, "emit").and.returnValue();
+    spyOn(component, 'selectFilterField').and.returnValue();
+    spyOn(component.onSearch, 'emit').and.returnValue();
 
     component.search();
     expect(component.filterFields.length).toEqual(0);
@@ -170,15 +170,14 @@ describe('ListFiltersComponent', () => {
     d.setMonth(0);
     d.setDate(1);
     expect(component.parseDateToDefaultStringFormat(d)).toEqual(`1970-01-01 00:00:00.000`);
-
   });
 
   it('should remove chip item', () => {
     component.columnsList = [getField()];
     component.filterFields = [];
-    component.selectedDisplayFilterFields = ["f1: contains \"searchText\""];
+    component.selectedDisplayFilterFields = ['f1: contains "searchText"'];
     component.selectedFilterFields = [getFormData()];
-    spyOn(component.onSearch, "emit").and.returnValue();
+    spyOn(component.onSearch, 'emit').and.returnValue();
     testHostFixture.detectChanges();
 
     component.remove(getField().column, 0);
@@ -187,13 +186,12 @@ describe('ListFiltersComponent', () => {
     expect(component.selectedFilterFields.length).toEqual(0);
     expect(component.selectedDisplayFilterFields.length).toEqual(0);
     expect(component.onSearch.emit).toHaveBeenCalledWith([]);
-
   });
 
   it('should set it in form when field is selected', () => {
     let field = getField();
     component.filterFields = [field];
-    spyOn(component, "setOperators").and.returnValue();
+    spyOn(component, 'setOperators').and.returnValue();
     testHostFixture.detectChanges();
 
     let option: MatOption = new MatOption(null, null, null, null);
@@ -203,7 +201,7 @@ describe('ListFiltersComponent', () => {
     testHostFixture.detectChanges();
 
     expect(component.field).toEqual(field);
-    expect(component.basicFilterForm.value["fieldName"]).toEqual(field.column);
+    expect(component.basicFilterForm.value['fieldName']).toEqual(field.column);
     expect(component.setOperators).toHaveBeenCalled();
     expect(component.mySelector).toEqual(true);
   });
@@ -229,27 +227,28 @@ describe('ListFiltersComponent', () => {
     testHostFixture.detectChanges();
 
     component.setOperators();
-    expect(component.operators.sort().join(',') === [operatorType.Equals, operatorType.NotEqual, operatorType.Range].sort().join(',')).toEqual(true);
+    expect(
+      component.operators.sort().join(',') ===
+        [operatorType.Equals, operatorType.NotEqual, operatorType.Range].sort().join(',')
+    ).toEqual(true);
   });
-
-
 });
 
 function getFormData(opType?: operatorType) {
   return {
-    searchValue: "searchText",
+    searchValue: 'searchText',
     operator: opType ? opType : operatorType.Equals,
-    fieldName: "f1"
-  }
+    fieldName: 'f1',
+  };
 }
 
 function getField(fType?: listColumnType): IListColumn {
   return {
-    column: "f1",
-    searchColumn: "f1",
-    label: "f1",
+    column: 'f1',
+    searchColumn: 'f1',
+    label: 'f1',
     type: fType ? fType : listColumnType.String,
     sort: false,
-    filter: true
+    filter: true,
   };
 }

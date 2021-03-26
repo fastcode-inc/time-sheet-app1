@@ -1,19 +1,20 @@
 package com.fastcode.timesheetapp1.domain.core.authorization.tokenverification;
 
-import javax.persistence.*;
+import com.fastcode.timesheetapp1.domain.core.abstractentity.AbstractEntity;
+import com.fastcode.timesheetapp1.domain.core.authorization.users.UsersEntity;
 import java.time.*;
 import java.util.Date;
-import com.fastcode.timesheetapp1.domain.core.authorization.users.UsersEntity;
-import com.fastcode.timesheetapp1.domain.core.abstractentity.AbstractEntity;
-import lombok.Getter;
-import lombok.Setter;
+import javax.persistence.*;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "tokenverification")
 @IdClass(TokenverificationId.class)
-@Getter @Setter
+@Getter
+@Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
 public class TokenverificationEntity extends AbstractEntity {
@@ -23,25 +24,20 @@ public class TokenverificationEntity extends AbstractEntity {
     private Date expirationTime;
 
     @Basic
-    @Column(name = "token", nullable = true,length =512)
+    @Column(name = "token", nullable = true, length = 512)
     private String token;
 
     @Id
-    @EqualsAndHashCode.Include()
-    @Column(name = "token_type", nullable = false,length =256)
+    @EqualsAndHashCode.Include
+    @Column(name = "token_type", nullable = false, length = 256)
     private String tokenType;
 
     @Id
-    @EqualsAndHashCode.Include()
+    @EqualsAndHashCode.Include
     @Column(name = "users_id", nullable = false)
     private Long usersId;
-    
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name = "users_id", insertable=false, updatable=false)
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "users_id", insertable = false, updatable = false)
     private UsersEntity users;
-
-
 }
-
-
-

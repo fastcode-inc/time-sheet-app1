@@ -16,42 +16,42 @@ const helper = new JwtHelperService();
 @Injectable()
 export class AuthenticationService {
   private decodedToken: ITokenDetail;
-  private apiUrl = API_URL;// 'http://localhost:5555';
-  
+  private apiUrl = API_URL; // 'http://localhost:5555';
+
   permissionsChange: Subject<string> = new Subject<string>();
-  preferenceChange: Subject<string> = new Subject<string>(); 
+  preferenceChange: Subject<string> = new Subject<string>();
   private _reqOptionsArgs = {
     withCredentials: true,
-    headers: new HttpHeaders().set('Content-Type', 'application/json').append('Access-Control-Allow-Origin', '*')
+    headers: new HttpHeaders().set('Content-Type', 'application/json').append('Access-Control-Allow-Origin', '*'),
   };
 
   constructor(
     private http: HttpClient,
-		public usersService: UsersExtendedService,
-    public cookieService: CookieService,
-  ) {
-  }
+    public usersService: UsersExtendedService,
+    public cookieService: CookieService
+  ) {}
 
   login(user: any): Observable<any> {
-    return this.http.post<any>(this.apiUrl + '/login', user, this._reqOptionsArgs).pipe(map(res => {
-      if(res.status !== 'EmailNotConfirmed'){
-	      let retval = res;
-	      //localStorage.setItem('salt', retval.salt);
-	      localStorage.setItem('token', retval.token);
-	      
-	      this.decodedToken = null;
-	      this.decodeToken();
-		  
-	      return retval;
-	  } else {
-        return res;
-      }
-    }));
+    return this.http.post<any>(this.apiUrl + '/login', user, this._reqOptionsArgs).pipe(
+      map((res) => {
+        if (res.status !== 'EmailNotConfirmed') {
+          let retval = res;
+          //localStorage.setItem('salt', retval.salt);
+          localStorage.setItem('token', retval.token);
+
+          this.decodedToken = null;
+          this.decodeToken();
+
+          return retval;
+        } else {
+          return res;
+        }
+      })
+    );
   }
 
-  logout(){
-    this.http.post<any>(this.apiUrl + '/auth/logout', null, this._reqOptionsArgs).subscribe(result => {
-    })
+  logout() {
+    this.http.post<any>(this.apiUrl + '/auth/logout', null, this._reqOptionsArgs).subscribe((result) => {});
     localStorage.removeItem('token');
   }
 
@@ -72,14 +72,14 @@ export class AuthenticationService {
     }
   }
 
-  getProfile(){
-    this.usersService.getProfile().subscribe(profile => {
+  getProfile() {
+    this.usersService.getProfile().subscribe((profile) => {
       localStorage.setItem('language', profile.language);
       localStorage.setItem('theme', profile.theme);
       this.preferenceChange.next();
-    })
+    });
   }
-  
+
   getTokenExpirationDate(): Date {
     const decoded = helper.decodeToken(this.token);
 
@@ -103,20 +103,18 @@ export class AuthenticationService {
     }
     return !(date.valueOf() > new Date().valueOf());
   }
-  resetPassword(data){
+  resetPassword(data) {
     return this.http.post<any>(this.apiUrl + '/password/reset', data, this._reqOptionsArgs);
   }
 
-  updatePassword(data){
+  updatePassword(data) {
     return this.http.post<any>(this.apiUrl + '/password/update', data, this._reqOptionsArgs);
   }
 
-
-  forgotPassword(email: any){
+  forgotPassword(email: any) {
     return this.http.post<any>(this.apiUrl + `/password/forgot`, email, this._reqOptionsArgs);
   }
   private handleError(err: HttpErrorResponse) {
-
     let errorMessage;
     if (err.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.
@@ -127,5 +125,4 @@ export class AuthenticationService {
     console.error(errorMessage);
     return throwError(errorMessage);
   }
-
 }

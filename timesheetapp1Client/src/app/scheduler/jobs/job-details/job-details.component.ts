@@ -32,13 +32,7 @@ export class JobDetailsComponent implements OnInit {
   dataSourceJobData = of(this.ELEMENT_DATA);
 
   // table data for triggers
-  displayedColumnsTriggers: string[] = [
-    'triggerName',
-    'triggerGroup',
-    'type',
-    'startTime',
-    'endTime'
-  ];
+  displayedColumnsTriggers: string[] = ['triggerName', 'triggerGroup', 'type', 'startTime', 'endTime'];
   triggers: ITrigger[] = [];
   dataSourceTriggers = of(this.triggers);
 
@@ -116,9 +110,9 @@ export class JobDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.jobForm = this.formBuilder.group({
-      jobName: [{ value:'', disabled: true }, Validators.required],
-      jobGroup: [{ value:'', disabled: true }, Validators.required],
-      jobClass: [{ value:'', disabled: true }, Validators.required],
+      jobName: [{ value: '', disabled: true }, Validators.required],
+      jobGroup: [{ value: '', disabled: true }, Validators.required],
+      jobClass: [{ value: '', disabled: true }, Validators.required],
       isDurable: [false],
       jobDescription: [''],
     });

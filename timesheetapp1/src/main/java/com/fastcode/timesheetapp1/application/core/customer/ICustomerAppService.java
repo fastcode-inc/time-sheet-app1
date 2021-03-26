@@ -1,16 +1,14 @@
 package com.fastcode.timesheetapp1.application.core.customer;
 
-import org.springframework.data.domain.Pageable;
 import com.fastcode.timesheetapp1.application.core.customer.dto.*;
 import com.fastcode.timesheetapp1.commons.search.SearchCriteria;
-
 import java.util.*;
+import org.springframework.data.domain.Pageable;
 
 public interface ICustomerAppService {
-	
-	//CRUD Operations
-	
-	CreateCustomerOutput create(CreateCustomerInput customer);
+    //CRUD Operations
+
+    CreateCustomerOutput create(CreateCustomerInput customer);
 
     void delete(Long id);
 
@@ -19,9 +17,8 @@ public interface ICustomerAppService {
     FindCustomerByIdOutput findById(Long id);
 
     List<FindCustomerByIdOutput> find(SearchCriteria search, Pageable pageable) throws Exception;
-    
+
     //Join Column Parsers
 
-	Map<String,String> parseProjectsJoinColumn(String keysString);
+    Map<String, String> parseProjectsJoinColumn(String keysString);
 }
-

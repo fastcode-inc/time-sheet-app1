@@ -5,16 +5,15 @@ import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter @Setter
+@Getter
+@Setter
 public class UpdateUsertaskInput {
 
-  	@NotNull(message = "taskid Should not be null")
-  	private Long taskid;
-  	
-  	@NotNull(message = "userid Should not be null")
-  	private Long userid;
-  	
-  	private Long versiono;
-  
-}
+    @NotNull(message = "taskid Should not be null")
+    private Long taskid;
 
+    @NotNull(message = "userid Should not be null")
+    private Long userid;
+
+    private Long versiono;
+}

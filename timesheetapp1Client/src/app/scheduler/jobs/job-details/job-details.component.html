@@ -42,7 +42,7 @@
               <mat-label fcHelp="{{ 'JOBS.FIELDS.NAME-HELP' | translate }}">
                 {{ 'JOBS.FIELDS.NAME' | translate }}</mat-label
               >
-              <input formControlName="jobName" matInput/>
+              <input formControlName="jobName" matInput />
               <mat-error *ngIf="!jobForm.get('jobName').valid && jobForm.get('jobName').touched">
                 {{ 'SCHEDULER-GENERAL.ERRORS.REQUIRED' | translate }}</mat-error
               >
@@ -55,7 +55,7 @@
               <mat-label fcHelp="{{ 'JOBS.FIELDS.GROUP-HELP' | translate }}">
                 {{ 'JOBS.FIELDS.GROUP' | translate }}</mat-label
               >
-              <input formControlName="jobGroup" matInput/>
+              <input formControlName="jobGroup" matInput />
               <mat-error *ngIf="!jobForm.get('jobGroup').valid && jobForm.get('jobGroup').touched">
                 {{ 'SCHEDULER-GENERAL.ERRORS.REQUIRED' | translate }}</mat-error
               >
@@ -68,7 +68,7 @@
               <mat-label fcHelp="{{ 'JOBS.FIELDS.CLASS-HELP' | translate }}">
                 {{ 'JOBS.FIELDS.CLASS' | translate }}
               </mat-label>
-              <input formControlName="jobClass" matInput/>
+              <input formControlName="jobClass" matInput />
               <mat-error *ngIf="!jobForm.get('jobClass').valid && jobForm.get('jobClass').touched">
                 {{ 'SCHEDULER-GENERAL.ERRORS.REQUIRED' | translate }}</mat-error
               >

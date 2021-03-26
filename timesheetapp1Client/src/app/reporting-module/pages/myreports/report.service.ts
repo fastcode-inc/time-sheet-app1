@@ -1,4 +1,3 @@
-
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -7,25 +6,27 @@ import { IReport } from './ireport';
 import { ShareApiService } from '../../services/share-api.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class ReportService extends ShareApiService<IReport>{
+export class ReportService extends ShareApiService<IReport> {
   constructor(private httpClient: HttpClient) {
-      super(httpClient, "reporting/report");
+    super(httpClient, 'reporting/report');
   }
 
   public getAllReports(searchText?: string, offset?: number, limit?: number, sort?: string): Observable<IReport[]> {
-
     let params: any = {
-      'search': searchText ? searchText : "",
-      'offset': offset ? offset : 0,
-      'limit': limit ? limit : 10,
-      'sort': sort ? sort : ''
+      search: searchText ? searchText : '',
+      offset: offset ? offset : 0,
+      limit: limit ? limit : 10,
+      sort: sort ? sort : '',
     };
-    return this.http.get<IReport[]>(this.url, { params }).pipe(map((response: any) => {
-      return response;
-    }), catchError(this.handleError));
-
+    return this.http
+      .get<IReport[]>(this.url, { params })
+      .pipe(
+        map((response: any) => {
+          return response;
+        }),
+        catchError(this.handleError)
+      );
   }
-  
 }

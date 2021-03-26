@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from "@angular/router";
-import { FormBuilder, Validators} from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
 import { UsertaskService } from '../usertask.service';
@@ -14,104 +14,98 @@ import { UsersService } from 'src/app/admin/user-management/users/users.service'
 @Component({
   selector: 'app-usertask-details',
   templateUrl: './usertask-details.component.html',
-  styleUrls: ['./usertask-details.component.scss']
+  styleUrls: ['./usertask-details.component.scss'],
 })
 export class UsertaskDetailsComponent extends BaseDetailsComponent<IUsertask> implements OnInit {
-	title = 'Usertask';
-	parentUrl = 'usertask';
-	constructor(
-		public formBuilder: FormBuilder,
-		public router: Router,
-		public route: ActivatedRoute,
-		public dialog: MatDialog,
-		public global: Globals,
-		public usertaskService: UsertaskService,
-		public pickerDialogService: PickerDialogService,
-		public errorService: ErrorService,
-		public taskService: TaskService,
-		public usersService: UsersService,
-		public globalPermissionService: GlobalPermissionService,
-	) {
-		super(formBuilder, router, route, dialog, global, pickerDialogService, usertaskService, errorService);
+  title = 'Usertask';
+  parentUrl = 'usertask';
+  constructor(
+    public formBuilder: FormBuilder,
+    public router: Router,
+    public route: ActivatedRoute,
+    public dialog: MatDialog,
+    public global: Globals,
+    public usertaskService: UsertaskService,
+    public pickerDialogService: PickerDialogService,
+    public errorService: ErrorService,
+    public taskService: TaskService,
+    public usersService: UsersService,
+    public globalPermissionService: GlobalPermissionService
+  ) {
+    super(formBuilder, router, route, dialog, global, pickerDialogService, usertaskService, errorService);
   }
 
-	ngOnInit() {
-		this.entityName = 'Usertask';
-		this.setAssociations();
-		super.ngOnInit();
-		this.setForm();
-    	this.getItem();
-	}
-  
-  setForm(){
+  ngOnInit() {
+    this.entityName = 'Usertask';
+    this.setAssociations();
+    super.ngOnInit();
+    this.setForm();
+    this.getItem();
+  }
+
+  setForm() {
     this.itemForm = this.formBuilder.group({
       taskid: ['', Validators.required],
       userid: ['', Validators.required],
-      taskDescriptiveField : [''],
-      usersDescriptiveField : [''],
-      
+      taskDescriptiveField: [''],
+      usersDescriptiveField: [''],
     });
-    
-    this.fields = [
-			
-			
-      ];
-      
+
+    this.fields = [];
   }
-  
+
   onItemFetched(item: IUsertask) {
     this.item = item;
     this.itemForm.patchValue(item);
   }
-  
-  setAssociations(){
+
+  setAssociations() {
     this.associations = [
       {
         column: [
-	        {
-	          key: 'taskid',
-	          value: undefined,
-	          referencedkey: 'id'
-			},
-		],
-		isParent: false,
-		table: 'task',
-		type: 'ManyToOne',
-		label: 'task',
-		service: this.taskService,
-		descriptiveField: 'taskDescriptiveField',
-	    referencedDescriptiveField: 'name',
-		},
+          {
+            key: 'taskid',
+            value: undefined,
+            referencedkey: 'id',
+          },
+        ],
+        isParent: false,
+        table: 'task',
+        type: 'ManyToOne',
+        label: 'task',
+        service: this.taskService,
+        descriptiveField: 'taskDescriptiveField',
+        referencedDescriptiveField: 'name',
+      },
       {
         column: [
-	        {
-	          key: 'userid',
-	          value: undefined,
-	          referencedkey: 'id'
-			},
-		],
-		isParent: false,
-		table: 'users',
-		type: 'ManyToOne',
-		label: 'users',
-		service: this.usersService,
-		descriptiveField: 'usersDescriptiveField',
-	    referencedDescriptiveField: 'lastname',
-		},
-		];
-		
-		this.childAssociations = this.associations.filter(association => {
-			return (association.isParent);
-		});
+          {
+            key: 'userid',
+            value: undefined,
+            referencedkey: 'id',
+          },
+        ],
+        isParent: false,
+        table: 'users',
+        type: 'ManyToOne',
+        label: 'users',
+        service: this.usersService,
+        descriptiveField: 'usersDescriptiveField',
+        referencedDescriptiveField: 'lastname',
+      },
+    ];
 
-		this.parentAssociations = this.associations.filter(association => {
-			return (!association.isParent);
-		});
-	}
-	
-	onSubmit() {
-		let usertask = this.itemForm.getRawValue();
-		super.onSubmit(usertask);
-		
-	}
+    this.childAssociations = this.associations.filter((association) => {
+      return association.isParent;
+    });
+
+    this.parentAssociations = this.associations.filter((association) => {
+      return !association.isParent;
+    });
+  }
+
+  onSubmit() {
+    let usertask = this.itemForm.getRawValue();
+    super.onSubmit(usertask);
+  }
 }

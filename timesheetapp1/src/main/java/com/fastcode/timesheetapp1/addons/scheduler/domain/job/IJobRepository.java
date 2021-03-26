@@ -5,7 +5,4 @@ import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.stereotype.Repository;
 
 @Repository("jobRepository")
-public interface IJobRepository extends JpaRepository<JobEntity, Long>, QuerydslPredicateExecutor<JobEntity>  {
-
-}
-
+public interface IJobRepository extends JpaRepository<JobEntity, Long>, QuerydslPredicateExecutor<JobEntity> {}

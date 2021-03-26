@@ -2,10 +2,10 @@
   <mat-spinner></mat-spinner>
 </section>
 <div *ngIf="item" class="list-container">
-  <fc-general-details 
-  	[fields]="fields"
-  	[itemForm]="itemForm"
-  	[parentAssociations]="parentAssociations"
+  <fc-general-details
+    [fields]="fields"
+    [itemForm]="itemForm"
+    [parentAssociations]="parentAssociations"
     [childAssociations]="childAssociations"
     [IsUpdatePermission]="IsUpdatePermission"
     [loading]="loading"
@@ -13,7 +13,8 @@
     [idParam]="idParam"
     (onPickerScroll)="onPickerScroll($event)"
     (onSelectAssociation)="selectAssociation($event)"
-    (openChildDetails)="openChildDetails($event)" (onBack)="onBack()"
+    (openChildDetails)="openChildDetails($event)"
+    (onBack)="onBack()"
     (onSubmit)="onSubmit()"
   >
   </fc-general-details>

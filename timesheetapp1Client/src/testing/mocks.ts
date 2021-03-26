@@ -1,6 +1,6 @@
 export { ActivatedRoute } from '@angular/router';
-import { Input, Injectable, Directive } from "@angular/core";
-import { of, Observable, Subject } from "rxjs";
+import { Input, Injectable, Directive } from '@angular/core';
+import { of, Observable, Subject } from 'rxjs';
 import { ITokenDetail } from 'src/app/common/shared';
 
 // @Directive({
@@ -16,68 +16,89 @@ import { ITokenDetail } from 'src/app/common/shared';
 
 export let GlobalsMock = {
   isSmallDevice$: of({ value: true }),
-  isMediumDeviceOrLess$: of({ value: true })
+  isMediumDeviceOrLess$: of({ value: true }),
 };
 
 export let ActivatedRouteMock = {
-  snapshot: { 
-    paramMap: { get: () => { return '1' } },
-    queryParams: { get: () => { return '1' } }
-  }
+  snapshot: {
+    paramMap: {
+      get: () => {
+        return '1';
+      },
+    },
+    queryParams: {
+      get: () => {
+        return '1';
+      },
+    },
+  },
+};
+
+@Injectable()
+export class RouterMock {
+  navigate = (commands: any) => {};
 }
 
 @Injectable()
-export class RouterMock { 
-  navigate = (commands: any) => {}; 
-}
-
-@Injectable()
-export class PickerDialogServiceMock { }
+export class PickerDialogServiceMock {}
 
 @Injectable()
 export class AuthenticationServiceMock {
-	permissionsChange = new Subject();
-	preferenceChange = new Subject();
-	
-	configure() {}
+  permissionsChange = new Subject();
+  preferenceChange = new Subject();
 
-  getMainUsers(): Observable<any> { return of([{id: 1, username: "user1"}]); }
+  configure() {}
 
-  get token(): string { return "sample token"; }
+  getMainUsers(): Observable<any> {
+    return of([{ id: 1, username: 'user1' }]);
+  }
 
-  decodeToken(): ITokenDetail { return {sub: "sub1"} }
-  
+  get token(): string {
+    return 'sample token';
+  }
+
+  decodeToken(): ITokenDetail {
+    return { sub: 'sub1' };
+  }
+
   // ldap, db
   //login(user: any): Observable<any> { return of({}) }
 
-  getLoggedInUserPermissions(): Observable<any> { return of(["p1"]); }
+  getLoggedInUserPermissions(): Observable<any> {
+    return of(['p1']);
+  }
 
   // oidc
   login() {}
 
   logout() {}
 
-  getTokenExpirationDate(token: string): Date { return new Date(); }
+  getTokenExpirationDate(token: string): Date {
+    return new Date();
+  }
 
-  isTokenExpired(token?: string): boolean { return true; }
+  isTokenExpired(token?: string): boolean {
+    return true;
+  }
 
-  hasPermissionOnEntity(entity: string, crudType: string): Boolean { return true; }
-  
+  hasPermissionOnEntity(entity: string, crudType: string): Boolean {
+    return true;
+  }
+
   getProfile() {}
-
 }
 
 @Injectable()
 export class GlobalPermissionServiceMock {
-  hasPermissionOnEntity(entity:string, crudType:string):Boolean {
+  hasPermissionOnEntity(entity: string, crudType: string): Boolean {
     return true;
   }
 
-  hasPermission(permission: string){
+  hasPermission(permission: string) {
     return true;
   }
 
-  checkPermission(entity:string, crudType:string):boolean {
+  checkPermission(entity: string, crudType: string): boolean {
     return true;
   }
 }

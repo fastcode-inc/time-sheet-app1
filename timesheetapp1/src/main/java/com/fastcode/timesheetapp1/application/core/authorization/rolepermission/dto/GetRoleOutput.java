@@ -4,14 +4,13 @@ import java.time.*;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter @Setter
+@Getter
+@Setter
 public class GetRoleOutput {
 
- 	private Long id;
- 	private String name;
- 	private String displayName;
-  	private Long rolepermissionPermissionId;
-  	private Long rolepermissionRoleId;
-
+    private Long id;
+    private String name;
+    private String displayName;
+    private Long rolepermissionPermissionId;
+    private Long rolepermissionRoleId;
 }
-

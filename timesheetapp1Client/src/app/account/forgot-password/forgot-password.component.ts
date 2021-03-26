@@ -7,21 +7,17 @@ import { takeUntil } from 'rxjs/operators';
 @Component({
   selector: 'app-forgot-password',
   templateUrl: './forgot-password.component.html',
-  styleUrls: ['./forgot-password.component.scss']
+  styleUrls: ['./forgot-password.component.scss'],
 })
 export class ForgotPasswordComponent implements OnInit {
-
   resetForm: FormGroup;
   private destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
   disabled: any = false;
   linkSent: boolean = false;
 
-
   returnUrl: string = 'fastcode';
 
-  constructor(
-    public authenticationService: AuthenticationService
-  ) { }
+  constructor(public authenticationService: AuthenticationService) {}
 
   ngOnInit() {
     this.form();
@@ -29,36 +25,36 @@ export class ForgotPasswordComponent implements OnInit {
 
   form() {
     this.resetForm = new FormGroup({
-      email: new FormControl('', [Validators.email])
+      email: new FormControl('', [Validators.email]),
     });
   }
 
   forgotPassword() {
-
     this.disabled = true;
     if (this.resetForm.invalid) {
       this.disabled = false;
       return;
     }
 
-    let forgetPasswordInput = { 
+    let forgetPasswordInput = {
       email: this.resetForm.value.email,
-      clientUrl: location.origin
-    }
-    this.authenticationService.forgotPassword(forgetPasswordInput)
-    .pipe(takeUntil(this.destroyed$))
+      clientUrl: location.origin,
+    };
+    this.authenticationService
+      .forgotPassword(forgetPasswordInput)
+      .pipe(takeUntil(this.destroyed$))
       .subscribe(
-        data => {
+        (data) => {
           this.linkSent = true;
         },
-        error => {
+        (error) => {
           this.disabled = false;
-        });
+        }
+      );
   }
 
   ngOnDestroy() {
     this.destroyed$.next(true);
     this.destroyed$.unsubscribe();
   }
-
 }

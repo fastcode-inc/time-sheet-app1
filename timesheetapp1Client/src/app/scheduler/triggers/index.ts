@@ -1,4 +1,4 @@
-export { ListFiltersComponent } from 'src/app/common/shared';;
+export { ListFiltersComponent } from 'src/app/common/shared';
 
 export { TriggerService } from './trigger.service';
 export { TriggersComponent } from './triggers.component';

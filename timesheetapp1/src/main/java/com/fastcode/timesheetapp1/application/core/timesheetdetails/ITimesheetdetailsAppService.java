@@ -1,16 +1,14 @@
 package com.fastcode.timesheetapp1.application.core.timesheetdetails;
 
-import org.springframework.data.domain.Pageable;
 import com.fastcode.timesheetapp1.application.core.timesheetdetails.dto.*;
 import com.fastcode.timesheetapp1.commons.search.SearchCriteria;
-
 import java.util.*;
+import org.springframework.data.domain.Pageable;
 
 public interface ITimesheetdetailsAppService {
-	
-	//CRUD Operations
-	
-	CreateTimesheetdetailsOutput create(CreateTimesheetdetailsInput timesheetdetails);
+    //CRUD Operations
+
+    CreateTimesheetdetailsOutput create(CreateTimesheetdetailsInput timesheetdetails);
 
     void delete(Long id);
 
@@ -19,16 +17,14 @@ public interface ITimesheetdetailsAppService {
     FindTimesheetdetailsByIdOutput findById(Long id);
 
     List<FindTimesheetdetailsByIdOutput> find(SearchCriteria search, Pageable pageable) throws Exception;
-	//Relationship Operations
-	//Relationship Operations
-	//Relationship Operations
-    
+    //Relationship Operations
+    //Relationship Operations
+    //Relationship Operations
+
     GetTaskOutput getTask(Long timesheetdetailsid);
-    
+
     GetTimeofftypeOutput getTimeofftype(Long timesheetdetailsid);
-    
+
     GetTimesheetOutput getTimesheet(Long timesheetdetailsid);
-    
     //Join Column Parsers
 }
-

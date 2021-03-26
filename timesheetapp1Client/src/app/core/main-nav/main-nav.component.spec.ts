@@ -1,4 +1,3 @@
-
 import { fakeAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatSidenavModule } from '@angular/material/sidenav';
 
@@ -17,16 +16,14 @@ describe('MainNavComponent', () => {
     TestBed.configureTestingModule({
       imports: [TestingModule, MatSidenavModule, MatExpansionModule],
       declarations: [MainNavComponent].concat(EntryComponents),
-      providers: [UsersService]
-    })
-    .compileComponents();
+      providers: [UsersService],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(MainNavComponent);
     component = fixture.componentInstance;
   }));
 
   it('should compile', () => {
-    
     fixture.detectChanges();
     expect(component).toBeTruthy();
   });
@@ -40,7 +37,7 @@ describe('MainNavComponent', () => {
     component.switchLanguage(lang);
 
     expect(component.translate.use).toHaveBeenCalledWith(lang);
-    expect(localStorage.setItem).toHaveBeenCalledWith('selectedLanguage',lang);
+    expect(localStorage.setItem).toHaveBeenCalledWith('selectedLanguage', lang);
     expect(component.usersService.updateLanguage).toHaveBeenCalledWith(lang);
     expect(component.selectedLanguage).toEqual(lang);
   });
@@ -65,7 +62,7 @@ describe('MainNavComponent', () => {
     component.selectedLanguage = lang;
     component.themes = themes;
     spyOn(component.translate, 'use');
-    spyOn(Storage.prototype, 'getItem').and.returnValue("null");
+    spyOn(Storage.prototype, 'getItem').and.returnValue('null');
     spyOn(component, 'changeTheme').and.returnValue();
 
     component.setPreferences();
@@ -74,7 +71,7 @@ describe('MainNavComponent', () => {
     expect(component.selectedLanguage).toEqual(lang);
     expect(component.translate.use).toHaveBeenCalledTimes(0);
   });
-  
+
   it('should logout the user and navigate to home', async () => {
     const router = TestBed.get(Router);
     let themes = ['theme1'];
@@ -89,7 +86,7 @@ describe('MainNavComponent', () => {
 
     let responsePromise = navigationSpy.calls.mostRecent().returnValue;
     await responsePromise;
-      
+
     expect(router.navigate).toHaveBeenCalledWith(['/']);
 
     expect(component.changeTheme).toHaveBeenCalledWith(themes[0], false);
@@ -105,14 +102,13 @@ describe('MainNavComponent', () => {
 
     let responsePromise = navigationSpy.calls.mostRecent().returnValue;
     await responsePromise;
-      
+
     expect(router.navigate).toHaveBeenCalledWith(['/login'], { queryParams: { returnUrl: 'dashboard' } });
   });
   it('should change theme without calling backend service', async () => {
-
     let themes = ['newTheme', 'appliedTheme'];
     component.themes = themes;
-    document.body.classList.add(themes[1])
+    document.body.classList.add(themes[1]);
 
     component.changeTheme(themes[0], false);
 
@@ -121,7 +117,6 @@ describe('MainNavComponent', () => {
   });
 
   it('should change theme and call backend service', async () => {
-
     let themes = ['newTheme', 'appliedTheme'];
     spyOn(component.usersService, 'updateTheme').and.returnValue(of(null));
     spyOn(Storage.prototype, 'setItem').and.returnValue();
@@ -135,5 +130,4 @@ describe('MainNavComponent', () => {
     expect(document.body.classList.contains(themes[1])).toBeFalsy();
     expect(localStorage.setItem).toHaveBeenCalledWith('theme', themes[0]);
   });
-
 });

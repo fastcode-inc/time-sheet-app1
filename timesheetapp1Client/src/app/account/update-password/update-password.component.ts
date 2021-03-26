@@ -8,10 +8,9 @@ import { takeUntil } from 'rxjs/operators';
 @Component({
   selector: 'app-update-password',
   templateUrl: './update-password.component.html',
-  styleUrls: ['./update-password.component.scss']
+  styleUrls: ['./update-password.component.scss'],
 })
 export class UpdatePasswordComponent implements OnInit {
-
   updatePasswordForm: FormGroup;
   private destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
   apiError: any = { show: false, msg: '' };
@@ -21,7 +20,7 @@ export class UpdatePasswordComponent implements OnInit {
     public activatedRoute: ActivatedRoute,
     public formBuilder: FormBuilder,
     public authenticationService: AuthenticationService
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.setForm();
@@ -31,27 +30,27 @@ export class UpdatePasswordComponent implements OnInit {
     this.updatePasswordForm = this.formBuilder.group({
       oldPassword: ['', Validators.required],
       newPassword: ['', Validators.required],
-      confirmPassword: ['', Validators.required]
+      confirmPassword: ['', Validators.required],
     });
   }
 
   updatePassword() {
-
     this.disabled = true;
     if (this.updatePasswordForm.invalid) {
       this.disabled = false;
       return;
     }
 
-
-    this.authenticationService.updatePassword(this.updatePasswordForm.value)
+    this.authenticationService
+      .updatePassword(this.updatePasswordForm.value)
       .pipe(takeUntil(this.destroyed$))
       .subscribe(
-        data => {
+        (data) => {
           this.passwordUpdated = true;
         },
-        error => {
+        (error) => {
           this.disabled = false;
-        });
+        }
+      );
   }
 }

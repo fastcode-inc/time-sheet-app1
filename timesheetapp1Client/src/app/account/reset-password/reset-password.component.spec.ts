@@ -14,16 +14,15 @@ describe('ResetPasswordComponent', () => {
 
   let data = {
     password: 'testPassword',
-    confirmPassword: 'testPassword'
+    confirmPassword: 'testPassword',
   };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ResetPasswordComponent ],
+      declarations: [ResetPasswordComponent],
       imports: [TestingModule],
-      providers: [AuthenticationService]
-    })
-    .compileComponents();
+      providers: [AuthenticationService],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -73,5 +72,4 @@ describe('ResetPasswordComponent', () => {
     expect(component.passwordUpdated).toBe(false);
     expect(component.disabled).toBe(false);
   });
-
 });

@@ -8,7 +8,7 @@ import { take } from 'rxjs/operators';
 @Component({
   selector: 'app-manage-dashboards',
   templateUrl: './manage-dashboards.component.html',
-  styleUrls: ['./manage-dashboards.component.scss']
+  styleUrls: ['./manage-dashboards.component.scss'],
 })
 export class ManageDashboardsComponent implements OnInit, OnDestroy {
   allDashboardsData = [];
@@ -17,39 +17,41 @@ export class ManageDashboardsComponent implements OnInit, OnDestroy {
     private dashboardService: DashboardService,
     private _snackBar: MatSnackBar,
     private translate: TranslateService,
-    private dialog: MatDialog,
-  ) { }
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit() {
-    this.dashboardService.getAll([], 0, 1000).subscribe(res => {
+    this.dashboardService.getAll([], 0, 1000).subscribe((res) => {
       this.allDashboardsData = res;
-    })
+    });
   }
 
   deleteDashboard(id) {
     this.deleteDialogRef = this.dialog.open(ConfirmDialogComponent, {
       disableClose: true,
       data: {
-        confirmationType: "delete"
-      }
+        confirmationType: 'delete',
+      },
     });
 
-    this.deleteDialogRef.afterClosed().pipe(take(1)).subscribe(action => {
-      if (action) {
-        this.dashboardService.delete(id).subscribe(res => {
-          this.allDashboardsData = this.allDashboardsData.filter(v => v.id !== id);
-          this.showMessage(this.translate.instant('REPORTING.MESSAGES.DASHBOARD.DELETED'));
-        });
-      }
-    });
+    this.deleteDialogRef
+      .afterClosed()
+      .pipe(take(1))
+      .subscribe((action) => {
+        if (action) {
+          this.dashboardService.delete(id).subscribe((res) => {
+            this.allDashboardsData = this.allDashboardsData.filter((v) => v.id !== id);
+            this.showMessage(this.translate.instant('REPORTING.MESSAGES.DASHBOARD.DELETED'));
+          });
+        }
+      });
   }
 
-  ngOnDestroy() {
-  }
+  ngOnDestroy() {}
 
   showMessage(msg): void {
-    this._snackBar.open(msg, "close", {
-      duration: 2000
+    this._snackBar.open(msg, 'close', {
+      duration: 2000,
     });
   }
 }

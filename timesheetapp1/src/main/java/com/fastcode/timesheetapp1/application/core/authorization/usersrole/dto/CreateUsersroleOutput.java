@@ -4,13 +4,12 @@ import java.time.*;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter @Setter
+@Getter
+@Setter
 public class CreateUsersroleOutput {
 
     private Long roleId;
     private Long usersId;
-	private String roleDescriptiveField;
-	private String usersDescriptiveField;
-
+    private String roleDescriptiveField;
+    private String usersDescriptiveField;
 }
-

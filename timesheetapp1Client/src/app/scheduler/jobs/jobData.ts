@@ -1,4 +1,4 @@
-export class JobData{
-    dataKey:string;
-    dataValue: string;
-  }
+export class JobData {
+  dataKey: string;
+  dataValue: string;
+}

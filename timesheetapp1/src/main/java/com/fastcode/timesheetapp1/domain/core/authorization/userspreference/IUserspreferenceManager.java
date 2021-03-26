@@ -5,18 +5,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface IUserspreferenceManager {
-   
     UserspreferenceEntity create(UserspreferenceEntity userspreference);
 
     void delete(UserspreferenceEntity userspreference);
 
     UserspreferenceEntity update(UserspreferenceEntity userspreference);
-    
-    UserspreferenceEntity findById(Long  id);
-    
+
+    UserspreferenceEntity findById(Long id);
+
     Page<UserspreferenceEntity> findAll(Predicate predicate, Pageable pageable);
-  
 }
-
-
-

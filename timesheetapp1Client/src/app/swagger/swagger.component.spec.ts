@@ -9,10 +9,9 @@ describe('SwaggerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SwaggerComponent ],
-      imports: [TestingModule]
-    })
-    .compileComponents();
+      declarations: [SwaggerComponent],
+      imports: [TestingModule],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

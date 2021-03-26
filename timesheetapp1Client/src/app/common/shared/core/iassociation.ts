@@ -1,7 +1,7 @@
-import { IAssociationEntry } from './iassociationentry'
+import { IAssociationEntry } from './iassociationentry';
 export interface IAssociation {
-    manyToMany?: IAssociationEntry[],
-    oneToMany?: IAssociationEntry[],
-    manyToOne?: IAssociationEntry[],
-    oneToOne?: IAssociationEntry[]
+  manyToMany?: IAssociationEntry[];
+  oneToMany?: IAssociationEntry[];
+  manyToOne?: IAssociationEntry[];
+  oneToOne?: IAssociationEntry[];
 }

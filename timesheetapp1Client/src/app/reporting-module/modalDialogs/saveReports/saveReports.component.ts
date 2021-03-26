@@ -1,39 +1,34 @@
-import {Component, Inject} from '@angular/core';
-import {MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {MatDialogRef} from '@angular/material';
+import { Component, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef } from '@angular/material';
 
 @Component({
   selector: 'app-savereports',
   templateUrl: './saveReports.component.html',
-  styleUrls: ['./saveReports.component.scss']
+  styleUrls: ['./saveReports.component.scss'],
 })
-
-export class SaveReportsComponent  {
+export class SaveReportsComponent {
   choosedashboard = 'new';
   report = {
     title: '',
-    description: ''
+    description: '',
+  };
+  response = {};
+  constructor(public dialogRef: MatDialogRef<SaveReportsComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {
+    this.report.title = data.title;
+    this.report.description = data.description;
   }
-  response = {}
-  constructor(
-    public dialogRef: MatDialogRef<SaveReportsComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) {
-      this.report.title = data.title;
-      this.report.description = data.description;
-     }
 
   onNoClick(): void {
     this.dialogRef.close(null);
   }
 
-  save(){
+  save() {
     this.response = {
       type: this.choosedashboard,
       reportTitle: this.report.title,
-      reportdescription: this.report.description
-    }
+      reportdescription: this.report.description,
+    };
     this.dialogRef.close(this.response);
   }
-
-
 }

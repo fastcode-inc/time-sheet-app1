@@ -4,34 +4,32 @@ import { SchemaData, SchemaFiles } from '../models/schema.model';
 import { MetaData } from '../models/reports.model';
 import { environment } from 'src/environments/environment';
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class MainService {
-  
   constructor(private http: HttpClient) {}
 
-  getMetaData(){
+  getMetaData() {
     return this.http.get<MetaData>(environment.reportingUrl + '/cubejs-api/v1/meta');
   }
 
-  getDbTablesList(){
+  getDbTablesList() {
     return this.http.get<SchemaData>(environment.reportingUrl + '/playground/db-schema');
   }
 
-  getSchemaFilesList(){
+  getSchemaFilesList() {
     return this.http.get<SchemaFiles>(environment.reportingUrl + '/playground/files');
   }
 
-  generateSchema(tablesList){
+  generateSchema(tablesList) {
     return this.http.post<SchemaFiles>(environment.reportingUrl + '/playground/generate-schema', tablesList);
   }
 
-  updateSchemaFile(updatedContent){
+  updateSchemaFile(updatedContent) {
     return this.http.post(environment.reportingUrl + '/saveschema', updatedContent);
   }
 
-  generateAggregatedMeasures(){
+  generateAggregatedMeasures() {
     return this.http.get<SchemaFiles>(environment.reportingUrl + '/generateAggregatedMeasures');
   }
-
 }

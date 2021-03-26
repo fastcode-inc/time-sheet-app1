@@ -9,51 +9,47 @@ import { ListFiltersComponent, ServiceUtils, DateUtils } from 'src/app/common/sh
 import { ListComponent, DetailsComponent, NewComponent, FieldsComp } from 'src/app/common/general-components';
 
 import { EntryComponents, TestingModule } from 'src/testing/utils';
-import { ITimeofftype, TimeofftypeService, TimeofftypeDetailsComponent, TimeofftypeListComponent,
-	TimeofftypeNewComponent } from '../';
+import {
+  ITimeofftype,
+  TimeofftypeService,
+  TimeofftypeDetailsComponent,
+  TimeofftypeListComponent,
+  TimeofftypeNewComponent,
+} from '../';
 
 describe('TimeofftypeListComponent', () => {
-  let fixture:ComponentFixture<TimeofftypeListComponent>;
-  let component:TimeofftypeListComponent;
+  let fixture: ComponentFixture<TimeofftypeListComponent>;
+  let component: TimeofftypeListComponent;
   let el: HTMLElement;
-  
+
   let d = new Date();
   let t = DateUtils.formatDateStringToAMPM(d);
-  let constData:ITimeofftype[] = [
-    {   
+  let constData: ITimeofftype[] = [
+    {
       id: 1,
       typename: 'typename1',
     },
-    {   
+    {
       id: 2,
       typename: 'typename2',
     },
   ];
-  let data: ITimeofftype[] = [... constData];
+  let data: ITimeofftype[] = [...constData];
 
   describe('Unit tests', () => {
-  
     beforeEach(async(() => {
-      
       TestBed.configureTestingModule({
-        declarations: [
-          TimeofftypeListComponent,
-          ListComponent
-        ],
+        declarations: [TimeofftypeListComponent, ListComponent],
         imports: [TestingModule],
-        providers: [
-          TimeofftypeService,      
-          ChangeDetectorRef,
-        ],
-        schemas: [NO_ERRORS_SCHEMA]   
+        providers: [TimeofftypeService, ChangeDetectorRef],
+        schemas: [NO_ERRORS_SCHEMA],
       }).compileComponents();
-
     }));
-    
+
     beforeEach(() => {
       fixture = TestBed.createComponent(TimeofftypeListComponent);
       component = fixture.componentInstance;
-      data = [... constData];
+      data = [...constData];
       fixture.detectChanges();
     });
 
@@ -62,7 +58,6 @@ describe('TimeofftypeListComponent', () => {
     });
 
     it('should run #ngOnInit()', async () => {
-
       spyOn(component.dataService, 'getAll').and.returnValue(of(data));
       component.ngOnInit();
 
@@ -77,7 +72,6 @@ describe('TimeofftypeListComponent', () => {
       expect(component.columns.length).toBeGreaterThan(0);
       expect(component.selectedColumns.length).toBeGreaterThan(0);
       expect(component.displayedColumns.length).toBeGreaterThan(0);
-
     });
 
     it('should run #addNew()', async () => {
@@ -86,13 +80,12 @@ describe('TimeofftypeListComponent', () => {
       el.click();
       expect(component.addNew).toHaveBeenCalled();
     });
-    
-    it('should run #delete()', async () => {
 
+    it('should run #delete()', async () => {
       component.items = data;
       fixture.detectChanges();
 
-      let tableRows = fixture.nativeElement.querySelectorAll('mat-row')
+      let tableRows = fixture.nativeElement.querySelectorAll('mat-row');
       let firstRowCells = tableRows[0].querySelectorAll('mat-cell');
       let editButtonCell = firstRowCells[firstRowCells.length - 1];
       let editButton = editButtonCell.querySelectorAll('button')[1];
@@ -100,14 +93,13 @@ describe('TimeofftypeListComponent', () => {
       spyOn(component, 'delete').and.returnValue();
       editButton.click();
       expect(component.delete).toHaveBeenCalledWith(data[0]);
-
     });
 
     it('should call openDetails function when edit button is clicked', async () => {
       component.items = data;
       fixture.detectChanges();
 
-      let tableRows = fixture.nativeElement.querySelectorAll('mat-row')
+      let tableRows = fixture.nativeElement.querySelectorAll('mat-row');
       let firstRowCells = tableRows[0].querySelectorAll('mat-cell');
       let editButtonCell = firstRowCells[firstRowCells.length - 1];
       let editButton = editButtonCell.querySelectorAll('button')[0];
@@ -120,27 +112,24 @@ describe('TimeofftypeListComponent', () => {
 
     it('should call applyFilter function in case of onSearch event of list-filter-component', async () => {
       fixture.detectChanges();
-      
+
       spyOn(component, 'applyFilter');
       fixture.debugElement.query(By.css('app-list-filters')).triggerEventHandler('onSearch', null);
-      
+
       expect(component.applyFilter).toHaveBeenCalled();
     });
 
     it('should pass the selected columns list as input to app list filters', async () => {
       fixture.detectChanges();
-      
+
       let listFilterElement: DebugElement = fixture.debugElement.query(By.css('app-list-filters'));
-      
+
       expect(listFilterElement.properties.columnsList).toBe(component.selectedColumns);
     });
-  
   });
-  
+
   describe('Integration tests', () => {
-
     beforeEach(async(() => {
-
       TestBed.configureTestingModule({
         declarations: [
           TimeofftypeListComponent,
@@ -149,28 +138,23 @@ describe('TimeofftypeListComponent', () => {
           TimeofftypeDetailsComponent,
           ListComponent,
           DetailsComponent,
-          FieldsComp
+          FieldsComp,
         ].concat(EntryComponents),
         imports: [
           TestingModule,
           RouterTestingModule.withRoutes([
             { path: 'timeofftype', component: TimeofftypeListComponent },
-            { path: 'timeofftype/:id', component: TimeofftypeDetailsComponent }
-          ])
+            { path: 'timeofftype/:id', component: TimeofftypeDetailsComponent },
+          ]),
         ],
-        providers: [
-          TimeofftypeService,
-          ChangeDetectorRef,
-        ]
-
+        providers: [TimeofftypeService, ChangeDetectorRef],
       }).compileComponents();
-
     }));
 
     beforeEach(() => {
       fixture = TestBed.createComponent(TimeofftypeListComponent);
       component = fixture.componentInstance;
-      data = [... constData];
+      data = [...constData];
       fixture.detectChanges();
     });
 
@@ -204,12 +188,12 @@ describe('TimeofftypeListComponent', () => {
 
       expect(component.dialog.open).toHaveBeenCalled();
     });
-    
+
     it('should delete the item from list', async () => {
       component.items = data;
       fixture.detectChanges();
 
-      let tableRows = fixture.nativeElement.querySelectorAll('mat-row')
+      let tableRows = fixture.nativeElement.querySelectorAll('mat-row');
       let firstRowCells = tableRows[0].querySelectorAll('mat-cell');
       let deleteButtonCell = firstRowCells[firstRowCells.length - 1];
       let deleteButton = deleteButtonCell.querySelectorAll('button[name="delete"]')[0];
@@ -222,7 +206,7 @@ describe('TimeofftypeListComponent', () => {
 
     it('should set the columns list in app list filters component', async () => {
       let listFilters: ListFiltersComponent = fixture.debugElement.query(By.css('app-list-filters')).componentInstance;
-      
+
       expect(listFilters.columnsList).toEqual(component.selectedColumns);
     });
 
@@ -232,7 +216,7 @@ describe('TimeofftypeListComponent', () => {
       component.items = data;
       fixture.detectChanges();
 
-      let tableRows = fixture.nativeElement.querySelectorAll('mat-row')
+      let tableRows = fixture.nativeElement.querySelectorAll('mat-row');
       let firstRowCells = tableRows[0].querySelectorAll('mat-cell');
       let editButtonCell = firstRowCells[firstRowCells.length - 1];
       let editButton = editButtonCell.querySelectorAll('button[name="edit"]')[0];
@@ -243,8 +227,10 @@ describe('TimeofftypeListComponent', () => {
 
       let responsePromise = navigationSpy.calls.mostRecent().returnValue;
       await responsePromise;
-      
-      expect(decodeURIComponent(location.path())).toBe(`/timeofftype/${ServiceUtils.encodeIdByObject(data[0], component.primaryKeys)}`);
+
+      expect(decodeURIComponent(location.path())).toBe(
+        `/timeofftype/${ServiceUtils.encodeIdByObject(data[0], component.primaryKeys)}`
+      );
     });
 
     it('should emit onSearch event of list-filter-component and call applyFilter function', async () => {
@@ -252,7 +238,7 @@ describe('TimeofftypeListComponent', () => {
       spyOn(component.dataService, 'getAssociations').and.returnValue(of(filteredArray));
       spyOn(component.dataService, 'getAll').and.returnValue(of(filteredArray));
 
-      let filterableColumns = component.columns.filter(x => x.filter)
+      let filterableColumns = component.columns.filter((x) => x.filter);
       if (filterableColumns.length > 0) {
         let searchButton = fixture.debugElement.query(By.css('app-list-filters')).query(By.css('button')).nativeElement;
         searchButton.click();
@@ -260,7 +246,5 @@ describe('TimeofftypeListComponent', () => {
         expect(component.items).toEqual(filteredArray);
       }
     });
-
   });
-        
 });

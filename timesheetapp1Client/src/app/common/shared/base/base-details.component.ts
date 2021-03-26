@@ -74,7 +74,7 @@ export class BaseDetailsComponent<E> implements OnInit, CanDeactivateGuard {
     public pickerDialogService: PickerDialogService,
     public dataService: GenericApiService<E>,
     public errorService: ErrorService
-  ) { }
+  ) {}
 
   /**
    * Sets CRUD permissions for entity for
@@ -164,38 +164,40 @@ export class BaseDetailsComponent<E> implements OnInit, CanDeactivateGuard {
    * @param association
    */
   selectAssociation(association: IAssociationEntry) {
-	let dialogConfig: IFCDialogConfig = <IFCDialogConfig>{
+    let dialogConfig: IFCDialogConfig = <IFCDialogConfig>{
       Title: association.table,
       IsSingleSelection: true,
-      DisplayField: association.referencedDescriptiveField
+      DisplayField: association.referencedDescriptiveField,
     };
-    
+
     // association.associatedObj = selectedParent;
     this.pickerDialogRef = this.pickerDialogService.open(dialogConfig);
 
     this.initializePickerPageInfo();
-    association.service.getAll(this.searchValuePicker, this.currentPickerPage * this.pickerPageSize, this.pickerPageSize).subscribe(items => {
-      this.isLoadingPickerResults = false;
-      this.pickerDialogRef.componentInstance.items = items;
-      association.data = items;
-      this.updatePickerPageInfo(items);
-    },
-      (error) => {
-        this.errorMessage = <any>error;
-        this.errorService.showError(this.errorMessage);
-      }
+    association.service
+      .getAll(this.searchValuePicker, this.currentPickerPage * this.pickerPageSize, this.pickerPageSize)
+      .subscribe(
+        (items) => {
+          this.isLoadingPickerResults = false;
+          this.pickerDialogRef.componentInstance.items = items;
+          association.data = items;
+          this.updatePickerPageInfo(items);
+        },
+        (error) => {
+          this.errorMessage = <any>error;
+          this.errorService.showError(this.errorMessage);
+        }
+      );
 
-    );
-
-    this.pickerDialogRef.componentInstance.onScroll.subscribe(data => {
+    this.pickerDialogRef.componentInstance.onScroll.subscribe((data) => {
       this.onPickerScroll(association);
     });
 
-    this.pickerDialogRef.componentInstance.onSearch.subscribe(data => {
+    this.pickerDialogRef.componentInstance.onSearch.subscribe((data) => {
       this.onPickerSearch(data, association);
     });
 
-    this.pickerDialogRef.afterClosed().subscribe(associatedItem => {
+    this.pickerDialogRef.afterClosed().subscribe((associatedItem) => {
       this.onPickerClose(associatedItem, association);
     });
   }
@@ -279,14 +281,17 @@ export class BaseDetailsComponent<E> implements OnInit, CanDeactivateGuard {
     };
     this.searchValuePicker = [searchField];
 
-    association.service.getAll(this.searchValuePicker, this.currentPickerPage * this.pickerPageSize, this.pickerPageSize).subscribe(items => {
-      this.isLoadingPickerResults = false;
-      this.pickerDialogRef.componentInstance.items = items;
-      association.data = items;
-      this.updatePickerPageInfo(items);
-    },
-      error => this.errorMessage = <any>error
-    );
+    association.service
+      .getAll(this.searchValuePicker, this.currentPickerPage * this.pickerPageSize, this.pickerPageSize)
+      .subscribe(
+        (items) => {
+          this.isLoadingPickerResults = false;
+          this.pickerDialogRef.componentInstance.items = items;
+          association.data = items;
+          this.updatePickerPageInfo(items);
+        },
+        (error) => (this.errorMessage = <any>error)
+      );
   }
 
   /**
@@ -330,9 +335,9 @@ export class BaseDetailsComponent<E> implements OnInit, CanDeactivateGuard {
         (childObj) => {
           this.router.navigate([
             '/' +
-            association.table.toLowerCase() +
-            '/' +
-            ServiceUtils.encodeIdByObject(childObj, association.associatedPrimaryKeys),
+              association.table.toLowerCase() +
+              '/' +
+              ServiceUtils.encodeIdByObject(childObj, association.associatedPrimaryKeys),
           ]);
         },
         (error) => {

@@ -5,17 +5,16 @@ import { of as observableOf } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 import { IExecutionHistory } from './executionHistory';
 import { JobService } from '../jobs/job.service';
-import { IListColumn, listColumnType, ISearchField } from 'src/app/common/shared';;
+import { IListColumn, listColumnType, ISearchField } from 'src/app/common/shared';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-execution-history',
   templateUrl: './execution-history.component.html',
-  styleUrls: ['./execution-history.component.scss']
+  styleUrls: ['./execution-history.component.scss'],
 })
 export class ExecutionHistoryComponent implements OnInit {
-
-  @ViewChild(MatSort,{  static: true }) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
   isLoadingResults = true;
 
   currentPage: number;
@@ -29,68 +28,70 @@ export class ExecutionHistoryComponent implements OnInit {
       label: this.translate.instant('EXECUTION-HISTORY.FIELDS.TRIGGER-NAME'),
       sort: true,
       filter: true,
-      type: listColumnType.String
+      type: listColumnType.String,
     },
     {
       column: 'triggerGroup',
       label: this.translate.instant('EXECUTION-HISTORY.FIELDS.TRIGGER-GROUP'),
       sort: false,
       filter: true,
-      type: listColumnType.String
+      type: listColumnType.String,
     },
     {
       column: 'jobName',
       label: this.translate.instant('EXECUTION-HISTORY.FIELDS.JOB-NAME'),
       sort: false,
       filter: true,
-      type: listColumnType.String
+      type: listColumnType.String,
     },
     {
       column: 'jobGroup',
       label: this.translate.instant('EXECUTION-HISTORY.FIELDS.JOB-GROUP'),
       sort: false,
       filter: true,
-      type: listColumnType.String
+      type: listColumnType.String,
     },
     {
       column: 'jobClass',
       label: this.translate.instant('EXECUTION-HISTORY.FIELDS.JOB-CLASS'),
       sort: false,
       filter: true,
-      type: listColumnType.String
+      type: listColumnType.String,
     },
     {
       column: 'jobStatus',
       label: this.translate.instant('EXECUTION-HISTORY.FIELDS.STATUS'),
       sort: false,
       filter: true,
-      type: listColumnType.String
+      type: listColumnType.String,
     },
     {
       column: 'duration',
       label: this.translate.instant('EXECUTION-HISTORY.FIELDS.DURATION'),
       sort: false,
       filter: true,
-      type: listColumnType.String
+      type: listColumnType.String,
     },
     {
       column: 'firedTime',
       label: this.translate.instant('EXECUTION-HISTORY.FIELDS.FIRE-TIME'),
       sort: false,
       filter: true,
-      type: listColumnType.Date
+      type: listColumnType.Date,
     },
     {
       column: 'finishedTime',
       label: this.translate.instant('EXECUTION-HISTORY.FIELDS.FINISHED-TIME'),
       sort: false,
       filter: true,
-      type: listColumnType.Date
-    }
-  ]
+      type: listColumnType.Date,
+    },
+  ];
 
   selectedColumns = this.columns;
-  displayedColumnsExecutionHistory: string[] = this.columns.map((obj) => { return obj.column });
+  displayedColumnsExecutionHistory: string[] = this.columns.map((obj) => {
+    return obj.column;
+  });
 
   public searchValue: ISearchField[] = [];
   public dataSource;
@@ -99,62 +100,55 @@ export class ExecutionHistoryComponent implements OnInit {
   userId: number;
   executionHistory: IExecutionHistory[] = [];
   errorMessage = '';
-  constructor(
-    private jobService: JobService,
-    public dialog: MatDialog,
-    private translate: TranslateService
-    ) {
-
-  }
+  constructor(private jobService: JobService, public dialog: MatDialog, private translate: TranslateService) {}
 
   ngOnInit() {
     this.setSort();
   }
 
   setSort() {
-    this.sort.sortChange.pipe(
-      startWith({}),
-      switchMap(() => {
-        this.isLoadingResults = true;
-        this.initializePageInfo();
-        return this.jobService.getJobExecutionHistory(this.searchValue, 0, this.pageSize, this.getSortValue());
-      }),
-      map(data => {
-        // Flip flag to show that loading has finished.
-        this.isLoadingResults = false;
-        return data;
-      }),
-      catchError(() => {
-        this.isLoadingResults = false;
-        // Catch if some error occurred. Return empty data.
-        return observableOf([]);
-      })
-    ).subscribe(data => {
-      this.executionHistory = data;
-      this.dataSource = new MatTableDataSource(this.executionHistory);
-      //manage pages for virtual scrolling
-      this.updatePageInfo(data);
-    });
+    this.sort.sortChange
+      .pipe(
+        startWith({}),
+        switchMap(() => {
+          this.isLoadingResults = true;
+          this.initializePageInfo();
+          return this.jobService.getJobExecutionHistory(this.searchValue, 0, this.pageSize, this.getSortValue());
+        }),
+        map((data) => {
+          // Flip flag to show that loading has finished.
+          this.isLoadingResults = false;
+          return data;
+        }),
+        catchError(() => {
+          this.isLoadingResults = false;
+          // Catch if some error occurred. Return empty data.
+          return observableOf([]);
+        })
+      )
+      .subscribe((data) => {
+        this.executionHistory = data;
+        this.dataSource = new MatTableDataSource(this.executionHistory);
+        //manage pages for virtual scrolling
+        this.updatePageInfo(data);
+      });
   }
 
   applyFilter(searchValue) {
     this.initializePageInfo();
     this.searchValue = searchValue;
     this.isLoadingResults = true;
-    this.jobService.getJobExecutionHistory(
-      this.searchValue,
-      this.currentPage * this.pageSize,
-      this.pageSize,
-      this.getSortValue()
-    ).subscribe(
-      data => {
-        this.isLoadingResults = false;
-        this.executionHistory = data;
-        this.dataSource = new MatTableDataSource(this.executionHistory);
-        this.updatePageInfo(data);
-      },
-      error => this.errorMessage = <any>error
-    );
+    this.jobService
+      .getJobExecutionHistory(this.searchValue, this.currentPage * this.pageSize, this.pageSize, this.getSortValue())
+      .subscribe(
+        (data) => {
+          this.isLoadingResults = false;
+          this.executionHistory = data;
+          this.dataSource = new MatTableDataSource(this.executionHistory);
+          this.updatePageInfo(data);
+        },
+        (error) => (this.errorMessage = <any>error)
+      );
   }
 
   initializePageInfo() {
@@ -168,40 +162,34 @@ export class ExecutionHistoryComponent implements OnInit {
     if (data.length > 0) {
       this.currentPage++;
       this.lastProcessedOffset += data.length;
-    }
-    else {
+    } else {
       this.hasMoreRecords = false;
     }
   }
 
   onTableScroll() {
-
     if (!this.isLoadingResults && this.hasMoreRecords && this.lastProcessedOffset < this.executionHistory.length) {
       this.isLoadingResults = true;
-      this.jobService.getJobExecutionHistory(
-        this.searchValue,
-        this.currentPage * this.pageSize,
-        this.pageSize,
-        this.getSortValue()
-      ).subscribe(
-        data => {
-          this.isLoadingResults = false;
-          this.executionHistory = this.executionHistory.concat(data);
-          this.dataSource = new MatTableDataSource(this.executionHistory);
+      this.jobService
+        .getJobExecutionHistory(this.searchValue, this.currentPage * this.pageSize, this.pageSize, this.getSortValue())
+        .subscribe(
+          (data) => {
+            this.isLoadingResults = false;
+            this.executionHistory = this.executionHistory.concat(data);
+            this.dataSource = new MatTableDataSource(this.executionHistory);
 
-          this.updatePageInfo(data);
-        },
-        error => this.errorMessage = <any>error
-      );
+            this.updatePageInfo(data);
+          },
+          (error) => (this.errorMessage = <any>error)
+        );
     }
   }
 
   getSortValue(): string {
     let sortVal = '';
     if (this.sort.active && this.sort.direction) {
-      sortVal = this.sort.active + "," + this.sort.direction;
+      sortVal = this.sort.active + ',' + this.sort.direction;
     }
     return sortVal;
   }
-
 }

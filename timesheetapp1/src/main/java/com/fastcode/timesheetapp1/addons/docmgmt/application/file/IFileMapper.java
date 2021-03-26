@@ -6,16 +6,13 @@ import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface IFileMapper {
+    FileEntity createFileInputToFileEntity(CreateFileInput fileDto);
 
-   FileEntity createFileInputToFileEntity(CreateFileInput fileDto);
-
-   CreateFileOutput fileEntityToCreateFileOutput(FileEntity entity);
+    CreateFileOutput fileEntityToCreateFileOutput(FileEntity entity);
 
     FileEntity updateFileInputToFileEntity(UpdateFileInput fileDto);
 
-   	UpdateFileOutput fileEntityToUpdateFileOutput(FileEntity entity);
+    UpdateFileOutput fileEntityToUpdateFileOutput(FileEntity entity);
 
-   	FindFileByIdOutput fileEntityToFindFileByIdOutput(FileEntity entity);
-
+    FindFileByIdOutput fileEntityToFindFileByIdOutput(FileEntity entity);
 }
-

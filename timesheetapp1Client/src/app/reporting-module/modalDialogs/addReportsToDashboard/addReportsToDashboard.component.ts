@@ -1,44 +1,42 @@
-import {Component, Inject} from '@angular/core';
-import {MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {MatDialogRef} from '@angular/material';
+import { Component, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef } from '@angular/material';
 
 @Component({
   selector: 'app-addReportsToDashboard',
   templateUrl: './addReportsToDashboard.component.html',
-  styleUrls: ['./addReportsToDashboard.component.scss']
+  styleUrls: ['./addReportsToDashboard.component.scss'],
 })
-
-export class AddReportsToDashboardComponent  {
+export class AddReportsToDashboardComponent {
   choosedashboard = 'new';
   dashboard = {
     title: '',
-    description: ''
-  }
+    description: '',
+  };
   report = {
     title: '',
     width: 'mediumchart',
-    description: ''
-  }
-  response = {}
+    description: '',
+  };
+  response = {};
   constructor(
     public dialogRef: MatDialogRef<AddReportsToDashboardComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {}
 
   onNoClick(): void {
     this.dialogRef.close(null);
   }
 
-  getDashboardData(){
+  getDashboardData() {
     this.response = {
       type: this.choosedashboard,
       title: this.dashboard.title,
       description: this.dashboard.description,
       chartTitle: this.report.title,
       reportdescription: this.report.description,
-      chartSize: this.report.width
-    }
+      chartSize: this.report.width,
+    };
     this.dialogRef.close(this.response);
   }
-
-
 }

@@ -1,9 +1,19 @@
-import { Component, OnInit, ChangeDetectorRef } from "@angular/core";
-import { MatSnackBar, MatDialog, MatDialogRef } from "@angular/material";
-import { ActivatedRoute, Router } from "@angular/router";
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { MatSnackBar, MatDialog, MatDialogRef } from '@angular/material';
+import { ActivatedRoute, Router } from '@angular/router';
 import * as _ from 'lodash';
-import { AddExReportsToDashboardComponent } from "src/app/reporting-module/modalDialogs/addExReportsToDashboard/addExReportsToDashboard.component";
-import { ConfirmDialogComponent, Globals, BaseListComponent, PickerDialogService, ErrorService, ISearchField, operatorType, listProcessingType, ServiceUtils } from 'src/app/common/shared';
+import { AddExReportsToDashboardComponent } from 'src/app/reporting-module/modalDialogs/addExReportsToDashboard/addExReportsToDashboard.component';
+import {
+  ConfirmDialogComponent,
+  Globals,
+  BaseListComponent,
+  PickerDialogService,
+  ErrorService,
+  ISearchField,
+  operatorType,
+  listProcessingType,
+  ServiceUtils,
+} from 'src/app/common/shared';
 import { ReportService } from 'src/app/reporting-module/pages/myreports/report.service';
 
 import { IReport } from 'src/app/reporting-module/pages/myreports/ireport';
@@ -17,15 +27,14 @@ import { TranslateService } from '@ngx-translate/core';
 export enum AccessOptions {
   Login = 'Login',
   noLogin = 'noLogin',
-  Password = 'Password'
+  Password = 'Password',
 }
 
 @Component({
-  selector: "app-myreports",
-  templateUrl: "./myreports.component.html",
-  styleUrls: ["./myreports.component.scss"]
+  selector: 'app-myreports',
+  templateUrl: './myreports.component.html',
+  styleUrls: ['./myreports.component.scss'],
 })
-
 export class MyreportsComponent extends BaseListComponent<IReport> implements OnInit {
   isMediumDeviceOrLess: boolean;
   showList: boolean = true;
@@ -34,21 +43,19 @@ export class MyreportsComponent extends BaseListComponent<IReport> implements On
   confirmDialogRef: MatDialogRef<ConfirmDialogComponent>;
   isLoading: boolean = true;
   loading = false;
-  
+
   private destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
 
   manageScreenResizing() {
-    this.global.isMediumDeviceOrLess$.subscribe(value => {
+    this.global.isMediumDeviceOrLess$.subscribe((value) => {
       this.isMediumDeviceOrLess = value;
       if (this.isMediumDeviceOrLess) {
         this.listFlexWidth = 100;
         this.detailsFlexWidth = 100;
-      }
-      else {
+      } else {
         this.listFlexWidth = 30;
         this.detailsFlexWidth = 70;
       }
-
     });
   }
 
@@ -56,10 +63,10 @@ export class MyreportsComponent extends BaseListComponent<IReport> implements On
   selectedReport: IReport;
   selectedReportRunningVersion: IReport;
   selectedReportPublishedVersion: IReport;
-  selectedVersion: string = "running";
+  selectedVersion: string = 'running';
   reportUnderAction: IReport;
   allDashboardsList = [];
-  searchText: string = "";
+  searchText: string = '';
 
   constructor(
     public _snackBar: MatSnackBar,
@@ -73,25 +80,24 @@ export class MyreportsComponent extends BaseListComponent<IReport> implements On
     public pickerDialogService: PickerDialogService,
     public errorService: ErrorService,
     public usersExtendedService: UsersExtendedService,
-    public translate: TranslateService,
-
+    public translate: TranslateService
   ) {
-    super(router, route, dialog, global, changeDetectorRefs, pickerDialogService, reportService, errorService)
+    super(router, route, dialog, global, changeDetectorRefs, pickerDialogService, reportService, errorService);
   }
 
   ngOnInit() {
-    this.reportService.getAllReports().subscribe(items => {
+    this.reportService.getAllReports().subscribe((items) => {
       this.initializePageInfo();
       this.isLoading = false;
       this.items = items;
       this.updatePageInfo(items);
     });
 
-    this.dashboardService.getAll([], 0, 1000).subscribe(res => {
-      this.allDashboardsList = res.map(v => {
+    this.dashboardService.getAll([], 0, 1000).subscribe((res) => {
+      this.allDashboardsList = res.map((v) => {
         return {
           id: v.id,
-          title: v.title
+          title: v.title,
         };
       });
     });
@@ -119,8 +125,8 @@ export class MyreportsComponent extends BaseListComponent<IReport> implements On
       this.currentPage * this.pageSize,
       this.pageSize,
       sortVal
-    )
-    this.processListObservable(this.itemsObservable, listProcessingType.Replace)
+    );
+    this.processListObservable(this.itemsObservable, listProcessingType.Replace);
   }
 
   /**
@@ -131,31 +137,34 @@ export class MyreportsComponent extends BaseListComponent<IReport> implements On
     if (!this.isLoadingResults && this.hasMoreRecords && this.lastProcessedOffset < this.items.length) {
       this.isLoadingResults = true;
       let sortVal = this.getSortValue();
-      this.itemsObservable = this.reportService.getAllReports(this.searchText, this.currentPage * this.pageSize, this.pageSize, sortVal);
+      this.itemsObservable = this.reportService.getAllReports(
+        this.searchText,
+        this.currentPage * this.pageSize,
+        this.pageSize,
+        sortVal
+      );
       this.processListObservable(this.itemsObservable, listProcessingType.Append);
     }
   }
 
-  switchVersion(event){
+  switchVersion(event) {
     let version = event.value;
-    if(version == 'published') {
-      if(this.selectedReportPublishedVersion){
+    if (version == 'published') {
+      if (this.selectedReportPublishedVersion) {
         this.selectedReport = this.selectedReportPublishedVersion;
-      }
-      else {
-        this.reportService.getPublishedVersion(this.selectedReport.id).subscribe(report => {
+      } else {
+        this.reportService.getPublishedVersion(this.selectedReport.id).subscribe((report) => {
           this.selectedReportPublishedVersion = report;
           this.selectedReport = report;
-        })
+        });
       }
-    }
-    else {
+    } else {
       this.selectedReport = this.selectedReportRunningVersion;
     }
   }
 
   viewReport(report: IReport) {
-    this.selectedVersion = "running";
+    this.selectedVersion = 'running';
     this.selectedReportRunningVersion = _.clone(report);
     this.selectedReport = _.clone(report);
     this.selectedReportPublishedVersion = null;
@@ -165,23 +174,23 @@ export class MyreportsComponent extends BaseListComponent<IReport> implements On
   editReport(id) {
     this.router.navigate([`reporting/reports/${id}`]);
   }
-  
+
   refreshReport(id) {
     this.confirmDialogRef = this.dialog.open(ConfirmDialogComponent, {
       disableClose: true,
       data: {
-        confirmationType: "confirm"
-      }
+        confirmationType: 'confirm',
+      },
     });
-    this.confirmDialogRef.afterClosed().subscribe(action => {
+    this.confirmDialogRef.afterClosed().subscribe((action) => {
       if (action) {
         this.loading = true;
-        this.reportService.refresh(id).subscribe(res => {
-			this.selectedReport = res;
-			this.selectedReportRunningVersion = res;
-			this.selectedVersion = 'running';
-	        this.loading = false;
-			this.showMessage(this.translate.instant('REPORTING.MESSAGES.REPORT.REFRESHED'));
+        this.reportService.refresh(id).subscribe((res) => {
+          this.selectedReport = res;
+          this.selectedReportRunningVersion = res;
+          this.selectedVersion = 'running';
+          this.loading = false;
+          this.showMessage(this.translate.instant('REPORTING.MESSAGES.REPORT.REFRESHED'));
         });
       }
     });
@@ -191,14 +200,14 @@ export class MyreportsComponent extends BaseListComponent<IReport> implements On
     this.confirmDialogRef = this.dialog.open(ConfirmDialogComponent, {
       disableClose: true,
       data: {
-        confirmationType: "confirm"
-      }
+        confirmationType: 'confirm',
+      },
     });
-    this.confirmDialogRef.afterClosed().subscribe(action => {
+    this.confirmDialogRef.afterClosed().subscribe((action) => {
       if (action) {
         this.loading = true;
-        this.reportService.publish(id).subscribe(res => {
-          this.items[this.items.findIndex(x => x.id == id)] = res;
+        this.reportService.publish(id).subscribe((res) => {
+          this.items[this.items.findIndex((x) => x.id == id)] = res;
           this.selectedReport = res;
           this.selectedReportRunningVersion = res;
           this.selectedReportPublishedVersion = null;
@@ -212,14 +221,14 @@ export class MyreportsComponent extends BaseListComponent<IReport> implements On
     this.confirmDialogRef = this.dialog.open(ConfirmDialogComponent, {
       disableClose: true,
       data: {
-        confirmationType: "delete"
-      }
+        confirmationType: 'delete',
+      },
     });
-    this.confirmDialogRef.afterClosed().subscribe(action => {
+    this.confirmDialogRef.afterClosed().subscribe((action) => {
       if (action) {
         this.loading = true;
-        this.reportService.delete(report.id).subscribe(res => {
-          this.items = this.items.filter(v => v.id !== report.id);
+        this.reportService.delete(report.id).subscribe((res) => {
+          this.items = this.items.filter((v) => v.id !== report.id);
           this.loading = false;
           this.showMessage(this.translate.instant('REPORTING.MESSAGES.REPORT.DELETED'));
         });
@@ -228,8 +237,8 @@ export class MyreportsComponent extends BaseListComponent<IReport> implements On
   }
 
   showMessage(msg: string): void {
-    this._snackBar.open(msg, "close", {
-      duration: 2000
+    this._snackBar.open(msg, 'close', {
+      duration: 2000,
     });
   }
 
@@ -239,48 +248,44 @@ export class MyreportsComponent extends BaseListComponent<IReport> implements On
 
   addReporttoDashboardDialog(report: IReport): void {
     const dialogRef = this.dialog.open(AddExReportsToDashboardComponent, {
-      panelClass: "fc-modal-dialog",
-      data: this.allDashboardsList
+      panelClass: 'fc-modal-dialog',
+      data: this.allDashboardsList,
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.loading = true;
-        if (result.type === "new") {
+        if (result.type === 'new') {
           const dashboardDetails = {
-					  usersId : report.usersId,
+            usersId: report.usersId,
             title: result.title,
             description: result.description,
             reportDetails: [
               {
                 id: report.id,
-                reportWidth: result.chartSize
-              }
-            ]
+                reportWidth: result.chartSize,
+              },
+            ],
           };
-          this.dashboardService
-            .addExistingReportToNewDashboard(dashboardDetails)
-            .subscribe(res => {
-        	  this.loading = false;
-              this.showMessage(`${this.translate.instant('REPORTING.MESSAGES.REPORT.ADDED-TO')} ${res.title}`);
-            });
+          this.dashboardService.addExistingReportToNewDashboard(dashboardDetails).subscribe((res) => {
+            this.loading = false;
+            this.showMessage(`${this.translate.instant('REPORTING.MESSAGES.REPORT.ADDED-TO')} ${res.title}`);
+          });
         } else {
           const dashboardDetails = {
             id: result.id,
-					  usersId : report.usersId,
+            usersId: report.usersId,
             reportDetails: [
               {
                 id: report.id,
-                reportWidth: result.chartSize
-              }
-            ]
+                reportWidth: result.chartSize,
+              },
+            ],
           };
-          this.dashboardService
-            .addExistingReportToExistingDashboard(dashboardDetails)
-            .subscribe(res => {
-              this.loading = false;
-              this.showMessage(`${this.translate.instant('REPORTING.MESSAGES.REPORT.ADDED-TO')} ${res.title}`);
-            });
+          this.dashboardService.addExistingReportToExistingDashboard(dashboardDetails).subscribe((res) => {
+            this.loading = false;
+            this.showMessage(`${this.translate.instant('REPORTING.MESSAGES.REPORT.ADDED-TO')} ${res.title}`);
+          });
         }
       }
     });

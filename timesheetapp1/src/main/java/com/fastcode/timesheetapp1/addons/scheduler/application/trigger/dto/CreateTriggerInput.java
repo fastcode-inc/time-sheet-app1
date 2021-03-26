@@ -6,7 +6,8 @@ import java.util.Map;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter @Setter
+@Getter
+@Setter
 public class CreateTriggerInput {
 
     private int repeatCount;
@@ -24,8 +25,5 @@ public class CreateTriggerInput {
     private Map<String, String> triggerMapData = new HashMap<String, String>();
     private Boolean repeatIndefinite = false;
 
-    public CreateTriggerInput() {
-    }
-
+    public CreateTriggerInput() {}
 }
-

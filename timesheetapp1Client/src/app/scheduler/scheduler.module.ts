@@ -18,11 +18,7 @@ import { RouterModule } from '@angular/router';
 import { SharedModule } from 'src/app/common/shared';
 
 @NgModule({
-  imports: [
-    RouterModule.forChild(SchedulerRoutes),
-    HttpClientModule,
-    SharedModule
-  ],
+  imports: [RouterModule.forChild(SchedulerRoutes), HttpClientModule, SharedModule],
   declarations: [
     JobsComponent,
     ExecutionHistoryComponent,
@@ -33,7 +29,7 @@ import { SharedModule } from 'src/app/common/shared';
     TriggerJobComponent,
     TriggerNewComponent,
     SelectJobComponent,
-    TriggerDetailsComponent
+    TriggerDetailsComponent,
   ],
   exports: [
     JobsComponent,
@@ -45,8 +41,7 @@ import { SharedModule } from 'src/app/common/shared';
     TriggerJobComponent,
     TriggerNewComponent,
     SelectJobComponent,
-    TriggerDetailsComponent
-  ]
+    TriggerDetailsComponent,
+  ],
 })
-
 export class SchedulerModule {}

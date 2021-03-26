@@ -18,9 +18,4 @@ export let ListComponent = GeneralListExtendedComponent;
 export let NewComponent = GeneralNewExtendedComponent;
 export let FieldsComp = FieldsExtendedComponent;
 
-export let GeneralComponents: any[] = [
-    DetailsComponent,
-    NewComponent,
-    ListComponent,
-    FieldsComp,
-]
+export let GeneralComponents: any[] = [DetailsComponent, NewComponent, ListComponent, FieldsComp];

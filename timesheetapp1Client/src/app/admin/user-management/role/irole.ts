@@ -1,6 +1,5 @@
-export interface IRole {  
-	displayName: string;
-	id: number;
-	name: string;
-
+export interface IRole {
+  displayName: string;
+  id: number;
+  name: string;
 }

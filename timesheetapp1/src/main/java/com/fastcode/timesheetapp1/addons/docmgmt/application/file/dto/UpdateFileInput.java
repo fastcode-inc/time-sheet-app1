@@ -1,22 +1,19 @@
 package com.fastcode.timesheetapp1.addons.docmgmt.application.file.dto;
 
+import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.validation.constraints.NotNull;
-
-@Getter @Setter
+@Getter
+@Setter
 public class UpdateFileInput {
 
-  	@NotNull(message = "id Should not be null")
-  	private Long id;
-  	
-  	private String label;
-  	
-  	private String name;
+    @NotNull(message = "id Should not be null")
+    private Long id;
 
-  	private String summary;
+    private String label;
 
+    private String name;
 
+    private String summary;
 }
-

@@ -2,13 +2,33 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import {
-  MatButtonModule, MatToolbarModule, MatSidenavModule,
-  MatIconModule, MatListModule, MatRadioModule, MatTableModule,
-  MatCardModule, MatTabsModule, MatInputModule, MatDialogModule,
-  MatSelectModule, MatCheckboxModule, MatAutocompleteModule,
-  MatDatepickerModule, MatNativeDateModule, MatMenuModule, MatSortModule,
-  MatPaginatorModule, MatProgressSpinnerModule, MatSnackBarModule,
-  MatExpansionModule, MatChipsModule, MatButtonToggleModule, MatTooltipModule
+  MatButtonModule,
+  MatToolbarModule,
+  MatSidenavModule,
+  MatIconModule,
+  MatListModule,
+  MatRadioModule,
+  MatTableModule,
+  MatCardModule,
+  MatTabsModule,
+  MatInputModule,
+  MatDialogModule,
+  MatSelectModule,
+  MatCheckboxModule,
+  MatAutocompleteModule,
+  MatDatepickerModule,
+  MatNativeDateModule,
+  MatMenuModule,
+  MatSortModule,
+  MatPaginatorModule,
+  MatProgressSpinnerModule,
+  MatSnackBarModule,
+  MatExpansionModule,
+  MatChipsModule,
+  MatButtonToggleModule,
+  MatTooltipModule,
+  MatDividerModule,
+  MatRippleModule,
 } from '@angular/material';
 
 @NgModule({
@@ -39,7 +59,9 @@ import {
     MatSnackBarModule,
     MatChipsModule,
     MatButtonToggleModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatDividerModule,
+    MatRippleModule,
   ],
   exports: [
     CommonModule,
@@ -67,7 +89,9 @@ import {
     MatSnackBarModule,
     MatChipsModule,
     MatButtonToggleModule,
-    MatTooltipModule
-  ]
+    MatTooltipModule,
+    MatDividerModule,
+    MatRippleModule,
+  ],
 })
-export class MaterialModule { }
+export class MaterialModule {}

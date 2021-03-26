@@ -1,24 +1,25 @@
 package com.fastcode.timesheetapp1.addons.scheduler.domain.jobhistory;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-import lombok.Getter;
-import lombok.Setter;
+import javax.persistence.*;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "job_history")
-@Getter @Setter
+@Getter
+@Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
 public class JobHistoryEntity implements Serializable {
 
-	private static final long serialVersionUID = 1L;
-	
+    private static final long serialVersionUID = 1L;
+
     @Id
-    @EqualsAndHashCode.Include()
+    @EqualsAndHashCode.Include
     @Column(name = "Id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -26,7 +27,7 @@ public class JobHistoryEntity implements Serializable {
     @Basic
     @Column(name = "job_name", nullable = false, length = 256)
     private String jobName;
-    
+
     @Basic
     @Column(name = "job_description", nullable = true, length = 1024)
     private String jobDescription;
@@ -34,7 +35,7 @@ public class JobHistoryEntity implements Serializable {
     @Basic
     @Column(name = "job_group", nullable = false, length = 256)
     private String jobGroup;
-    
+
     @Basic
     @Column(name = "job_class", nullable = false, length = 256)
     private String jobClass;
@@ -46,7 +47,7 @@ public class JobHistoryEntity implements Serializable {
     @Basic
     @Column(name = "finished_time", nullable = true)
     private Date finishedTime;
-    
+
     @Basic
     @Column(name = "trigger_name", nullable = false, length = 256)
     private String triggerName;
@@ -58,27 +59,25 @@ public class JobHistoryEntity implements Serializable {
     @Basic
     @Column(name = "duration", nullable = false, length = 256)
     private String duration;
-    
+
     @Basic
     @Column(name = "job_status", nullable = false, length = 256)
     private String jobStatus;
-    
+
     @Basic
     @Column(name = "job_map_data", nullable = true, length = 256)
     private String jobMapData;
 
     @Override
     public boolean equals(Object o) {
-    	 if (this == o) return true;
-    	 if (!(o instanceof JobHistoryEntity)) return false;
-         JobHistoryEntity that = (JobHistoryEntity) o;
-         return id != null && id.equals(that.id);
-       
+        if (this == o) return true;
+        if (!(o instanceof JobHistoryEntity)) return false;
+        JobHistoryEntity that = (JobHistoryEntity) o;
+        return id != null && id.equals(that.id);
     }
 
     @Override
     public int hashCode() {
-    	 return 31;
-    	 
+        return 31;
     }
 }

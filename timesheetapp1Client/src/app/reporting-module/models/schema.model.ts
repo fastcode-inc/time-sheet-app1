@@ -1,4 +1,3 @@
-
 export interface SchemaData {
   tablesSchema: Object;
 }
@@ -8,6 +7,6 @@ export interface SchemaFileData {
   content: string;
   absPath: string;
 }
-export interface SchemaFiles{
+export interface SchemaFiles {
   files: Array<SchemaFileData>;
 }

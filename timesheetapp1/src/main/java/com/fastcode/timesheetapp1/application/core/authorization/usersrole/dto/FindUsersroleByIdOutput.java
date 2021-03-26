@@ -4,14 +4,13 @@ import java.time.*;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter @Setter
+@Getter
+@Setter
 public class FindUsersroleByIdOutput {
 
-  	private Long roleId;
-  	private Long usersId;
-  	private String roleDescriptiveField;
-  	private String usersDescriptiveField;
-	private Long versiono;
- 
+    private Long roleId;
+    private Long usersId;
+    private String roleDescriptiveField;
+    private String usersDescriptiveField;
+    private Long versiono;
 }
-

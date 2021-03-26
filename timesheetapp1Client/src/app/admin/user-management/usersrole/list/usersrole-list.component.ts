@@ -14,118 +14,112 @@ import { UsersService } from 'src/app/admin/user-management/users/users.service'
 @Component({
   selector: 'app-usersrole-list',
   templateUrl: './usersrole-list.component.html',
-  styleUrls: ['./usersrole-list.component.scss']
+  styleUrls: ['./usersrole-list.component.scss'],
 })
 export class UsersroleListComponent extends BaseListComponent<IUsersrole> implements OnInit {
-
-	title = 'Usersrole';
-	constructor(
-		public router: Router,
-		public route: ActivatedRoute,
-		public global: Globals,
-		public dialog: MatDialog,
-		public changeDetectorRefs: ChangeDetectorRef,
-		public pickerDialogService: PickerDialogService,
-		public usersroleService: UsersroleService,
-		public errorService: ErrorService,
-		public roleService: RoleService,
-		public usersService: UsersService,
-		public globalPermissionService: GlobalPermissionService,
-	) { 
-		super(router, route, dialog, global, changeDetectorRefs, pickerDialogService, usersroleService, errorService)
+  title = 'Usersrole';
+  constructor(
+    public router: Router,
+    public route: ActivatedRoute,
+    public global: Globals,
+    public dialog: MatDialog,
+    public changeDetectorRefs: ChangeDetectorRef,
+    public pickerDialogService: PickerDialogService,
+    public usersroleService: UsersroleService,
+    public errorService: ErrorService,
+    public roleService: RoleService,
+    public usersService: UsersService,
+    public globalPermissionService: GlobalPermissionService
+  ) {
+    super(router, route, dialog, global, changeDetectorRefs, pickerDialogService, usersroleService, errorService);
   }
 
-	ngOnInit() {
-		this.entityName = 'Usersrole';
-		this.setAssociation();
-		this.setColumns();
-		this.primaryKeys = ['roleId', 'usersId', ]
-		super.ngOnInit();
-	}
-  
-  
-	setAssociation(){
-  	
-		this.associations = [
-			{
-				column: [
-            {
-					  	key: 'roleId',
-					  	value: undefined,
-					  	referencedkey: 'id'
-					  },
-					  
-				],
-				isParent: false,
-				descriptiveField: 'roleDescriptiveField',
-				referencedDescriptiveField: 'displayName',
-				service: this.roleService,
-				associatedObj: undefined,
-				table: 'role',
-				type: 'ManyToOne',
-				url: 'Usersroles',
-				listColumn: 'role',
-				label: 'role',
+  ngOnInit() {
+    this.entityName = 'Usersrole';
+    this.setAssociation();
+    this.setColumns();
+    this.primaryKeys = ['roleId', 'usersId'];
+    super.ngOnInit();
+  }
 
-			},
-			{
-				column: [
-            {
-					  	key: 'usersId',
-					  	value: undefined,
-					  	referencedkey: 'id'
-					  },
-					  
-				],
-				isParent: false,
-				descriptiveField: 'usersDescriptiveField',
-				referencedDescriptiveField: 'lastname',
-				service: this.usersService,
-				associatedObj: undefined,
-				table: 'users',
-				type: 'ManyToOne',
-				url: 'usersroles',
-				listColumn: 'users',
-				label: 'users',
+  setAssociation() {
+    this.associations = [
+      {
+        column: [
+          {
+            key: 'roleId',
+            value: undefined,
+            referencedkey: 'id',
+          },
+        ],
+        isParent: false,
+        descriptiveField: 'roleDescriptiveField',
+        referencedDescriptiveField: 'displayName',
+        service: this.roleService,
+        associatedObj: undefined,
+        table: 'role',
+        type: 'ManyToOne',
+        url: 'Usersroles',
+        listColumn: 'role',
+        label: 'role',
+      },
+      {
+        column: [
+          {
+            key: 'usersId',
+            value: undefined,
+            referencedkey: 'id',
+          },
+        ],
+        isParent: false,
+        descriptiveField: 'usersDescriptiveField',
+        referencedDescriptiveField: 'lastname',
+        service: this.usersService,
+        associatedObj: undefined,
+        table: 'users',
+        type: 'ManyToOne',
+        url: 'usersroles',
+        listColumn: 'users',
+        label: 'users',
+      },
+    ];
+  }
 
-			},
-		];
-	}
-  
-  	setColumns(){
-  		this.columns = [
-			{
-	  			column: 'roleDescriptiveField',
-				searchColumn: 'role',
-				label: 'role',
-				sort: true,
-				filter: true,
-				type: listColumnType.String
-	  		},
-			{
-	  			column: 'usersDescriptiveField',
-				searchColumn: 'users',
-				label: 'users',
-				sort: true,
-				filter: true,
-				type: listColumnType.String
-	  		},
-		  	{
-				column: 'actions',
-				label: 'Actions',
-				sort: false,
-				filter: false,
-				type: listColumnType.String
-			}
-		];
-		this.selectedColumns = this.columns;
-		this.displayedColumns = this.columns.map((obj) => { return obj.column });
-  	}
+  setColumns() {
+    this.columns = [
+      {
+        column: 'roleDescriptiveField',
+        searchColumn: 'role',
+        label: 'role',
+        sort: true,
+        filter: true,
+        type: listColumnType.String,
+      },
+      {
+        column: 'usersDescriptiveField',
+        searchColumn: 'users',
+        label: 'users',
+        sort: true,
+        filter: true,
+        type: listColumnType.String,
+      },
+      {
+        column: 'actions',
+        label: 'Actions',
+        sort: false,
+        filter: false,
+        type: listColumnType.String,
+      },
+    ];
+    this.selectedColumns = this.columns;
+    this.displayedColumns = this.columns.map((obj) => {
+      return obj.column;
+    });
+  }
   addNew(comp) {
-	if(!comp){
-		comp = UsersroleNewComponent;
-	}
-	super.addNew(comp);
+    if (!comp) {
+      comp = UsersroleNewComponent;
+    }
+    super.addNew(comp);
   }
-  
 }

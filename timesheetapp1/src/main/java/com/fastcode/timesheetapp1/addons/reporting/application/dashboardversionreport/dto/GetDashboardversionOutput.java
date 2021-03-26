@@ -3,14 +3,13 @@ package com.fastcode.timesheetapp1.addons.reporting.application.dashboardversion
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter @Setter
+@Getter
+@Setter
 public class GetDashboardversionOutput {
 
-	private String description;
-	private Long id;
-	private String title;
-	private Long reportdashboardDashboardId;
-	private Long reportdashboardReportId;
-
+    private String description;
+    private Long id;
+    private String title;
+    private Long reportdashboardDashboardId;
+    private Long reportdashboardReportId;
 }
-

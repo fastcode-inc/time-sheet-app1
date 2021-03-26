@@ -19,16 +19,14 @@ import { ListComponent } from 'src/app/common/general-components';
 
 export enum listProcessingType {
   Replace = 'Replace',
-  Append = 'Append'
+  Append = 'Append',
 }
 
 @Component({
   selector: 'app-base-list',
-  template: ''
+  template: '',
 })
-
 export class BaseListComponent<E> implements OnInit {
-
   defaultDateFormat: string = 'mediumDate';
   defaultDateTimeFormat: string = 'medium';
   associations: IAssociationEntry[];
@@ -59,16 +57,21 @@ export class BaseListComponent<E> implements OnInit {
   largerDeviceDialogWidthSize: string = '85%';
   largerDeviceDialogHeightSize: string = '85%';
 
-  /** 
+  /**
    * Guard against browser refresh, close, etc.
-   * Checks if user has some unsaved changes 
+   * Checks if user has some unsaved changes
    * before leaving the page.
    */
   @HostListener('window:beforeunload')
   canDeactivate(): Observable<boolean> | boolean {
     // returning true will navigate without confirmation
     // returning false will show a confirm dialog before navigating away
-    if (this.dialogRef && this.dialogRef.componentInstance && this.dialogRef.componentInstance.itemForm.dirty && !this.dialogRef.componentInstance.submitted) {
+    if (
+      this.dialogRef &&
+      this.dialogRef.componentInstance &&
+      this.dialogRef.componentInstance.itemForm.dirty &&
+      !this.dialogRef.componentInstance.submitted
+    ) {
       return false;
     }
     return true;
@@ -83,10 +86,7 @@ export class BaseListComponent<E> implements OnInit {
     public pickerDialogService: PickerDialogService,
     public dataService: GenericApiService<E>,
     public errorService: ErrorService
-
-  ) {
-
-  }
+  ) {}
 
   /**
    * Sets CRUD permissions for entity for
@@ -103,10 +103,13 @@ export class BaseListComponent<E> implements OnInit {
       } else {
         this.IsDeletePermission = this.globalPermissionService.hasPermissionOnEntity(entityName, 'DELETE');
         this.IsUpdatePermission = this.globalPermissionService.hasPermissionOnEntity(entityName, 'UPDATE');
-        this.IsReadPermission = (this.IsDeletePermission || this.IsUpdatePermission) ? true : this.globalPermissionService.hasPermissionOnEntity(entityName, 'READ');
+        this.IsReadPermission =
+          this.IsDeletePermission || this.IsUpdatePermission
+            ? true
+            : this.globalPermissionService.hasPermissionOnEntity(entityName, 'READ');
       }
     }
-  }
+  };
 
   ngOnInit() {
     this.setPermissions();
@@ -116,52 +119,53 @@ export class BaseListComponent<E> implements OnInit {
   }
 
   /**
-   * Adds a listener to sort value change event to 
+   * Adds a listener to sort value change event to
    * load item data.
-   * also gets triggered on component initialization. 
+   * also gets triggered on component initialization.
    */
   setSort() {
-    this.generalListComp.sort.sortChange.pipe(
-      startWith({}),
-      switchMap(() => {
-        this.isLoadingResults = true;
-        this.initializePageInfo();
-        let sortVal = this.getSortValue();
+    this.generalListComp.sort.sortChange
+      .pipe(
+        startWith({}),
+        switchMap(() => {
+          this.isLoadingResults = true;
+          this.initializePageInfo();
+          let sortVal = this.getSortValue();
 
-        if (this.selectedAssociation !== undefined) {
-          return this.selectedAssociation.service.getAssociations(
-            this.selectedAssociation.url,
-            ServiceUtils.encodeId(this.selectedAssociation.column),
-            this.searchValue,
-            this.currentPage * this.pageSize,
-            this.pageSize,
-            sortVal
-          ); // fetch filtered data based on selected association
-        }
-        else {
-          return this.dataService.getAll(this.searchValue, this.currentPage * this.pageSize, this.pageSize, sortVal);
-        }
-      }),
-      map(data => {
-        this.isLoadingResults = false;
-        return data;
-      }),
-      catchError(() => {
-        this.isLoadingResults = false;
-        this.errorService.showError('An error occured while fetching results');
-        return observableOf([]);
-      })
-    ).subscribe((data: any[]) => {
-      this.items = data;
-      this.updatePageInfo(data);
-    });
+          if (this.selectedAssociation !== undefined) {
+            return this.selectedAssociation.service.getAssociations(
+              this.selectedAssociation.url,
+              ServiceUtils.encodeId(this.selectedAssociation.column),
+              this.searchValue,
+              this.currentPage * this.pageSize,
+              this.pageSize,
+              sortVal
+            ); // fetch filtered data based on selected association
+          } else {
+            return this.dataService.getAll(this.searchValue, this.currentPage * this.pageSize, this.pageSize, sortVal);
+          }
+        }),
+        map((data) => {
+          this.isLoadingResults = false;
+          return data;
+        }),
+        catchError(() => {
+          this.isLoadingResults = false;
+          this.errorService.showError('An error occured while fetching results');
+          return observableOf([]);
+        })
+      )
+      .subscribe((data: any[]) => {
+        this.items = data;
+        this.updatePageInfo(data);
+      });
   }
 
   /**
    * Manages screen resizing for responsiveness.
    */
   manageScreenResizing() {
-    this.global.isMediumDeviceOrLess$.subscribe(value => {
+    this.global.isMediumDeviceOrLess$.subscribe((value) => {
       this.isMediumDeviceOrLess = value;
       if (value) {
         this.selectedColumns = this.columns;
@@ -169,16 +173,20 @@ export class BaseListComponent<E> implements OnInit {
         if (this.columns.length > 3) {
           this.selectedColumns.push(this.columns[this.columns.length - 1]);
         }
-        this.displayedColumns = this.selectedColumns.map((obj, index) => { return obj.column });
-      }
-      else {
+        this.displayedColumns = this.selectedColumns.map((obj, index) => {
+          return obj.column;
+        });
+      } else {
         this.selectedColumns = this.columns;
-        this.displayedColumns = this.selectedColumns.map((obj) => { return obj.column });
+        this.displayedColumns = this.selectedColumns.map((obj) => {
+          return obj.column;
+        });
       }
       if (this.dialogRef)
-        this.dialogRef.updateSize(value ? this.mediumDeviceOrLessDialogSize : this.largerDeviceDialogWidthSize,
-          value ? this.mediumDeviceOrLessDialogSize : this.largerDeviceDialogHeightSize);
-
+        this.dialogRef.updateSize(
+          value ? this.mediumDeviceOrLessDialogSize : this.largerDeviceDialogWidthSize,
+          value ? this.mediumDeviceOrLessDialogSize : this.largerDeviceDialogHeightSize
+        );
     });
   }
 
@@ -197,9 +205,8 @@ export class BaseListComponent<E> implements OnInit {
         this.currentPage * this.pageSize,
         this.pageSize,
         sortVal
-      );// fetch filtered data based on selected association
-    }
-    else {
+      ); // fetch filtered data based on selected association
+    } else {
       this.itemsObservable = this.dataService.getAll(
         this.searchValue,
         this.currentPage * this.pageSize,
@@ -208,7 +215,6 @@ export class BaseListComponent<E> implements OnInit {
       );
     }
     this.processListObservable(this.itemsObservable, listProcessingType.Replace);
-
   }
 
   /**
@@ -223,9 +229,9 @@ export class BaseListComponent<E> implements OnInit {
       width: this.isMediumDeviceOrLess ? this.mediumDeviceOrLessDialogSize : this.largerDeviceDialogWidthSize,
       maxWidth: 'none',
       panelClass: 'fc-modal-dialog',
-      data: data
+      data: data,
     });
-    this.dialogRef.afterClosed().subscribe(result => {
+    this.dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.errorService.showError(`Item created!`);
         this.getItems();
@@ -242,17 +248,17 @@ export class BaseListComponent<E> implements OnInit {
     if (!this.selectedAssociation) {
       this.openDialog(component, null);
       return;
-    }
-    else {
-      let data: any = {}
-      this.selectedAssociation.column.forEach(col => {
+    } else {
+      let data: any = {};
+      this.selectedAssociation.column.forEach((col) => {
         data[col.key] = col.value;
       });
-      data[this.selectedAssociation.descriptiveField] = this.selectedAssociation.associatedObj[this.selectedAssociation.referencedDescriptiveField];
+      data[this.selectedAssociation.descriptiveField] = this.selectedAssociation.associatedObj[
+        this.selectedAssociation.referencedDescriptiveField
+      ];
       this.openDialog(component, data);
       return;
     }
-
   }
 
   /**
@@ -272,22 +278,21 @@ export class BaseListComponent<E> implements OnInit {
         this.currentPage * this.pageSize,
         this.pageSize,
         sortVal
-      )
-    }
-    else {
+      );
+    } else {
       this.itemsObservable = this.dataService.getAll(
         this.searchValue,
         this.currentPage * this.pageSize,
         this.pageSize,
         sortVal
-      )
+      );
     }
-    this.processListObservable(this.itemsObservable, listProcessingType.Replace)
+    this.processListObservable(this.itemsObservable, listProcessingType.Replace);
   }
 
   /**
    * Checks if parameter for some association is passed,
-   * fetches object details against that association and 
+   * fetches object details against that association and
    * sets selectedAssociation.
    * @param params Map of query params to check if some association column is there.
    */
@@ -305,14 +310,22 @@ export class BaseListComponent<E> implements OnInit {
       });
       if (matchedColumns == totalCount) {
         this.selectedAssociation = association;
-        this.selectedColumns.splice(this.selectedColumns.findIndex(item => item.column == association.descriptiveField), 1);
-        this.displayedColumns.splice(this.displayedColumns.findIndex(item => item == association.descriptiveField), 1);
-        this.selectedAssociation.service.getById(ServiceUtils.encodeId(this.selectedAssociation.column)).subscribe(parentObj => {
-          this.selectedAssociation.associatedObj = parentObj;
-        })
+        this.selectedColumns.splice(
+          this.selectedColumns.findIndex((item) => item.column == association.descriptiveField),
+          1
+        );
+        this.displayedColumns.splice(
+          this.displayedColumns.findIndex((item) => item == association.descriptiveField),
+          1
+        );
+        this.selectedAssociation.service
+          .getById(ServiceUtils.encodeId(this.selectedAssociation.column))
+          .subscribe((parentObj) => {
+            this.selectedAssociation.associatedObj = parentObj;
+          });
         return;
       }
-    })
+    });
   }
 
   /**
@@ -321,9 +334,9 @@ export class BaseListComponent<E> implements OnInit {
    */
   deleteItem(item: E) {
     let id = ServiceUtils.encodeIdByObject(item, this.primaryKeys);
-    this.dataService.delete(id).subscribe(result => {
+    this.dataService.delete(id).subscribe((result) => {
       let r = result;
-      const index: number = this.items.findIndex(x => ServiceUtils.encodeIdByObject(x, this.primaryKeys) == id);
+      const index: number = this.items.findIndex((x) => ServiceUtils.encodeIdByObject(x, this.primaryKeys) == id);
       if (index !== -1) {
         this.items.splice(index, 1);
         this.items = [...this.items];
@@ -341,11 +354,11 @@ export class BaseListComponent<E> implements OnInit {
     this.deleteDialogRef = this.dialog.open(ConfirmDialogComponent, {
       disableClose: true,
       data: {
-        confirmationType: 'delete'
-      }
+        confirmationType: 'delete',
+      },
     });
 
-    this.deleteDialogRef.afterClosed().subscribe(action => {
+    this.deleteDialogRef.afterClosed().subscribe((action) => {
       if (action) {
         this.deleteItem(item);
       }
@@ -354,17 +367,19 @@ export class BaseListComponent<E> implements OnInit {
 
   /**
    * Redirects to details page of given item.
-   * @param item 
+   * @param item
    */
   openDetails(item: E) {
-    this.router.navigate([`/${this.dataService.suffix.toLowerCase()}/${ServiceUtils.encodeIdByObject(item, this.primaryKeys)}`]);
+    this.router.navigate([
+      `/${this.dataService.suffix.toLowerCase()}/${ServiceUtils.encodeIdByObject(item, this.primaryKeys)}`,
+    ]);
   }
 
   /**
    * Redirects back to the details page of selected association.
    */
   back() {
-    let parentPrimaryKeys = this.selectedAssociation.column.map(c => c.referencedkey);
+    let parentPrimaryKeys = this.selectedAssociation.column.map((c) => c.referencedkey);
     let paramString = ServiceUtils.encodeIdByObject(this.selectedAssociation.associatedObj, parentPrimaryKeys);
     this.router.navigate([`/${this.selectedAssociation.table.toLowerCase()}/${paramString}`]);
   }
@@ -395,8 +410,7 @@ export class BaseListComponent<E> implements OnInit {
     if (data.length > 0) {
       this.currentPage++;
       this.lastProcessedOffset += data.length;
-    }
-    else {
+    } else {
       this.hasMoreRecords = false;
     }
   }
@@ -410,17 +424,28 @@ export class BaseListComponent<E> implements OnInit {
       this.isLoadingResults = true;
       let sortVal = this.getSortValue();
       if (this.selectedAssociation !== undefined) {
-        this.itemsObservable = this.selectedAssociation.service.getAssociations(this.selectedAssociation.url, ServiceUtils.encodeId(this.selectedAssociation.column), this.searchValue, this.currentPage * this.pageSize, this.pageSize, sortVal);
-      }
-      else {
-        this.itemsObservable = this.dataService.getAll(this.searchValue, this.currentPage * this.pageSize, this.pageSize, sortVal);
+        this.itemsObservable = this.selectedAssociation.service.getAssociations(
+          this.selectedAssociation.url,
+          ServiceUtils.encodeId(this.selectedAssociation.column),
+          this.searchValue,
+          this.currentPage * this.pageSize,
+          this.pageSize,
+          sortVal
+        );
+      } else {
+        this.itemsObservable = this.dataService.getAll(
+          this.searchValue,
+          this.currentPage * this.pageSize,
+          this.pageSize,
+          sortVal
+        );
       }
       this.processListObservable(this.itemsObservable, listProcessingType.Append);
     }
   }
 
   /**
-   * Gets field based on which table is 
+   * Gets field based on which table is
    * currently sorted and sort direction
    * from matSort.
    * @returns String containing sort information.
@@ -441,22 +466,21 @@ export class BaseListComponent<E> implements OnInit {
    */
   processListObservable(listObservable: Observable<E[]>, type: listProcessingType) {
     listObservable.subscribe(
-      items => {
+      (items) => {
         this.isLoadingResults = false;
         if (type == listProcessingType.Replace) {
           this.items = items;
-        }
-        else {
+        } else {
           this.items = this.items.concat(items);
         }
         this.updatePageInfo(items);
       },
-      error => {
+      (error) => {
         this.isLoadingResults = false;
-        this.errorMessage = <any>error
+        this.errorMessage = <any>error;
         this.errorService.showError('An error occured while fetching results');
       }
-    )
+    );
   }
 
   /**
@@ -475,7 +499,6 @@ export class BaseListComponent<E> implements OnInit {
    * @returns Boolean flag.
    */
   isColumnSortable(columnDef: string) {
-    return this.columns.find(x => x.column == columnDef).sort;
+    return this.columns.find((x) => x.column == columnDef).sort;
   }
-
 }

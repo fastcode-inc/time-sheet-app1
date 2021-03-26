@@ -14,9 +14,7 @@ export interface IFCDialogConfig {
 export class PickerDialogService {
   isSmallDeviceOrLess: boolean;
   dialogRef: MatDialogRef<any>;
-  constructor(private global: Globals, public dialog: MatDialog) {
-    
-  }
+  constructor(private global: Globals, public dialog: MatDialog) {}
   open(config: IFCDialogConfig): MatDialogRef<any> {
     this.dialogRef = this.dialog.open(PickerComponent, {
       data: config,

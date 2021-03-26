@@ -8,10 +8,9 @@ import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-chart',
   templateUrl: './chart.component.html',
-  styleUrls: ['./chart.component.scss']
+  styleUrls: ['./chart.component.scss'],
 })
 export class ChartComponent implements OnInit, OnChanges {
-
   @Input() chartType;
   @Input() ctype = 'line';
   @Input() query;
@@ -19,7 +18,7 @@ export class ChartComponent implements OnInit, OnChanges {
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
-  constructor(private cubejs: CubejsClient, private translate: TranslateService) { }
+  constructor(private cubejs: CubejsClient, private translate: TranslateService) {}
 
   error = '';
   ready = false;
@@ -32,22 +31,22 @@ export class ChartComponent implements OnInit, OnChanges {
   public chartLabels;
   public chartOptions: any = {
     responsive: true,
-    maintainAspectRatio: false
+    maintainAspectRatio: false,
   };
   public chartColors;
   public lineChartColors = [
     {
       borderColor: '#7DB3FF',
       backgroundColor: 'rgba(106, 110, 229, .16)',
-      fill: false
-    }
+      fill: false,
+    },
   ];
 
   public areaChartColors = [
     {
       borderColor: '#7DB3FF',
-      backgroundColor: 'rgba(106, 110, 229, .16)'
-    }
+      backgroundColor: 'rgba(106, 110, 229, .16)',
+    },
   ];
 
   public pieChartColors = [
@@ -71,29 +70,27 @@ export class ChartComponent implements OnInit, OnChanges {
         '#2E1187',
         '#7D99FF',
         '#49027B',
-      ]
-    }
+      ],
+    },
   ];
   public barChartColors = [
     {
       borderColor: '#7DB3FF',
-      backgroundColor: '#7DB3FF'
+      backgroundColor: '#7DB3FF',
     },
     {
       borderColor: '#49457B',
-      backgroundColor: '#49457B'
+      backgroundColor: '#49457B',
     },
     {
       borderColor: '#FF7C78',
-      backgroundColor: '#FF7C78'
-    }
+      backgroundColor: '#FF7C78',
+    },
   ];
 
   private dateFormatter = ({ x }) => moment(x).format('MMM DD');
-  private numberFormatter = x => x.toLocaleString();
-  private capitalize = ([first, ...rest]) =>
-    first.toUpperCase() + rest.join('').toLowerCase()
-
+  private numberFormatter = (x) => x.toLocaleString();
+  private capitalize = ([first, ...rest]) => first.toUpperCase() + rest.join('').toLowerCase();
 
   setLineChartData() {
     this.chartOptions = {
@@ -103,27 +100,29 @@ export class ChartComponent implements OnInit, OnChanges {
           {
             ticks: {
               maxTicksLimit: 4,
-              maxRotation: 0
+              maxRotation: 0,
             },
             gridLines: {
               color: 'rgba(0, 0, 0, 0)',
-            }
-          }
+            },
+          },
         ],
-        yAxes: [{
-          stacked: true,
-          gridLines: {
-            color: 'rgba(212, 212, 212, 0.2)',
-          }
-        }]
+        yAxes: [
+          {
+            stacked: true,
+            gridLines: {
+              color: 'rgba(212, 212, 212, 0.2)',
+            },
+          },
+        ],
       },
       legend: {
         display: false,
         labels: {
-          fontColor: '#673ab7'
-        }
+          fontColor: '#673ab7',
+        },
       },
-      fill: false
+      fill: false,
     };
     if (this.ctype === 'line') {
       this.chartColors = this.lineChartColors;
@@ -137,8 +136,8 @@ export class ChartComponent implements OnInit, OnChanges {
       responsive: true,
       maintainAspectRatio: false,
       legend: {
-        display: false
-      }
+        display: false,
+      },
     };
     this.chartColors = this.pieChartColors;
   }
@@ -154,28 +153,28 @@ export class ChartComponent implements OnInit, OnChanges {
             stacked: stacked,
             ticks: {
               maxTicksLimit: 4,
-              maxRotation: 0
-            }
-          }
+              maxRotation: 0,
+            },
+          },
         ],
-        yAxes: [{ stacked: stacked }]
+        yAxes: [{ stacked: stacked }],
       },
       legend: {
-        position: 'bottom'
-      }
+        position: 'bottom',
+      },
     };
   }
 
   commonSetup(resultSet) {
-    this.chartLabels = resultSet.categories().map(c => c.category);
+    this.chartLabels = resultSet.categories().map((c) => c.category);
     this.chartData = resultSet.series().map((s, index) => ({
       label: s.title,
-      data: s.series.map(r => r.value)
+      data: s.series.map((r) => r.value),
     }));
   }
 
   convertCols(r) {
-    return r.map(v => v.key);
+    return r.map((v) => v.key);
   }
 
   tableSetup(resultSet) {
@@ -205,9 +204,7 @@ export class ChartComponent implements OnInit, OnChanges {
         }
         this.setStackedBarChartData(stacked);
       } else if (this.chartType === 'singleValue') {
-        this.chartData = this.numberFormatter(
-          resultSet.chartPivot()[0][resultSet.seriesNames()[0].key]
-        );
+        this.chartData = this.numberFormatter(resultSet.chartPivot()[0][resultSet.seriesNames()[0].key]);
       }
       this.ready = true;
       this.table = false;

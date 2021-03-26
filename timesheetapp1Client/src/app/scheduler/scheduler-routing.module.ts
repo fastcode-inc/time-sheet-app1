@@ -12,14 +12,14 @@ import { ExecutingJobsComponent } from './executing-jobs/executing-jobs.componen
 import { ExecutionHistoryComponent } from './execution-history/execution-history.component';
 
 export const SchedulerRoutes: Routes = [
-    { path: 'jobs', component: JobsComponent },
-    { path: 'jobs/:jobName/:jobGroup', component: JobDetailsComponent },
-    { path: 'job', component: JobNewComponent },
+  { path: 'jobs', component: JobsComponent },
+  { path: 'jobs/:jobName/:jobGroup', component: JobDetailsComponent },
+  { path: 'job', component: JobNewComponent },
 
-    { path: 'triggers', component: TriggersComponent },
-    { path: 'triggers/:triggerName/:triggerGroup', component: TriggerDetailsComponent },
-    { path: 'trigg', component: TriggerNewComponent },
-    { path: 'selectJob', component: SelectJobComponent },
-    { path: 'executionHistory', component: ExecutionHistoryComponent },
-    { path: 'executingJobs', component: ExecutingJobsComponent }
+  { path: 'triggers', component: TriggersComponent },
+  { path: 'triggers/:triggerName/:triggerGroup', component: TriggerDetailsComponent },
+  { path: 'trigg', component: TriggerNewComponent },
+  { path: 'selectJob', component: SelectJobComponent },
+  { path: 'executionHistory', component: ExecutionHistoryComponent },
+  { path: 'executingJobs', component: ExecutingJobsComponent },
 ];

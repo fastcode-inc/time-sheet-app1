@@ -1,37 +1,36 @@
 package com.fastcode.timesheetapp1.addons.docmgmt.domain.file;
 
+import com.fastcode.timesheetapp1.addons.email.domain.emailattachments.EmailAttachments;
 import com.fastcode.timesheetapp1.domain.core.abstractentity.AbstractEntity;
+import java.util.Date;
+import javax.persistence.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.content.commons.annotations.ContentId;
 import org.springframework.content.commons.annotations.ContentLength;
 import org.springframework.content.commons.annotations.MimeType;
 import org.springframework.versions.*;
 
-import com.fastcode.timesheetapp1.addons.email.domain.emailattachments.EmailAttachments;
-import javax.persistence.*;
-import java.util.Date;
-
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 @Entity
 @Table(name = "file")
-@Getter @Setter
+@Getter
+@Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
 public class FileEntity extends AbstractEntity {
 
-@Basic
-@Column(name = "summary", nullable = true)
-private String summary;
+    @Basic
+    @Column(name = "summary", nullable = true)
+    private String summary;
 
     @Basic
     @Column(name = "created", nullable = true)
     private Date created;
 
     @Basic
-    @Column(name = "content_id", nullable = true,length =255)
+    @Column(name = "content_id", nullable = true, length = 255)
     @ContentId
     private String contentId;
 
@@ -41,7 +40,7 @@ private String summary;
     private String label;
 
     @Basic
-    @Column(name = "mime_type", nullable = true,length =255)
+    @Column(name = "mime_type", nullable = true, length = 255)
     @MimeType
     private String mimeType;
 
@@ -70,7 +69,7 @@ private String summary;
     private String name;
 
     @Basic
-    @Column(name = "lock_owner", nullable = true,length =255)
+    @Column(name = "lock_owner", nullable = true, length = 255)
     @LockOwner
     private String lockOwner;
 
@@ -82,20 +81,19 @@ private String summary;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    @EqualsAndHashCode.Include()
+    @EqualsAndHashCode.Include
     private Long id;
 
-    @OneToOne(mappedBy = "file", cascade=CascadeType.ALL)
+    @OneToOne(mappedBy = "file", cascade = CascadeType.ALL)
     private EmailAttachments emailAttachments;
-    
+
     public void setEmailAttachments(EmailAttachments emailAttachments) {
         if (emailAttachments == null) {
             if (this.emailAttachments != null) {
                 this.emailAttachments.setFile(null);
             }
-        }
-        else {
-        	emailAttachments.setFile(this);
+        } else {
+            emailAttachments.setFile(this);
         }
         this.emailAttachments = emailAttachments;
     }
@@ -105,6 +103,4 @@ private String summary;
         this.summary = f.summary;
         this.name = f.name;
     }
-
 }
-

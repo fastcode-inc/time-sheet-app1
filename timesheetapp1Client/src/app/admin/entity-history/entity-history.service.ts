@@ -4,19 +4,21 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { IEntityHistory } from './entityHistory';
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-
 export class EntityHistoryService {
   url = environment.apiUrl;
 
-  constructor(private httpclient: HttpClient) {
+  constructor(private httpclient: HttpClient) {}
+
+  public getAll(search: string, offset: number, limit: number): Observable<IEntityHistory[]> {
+    return this.httpclient
+      .get<IEntityHistory[]>(
+        this.url + '/audit/changes' + '?search=' + search + '&offset=' + offset + '&limit=' + limit
+      )
+      .pipe();
   }
 
-  public getAll(search:string, offset:number, limit: number): Observable<IEntityHistory[]> {
-    return this.httpclient.get<IEntityHistory[]>(this.url + '/audit/changes' + "?search=" + search + "&offset=" + offset + "&limit=" + limit).pipe();
-  }
-  
   public getByEntity(entity: string, search: string, offset: number, limit: number): Observable<IEntityHistory[]> {
     return this.httpclient
       .get<IEntityHistory[]>(
@@ -24,5 +26,4 @@ export class EntityHistoryService {
       )
       .pipe();
   }
-
 }

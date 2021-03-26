@@ -14,118 +14,112 @@ import { UsersService } from 'src/app/admin/user-management/users/users.service'
 @Component({
   selector: 'app-usertask-list',
   templateUrl: './usertask-list.component.html',
-  styleUrls: ['./usertask-list.component.scss']
+  styleUrls: ['./usertask-list.component.scss'],
 })
 export class UsertaskListComponent extends BaseListComponent<IUsertask> implements OnInit {
-
-	title = 'Usertask';
-	constructor(
-		public router: Router,
-		public route: ActivatedRoute,
-		public global: Globals,
-		public dialog: MatDialog,
-		public changeDetectorRefs: ChangeDetectorRef,
-		public pickerDialogService: PickerDialogService,
-		public usertaskService: UsertaskService,
-		public errorService: ErrorService,
-		public taskService: TaskService,
-		public usersService: UsersService,
-		public globalPermissionService: GlobalPermissionService,
-	) { 
-		super(router, route, dialog, global, changeDetectorRefs, pickerDialogService, usertaskService, errorService)
+  title = 'Usertask';
+  constructor(
+    public router: Router,
+    public route: ActivatedRoute,
+    public global: Globals,
+    public dialog: MatDialog,
+    public changeDetectorRefs: ChangeDetectorRef,
+    public pickerDialogService: PickerDialogService,
+    public usertaskService: UsertaskService,
+    public errorService: ErrorService,
+    public taskService: TaskService,
+    public usersService: UsersService,
+    public globalPermissionService: GlobalPermissionService
+  ) {
+    super(router, route, dialog, global, changeDetectorRefs, pickerDialogService, usertaskService, errorService);
   }
 
-	ngOnInit() {
-		this.entityName = 'Usertask';
-		this.setAssociation();
-		this.setColumns();
-		this.primaryKeys = ['taskid', 'userid', ]
-		super.ngOnInit();
-	}
-  
-  
-	setAssociation(){
-  	
-		this.associations = [
-			{
-				column: [
-            {
-					  	key: 'taskid',
-					  	value: undefined,
-					  	referencedkey: 'id'
-					  },
-					  
-				],
-				isParent: false,
-				descriptiveField: 'taskDescriptiveField',
-				referencedDescriptiveField: 'name',
-				service: this.taskService,
-				associatedObj: undefined,
-				table: 'task',
-				type: 'ManyToOne',
-				url: 'usertasks',
-				listColumn: 'task',
-				label: 'task',
+  ngOnInit() {
+    this.entityName = 'Usertask';
+    this.setAssociation();
+    this.setColumns();
+    this.primaryKeys = ['taskid', 'userid'];
+    super.ngOnInit();
+  }
 
-			},
-			{
-				column: [
-            {
-					  	key: 'userid',
-					  	value: undefined,
-					  	referencedkey: 'id'
-					  },
-					  
-				],
-				isParent: false,
-				descriptiveField: 'usersDescriptiveField',
-				referencedDescriptiveField: 'lastname',
-				service: this.usersService,
-				associatedObj: undefined,
-				table: 'users',
-				type: 'ManyToOne',
-				url: 'usertasks',
-				listColumn: 'users',
-				label: 'users',
+  setAssociation() {
+    this.associations = [
+      {
+        column: [
+          {
+            key: 'taskid',
+            value: undefined,
+            referencedkey: 'id',
+          },
+        ],
+        isParent: false,
+        descriptiveField: 'taskDescriptiveField',
+        referencedDescriptiveField: 'name',
+        service: this.taskService,
+        associatedObj: undefined,
+        table: 'task',
+        type: 'ManyToOne',
+        url: 'usertasks',
+        listColumn: 'task',
+        label: 'task',
+      },
+      {
+        column: [
+          {
+            key: 'userid',
+            value: undefined,
+            referencedkey: 'id',
+          },
+        ],
+        isParent: false,
+        descriptiveField: 'usersDescriptiveField',
+        referencedDescriptiveField: 'lastname',
+        service: this.usersService,
+        associatedObj: undefined,
+        table: 'users',
+        type: 'ManyToOne',
+        url: 'usertasks',
+        listColumn: 'users',
+        label: 'users',
+      },
+    ];
+  }
 
-			},
-		];
-	}
-  
-  	setColumns(){
-  		this.columns = [
-			{
-	  			column: 'taskDescriptiveField',
-				searchColumn: 'task',
-				label: 'task',
-				sort: true,
-				filter: true,
-				type: listColumnType.String
-	  		},
-			{
-	  			column: 'usersDescriptiveField',
-				searchColumn: 'users',
-				label: 'users',
-				sort: true,
-				filter: true,
-				type: listColumnType.String
-	  		},
-		  	{
-				column: 'actions',
-				label: 'Actions',
-				sort: false,
-				filter: false,
-				type: listColumnType.String
-			}
-		];
-		this.selectedColumns = this.columns;
-		this.displayedColumns = this.columns.map((obj) => { return obj.column });
-  	}
+  setColumns() {
+    this.columns = [
+      {
+        column: 'taskDescriptiveField',
+        searchColumn: 'task',
+        label: 'task',
+        sort: true,
+        filter: true,
+        type: listColumnType.String,
+      },
+      {
+        column: 'usersDescriptiveField',
+        searchColumn: 'users',
+        label: 'users',
+        sort: true,
+        filter: true,
+        type: listColumnType.String,
+      },
+      {
+        column: 'actions',
+        label: 'Actions',
+        sort: false,
+        filter: false,
+        type: listColumnType.String,
+      },
+    ];
+    this.selectedColumns = this.columns;
+    this.displayedColumns = this.columns.map((obj) => {
+      return obj.column;
+    });
+  }
   addNew(comp) {
-	if(!comp){
-		comp = UsertaskNewComponent;
-	}
-	super.addNew(comp);
+    if (!comp) {
+      comp = UsertaskNewComponent;
+    }
+    super.addNew(comp);
   }
-  
 }

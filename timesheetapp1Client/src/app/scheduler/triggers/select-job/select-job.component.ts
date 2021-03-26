@@ -5,7 +5,7 @@ import { JobService, IJob } from 'src/app/scheduler/jobs';
 @Component({
   selector: 'app-select-job',
   templateUrl: './select-job.component.html',
-  styleUrls: ['./select-job.component.scss']
+  styleUrls: ['./select-job.component.scss'],
 })
 export class SelectJobComponent implements OnInit {
   loading = true;
@@ -13,11 +13,11 @@ export class SelectJobComponent implements OnInit {
   jobs: IJob[] = [];
   errorMessage = '';
 
-  constructor(private jobService: JobService, public dialogRef: MatDialogRef<SelectJobComponent>) { }
+  constructor(private jobService: JobService, public dialogRef: MatDialogRef<SelectJobComponent>) {}
 
   ngOnInit() {
     this.jobService.getAll(null, null, null, null).subscribe(
-      perms => {
+      (perms) => {
         this.loading = false;
         this.jobs = perms;
       },

@@ -1,10 +1,9 @@
 import { Directive, ElementRef, Output, EventEmitter } from '@angular/core';
 
 @Directive({
-  selector: '[appVirtualScroll]'
+  selector: '[appVirtualScroll]',
 })
 export class VirtualScrollDirective {
-
   private element: HTMLInputElement;
 
   @Output() onScroll: EventEmitter<any> = new EventEmitter();
@@ -20,9 +19,9 @@ export class VirtualScrollDirective {
    * Handles scroll event of the element
    * and emits onScroll event.
    */
-  scrollEventHandler = (e) =>{
-    const tableViewHeight = e.target.offsetHeight // viewport
-    const tableScrollHeight = e.target.scrollHeight // length of all table
+  scrollEventHandler = (e) => {
+    const tableViewHeight = e.target.offsetHeight; // viewport
+    const tableScrollHeight = e.target.scrollHeight; // length of all table
     const scrollLocation = e.target.scrollTop; // how far user scrolled
 
     // If the user has scrolled within 40px of the bottom, add more data
@@ -30,7 +29,7 @@ export class VirtualScrollDirective {
     const limit = tableScrollHeight - tableViewHeight - buffer;
 
     if (scrollLocation > limit) {
-      this.onScroll.emit()
+      this.onScroll.emit();
     }
-  }
+  };
 }

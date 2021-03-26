@@ -1,14 +1,13 @@
 package com.fastcode.timesheetapp1.addons.reporting.application.dashboard.dto;
 
-
-
 import java.time.*;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter @Setter
+@Getter
+@Setter
 public class GetUsersOutput {
-	
+
     private String emailaddress;
     private String firstname;
     private Long id;
@@ -18,6 +17,5 @@ public class GetUsersOutput {
     private String triggerGroup;
     private String triggerName;
     private String username;
-   	private Long dashboardId;
-
+    private Long dashboardId;
 }

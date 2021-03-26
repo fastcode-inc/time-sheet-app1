@@ -7,7 +7,7 @@ export interface Measures {
   type: number;
   drillMembers?: Array<string>;
 }
-export interface Dimensions{
+export interface Dimensions {
   name: any;
   title: any;
   type: any;

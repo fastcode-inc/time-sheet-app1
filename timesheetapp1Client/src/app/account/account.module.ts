@@ -8,23 +8,8 @@ import { SharedModule } from 'src/app/common/shared';
 import { routingModule } from './account.routing';
 
 @NgModule({
-  declarations: [
-		ForgotPasswordComponent,
-		UpdatePasswordComponent,
-		ResetPasswordComponent,
-		UpdateProfileComponent,
-
-  ],
-  exports: [
-		ForgotPasswordComponent,
-		UpdatePasswordComponent,
-		ResetPasswordComponent,
-		UpdateProfileComponent,
-
-  ],
-  imports: [
-    routingModule,
-    SharedModule
-  ]
+  declarations: [ForgotPasswordComponent, UpdatePasswordComponent, ResetPasswordComponent, UpdateProfileComponent],
+  exports: [ForgotPasswordComponent, UpdatePasswordComponent, ResetPasswordComponent, UpdateProfileComponent],
+  imports: [routingModule, SharedModule],
 })
-export class AccountModule { }
+export class AccountModule {}

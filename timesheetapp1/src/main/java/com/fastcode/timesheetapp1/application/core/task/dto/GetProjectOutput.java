@@ -4,15 +4,14 @@ import java.time.*;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter @Setter
+@Getter
+@Setter
 public class GetProjectOutput {
 
- 	private String description;
- 	private LocalDate enddate;
- 	private Long id;
- 	private String name;
- 	private LocalDate startdate;
-  	private Long taskId;
-
+    private String description;
+    private LocalDate enddate;
+    private Long id;
+    private String name;
+    private LocalDate startdate;
+    private Long taskId;
 }
-

@@ -1,4 +1,3 @@
-
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
@@ -8,7 +7,7 @@ import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { SwaggerComponent } from './swagger/swagger.component';
-import { ErrorPageComponent  } from './error-page/error-page.component';
+import { ErrorPageComponent } from './error-page/error-page.component';
 /** core components and filters for authorization and authentication **/
 
 import { AuthenticationService } from './core/authentication.service';
@@ -34,19 +33,14 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
 }
 
 const cubejsOptions = {
-	token:
-		"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.K9PiJkjegbhnw4Ca5pPlkTmZihoOm42w8bja9Qs2qJg",
-	options: {
-		apiUrl: "http://localhost:4200/cubejs-api/v1"
-	}
+  token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.K9PiJkjegbhnw4Ca5pPlkTmZihoOm42w8bja9Qs2qJg',
+  options: {
+    apiUrl: 'http://localhost:4200/cubejs-api/v1',
+  },
 };
 
 @NgModule({
-	declarations: [
-		ErrorPageComponent,
-		SwaggerComponent,
-		AppComponent,
-  ],
+  declarations: [ErrorPageComponent, SwaggerComponent, AppComponent],
   imports: [
     BrowserModule,
     routingModule,
@@ -60,23 +54,20 @@ const cubejsOptions = {
       loader: {
         provide: TranslateLoader,
         useFactory: HttpLoaderFactory,
-        deps: [HttpClient]
-      }
+        deps: [HttpClient],
+      },
     }),
-		CubejsClientModule.forRoot(cubejsOptions),
-
+    CubejsClientModule.forRoot(cubejsOptions),
   ],
   providers: [
-		{ provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-		AuthenticationService,
-		GlobalPermissionService,
-		{ provide: HTTP_INTERCEPTORS, useClass: JwtErrorInterceptor, multi: true },
-		AuthGuard,
-		ThemeService,
-	],
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    AuthenticationService,
+    GlobalPermissionService,
+    { provide: HTTP_INTERCEPTORS, useClass: JwtErrorInterceptor, multi: true },
+    AuthGuard,
+    ThemeService,
+  ],
   bootstrap: [AppComponent],
-  entryComponents: [
-  ]
+  entryComponents: [],
 })
-export class AppModule {
-}
+export class AppModule {}

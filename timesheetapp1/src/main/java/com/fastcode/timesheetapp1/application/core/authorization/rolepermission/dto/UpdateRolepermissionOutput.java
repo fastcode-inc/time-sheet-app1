@@ -4,12 +4,12 @@ import java.time.*;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter @Setter
+@Getter
+@Setter
 public class UpdateRolepermissionOutput {
 
-  	private Long permissionId;
-  	private Long roleId;
-	private String permissionDescriptiveField;
-	private String roleDescriptiveField;
-
+    private Long permissionId;
+    private Long roleId;
+    private String permissionDescriptiveField;
+    private String roleDescriptiveField;
 }

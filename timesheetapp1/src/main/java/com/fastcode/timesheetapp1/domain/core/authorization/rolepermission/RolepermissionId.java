@@ -1,24 +1,24 @@
 package com.fastcode.timesheetapp1.domain.core.authorization.rolepermission;
 
+import java.io.Serializable;
 import java.time.*;
 import javax.persistence.*;
-import java.io.Serializable;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Getter @Setter
+@Getter
+@Setter
 @NoArgsConstructor
 public class RolepermissionId implements Serializable {
 
-	private static final long serialVersionUID = 1L;
-	
+    private static final long serialVersionUID = 1L;
+
     private Long permissionId;
     private Long roleId;
-    
-    public RolepermissionId(Long permissionId,Long roleId) {
- 	this.permissionId = permissionId;
- 	this.roleId = roleId;
+
+    public RolepermissionId(Long permissionId, Long roleId) {
+        this.permissionId = permissionId;
+        this.roleId = roleId;
     }
-    
 }

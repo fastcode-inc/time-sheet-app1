@@ -4,12 +4,11 @@ import java.time.*;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter @Setter
+@Getter
+@Setter
 public class FindTimeofftypeByIdOutput {
 
-  	private Long id;
-  	private String typename;
-	private Long versiono;
- 
+    private Long id;
+    private String typename;
+    private Long versiono;
 }
-

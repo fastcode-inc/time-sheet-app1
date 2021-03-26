@@ -7,7 +7,12 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { Location } from '@angular/common';
 
 import { TestingModule, EntryComponents } from 'src/testing/utils';
-import { IRolepermission, RolepermissionService, RolepermissionDetailsComponent, RolepermissionListComponent } from '../';
+import {
+  IRolepermission,
+  RolepermissionService,
+  RolepermissionDetailsComponent,
+  RolepermissionListComponent,
+} from '../';
 import { DateUtils } from 'src/app/common/shared';
 import { ListComponent, DetailsComponent, FieldsComp } from 'src/app/common/general-components';
 
@@ -15,35 +20,30 @@ describe('RolepermissionDetailsComponent', () => {
   let component: RolepermissionDetailsComponent;
   let fixture: ComponentFixture<RolepermissionDetailsComponent>;
   let el: HTMLElement;
-  
+
   let d = new Date();
   let t = DateUtils.formatDateStringToAMPM(d);
-  
+
   let relationData: any = {
     permissionDescriptiveField: 'displayName1',
     roleDescriptiveField: 'displayName1',
-  }
-  let data:IRolepermission = {
+  };
+  let data: IRolepermission = {
     permissionId: 1,
     roleId: 1,
-    ... relationData
+    ...relationData,
   };
-  
+
   describe('Unit Tests', () => {
     beforeEach(async(() => {
       TestBed.configureTestingModule({
-        declarations: [
-          RolepermissionDetailsComponent,
-          DetailsComponent
-        ],
+        declarations: [RolepermissionDetailsComponent, DetailsComponent],
         imports: [TestingModule],
-        providers: [
-          RolepermissionService,
-        ],
-        schemas: [NO_ERRORS_SCHEMA]  
+        providers: [RolepermissionService],
+        schemas: [NO_ERRORS_SCHEMA],
       }).compileComponents();
     }));
-  
+
     beforeEach(() => {
       fixture = TestBed.createComponent(RolepermissionDetailsComponent);
       component = fixture.componentInstance;
@@ -88,34 +88,29 @@ describe('RolepermissionDetailsComponent', () => {
       spyOn(component, 'onBack').and.returnValue();
       el = fixture.debugElement.query(By.css('button[name=back]')).nativeElement;
       el.click();
-      
+
       expect(component.onBack).toHaveBeenCalled();
     });
-
   });
-  
+
   describe('Integration Tests', () => {
     beforeEach(async(() => {
-
       TestBed.configureTestingModule({
         declarations: [
           RolepermissionDetailsComponent,
           RolepermissionListComponent,
           DetailsComponent,
           ListComponent,
-          FieldsComp
+          FieldsComp,
         ].concat(EntryComponents),
         imports: [
           TestingModule,
           RouterTestingModule.withRoutes([
             { path: 'rolepermission', component: RolepermissionDetailsComponent },
-            { path: 'rolepermission/:id', component: RolepermissionListComponent }
-          ])
+            { path: 'rolepermission/:id', component: RolepermissionListComponent },
+          ]),
         ],
-        providers: [
-          RolepermissionService
-        ]
-
+        providers: [RolepermissionService],
       }).compileComponents();
     }));
 
@@ -157,7 +152,6 @@ describe('RolepermissionDetailsComponent', () => {
       el.click();
 
       expect(component.errorService.showError).toHaveBeenCalled();
-
     });
 
     it('should go back to list component when back button is clicked', async () => {
@@ -173,9 +167,6 @@ describe('RolepermissionDetailsComponent', () => {
       let responsePromise = navigationSpy.calls.mostRecent().returnValue;
       await responsePromise;
       expect(location.path()).toBe('/rolepermission');
-
     });
-
   });
-  
 });

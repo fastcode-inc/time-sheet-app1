@@ -12,8 +12,16 @@ export interface IExecutionHistory {
   jobMapData?: Object;
 }
 export class ExecutionHistory implements IExecutionHistory {
-  constructor(public id?: number, public jobName?: string, public jobGroup?: string,
-    public description?: string, public jobClass?: string, public duration?: string,
-    public firedTime?: Date, public finishedTime?: Date, public jobMapData?: Object,
-    public jobStatus?: string) { }
+  constructor(
+    public id?: number,
+    public jobName?: string,
+    public jobGroup?: string,
+    public description?: string,
+    public jobClass?: string,
+    public duration?: string,
+    public firedTime?: Date,
+    public finishedTime?: Date,
+    public jobMapData?: Object,
+    public jobStatus?: string
+  ) {}
 }

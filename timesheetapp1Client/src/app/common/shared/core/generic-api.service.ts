@@ -8,8 +8,8 @@ import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class GenericApiService<T> {
-  protected url = "";
-  protected apiUrl = "";
+  protected url = '';
+  protected apiUrl = '';
   constructor(protected http: HttpClient, public suffix: string) {
     this.apiUrl = environment.apiUrl;
     this.url = environment.apiUrl + '/' + suffix;
@@ -19,68 +19,94 @@ export class GenericApiService<T> {
   /**
    * Fetches list of items based on
    * given criteria.
-   * @param searchFields Search criteria. 
+   * @param searchFields Search criteria.
    * @param offset No. of items to be skipped.
    * @param limit Maximum no. of records.
    * @param sort Field and direction information for sorting.
    * @returns Observable of items list.
    */
   public getAll(searchFields?: ISearchField[], offset?: number, limit?: number, sort?: string): Observable<T[]> {
-
     let params = ServiceUtils.buildQueryData(searchFields, offset, limit, sort);
 
-    return this.http.get<T[]>(this.url, { params }).pipe(map((response: any) => {
-      return response;
-    }), catchError(this.handleError));
-
+    return this.http
+      .get<T[]>(this.url, { params })
+      .pipe(
+        map((response: any) => {
+          return response;
+        }),
+        catchError(this.handleError)
+      );
   }
-  
+
   /**
    * Fetches specific child's object of given parent.
    * @param childSuffix Url suffix for the child to be fetched.
    * @param id Item id of parent.
    */
-  getChild(childSuffix : string, id:any) : Observable<any>{
-    return this.http
-      .get<T>(this.url + '/' + id + "/" + childSuffix).pipe(catchError(this.handleError));
+  getChild(childSuffix: string, id: any): Observable<any> {
+    return this.http.get<T>(this.url + '/' + id + '/' + childSuffix).pipe(catchError(this.handleError));
   }
-  
+
   /**
    * Fetches list of child entity.
    * @param childSuffix Url suffix of the child entity.
    * @param Id
-   * @param searchFields Search criteria. 
+   * @param searchFields Search criteria.
    * @param offset No. of items to be skipped.
    * @param limit Maximum no. of records.
    * @param sort Field and direction information for sorting.
    * @returns Observable of items list.
    */
-  getAssociations(childSuffix: string, id: any, searchFields?: ISearchField[], offset?: number, limit?: number, sort?: string): Observable<any[]> {
+  getAssociations(
+    childSuffix: string,
+    id: any,
+    searchFields?: ISearchField[],
+    offset?: number,
+    limit?: number,
+    sort?: string
+  ): Observable<any[]> {
     let url = this.apiUrl + '/' + this.suffix + '/' + id + '/' + childSuffix;
     let params = ServiceUtils.buildQueryData(searchFields, offset, limit, sort);
-    return this.http.get<T[]>(url, { params }).pipe(map((response: any) => {
-      return response;
-    }), catchError(this.handleError));
+    return this.http
+      .get<T[]>(url, { params })
+      .pipe(
+        map((response: any) => {
+          return response;
+        }),
+        catchError(this.handleError)
+      );
   }
-  
+
   /**
    * Fetches list of child entity
    *  which does not belong to this item.
    * @param childSuffix Url suffix of the child entity.
    * @param id
-   * @param searchFields Search criteria. 
+   * @param searchFields Search criteria.
    * @param offset No. of items to be skipped.
    * @param limit Maximum no. of records.
    * @param sort Field and direction information for sorting.
    * @returns Observable of items list.
    */
-  getAvailableAssociations(childSuffix: string, id: any, searchFields?: ISearchField[], offset?: number, limit?: number, sort?: string): Observable<any[]> {
-
-    let url = this.apiUrl + '/' + this.suffix + '/' + id + '/available' + childSuffix[0].toUpperCase() + childSuffix.slice(1);
+  getAvailableAssociations(
+    childSuffix: string,
+    id: any,
+    searchFields?: ISearchField[],
+    offset?: number,
+    limit?: number,
+    sort?: string
+  ): Observable<any[]> {
+    let url =
+      this.apiUrl + '/' + this.suffix + '/' + id + '/available' + childSuffix[0].toUpperCase() + childSuffix.slice(1);
     let params = ServiceUtils.buildQueryData(searchFields, offset, limit, sort);
-    return this.http.get<T[]>(url, { params }).pipe(map((response: any) => {
-      return response;
-    }), catchError(this.handleError));
+    return this.http
+      .get<T[]>(url, { params })
+      .pipe(
+        map((response: any) => {
+          return response;
+        }),
+        catchError(this.handleError)
+      );
   }
 
   /**
@@ -89,8 +115,7 @@ export class GenericApiService<T> {
    * @returns Observable of entity object.
    */
   public getById(id: any): Observable<T> {
-    return this.http
-      .get<T>(this.url + '/' + id).pipe(catchError(this.handleError));
+    return this.http.get<T>(this.url + '/' + id).pipe(catchError(this.handleError));
   }
 
   /**
@@ -99,8 +124,7 @@ export class GenericApiService<T> {
    * @returns Observable of created entity object.
    */
   public create(item: T): Observable<T> {
-    return this.http
-      .post<T>(this.url, item).pipe(catchError(this.handleError));
+    return this.http.post<T>(this.url, item).pipe(catchError(this.handleError));
   }
 
   /**
@@ -110,8 +134,7 @@ export class GenericApiService<T> {
    * @returns Observable of updated entity object.
    */
   public update(item: T, id: any): Observable<T> {
-    return this.http
-      .put<T>(this.url + '/' + id, item).pipe(catchError(this.handleError));
+    return this.http.put<T>(this.url + '/' + id, item).pipe(catchError(this.handleError));
   }
 
   /**
@@ -119,18 +142,23 @@ export class GenericApiService<T> {
    * @param id
    */
   public delete(id: any): Observable<null> {
-    return this.http
-      .delete(this.url + '/' + id).pipe(map(res => null), catchError(this.handleError));
+    return this.http.delete(this.url + '/' + id).pipe(
+      map((res) => null),
+      catchError(this.handleError)
+    );
   }
-  
+
   /**
    * General method to call any get api.
    * @param url
    */
   public get(url: string): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/${url}`, {}).pipe(map((response: any) => {
-      return response;
-    }), catchError(this.handleError));
+    return this.http.get<any>(`${this.apiUrl}/${url}`, {}).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError(this.handleError)
+    );
   }
 
   /**
@@ -139,9 +167,12 @@ export class GenericApiService<T> {
    * @param data
    */
   public post(url: string, data: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/${url}`, data).pipe(map((response: any) => {
-      return response;
-    }), catchError(this.handleError));
+    return this.http.post<any>(`${this.apiUrl}/${url}`, data).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError(this.handleError)
+    );
   }
 
   /**
@@ -149,29 +180,32 @@ export class GenericApiService<T> {
    * @param url
    */
   public deleteByUrl(url: string): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrl}/${url}`).pipe(map((response: any) => {
-      return response;
-    }), catchError(this.handleError));
+    return this.http.delete<any>(`${this.apiUrl}/${url}`).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError(this.handleError)
+    );
   }
 
   combineDateAndTime(date: string, time: string): Date {
-    let tmpDate = new Date(date)
+    let tmpDate = new Date(date);
     let ham = this.getHoursAndMinutes(time);
-    tmpDate.setHours(ham.hours? ham.hours : 0);
-    tmpDate.setMinutes(ham.minutes? ham.minutes : 0);
+    tmpDate.setHours(ham.hours ? ham.hours : 0);
+    tmpDate.setMinutes(ham.minutes ? ham.minutes : 0);
     return tmpDate;
   }
 
-  getHoursAndMinutes(time: string){
+  getHoursAndMinutes(time: string) {
     let hours: number = parseInt(time.substring(0, 2));
     let minutes = parseInt(time.substring(3, 5));
-    let ampm = time.substring(6, 8)? time.substring(6, 8): "am";
-    if (ampm.toLocaleLowerCase() == "pm" && hours < 12) {
+    let ampm = time.substring(6, 8) ? time.substring(6, 8) : 'am';
+    if (ampm.toLocaleLowerCase() == 'pm' && hours < 12) {
       hours = hours + 12;
-    } else if (ampm.toLocaleLowerCase() == "am" && hours === 12) {
+    } else if (ampm.toLocaleLowerCase() == 'am' && hours === 12) {
       hours = 0;
     }
-    return {hours: hours, minutes: minutes};
+    return { hours: hours, minutes: minutes };
   }
 
   formatDateStringToAMPM(d) {
@@ -188,7 +222,7 @@ export class GenericApiService<T> {
     }
     return null;
   }
-  
+
   getFormattedTime(time: string, withOffset: boolean) {
     let ham = this.getHoursAndMinutes(time);
     let hours = ham.hours > 9 ? ham.hours.toString() : '0' + ham.hours.toString();
@@ -201,40 +235,38 @@ export class GenericApiService<T> {
   }
 
   getOffset() {
-    const offset = - new Date().getTimezoneOffset();
-    const d = (offset) / 60;
+    const offset = -new Date().getTimezoneOffset();
+    const d = offset / 60;
     let h = Math.floor(d);
-    let m = (offset) % 60;
-    if(d < 0) {
-        h = Math.ceil(d);
-        h = -h;
-        m = -m;
+    let m = offset % 60;
+    if (d < 0) {
+      h = Math.ceil(d);
+      h = -h;
+      m = -m;
     }
 
     let minutes = m.toString();
     let hours = h.toString();
     if (m < 10) {
-        minutes = '0' + minutes;
+      minutes = '0' + minutes;
     }
     if (h < 10) {
-        hours = '0' + hours;
+      hours = '0' + hours;
     }
     let offsetStr = `${hours}:${minutes}`;
     if (d < 0) {
-        offsetStr = '-' + offsetStr;
+      offsetStr = '-' + offsetStr;
     } else {
-        offsetStr = '+' + offsetStr;
+      offsetStr = '+' + offsetStr;
     }
     return offsetStr;
   }
 
-
   /**
    * Handles Api error events.
-   * @param err 
+   * @param err
    */
   protected handleError(err: HttpErrorResponse) {
-
     let errorMessage;
     if (err.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.

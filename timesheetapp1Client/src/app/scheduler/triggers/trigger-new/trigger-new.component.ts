@@ -52,23 +52,26 @@ export class TriggerNewComponent implements OnInit {
   }
 
   createForm() {
-    this.triggerForm = this.formBuilder.group({
-      jobName: [{ value: 'ads', disabled: true }, Validators.required],
-      jobGroup: [{ value: 'asd', disabled: true }, Validators.required],
-      // jobClass: [{ value: '', disabled: true }, Validators.required],
-      triggerName: ['', Validators.required],
-      triggerGroup: ['', Validators.required],
-      triggerType: ['', Validators.required],
-      startDate: [''],
-      startTime: [''],
-      endDate: [''],
-      endTime: [''],
-      cronExpression: [''],
-      repeatInterval: ['', Validators.required],
-      repeatIndefinite: [''],
-      repeatCount: [''],
-      description: [''],
-    }, { validator: this.jobValidatorFn});
+    this.triggerForm = this.formBuilder.group(
+      {
+        jobName: [{ value: 'ads', disabled: true }, Validators.required],
+        jobGroup: [{ value: 'asd', disabled: true }, Validators.required],
+        // jobClass: [{ value: '', disabled: true }, Validators.required],
+        triggerName: ['', Validators.required],
+        triggerGroup: ['', Validators.required],
+        triggerType: ['', Validators.required],
+        startDate: [''],
+        startTime: [''],
+        endDate: [''],
+        endTime: [''],
+        cronExpression: [''],
+        repeatInterval: ['', Validators.required],
+        repeatIndefinite: [''],
+        repeatCount: [''],
+        description: [''],
+      },
+      { validator: this.jobValidatorFn }
+    );
 
     this.triggerForm.get('triggerType').setValue(this.triggerTypes[0]);
     this.triggerForm.get('repeatIndefinite').setValue(true);
@@ -214,5 +217,5 @@ export class TriggerNewComponent implements OnInit {
 
   jobValidatorFn = (group: AbstractControl) => {
     return !group.get('jobName').value || !group.get('jobGroup').value ? { invalidRepository: true } : null;
-  }
+  };
 }

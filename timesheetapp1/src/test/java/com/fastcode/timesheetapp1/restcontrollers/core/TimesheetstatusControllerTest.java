@@ -10,13 +10,29 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.util.*;
+import com.fastcode.timesheetapp1.application.core.timesheet.TimesheetAppService;
+import com.fastcode.timesheetapp1.application.core.timesheetstatus.TimesheetstatusAppService;
+import com.fastcode.timesheetapp1.application.core.timesheetstatus.dto.*;
+import com.fastcode.timesheetapp1.commons.logging.LoggingHelper;
+import com.fastcode.timesheetapp1.commons.search.SearchUtils;
+import com.fastcode.timesheetapp1.domain.core.authorization.users.IUsersRepository;
+import com.fastcode.timesheetapp1.domain.core.authorization.users.UsersEntity;
+import com.fastcode.timesheetapp1.domain.core.timesheet.ITimesheetRepository;
+import com.fastcode.timesheetapp1.domain.core.timesheet.TimesheetEntity;
+import com.fastcode.timesheetapp1.domain.core.timesheetstatus.ITimesheetstatusRepository;
+import com.fastcode.timesheetapp1.domain.core.timesheetstatus.ITimesheetstatusRepository;
+import com.fastcode.timesheetapp1.domain.core.timesheetstatus.TimesheetstatusEntity;
+import com.fastcode.timesheetapp1.domain.core.timesheetstatus.TimesheetstatusEntity;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.time.*;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityNotFoundException;
+import java.util.*;
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
-
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityNotFoundException;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,7 +45,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.SpyBean;
-
 import org.springframework.core.env.Environment;
 import org.springframework.data.web.SortHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
@@ -37,391 +52,407 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.fastcode.timesheetapp1.commons.logging.LoggingHelper;
-import com.fastcode.timesheetapp1.commons.search.SearchUtils;
-import com.fastcode.timesheetapp1.application.core.timesheetstatus.TimesheetstatusAppService;
-import com.fastcode.timesheetapp1.application.core.timesheetstatus.dto.*;
-import com.fastcode.timesheetapp1.domain.core.timesheetstatus.ITimesheetstatusRepository;
-import com.fastcode.timesheetapp1.domain.core.timesheetstatus.TimesheetstatusEntity;
-import com.fastcode.timesheetapp1.domain.core.timesheet.ITimesheetRepository;
-import com.fastcode.timesheetapp1.domain.core.timesheet.TimesheetEntity;
-import com.fastcode.timesheetapp1.domain.core.timesheetstatus.ITimesheetstatusRepository;
-import com.fastcode.timesheetapp1.domain.core.timesheetstatus.TimesheetstatusEntity;
-import com.fastcode.timesheetapp1.domain.core.authorization.users.IUsersRepository;
-import com.fastcode.timesheetapp1.domain.core.authorization.users.UsersEntity;
-import com.fastcode.timesheetapp1.application.core.timesheet.TimesheetAppService;    
-
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
-				properties = "spring.profiles.active=test")
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, properties = "spring.profiles.active=test")
 public class TimesheetstatusControllerTest {
-	
-	@Autowired
-	protected SortHandlerMethodArgumentResolver sortArgumentResolver;
 
-	@Autowired
-	@Qualifier("timesheetstatusRepository") 
-	protected ITimesheetstatusRepository timesheetstatus_repository;
-	
-	@Autowired
-	@Qualifier("timesheetRepository") 
-	protected ITimesheetRepository timesheetRepository;
-	
-	@Autowired
-	@Qualifier("timesheetstatusRepository") 
-	protected ITimesheetstatusRepository timesheetstatusRepository;
-	
-	@Autowired
-	@Qualifier("usersRepository") 
-	protected IUsersRepository usersRepository;
-	
-	@SpyBean
-	@Qualifier("timesheetstatusAppService")
-	protected TimesheetstatusAppService timesheetstatusAppService;
-	
+    @Autowired
+    protected SortHandlerMethodArgumentResolver sortArgumentResolver;
+
+    @Autowired
+    @Qualifier("timesheetstatusRepository")
+    protected ITimesheetstatusRepository timesheetstatus_repository;
+
+    @Autowired
+    @Qualifier("timesheetRepository")
+    protected ITimesheetRepository timesheetRepository;
+
+    @Autowired
+    @Qualifier("timesheetstatusRepository")
+    protected ITimesheetstatusRepository timesheetstatusRepository;
+
+    @Autowired
+    @Qualifier("usersRepository")
+    protected IUsersRepository usersRepository;
+
+    @SpyBean
+    @Qualifier("timesheetstatusAppService")
+    protected TimesheetstatusAppService timesheetstatusAppService;
+
     @SpyBean
     @Qualifier("timesheetAppService")
-	protected TimesheetAppService  timesheetAppService;
-	
-	@SpyBean
-	protected LoggingHelper logHelper;
+    protected TimesheetAppService timesheetAppService;
 
-	@SpyBean
-	protected Environment env;
+    @SpyBean
+    protected LoggingHelper logHelper;
 
-	@Mock
-	protected Logger loggerMock;
+    @SpyBean
+    protected Environment env;
 
-	protected TimesheetstatusEntity timesheetstatus;
+    @Mock
+    protected Logger loggerMock;
 
-	protected MockMvc mvc;
-	
-	@Autowired
-	EntityManagerFactory emf;
-	
+    protected TimesheetstatusEntity timesheetstatus;
+
+    protected MockMvc mvc;
+
+    @Autowired
+    EntityManagerFactory emf;
+
     static EntityManagerFactory emfs;
-    
+
     static int relationCount = 10;
-    
-	int countTimesheet = 10;
-	
-	int countTimesheetstatus = 10;
-	
-	int countUsers = 10;
-	
-	@PostConstruct
-	public void init() {
-	emfs = emf;
-	}
 
-	@AfterClass
-	public static void cleanup() {
-		EntityManager em = emfs.createEntityManager();
-		em.getTransaction().begin();
-		em.createNativeQuery("SET REFERENTIAL_INTEGRITY FALSE").executeUpdate();
-		em.createNativeQuery("truncate table timesheet.timesheetstatus RESTART IDENTITY").executeUpdate();
-		em.createNativeQuery("truncate table timesheet.timesheet RESTART IDENTITY").executeUpdate();
-		em.createNativeQuery("truncate table timesheet.timesheetstatus RESTART IDENTITY").executeUpdate();
-		em.createNativeQuery("truncate table timesheet.users RESTART IDENTITY").executeUpdate();
-	 	em.createNativeQuery("SET REFERENTIAL_INTEGRITY TRUE").executeUpdate();
-		em.getTransaction().commit();
-	}
-	
-	public TimesheetEntity createTimesheetEntity() {
-	
-		if(countTimesheet>60) {
-			countTimesheet = 10;
-		}
-		
-		TimesheetEntity timesheetEntity = new TimesheetEntity();
-		timesheetEntity.setId(Long.valueOf(relationCount));
-  		timesheetEntity.setNotes(String.valueOf(relationCount));
-		timesheetEntity.setPeriodendingdate(SearchUtils.stringToLocalDate("19"+countTimesheet+"-09-01"));
-		timesheetEntity.setPeriodstartingdate(SearchUtils.stringToLocalDate("19"+countTimesheet+"-09-01"));
-		timesheetEntity.setVersiono(0L);
-		relationCount++;
-		TimesheetstatusEntity timesheetstatus= createTimesheetstatusEntity();
-		timesheetEntity.setTimesheetstatus(timesheetstatus);
-		UsersEntity users= createUsersEntity();
-		timesheetEntity.setUsers(users);
-		if(!timesheetRepository.findAll().contains(timesheetEntity))
-		{
-			 timesheetEntity = timesheetRepository.save(timesheetEntity);
-		}
-		countTimesheet++;
-	    return timesheetEntity;
-	}
-	public TimesheetstatusEntity createTimesheetstatusEntity() {
-	
-		if(countTimesheetstatus>60) {
-			countTimesheetstatus = 10;
-		}
-		
-		TimesheetstatusEntity timesheetstatusEntity = new TimesheetstatusEntity();
-		timesheetstatusEntity.setId(Long.valueOf(relationCount));
-  		timesheetstatusEntity.setStatusname(String.valueOf(relationCount));
-		timesheetstatusEntity.setVersiono(0L);
-		relationCount++;
-		if(!timesheetstatusRepository.findAll().contains(timesheetstatusEntity))
-		{
-			 timesheetstatusEntity = timesheetstatusRepository.save(timesheetstatusEntity);
-		}
-		countTimesheetstatus++;
-	    return timesheetstatusEntity;
-	}
-	public UsersEntity createUsersEntity() {
-	
-		if(countUsers>60) {
-			countUsers = 10;
-		}
-		
-		UsersEntity usersEntity = new UsersEntity();
-  		usersEntity.setEmailaddress(String.valueOf(relationCount));
-  		usersEntity.setFirstname(String.valueOf(relationCount));
-		usersEntity.setId(Long.valueOf(relationCount));
-		usersEntity.setIsactive(false);
-		usersEntity.setJoinDate(SearchUtils.stringToLocalDate("19"+countUsers+"-09-01"));
-  		usersEntity.setLastname(String.valueOf(relationCount));
-  		usersEntity.setPassword(String.valueOf(relationCount));
-  		usersEntity.setTriggerGroup(String.valueOf(relationCount));
-  		usersEntity.setTriggerName(String.valueOf(relationCount));
-  		usersEntity.setUsername(String.valueOf(relationCount));
-		usersEntity.setVersiono(0L);
-		relationCount++;
-		if(!usersRepository.findAll().contains(usersEntity))
-		{
-			 usersEntity = usersRepository.save(usersEntity);
-		}
-		countUsers++;
-	    return usersEntity;
-	}
+    int countTimesheet = 10;
 
-	public TimesheetstatusEntity createEntity() {
-	
-		TimesheetstatusEntity timesheetstatusEntity = new TimesheetstatusEntity();
-		timesheetstatusEntity.setId(1L);
-  		timesheetstatusEntity.setStatusname("1");
-		timesheetstatusEntity.setVersiono(0L);
-		
-		return timesheetstatusEntity;
-	}
+    int countTimesheetstatus = 10;
 
-	public CreateTimesheetstatusInput createTimesheetstatusInput() {
-	
-	    CreateTimesheetstatusInput timesheetstatusInput = new CreateTimesheetstatusInput();
-  		timesheetstatusInput.setStatusname("5");
-		
-		return timesheetstatusInput;
-	}
+    int countUsers = 10;
 
-	public TimesheetstatusEntity createNewEntity() {
-		TimesheetstatusEntity timesheetstatus = new TimesheetstatusEntity();
-		timesheetstatus.setId(3L);
-		timesheetstatus.setStatusname("3");
-		
-		return timesheetstatus;
-	}
-	
-	public TimesheetstatusEntity createUpdateEntity() {
-		TimesheetstatusEntity timesheetstatus = new TimesheetstatusEntity();
-		timesheetstatus.setId(4L);
-		timesheetstatus.setStatusname("4");
-		
-		return timesheetstatus;
-	}
+    @PostConstruct
+    public void init() {
+        emfs = emf;
+    }
 
-	@Before
-	public void setup() {
-		MockitoAnnotations.initMocks(this);
-    
-		final TimesheetstatusController timesheetstatusController = new TimesheetstatusController(timesheetstatusAppService, timesheetAppService,
-	logHelper,env);
-		when(logHelper.getLogger()).thenReturn(loggerMock);
-		doNothing().when(loggerMock).error(anyString());
+    @AfterClass
+    public static void cleanup() {
+        EntityManager em = emfs.createEntityManager();
+        em.getTransaction().begin();
+        em.createNativeQuery("SET REFERENTIAL_INTEGRITY FALSE").executeUpdate();
+        em.createNativeQuery("truncate table timesheet.timesheetstatus RESTART IDENTITY").executeUpdate();
+        em.createNativeQuery("truncate table timesheet.timesheet RESTART IDENTITY").executeUpdate();
+        em.createNativeQuery("truncate table timesheet.timesheetstatus RESTART IDENTITY").executeUpdate();
+        em.createNativeQuery("truncate table timesheet.users RESTART IDENTITY").executeUpdate();
+        em.createNativeQuery("SET REFERENTIAL_INTEGRITY TRUE").executeUpdate();
+        em.getTransaction().commit();
+    }
 
-		this.mvc = MockMvcBuilders.standaloneSetup(timesheetstatusController)
-				.setCustomArgumentResolvers(sortArgumentResolver)
-				.setControllerAdvice()
-				.build();
-	}
+    public TimesheetEntity createTimesheetEntity() {
+        if (countTimesheet > 60) {
+            countTimesheet = 10;
+        }
 
-	@Before
-	public void initTest() {
+        TimesheetEntity timesheetEntity = new TimesheetEntity();
+        timesheetEntity.setId(Long.valueOf(relationCount));
+        timesheetEntity.setNotes(String.valueOf(relationCount));
+        timesheetEntity.setPeriodendingdate(SearchUtils.stringToLocalDate("19" + countTimesheet + "-09-01"));
+        timesheetEntity.setPeriodstartingdate(SearchUtils.stringToLocalDate("19" + countTimesheet + "-09-01"));
+        timesheetEntity.setVersiono(0L);
+        relationCount++;
+        TimesheetstatusEntity timesheetstatus = createTimesheetstatusEntity();
+        timesheetEntity.setTimesheetstatus(timesheetstatus);
+        UsersEntity users = createUsersEntity();
+        timesheetEntity.setUsers(users);
+        if (!timesheetRepository.findAll().contains(timesheetEntity)) {
+            timesheetEntity = timesheetRepository.save(timesheetEntity);
+        }
+        countTimesheet++;
+        return timesheetEntity;
+    }
 
-		timesheetstatus= createEntity();
-		List<TimesheetstatusEntity> list= timesheetstatus_repository.findAll();
-		if(!list.contains(timesheetstatus)) {
-			timesheetstatus=timesheetstatus_repository.save(timesheetstatus);
-		}
+    public TimesheetstatusEntity createTimesheetstatusEntity() {
+        if (countTimesheetstatus > 60) {
+            countTimesheetstatus = 10;
+        }
 
-	}
+        TimesheetstatusEntity timesheetstatusEntity = new TimesheetstatusEntity();
+        timesheetstatusEntity.setId(Long.valueOf(relationCount));
+        timesheetstatusEntity.setStatusname(String.valueOf(relationCount));
+        timesheetstatusEntity.setVersiono(0L);
+        relationCount++;
+        if (!timesheetstatusRepository.findAll().contains(timesheetstatusEntity)) {
+            timesheetstatusEntity = timesheetstatusRepository.save(timesheetstatusEntity);
+        }
+        countTimesheetstatus++;
+        return timesheetstatusEntity;
+    }
 
-	@Test
-	public void FindById_IdIsValid_ReturnStatusOk() throws Exception {
-	
-		mvc.perform(get("/timesheetstatus/" + timesheetstatus.getId()+"/")
-				.contentType(MediaType.APPLICATION_JSON))
-		.andExpect(status().isOk());
-	}  
+    public UsersEntity createUsersEntity() {
+        if (countUsers > 60) {
+            countUsers = 10;
+        }
 
-	@Test
-	public void FindById_IdIsNotValid_ReturnStatusNotFound() {
+        UsersEntity usersEntity = new UsersEntity();
+        usersEntity.setEmailaddress(String.valueOf(relationCount));
+        usersEntity.setFirstname(String.valueOf(relationCount));
+        usersEntity.setId(Long.valueOf(relationCount));
+        usersEntity.setIsactive(false);
+        usersEntity.setJoinDate(SearchUtils.stringToLocalDate("19" + countUsers + "-09-01"));
+        usersEntity.setLastname(String.valueOf(relationCount));
+        usersEntity.setPassword(String.valueOf(relationCount));
+        usersEntity.setTriggerGroup(String.valueOf(relationCount));
+        usersEntity.setTriggerName(String.valueOf(relationCount));
+        usersEntity.setUsername(String.valueOf(relationCount));
+        usersEntity.setVersiono(0L);
+        relationCount++;
+        if (!usersRepository.findAll().contains(usersEntity)) {
+            usersEntity = usersRepository.save(usersEntity);
+        }
+        countUsers++;
+        return usersEntity;
+    }
 
-		 org.assertj.core.api.Assertions.assertThatThrownBy(() -> mvc.perform(get("/timesheetstatus/999")
-				.contentType(MediaType.APPLICATION_JSON))
-					.andExpect(status().isOk())).hasCause(new EntityNotFoundException("Not found"));
+    public TimesheetstatusEntity createEntity() {
+        TimesheetstatusEntity timesheetstatusEntity = new TimesheetstatusEntity();
+        timesheetstatusEntity.setId(1L);
+        timesheetstatusEntity.setStatusname("1");
+        timesheetstatusEntity.setVersiono(0L);
 
-	}
-	@Test
-	public void CreateTimesheetstatus_TimesheetstatusDoesNotExist_ReturnStatusOk() throws Exception {
-		CreateTimesheetstatusInput timesheetstatusInput = createTimesheetstatusInput();	
-			
+        return timesheetstatusEntity;
+    }
 
-		ObjectWriter ow = new ObjectMapper().registerModule(new JavaTimeModule()).disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS).writer().withDefaultPrettyPrinter();
-	
-		String json = ow.writeValueAsString(timesheetstatusInput);
+    public CreateTimesheetstatusInput createTimesheetstatusInput() {
+        CreateTimesheetstatusInput timesheetstatusInput = new CreateTimesheetstatusInput();
+        timesheetstatusInput.setStatusname("5");
 
-		mvc.perform(post("/timesheetstatus").contentType(MediaType.APPLICATION_JSON).content(json))
-		.andExpect(status().isOk());
+        return timesheetstatusInput;
+    }
 
-	}     
-	
+    public TimesheetstatusEntity createNewEntity() {
+        TimesheetstatusEntity timesheetstatus = new TimesheetstatusEntity();
+        timesheetstatus.setId(3L);
+        timesheetstatus.setStatusname("3");
 
-	@Test
-	public void DeleteTimesheetstatus_IdIsNotValid_ThrowEntityNotFoundException() {
+        return timesheetstatus;
+    }
 
-        doReturn(null).when(timesheetstatusAppService).findById(999L);
-        org.assertj.core.api.Assertions.assertThatThrownBy(() ->  mvc.perform(delete("/timesheetstatus/999")
-				.contentType(MediaType.APPLICATION_JSON))
-				.andExpect(status().isOk())).hasCause(new EntityNotFoundException("There does not exist a timesheetstatus with a id=999"));
+    public TimesheetstatusEntity createUpdateEntity() {
+        TimesheetstatusEntity timesheetstatus = new TimesheetstatusEntity();
+        timesheetstatus.setId(4L);
+        timesheetstatus.setStatusname("4");
 
-	}  
+        return timesheetstatus;
+    }
 
-	@Test
-	public void Delete_IdIsValid_ReturnStatusNoContent() throws Exception {
-	
-	 	TimesheetstatusEntity entity =  createNewEntity();
-	 	entity.setVersiono(0L);
-		entity = timesheetstatus_repository.save(entity);
-		
+    @Before
+    public void setup() {
+        MockitoAnnotations.initMocks(this);
 
-		FindTimesheetstatusByIdOutput output= new FindTimesheetstatusByIdOutput();
-		output.setId(entity.getId());
-		output.setStatusname(entity.getStatusname());
-		
-         Mockito.doReturn(output).when(timesheetstatusAppService).findById(entity.getId());
-       
-    //    Mockito.when(timesheetstatusAppService.findById(entity.getId())).thenReturn(output);
-        
-		mvc.perform(delete("/timesheetstatus/" + entity.getId()+"/")
-				.contentType(MediaType.APPLICATION_JSON))
-		.andExpect(status().isNoContent());
-	}  
+        final TimesheetstatusController timesheetstatusController = new TimesheetstatusController(
+            timesheetstatusAppService,
+            timesheetAppService,
+            logHelper,
+            env
+        );
+        when(logHelper.getLogger()).thenReturn(loggerMock);
+        doNothing().when(loggerMock).error(anyString());
 
+        this.mvc =
+            MockMvcBuilders
+                .standaloneSetup(timesheetstatusController)
+                .setCustomArgumentResolvers(sortArgumentResolver)
+                .setControllerAdvice()
+                .build();
+    }
 
-	@Test
-	public void UpdateTimesheetstatus_TimesheetstatusDoesNotExist_ReturnStatusNotFound() throws Exception {
-   
-        doReturn(null).when(timesheetstatusAppService).findById(999L);
-        
-        UpdateTimesheetstatusInput timesheetstatus = new UpdateTimesheetstatusInput();
-		timesheetstatus.setId(999L);
-  		timesheetstatus.setStatusname("999");
+    @Before
+    public void initTest() {
+        timesheetstatus = createEntity();
+        List<TimesheetstatusEntity> list = timesheetstatus_repository.findAll();
+        if (!list.contains(timesheetstatus)) {
+            timesheetstatus = timesheetstatus_repository.save(timesheetstatus);
+        }
+    }
 
-		ObjectWriter ow = new ObjectMapper().registerModule(new JavaTimeModule()).disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS).writer().withDefaultPrettyPrinter();
-		String json = ow.writeValueAsString(timesheetstatus);
-
-		 org.assertj.core.api.Assertions.assertThatThrownBy(() -> mvc.perform(put("/timesheetstatus/999").contentType(MediaType.APPLICATION_JSON).content(json))
-					.andExpect(status().isOk())).hasCause(new EntityNotFoundException("Unable to update. Timesheetstatus with id=999 not found."));
-	}    
-
-	@Test
-	public void UpdateTimesheetstatus_TimesheetstatusExists_ReturnStatusOk() throws Exception {
-		TimesheetstatusEntity entity =  createUpdateEntity();
-		entity.setVersiono(0L);
-		
-		entity = timesheetstatus_repository.save(entity);
-		FindTimesheetstatusByIdOutput output= new FindTimesheetstatusByIdOutput();
-		output.setId(entity.getId());
-		output.setStatusname(entity.getStatusname());
-		output.setVersiono(entity.getVersiono());
-		
-        Mockito.when(timesheetstatusAppService.findById(entity.getId())).thenReturn(output);
-        
-		UpdateTimesheetstatusInput timesheetstatusInput = new UpdateTimesheetstatusInput();
-		timesheetstatusInput.setId(entity.getId());
-		timesheetstatusInput.setStatusname(entity.getStatusname());
-		
-		
-		
-		ObjectWriter ow = new ObjectMapper().registerModule(new JavaTimeModule()).disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS).writer().withDefaultPrettyPrinter();
-		String json = ow.writeValueAsString(timesheetstatusInput);
-	
-		mvc.perform(put("/timesheetstatus/" + entity.getId()+"/").contentType(MediaType.APPLICATION_JSON).content(json))
-		.andExpect(status().isOk());
-
-		TimesheetstatusEntity de = createUpdateEntity();
-		de.setId(entity.getId());
-		timesheetstatus_repository.delete(de);
-		
-
-	}    
-	@Test
-	public void FindAll_SearchIsNotNullAndPropertyIsValid_ReturnStatusOk() throws Exception {
-
-		mvc.perform(get("/timesheetstatus?search=id[equals]=1&limit=10&offset=1")
-				.contentType(MediaType.APPLICATION_JSON))
-		.andExpect(status().isOk());
-	}    
-
-	@Test
-	public void FindAll_SearchIsNotNullAndPropertyIsNotValid_ThrowException() throws Exception {
-
-		org.assertj.core.api.Assertions.assertThatThrownBy(() ->  mvc.perform(get("/timesheetstatus?search=timesheetstatusid[equals]=1&limit=10&offset=1")
-				.contentType(MediaType.APPLICATION_JSON))
-				.andExpect(status().isOk())).hasCause(new Exception("Wrong URL Format: Property timesheetstatusid not found!"));
-
-	} 
-	
-	
     @Test
-	public void GetTimesheets_searchIsNotEmptyAndPropertyIsNotValid_ThrowException() {
-	
-		Map<String,String> joinCol = new HashMap<String,String>();
-		joinCol.put("id", "1");
+    public void FindById_IdIsValid_ReturnStatusOk() throws Exception {
+        mvc
+            .perform(get("/timesheetstatus/" + timesheetstatus.getId() + "/").contentType(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk());
+    }
 
-		Mockito.when(timesheetstatusAppService.parseTimesheetsJoinColumn("timesheetstatusid")).thenReturn(joinCol);
-		org.assertj.core.api.Assertions.assertThatThrownBy(() ->  mvc.perform(get("/timesheetstatus/1/timesheets?search=abc[equals]=1&limit=10&offset=1")
-				.contentType(MediaType.APPLICATION_JSON))
-	    		  .andExpect(status().isOk())).hasCause(new Exception("Wrong URL Format: Property abc not found!"));
-	
-	}    
-	
-	@Test
-	public void GetTimesheets_searchIsNotEmptyAndPropertyIsValid_ReturnList() throws Exception {
+    @Test
+    public void FindById_IdIsNotValid_ReturnStatusNotFound() {
+        org.assertj.core.api.Assertions
+            .assertThatThrownBy(
+                () ->
+                    mvc
+                        .perform(get("/timesheetstatus/999").contentType(MediaType.APPLICATION_JSON))
+                        .andExpect(status().isOk())
+            )
+            .hasCause(new EntityNotFoundException("Not found"));
+    }
 
-		Map<String,String> joinCol = new HashMap<String,String>();
-		joinCol.put("id", "1");
-		
+    @Test
+    public void CreateTimesheetstatus_TimesheetstatusDoesNotExist_ReturnStatusOk() throws Exception {
+        CreateTimesheetstatusInput timesheetstatusInput = createTimesheetstatusInput();
+
+        ObjectWriter ow = new ObjectMapper()
+            .registerModule(new JavaTimeModule())
+            .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
+            .writer()
+            .withDefaultPrettyPrinter();
+
+        String json = ow.writeValueAsString(timesheetstatusInput);
+
+        mvc
+            .perform(post("/timesheetstatus").contentType(MediaType.APPLICATION_JSON).content(json))
+            .andExpect(status().isOk());
+    }
+
+    @Test
+    public void DeleteTimesheetstatus_IdIsNotValid_ThrowEntityNotFoundException() {
+        doReturn(null).when(timesheetstatusAppService).findById(999L);
+        org.assertj.core.api.Assertions
+            .assertThatThrownBy(
+                () ->
+                    mvc
+                        .perform(delete("/timesheetstatus/999").contentType(MediaType.APPLICATION_JSON))
+                        .andExpect(status().isOk())
+            )
+            .hasCause(new EntityNotFoundException("There does not exist a timesheetstatus with a id=999"));
+    }
+
+    @Test
+    public void Delete_IdIsValid_ReturnStatusNoContent() throws Exception {
+        TimesheetstatusEntity entity = createNewEntity();
+        entity.setVersiono(0L);
+        entity = timesheetstatus_repository.save(entity);
+
+        FindTimesheetstatusByIdOutput output = new FindTimesheetstatusByIdOutput();
+        output.setId(entity.getId());
+        output.setStatusname(entity.getStatusname());
+
+        Mockito.doReturn(output).when(timesheetstatusAppService).findById(entity.getId());
+
+        //    Mockito.when(timesheetstatusAppService.findById(entity.getId())).thenReturn(output);
+
+        mvc
+            .perform(delete("/timesheetstatus/" + entity.getId() + "/").contentType(MediaType.APPLICATION_JSON))
+            .andExpect(status().isNoContent());
+    }
+
+    @Test
+    public void UpdateTimesheetstatus_TimesheetstatusDoesNotExist_ReturnStatusNotFound() throws Exception {
+        doReturn(null).when(timesheetstatusAppService).findById(999L);
+
+        UpdateTimesheetstatusInput timesheetstatus = new UpdateTimesheetstatusInput();
+        timesheetstatus.setId(999L);
+        timesheetstatus.setStatusname("999");
+
+        ObjectWriter ow = new ObjectMapper()
+            .registerModule(new JavaTimeModule())
+            .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
+            .writer()
+            .withDefaultPrettyPrinter();
+        String json = ow.writeValueAsString(timesheetstatus);
+
+        org.assertj.core.api.Assertions
+            .assertThatThrownBy(
+                () ->
+                    mvc
+                        .perform(put("/timesheetstatus/999").contentType(MediaType.APPLICATION_JSON).content(json))
+                        .andExpect(status().isOk())
+            )
+            .hasCause(new EntityNotFoundException("Unable to update. Timesheetstatus with id=999 not found."));
+    }
+
+    @Test
+    public void UpdateTimesheetstatus_TimesheetstatusExists_ReturnStatusOk() throws Exception {
+        TimesheetstatusEntity entity = createUpdateEntity();
+        entity.setVersiono(0L);
+
+        entity = timesheetstatus_repository.save(entity);
+        FindTimesheetstatusByIdOutput output = new FindTimesheetstatusByIdOutput();
+        output.setId(entity.getId());
+        output.setStatusname(entity.getStatusname());
+        output.setVersiono(entity.getVersiono());
+
+        Mockito.when(timesheetstatusAppService.findById(entity.getId())).thenReturn(output);
+
+        UpdateTimesheetstatusInput timesheetstatusInput = new UpdateTimesheetstatusInput();
+        timesheetstatusInput.setId(entity.getId());
+        timesheetstatusInput.setStatusname(entity.getStatusname());
+
+        ObjectWriter ow = new ObjectMapper()
+            .registerModule(new JavaTimeModule())
+            .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
+            .writer()
+            .withDefaultPrettyPrinter();
+        String json = ow.writeValueAsString(timesheetstatusInput);
+
+        mvc
+            .perform(
+                put("/timesheetstatus/" + entity.getId() + "/").contentType(MediaType.APPLICATION_JSON).content(json)
+            )
+            .andExpect(status().isOk());
+
+        TimesheetstatusEntity de = createUpdateEntity();
+        de.setId(entity.getId());
+        timesheetstatus_repository.delete(de);
+    }
+
+    @Test
+    public void FindAll_SearchIsNotNullAndPropertyIsValid_ReturnStatusOk() throws Exception {
+        mvc
+            .perform(
+                get("/timesheetstatus?search=id[equals]=1&limit=10&offset=1").contentType(MediaType.APPLICATION_JSON)
+            )
+            .andExpect(status().isOk());
+    }
+
+    @Test
+    public void FindAll_SearchIsNotNullAndPropertyIsNotValid_ThrowException() throws Exception {
+        org.assertj.core.api.Assertions
+            .assertThatThrownBy(
+                () ->
+                    mvc
+                        .perform(
+                            get("/timesheetstatus?search=timesheetstatusid[equals]=1&limit=10&offset=1")
+                                .contentType(MediaType.APPLICATION_JSON)
+                        )
+                        .andExpect(status().isOk())
+            )
+            .hasCause(new Exception("Wrong URL Format: Property timesheetstatusid not found!"));
+    }
+
+    @Test
+    public void GetTimesheets_searchIsNotEmptyAndPropertyIsNotValid_ThrowException() {
+        Map<String, String> joinCol = new HashMap<String, String>();
+        joinCol.put("id", "1");
+
         Mockito.when(timesheetstatusAppService.parseTimesheetsJoinColumn("timesheetstatusid")).thenReturn(joinCol);
-		mvc.perform(get("/timesheetstatus/1/timesheets?search=timesheetstatusid[equals]=1&limit=10&offset=1")
-				.contentType(MediaType.APPLICATION_JSON))
-	    		  .andExpect(status().isOk());
-	}  
-	
-	@Test
-	public void GetTimesheets_searchIsNotEmpty() {
-	
-		Mockito.when(timesheetstatusAppService.parseTimesheetsJoinColumn(anyString())).thenReturn(null);
-	 		  		    		  
-	    org.assertj.core.api.Assertions.assertThatThrownBy(() -> mvc.perform(get("/timesheetstatus/1/timesheets?search=timesheetstatusid[equals]=1&limit=10&offset=1")
-				.contentType(MediaType.APPLICATION_JSON))
-		.andExpect(status().isOk())).hasCause(new EntityNotFoundException("Invalid join column"));
-	}    
-    
-}
+        org.assertj.core.api.Assertions
+            .assertThatThrownBy(
+                () ->
+                    mvc
+                        .perform(
+                            get("/timesheetstatus/1/timesheets?search=abc[equals]=1&limit=10&offset=1")
+                                .contentType(MediaType.APPLICATION_JSON)
+                        )
+                        .andExpect(status().isOk())
+            )
+            .hasCause(new Exception("Wrong URL Format: Property abc not found!"));
+    }
 
+    @Test
+    public void GetTimesheets_searchIsNotEmptyAndPropertyIsValid_ReturnList() throws Exception {
+        Map<String, String> joinCol = new HashMap<String, String>();
+        joinCol.put("id", "1");
+
+        Mockito.when(timesheetstatusAppService.parseTimesheetsJoinColumn("timesheetstatusid")).thenReturn(joinCol);
+        mvc
+            .perform(
+                get("/timesheetstatus/1/timesheets?search=timesheetstatusid[equals]=1&limit=10&offset=1")
+                    .contentType(MediaType.APPLICATION_JSON)
+            )
+            .andExpect(status().isOk());
+    }
+
+    @Test
+    public void GetTimesheets_searchIsNotEmpty() {
+        Mockito.when(timesheetstatusAppService.parseTimesheetsJoinColumn(anyString())).thenReturn(null);
+
+        org.assertj.core.api.Assertions
+            .assertThatThrownBy(
+                () ->
+                    mvc
+                        .perform(
+                            get("/timesheetstatus/1/timesheets?search=timesheetstatusid[equals]=1&limit=10&offset=1")
+                                .contentType(MediaType.APPLICATION_JSON)
+                        )
+                        .andExpect(status().isOk())
+            )
+            .hasCause(new EntityNotFoundException("Invalid join column"));
+    }
+}

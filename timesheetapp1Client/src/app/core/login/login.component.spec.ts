@@ -25,15 +25,15 @@ describe('LoginComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [LoginComponent].concat(EntryComponents),
-      imports: [TestingModule],//, RouterTestingModule.withRoutes([{path: 'some/path',component: dummy}])]
+      imports: [TestingModule], //, RouterTestingModule.withRoutes([{path: 'some/path',component: dummy}])]
       providers: [
         { provide: MatDialogRef, useValue: { close: (dialogResult: any) => {} } },
         {
           provide: ActivatedRoute,
           useValue: {
-            snapshot: {queryParams: {}}
+            snapshot: { queryParams: {} },
           },
-        }
+        },
       ],
     }).compileComponents();
   }));
@@ -52,7 +52,6 @@ describe('LoginComponent', () => {
   });
 
   it('should navigate to returnUrl if a valid token exists', async () => {
-
     spyOn(component.authenticationService, 'isTokenExpired').and.returnValue(false);
     aroutes.snapshot.queryParams['returnUrl'] = 'sampleReturn';
     fixture.detectChanges();
@@ -65,7 +64,7 @@ describe('LoginComponent', () => {
   });
 
   it('should navigate dashboard if no redirect url is provided and a valid token exists', async () => {
-   spyOn(component.authenticationService, 'isTokenExpired').and.returnValue(false);
+    spyOn(component.authenticationService, 'isTokenExpired').and.returnValue(false);
 
     component.ngOnInit();
 

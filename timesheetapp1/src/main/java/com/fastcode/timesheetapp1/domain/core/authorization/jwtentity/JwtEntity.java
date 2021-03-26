@@ -1,16 +1,17 @@
 package com.fastcode.timesheetapp1.domain.core.authorization.jwtentity;
 
-import javax.persistence.*;
-import java.time.*;
 import com.fastcode.timesheetapp1.domain.core.abstractentity.AbstractEntity;
-import lombok.Getter;
-import lombok.Setter;
+import java.time.*;
+import javax.persistence.*;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "jwt_entity")
-@Getter @Setter
+@Getter
+@Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
 public class JwtEntity extends AbstractEntity {
@@ -24,17 +25,12 @@ public class JwtEntity extends AbstractEntity {
     private String authorizationToken;
 
     @Id
-    @EqualsAndHashCode.Include()
+    @EqualsAndHashCode.Include
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
-    
+
     @Basic
-    @Column(name = "user_name", nullable = false,length =32)
+    @Column(name = "user_name", nullable = false, length = 32)
     private String userName;
-
-
 }
-
-
-

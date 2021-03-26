@@ -15,37 +15,32 @@ describe('TaskDetailsComponent', () => {
   let component: TaskDetailsComponent;
   let fixture: ComponentFixture<TaskDetailsComponent>;
   let el: HTMLElement;
-  
+
   let d = new Date();
   let t = DateUtils.formatDateStringToAMPM(d);
-  
+
   let relationData: any = {
     projectid: 1,
     projectDescriptiveField: 'name1',
-  }
-  let data:ITask = {
+  };
+  let data: ITask = {
     description: 'description1',
     id: 1,
     isactive: true,
     name: 'name1',
-    ... relationData
+    ...relationData,
   };
-  
+
   describe('Unit Tests', () => {
     beforeEach(async(() => {
       TestBed.configureTestingModule({
-        declarations: [
-          TaskDetailsComponent,
-          DetailsComponent
-        ],
+        declarations: [TaskDetailsComponent, DetailsComponent],
         imports: [TestingModule],
-        providers: [
-          TaskService,
-        ],
-        schemas: [NO_ERRORS_SCHEMA]  
+        providers: [TaskService],
+        schemas: [NO_ERRORS_SCHEMA],
       }).compileComponents();
     }));
-  
+
     beforeEach(() => {
       fixture = TestBed.createComponent(TaskDetailsComponent);
       component = fixture.componentInstance;
@@ -90,34 +85,25 @@ describe('TaskDetailsComponent', () => {
       spyOn(component, 'onBack').and.returnValue();
       el = fixture.debugElement.query(By.css('button[name=back]')).nativeElement;
       el.click();
-      
+
       expect(component.onBack).toHaveBeenCalled();
     });
-
   });
-  
+
   describe('Integration Tests', () => {
     beforeEach(async(() => {
-
       TestBed.configureTestingModule({
-        declarations: [
-          TaskDetailsComponent,
-          TaskListComponent,
-          DetailsComponent,
-          ListComponent,
-          FieldsComp
-        ].concat(EntryComponents),
+        declarations: [TaskDetailsComponent, TaskListComponent, DetailsComponent, ListComponent, FieldsComp].concat(
+          EntryComponents
+        ),
         imports: [
           TestingModule,
           RouterTestingModule.withRoutes([
             { path: 'task', component: TaskDetailsComponent },
-            { path: 'task/:id', component: TaskListComponent }
-          ])
+            { path: 'task/:id', component: TaskListComponent },
+          ]),
         ],
-        providers: [
-          TaskService
-        ]
-
+        providers: [TaskService],
       }).compileComponents();
     }));
 
@@ -159,7 +145,6 @@ describe('TaskDetailsComponent', () => {
       el.click();
 
       expect(component.errorService.showError).toHaveBeenCalled();
-
     });
 
     it('should go back to list component when back button is clicked', async () => {
@@ -175,9 +160,6 @@ describe('TaskDetailsComponent', () => {
       let responsePromise = navigationSpy.calls.mostRecent().returnValue;
       await responsePromise;
       expect(location.path()).toBe('/task');
-
     });
-
   });
-  
 });

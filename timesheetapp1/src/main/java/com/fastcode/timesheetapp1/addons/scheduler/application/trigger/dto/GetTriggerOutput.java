@@ -6,7 +6,8 @@ import java.util.Map;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter @Setter
+@Getter
+@Setter
 public class GetTriggerOutput {
 
     private int repeatCount = 0;
@@ -27,6 +28,4 @@ public class GetTriggerOutput {
     private Date nextExecutionTime;
     private Map<String, String> jobMapData = new HashMap<String, String>();
     private Map<String, String> triggerMapData = new HashMap<String, String>();
-   
 }
-

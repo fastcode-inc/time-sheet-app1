@@ -15,33 +15,27 @@ describe('TimeofftypeDetailsComponent', () => {
   let component: TimeofftypeDetailsComponent;
   let fixture: ComponentFixture<TimeofftypeDetailsComponent>;
   let el: HTMLElement;
-  
+
   let d = new Date();
   let t = DateUtils.formatDateStringToAMPM(d);
-  
-  let relationData: any = {
-  }
-  let data:ITimeofftype = {
+
+  let relationData: any = {};
+  let data: ITimeofftype = {
     id: 1,
     typename: 'typename1',
-    ... relationData
+    ...relationData,
   };
-  
+
   describe('Unit Tests', () => {
     beforeEach(async(() => {
       TestBed.configureTestingModule({
-        declarations: [
-          TimeofftypeDetailsComponent,
-          DetailsComponent
-        ],
+        declarations: [TimeofftypeDetailsComponent, DetailsComponent],
         imports: [TestingModule],
-        providers: [
-          TimeofftypeService,
-        ],
-        schemas: [NO_ERRORS_SCHEMA]  
+        providers: [TimeofftypeService],
+        schemas: [NO_ERRORS_SCHEMA],
       }).compileComponents();
     }));
-  
+
     beforeEach(() => {
       fixture = TestBed.createComponent(TimeofftypeDetailsComponent);
       component = fixture.componentInstance;
@@ -86,34 +80,29 @@ describe('TimeofftypeDetailsComponent', () => {
       spyOn(component, 'onBack').and.returnValue();
       el = fixture.debugElement.query(By.css('button[name=back]')).nativeElement;
       el.click();
-      
+
       expect(component.onBack).toHaveBeenCalled();
     });
-
   });
-  
+
   describe('Integration Tests', () => {
     beforeEach(async(() => {
-
       TestBed.configureTestingModule({
         declarations: [
           TimeofftypeDetailsComponent,
           TimeofftypeListComponent,
           DetailsComponent,
           ListComponent,
-          FieldsComp
+          FieldsComp,
         ].concat(EntryComponents),
         imports: [
           TestingModule,
           RouterTestingModule.withRoutes([
             { path: 'timeofftype', component: TimeofftypeDetailsComponent },
-            { path: 'timeofftype/:id', component: TimeofftypeListComponent }
-          ])
+            { path: 'timeofftype/:id', component: TimeofftypeListComponent },
+          ]),
         ],
-        providers: [
-          TimeofftypeService
-        ]
-
+        providers: [TimeofftypeService],
       }).compileComponents();
     }));
 
@@ -155,7 +144,6 @@ describe('TimeofftypeDetailsComponent', () => {
       el.click();
 
       expect(component.errorService.showError).toHaveBeenCalled();
-
     });
 
     it('should go back to list component when back button is clicked', async () => {
@@ -171,9 +159,6 @@ describe('TimeofftypeDetailsComponent', () => {
       let responsePromise = navigationSpy.calls.mostRecent().returnValue;
       await responsePromise;
       expect(location.path()).toBe('/timeofftype');
-
     });
-
   });
-  
 });

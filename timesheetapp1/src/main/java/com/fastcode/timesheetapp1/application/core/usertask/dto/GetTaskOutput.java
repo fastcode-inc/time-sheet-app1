@@ -4,15 +4,14 @@ import java.time.*;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter @Setter
+@Getter
+@Setter
 public class GetTaskOutput {
 
- 	private String description;
- 	private Long id;
- 	private Boolean isactive;
- 	private String name;
-  	private Long usertaskTaskid;
-  	private Long usertaskUserid;
-
+    private String description;
+    private Long id;
+    private Boolean isactive;
+    private String name;
+    private Long usertaskTaskid;
+    private Long usertaskUserid;
 }
-

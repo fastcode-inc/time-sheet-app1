@@ -1,6 +1,6 @@
 export interface Report {
-  id?: string,
-  userId?: number,
+  id?: string;
+  userId?: number;
   title: string;
   description?: string;
   reportType: string;
@@ -10,8 +10,8 @@ export interface Report {
 }
 
 export interface Dashboard {
-  id?: string,
-  userId?: number,
+  id?: string;
+  userId?: number;
   title?: string;
   description?: string;
   reportDetails?: Array<Report>;
