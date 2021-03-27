@@ -48,7 +48,7 @@ WORKDIR /build/timesheetapp1Client
 RUN node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng build
 
 #copy angular dist app folder to the public htdocs of the apache container.
-RUN cp -R ./dist/timesheetapp1Client/* /usr/local/apache2/htdocs/
+RUN cp -R ./dist/timesheetClient/* /usr/local/apache2/htdocs/
 
 # Copy certificate files
 COPY ./server.crt /usr/local/apache2/conf/
