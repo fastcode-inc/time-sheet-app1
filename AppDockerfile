@@ -28,16 +28,16 @@ ENV DEBIAN_FRONTEND noninteractive
 #Build
 RUN mkdir /build
 
-COPY timesheet/ /build/timesheet/
+COPY timesheetapp1/ /build/timesheetapp1/
 
-WORKDIR /build/timesheet
+WORKDIR /build/timesheetapp1
 
 RUN mvn clean package -Dmaven.test.skip=true
 
 #expose port
 EXPOSE 5555
 
-WORKDIR /build/timesheet/target
+WORKDIR /build/timesheetapp1/target
 
 #cmd to execute
 ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","timesheet-0.0.1-SNAPSHOT.war"]
