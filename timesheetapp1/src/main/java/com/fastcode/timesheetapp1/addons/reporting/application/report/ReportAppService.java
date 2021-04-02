@@ -16,12 +16,11 @@ import com.fastcode.timesheetapp1.addons.reporting.domain.reportversion.IReportv
 import com.fastcode.timesheetapp1.addons.reporting.domain.reportversion.ReportversionEntity;
 import com.fastcode.timesheetapp1.addons.reporting.domain.reportversion.ReportversionId;
 import com.fastcode.timesheetapp1.commons.logging.LoggingHelper;
-import com.fastcode.timesheetapp1.commons.search.*;
+import com.fastcode.timesheetapp1.commons.search.SearchCriteria;
+import com.fastcode.timesheetapp1.commons.search.SearchFields;
 import com.fastcode.timesheetapp1.domain.core.authorization.users.UsersEntity;
 import com.fastcode.timesheetapp1.domain.extended.authorization.users.IUsersRepositoryExtended;
 import com.querydsl.core.BooleanBuilder;
-import java.time.*;
-import java.util.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -30,6 +29,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.*;
 
 @Service("reportAppService")
 public class ReportAppService implements IReportAppService {

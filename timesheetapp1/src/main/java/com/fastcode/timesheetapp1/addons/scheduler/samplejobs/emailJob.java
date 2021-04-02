@@ -1,16 +1,15 @@
 package com.fastcode.timesheetapp1.addons.scheduler.samplejobs;
 
-import java.time.LocalDate;
-import java.util.List;
-
+import com.fastcode.timesheetapp1.addons.email.application.mail.IEmailService;
+import com.fastcode.timesheetapp1.domain.core.timesheetdetails.TimesheetdetailsEntity;
+import com.fastcode.timesheetapp1.domain.extended.timesheetdetails.ITimesheetdetailsRepositoryExtended;
 import org.quartz.Job;
 import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.fastcode.timesheetapp1.addons.email.application.mail.IEmailService;
-import com.fastcode.timesheetapp1.domain.core.timesheetdetails.TimesheetdetailsEntity;
-import com.fastcode.timesheetapp1.domain.extended.timesheetdetails.ITimesheetdetailsRepositoryExtended;
+import java.time.LocalDate;
+import java.util.List;
 
 public class emailJob implements Job {
 

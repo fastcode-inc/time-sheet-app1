@@ -1,41 +1,31 @@
 package com.fastcode.timesheetapp1.application.core.customer;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import com.fastcode.timesheetapp1.application.core.customer.dto.*;
+import com.fastcode.timesheetapp1.application.core.customer.dto.CreateCustomerInput;
+import com.fastcode.timesheetapp1.application.core.customer.dto.FindCustomerByIdOutput;
+import com.fastcode.timesheetapp1.application.core.customer.dto.UpdateCustomerInput;
 import com.fastcode.timesheetapp1.commons.logging.LoggingHelper;
-import com.fastcode.timesheetapp1.commons.search.*;
-import com.fastcode.timesheetapp1.domain.core.customer.*;
+import com.fastcode.timesheetapp1.commons.search.SearchCriteria;
+import com.fastcode.timesheetapp1.commons.search.SearchFields;
 import com.fastcode.timesheetapp1.domain.core.customer.CustomerEntity;
+import com.fastcode.timesheetapp1.domain.core.customer.ICustomerRepository;
 import com.fastcode.timesheetapp1.domain.core.customer.QCustomerEntity;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
-import java.time.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
-import org.mockito.Spy;
+import org.mockito.*;
 import org.slf4j.Logger;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.util.*;
+
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 public class CustomerAppServiceTest {

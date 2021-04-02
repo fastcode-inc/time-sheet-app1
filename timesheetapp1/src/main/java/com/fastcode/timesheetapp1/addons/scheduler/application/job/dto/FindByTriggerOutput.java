@@ -1,10 +1,11 @@
 package com.fastcode.timesheetapp1.addons.scheduler.application.job.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import lombok.Getter;
-import lombok.Setter;
 
 @Getter
 @Setter

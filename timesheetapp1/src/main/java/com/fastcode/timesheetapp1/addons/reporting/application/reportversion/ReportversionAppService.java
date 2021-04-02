@@ -1,11 +1,6 @@
 package com.fastcode.timesheetapp1.addons.reporting.application.reportversion;
 
-import com.fastcode.timesheetapp1.addons.reporting.application.reportversion.dto.CreateReportversionInput;
-import com.fastcode.timesheetapp1.addons.reporting.application.reportversion.dto.CreateReportversionOutput;
-import com.fastcode.timesheetapp1.addons.reporting.application.reportversion.dto.FindReportversionByIdOutput;
-import com.fastcode.timesheetapp1.addons.reporting.application.reportversion.dto.GetUsersOutput;
-import com.fastcode.timesheetapp1.addons.reporting.application.reportversion.dto.UpdateReportversionInput;
-import com.fastcode.timesheetapp1.addons.reporting.application.reportversion.dto.UpdateReportversionOutput;
+import com.fastcode.timesheetapp1.addons.reporting.application.reportversion.dto.*;
 import com.fastcode.timesheetapp1.addons.reporting.domain.report.IReportRepository;
 import com.fastcode.timesheetapp1.addons.reporting.domain.report.ReportEntity;
 import com.fastcode.timesheetapp1.addons.reporting.domain.reportversion.IReportversionRepository;
@@ -18,12 +13,6 @@ import com.fastcode.timesheetapp1.commons.search.SearchFields;
 import com.fastcode.timesheetapp1.domain.core.authorization.users.UsersEntity;
 import com.fastcode.timesheetapp1.domain.extended.authorization.users.IUsersRepositoryExtended;
 import com.querydsl.core.BooleanBuilder;
-import java.time.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
@@ -31,6 +20,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.*;
 
 @Service("reportversionAppService")
 public class ReportversionAppService implements IReportversionAppService {

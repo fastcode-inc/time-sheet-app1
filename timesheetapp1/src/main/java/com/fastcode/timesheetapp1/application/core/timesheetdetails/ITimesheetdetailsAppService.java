@@ -2,8 +2,9 @@ package com.fastcode.timesheetapp1.application.core.timesheetdetails;
 
 import com.fastcode.timesheetapp1.application.core.timesheetdetails.dto.*;
 import com.fastcode.timesheetapp1.commons.search.SearchCriteria;
-import java.util.*;
 import org.springframework.data.domain.Pageable;
+
+import java.util.List;
 
 public interface ITimesheetdetailsAppService {
     //CRUD Operations

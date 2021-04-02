@@ -4,7 +4,6 @@ import com.fastcode.timesheetapp1.addons.reporting.application.dashboardversion.
 import com.fastcode.timesheetapp1.addons.reporting.domain.dashboardversion.DashboardversionEntity;
 import com.fastcode.timesheetapp1.addons.reporting.domain.dashboardversionreport.DashboardversionreportEntity;
 import com.fastcode.timesheetapp1.domain.core.authorization.users.UsersEntity;
-import java.time.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;

@@ -3,12 +3,12 @@ package com.fastcode.timesheetapp1.domain.core.authorization.userspermission;
 import com.fastcode.timesheetapp1.domain.core.abstractentity.AbstractEntity;
 import com.fastcode.timesheetapp1.domain.core.authorization.permission.PermissionEntity;
 import com.fastcode.timesheetapp1.domain.core.authorization.users.UsersEntity;
-import java.time.*;
-import javax.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name = "userspermission")

@@ -3,12 +3,12 @@ package com.fastcode.timesheetapp1.domain.core.authorization.usersrole;
 import com.fastcode.timesheetapp1.domain.core.abstractentity.AbstractEntity;
 import com.fastcode.timesheetapp1.domain.core.authorization.role.RoleEntity;
 import com.fastcode.timesheetapp1.domain.core.authorization.users.UsersEntity;
-import java.time.*;
-import javax.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name = "usersrole")

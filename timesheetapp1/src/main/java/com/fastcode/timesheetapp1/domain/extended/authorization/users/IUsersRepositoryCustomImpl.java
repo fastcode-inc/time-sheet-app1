@@ -1,12 +1,6 @@
 package com.fastcode.timesheetapp1.domain.extended.authorization.users;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-
+import com.fastcode.timesheetapp1.application.core.authorization.users.dto.FindUsersByIdOutput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Page;
@@ -14,7 +8,11 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
-import com.fastcode.timesheetapp1.application.core.authorization.users.dto.FindUsersByIdOutput;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import java.util.ArrayList;
+import java.util.List;
 
 @Repository("usersRepositoryCustomImpl")
 @SuppressWarnings({"unchecked"})

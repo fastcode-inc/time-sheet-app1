@@ -1,14 +1,13 @@
 package com.fastcode.timesheetapp1.application.extended.authorization.rolepermission;
 
-import org.springframework.stereotype.Service;
 import com.fastcode.timesheetapp1.application.core.authorization.rolepermission.RolepermissionAppService;
-
-import com.fastcode.timesheetapp1.domain.extended.authorization.rolepermission.IRolepermissionRepositoryExtended;
+import com.fastcode.timesheetapp1.commons.logging.LoggingHelper;
 import com.fastcode.timesheetapp1.domain.extended.authorization.permission.IPermissionRepositoryExtended;
 import com.fastcode.timesheetapp1.domain.extended.authorization.role.IRoleRepositoryExtended;
+import com.fastcode.timesheetapp1.domain.extended.authorization.rolepermission.IRolepermissionRepositoryExtended;
 import com.fastcode.timesheetapp1.domain.extended.authorization.usersrole.IUsersroleRepositoryExtended;
 import com.fastcode.timesheetapp1.security.JWTAppService;
-import com.fastcode.timesheetapp1.commons.logging.LoggingHelper;
+import org.springframework.stereotype.Service;
 
 @Service("rolepermissionAppServiceExtended")
 public class RolepermissionAppServiceExtended extends RolepermissionAppService implements IRolepermissionAppServiceExtended {

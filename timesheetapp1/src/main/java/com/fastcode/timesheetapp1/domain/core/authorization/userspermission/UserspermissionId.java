@@ -1,11 +1,11 @@
 package com.fastcode.timesheetapp1.domain.core.authorization.userspermission;
 
-import java.io.Serializable;
-import java.time.*;
-import javax.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import javax.persistence.*;
+import java.io.Serializable;
 
 @Getter
 @Setter

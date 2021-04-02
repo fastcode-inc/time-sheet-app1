@@ -2,7 +2,6 @@ package com.fastcode.timesheetapp1.application.core.customer;
 
 import com.fastcode.timesheetapp1.application.core.customer.dto.*;
 import com.fastcode.timesheetapp1.domain.core.customer.CustomerEntity;
-import java.time.*;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")

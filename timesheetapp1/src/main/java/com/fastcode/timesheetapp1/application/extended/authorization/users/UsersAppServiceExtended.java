@@ -1,9 +1,20 @@
 package com.fastcode.timesheetapp1.application.extended.authorization.users;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
+import com.fastcode.timesheetapp1.addons.reporting.domain.dashboardversion.IDashboardversionRepository;
+import com.fastcode.timesheetapp1.addons.reporting.domain.dashboardversionreport.IDashboardversionreportRepository;
+import com.fastcode.timesheetapp1.addons.reporting.domain.reportversion.IReportversionRepository;
+import com.fastcode.timesheetapp1.addons.scheduler.application.trigger.ITriggerAppService;
+import com.fastcode.timesheetapp1.addons.scheduler.application.trigger.dto.CreateTriggerInput;
+import com.fastcode.timesheetapp1.application.core.authorization.users.UsersAppService;
+import com.fastcode.timesheetapp1.application.core.authorization.users.dto.FindUsersByIdOutput;
+import com.fastcode.timesheetapp1.application.core.authorization.users.dto.UpdateUsersOutput;
+import com.fastcode.timesheetapp1.commons.logging.LoggingHelper;
+import com.fastcode.timesheetapp1.domain.core.authorization.users.UsersEntity;
+import com.fastcode.timesheetapp1.domain.core.authorization.userspreference.IUserspreferenceRepository;
+import com.fastcode.timesheetapp1.domain.core.authorization.userspreference.UserspreferenceEntity;
+import com.fastcode.timesheetapp1.domain.extended.authorization.users.IUserRepositoryCustom;
+import com.fastcode.timesheetapp1.domain.extended.authorization.users.IUsersRepositoryExtended;
+import lombok.NonNull;
 import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
@@ -16,26 +27,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.fastcode.timesheetapp1.addons.reporting.domain.dashboardversion.IDashboardversionRepository;
-import com.fastcode.timesheetapp1.addons.reporting.domain.dashboardversionreport.IDashboardversionreportRepository;
-import com.fastcode.timesheetapp1.addons.reporting.domain.reportversion.IReportversionRepository;
-import com.fastcode.timesheetapp1.addons.scheduler.application.trigger.ITriggerAppService;
-import com.fastcode.timesheetapp1.addons.scheduler.application.trigger.dto.CreateTriggerInput;
-import com.fastcode.timesheetapp1.application.core.authorization.users.UsersAppService;
-import com.fastcode.timesheetapp1.application.core.authorization.users.dto.FindUsersByIdOutput;
-import com.fastcode.timesheetapp1.application.core.authorization.users.dto.UpdateUsersOutput;
-import com.fastcode.timesheetapp1.domain.extended.authorization.users.IUserRepositoryCustom;
-import com.fastcode.timesheetapp1.domain.extended.authorization.users.IUsersRepositoryCustomImpl;
-import com.fastcode.timesheetapp1.domain.extended.authorization.users.IUsersRepositoryExtended;
-
-import lombok.NonNull;
-
-import com.fastcode.timesheetapp1.domain.core.authorization.users.IUsersRepository;
-import com.fastcode.timesheetapp1.domain.core.authorization.users.UsersEntity;
-import com.fastcode.timesheetapp1.domain.core.authorization.userspreference.IUserspreferenceRepository;
-import com.fastcode.timesheetapp1.domain.core.authorization.userspreference.UserspreferenceEntity;
-import com.fastcode.timesheetapp1.commons.logging.LoggingHelper;
-import com.fastcode.timesheetapp1.commons.search.SearchCriteria;
+import java.util.List;
 
 @Service("usersAppServiceExtended")
 public class UsersAppServiceExtended extends UsersAppService implements IUsersAppServiceExtended {

@@ -3,14 +3,15 @@ package com.fastcode.timesheetapp1.addons.scheduler.domain.jobhistory;
 import com.fastcode.timesheetapp1.addons.scheduler.BeanUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.quartz.JobListener;
 import org.springframework.stereotype.Component;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Component
 public class JobsListener implements JobListener {

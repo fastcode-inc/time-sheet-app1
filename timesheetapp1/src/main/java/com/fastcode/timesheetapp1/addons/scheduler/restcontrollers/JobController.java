@@ -5,12 +5,6 @@ import com.fastcode.timesheetapp1.addons.scheduler.application.job.dto.*;
 import com.fastcode.timesheetapp1.commons.search.OffsetBasedPageRequest;
 import com.fastcode.timesheetapp1.commons.search.SearchCriteria;
 import com.fastcode.timesheetapp1.commons.search.SearchUtils;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.util.List;
-import java.util.Optional;
-import javax.persistence.EntityNotFoundException;
-import javax.validation.Valid;
 import org.quartz.JobKey;
 import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +16,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import javax.persistence.EntityNotFoundException;
+import javax.validation.Valid;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/scheduler/jobs")

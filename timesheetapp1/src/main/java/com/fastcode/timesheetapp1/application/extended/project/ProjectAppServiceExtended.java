@@ -1,11 +1,10 @@
 package com.fastcode.timesheetapp1.application.extended.project;
 
-import org.springframework.stereotype.Service;
 import com.fastcode.timesheetapp1.application.core.project.ProjectAppService;
-
-import com.fastcode.timesheetapp1.domain.extended.project.IProjectRepositoryExtended;
-import com.fastcode.timesheetapp1.domain.extended.customer.ICustomerRepositoryExtended;
 import com.fastcode.timesheetapp1.commons.logging.LoggingHelper;
+import com.fastcode.timesheetapp1.domain.extended.customer.ICustomerRepositoryExtended;
+import com.fastcode.timesheetapp1.domain.extended.project.IProjectRepositoryExtended;
+import org.springframework.stereotype.Service;
 
 @Service("projectAppServiceExtended")
 public class ProjectAppServiceExtended extends ProjectAppService implements IProjectAppServiceExtended {

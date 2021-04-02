@@ -11,15 +11,16 @@ import com.fastcode.timesheetapp1.domain.core.authorization.userspreference.User
 import com.fastcode.timesheetapp1.domain.core.authorization.usersrole.UsersroleEntity;
 import com.fastcode.timesheetapp1.domain.core.timesheet.TimesheetEntity;
 import com.fastcode.timesheetapp1.domain.core.usertask.UsertaskEntity;
-import java.time.*;
-import java.util.HashSet;
-import java.util.Set;
-import javax.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.javers.core.metamodel.annotation.ShallowReference;
+
+import javax.persistence.*;
+import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")

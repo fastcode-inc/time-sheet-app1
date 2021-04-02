@@ -1,12 +1,6 @@
 package com.fastcode.timesheetapp1.addons.reporting.domain.report;
 
 import com.fastcode.timesheetapp1.addons.reporting.application.report.dto.ReportDetailsOutput;
-import java.time.*;
-import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -16,6 +10,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import java.util.ArrayList;
+import java.util.List;
 
 @Repository("reportRepositoryCustomImpl")
 @SuppressWarnings({ "unchecked" })

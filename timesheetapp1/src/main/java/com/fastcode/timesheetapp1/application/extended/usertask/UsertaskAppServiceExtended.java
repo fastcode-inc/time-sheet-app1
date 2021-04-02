@@ -1,29 +1,22 @@
 package com.fastcode.timesheetapp1.application.extended.usertask;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
-
 import com.fastcode.timesheetapp1.application.core.project.dto.FindProjectByIdOutput;
 import com.fastcode.timesheetapp1.application.core.task.dto.FindTaskByIdOutput;
-import com.fastcode.timesheetapp1.application.core.usertask.IUsertaskMapper;
 import com.fastcode.timesheetapp1.application.core.usertask.UsertaskAppService;
 import com.fastcode.timesheetapp1.application.extended.project.IProjectAppServiceExtended;
 import com.fastcode.timesheetapp1.application.extended.task.ITaskAppServiceExtended;
 import com.fastcode.timesheetapp1.application.extended.usertask.dto.UsertaskOutput;
-import com.fastcode.timesheetapp1.domain.extended.usertask.IUsertaskRepositoryExtended;
-
-import lombok.NonNull;
-
-import com.fastcode.timesheetapp1.domain.extended.task.ITaskRepositoryExtended;
-import com.fastcode.timesheetapp1.domain.core.task.ITaskRepository;
-import com.fastcode.timesheetapp1.domain.core.task.TaskEntity;
-import com.fastcode.timesheetapp1.domain.core.usertask.IUsertaskRepository;
+import com.fastcode.timesheetapp1.commons.logging.LoggingHelper;
 import com.fastcode.timesheetapp1.domain.core.usertask.UsertaskEntity;
 import com.fastcode.timesheetapp1.domain.extended.authorization.users.IUsersRepositoryExtended;
-import com.fastcode.timesheetapp1.commons.logging.LoggingHelper;
+import com.fastcode.timesheetapp1.domain.extended.task.ITaskRepositoryExtended;
+import com.fastcode.timesheetapp1.domain.extended.usertask.IUsertaskRepositoryExtended;
+import lombok.NonNull;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service("usertaskAppServiceExtended")
 public class UsertaskAppServiceExtended extends UsertaskAppService implements IUsertaskAppServiceExtended {

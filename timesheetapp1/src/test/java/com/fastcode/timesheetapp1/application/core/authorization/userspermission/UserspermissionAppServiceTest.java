@@ -1,45 +1,38 @@
 package com.fastcode.timesheetapp1.application.core.authorization.userspermission;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import com.fastcode.timesheetapp1.application.core.authorization.userspermission.dto.*;
+import com.fastcode.timesheetapp1.application.core.authorization.userspermission.dto.CreateUserspermissionInput;
+import com.fastcode.timesheetapp1.application.core.authorization.userspermission.dto.CreateUserspermissionOutput;
+import com.fastcode.timesheetapp1.application.core.authorization.userspermission.dto.FindUserspermissionByIdOutput;
+import com.fastcode.timesheetapp1.application.core.authorization.userspermission.dto.UpdateUserspermissionInput;
 import com.fastcode.timesheetapp1.commons.logging.LoggingHelper;
-import com.fastcode.timesheetapp1.commons.search.*;
+import com.fastcode.timesheetapp1.commons.search.SearchCriteria;
+import com.fastcode.timesheetapp1.commons.search.SearchFields;
 import com.fastcode.timesheetapp1.domain.core.authorization.permission.IPermissionRepository;
 import com.fastcode.timesheetapp1.domain.core.authorization.permission.PermissionEntity;
 import com.fastcode.timesheetapp1.domain.core.authorization.users.IUsersRepository;
 import com.fastcode.timesheetapp1.domain.core.authorization.users.UsersEntity;
-import com.fastcode.timesheetapp1.domain.core.authorization.userspermission.*;
+import com.fastcode.timesheetapp1.domain.core.authorization.userspermission.IUserspermissionRepository;
 import com.fastcode.timesheetapp1.domain.core.authorization.userspermission.QUserspermissionEntity;
 import com.fastcode.timesheetapp1.domain.core.authorization.userspermission.UserspermissionEntity;
 import com.fastcode.timesheetapp1.domain.core.authorization.userspermission.UserspermissionId;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
-import java.time.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
-import org.mockito.Spy;
+import org.mockito.*;
 import org.slf4j.Logger;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.util.*;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 public class UserspermissionAppServiceTest {

@@ -1,9 +1,10 @@
 package com.fastcode.timesheetapp1.application.core.authorization.users.dto;
 
-import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter

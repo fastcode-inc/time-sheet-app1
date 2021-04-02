@@ -2,15 +2,15 @@ package com.fastcode.timesheetapp1.domain.core.timesheetstatus;
 
 import com.fastcode.timesheetapp1.domain.core.abstractentity.AbstractEntity;
 import com.fastcode.timesheetapp1.domain.core.timesheet.TimesheetEntity;
-import java.time.*;
-import java.util.HashSet;
-import java.util.Set;
-import javax.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.javers.core.metamodel.annotation.ShallowReference;
+
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "timesheetstatus")

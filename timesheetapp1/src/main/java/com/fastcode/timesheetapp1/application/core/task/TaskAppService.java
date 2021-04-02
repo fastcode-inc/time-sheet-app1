@@ -2,15 +2,14 @@ package com.fastcode.timesheetapp1.application.core.task;
 
 import com.fastcode.timesheetapp1.application.core.task.dto.*;
 import com.fastcode.timesheetapp1.commons.logging.LoggingHelper;
-import com.fastcode.timesheetapp1.commons.search.*;
+import com.fastcode.timesheetapp1.commons.search.SearchCriteria;
+import com.fastcode.timesheetapp1.commons.search.SearchFields;
 import com.fastcode.timesheetapp1.domain.core.project.IProjectRepository;
 import com.fastcode.timesheetapp1.domain.core.project.ProjectEntity;
 import com.fastcode.timesheetapp1.domain.core.task.ITaskRepository;
 import com.fastcode.timesheetapp1.domain.core.task.QTaskEntity;
 import com.fastcode.timesheetapp1.domain.core.task.TaskEntity;
 import com.querydsl.core.BooleanBuilder;
-import java.time.*;
-import java.util.*;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
@@ -20,6 +19,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.*;
 
 @Service("taskAppService")
 @RequiredArgsConstructor

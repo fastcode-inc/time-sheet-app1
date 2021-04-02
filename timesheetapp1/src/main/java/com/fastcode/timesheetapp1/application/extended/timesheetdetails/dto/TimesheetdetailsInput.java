@@ -1,11 +1,11 @@
 package com.fastcode.timesheetapp1.application.extended.timesheetdetails.dto;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import javax.validation.constraints.NotNull;
-
 import lombok.Getter;
 import lombok.Setter;
+
+import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Getter @Setter
 public class TimesheetdetailsInput {

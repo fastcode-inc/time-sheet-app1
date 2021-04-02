@@ -2,7 +2,9 @@ package com.fastcode.timesheetapp1.application.core.timesheetdetails;
 
 import com.fastcode.timesheetapp1.application.core.timesheetdetails.dto.*;
 import com.fastcode.timesheetapp1.commons.logging.LoggingHelper;
-import com.fastcode.timesheetapp1.commons.search.*;
+import com.fastcode.timesheetapp1.commons.search.SearchCriteria;
+import com.fastcode.timesheetapp1.commons.search.SearchFields;
+import com.fastcode.timesheetapp1.commons.search.SearchUtils;
 import com.fastcode.timesheetapp1.domain.core.task.ITaskRepository;
 import com.fastcode.timesheetapp1.domain.core.task.TaskEntity;
 import com.fastcode.timesheetapp1.domain.core.timeofftype.ITimeofftypeRepository;
@@ -13,9 +15,6 @@ import com.fastcode.timesheetapp1.domain.core.timesheetdetails.ITimesheetdetails
 import com.fastcode.timesheetapp1.domain.core.timesheetdetails.QTimesheetdetailsEntity;
 import com.fastcode.timesheetapp1.domain.core.timesheetdetails.TimesheetdetailsEntity;
 import com.querydsl.core.BooleanBuilder;
-import java.math.BigDecimal;
-import java.time.*;
-import java.util.*;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
@@ -26,6 +25,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.*;
 
 @Service("timesheetdetailsAppService")
 @RequiredArgsConstructor

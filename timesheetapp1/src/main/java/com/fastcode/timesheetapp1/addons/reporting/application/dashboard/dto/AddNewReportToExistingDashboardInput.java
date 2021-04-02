@@ -1,10 +1,11 @@
 package com.fastcode.timesheetapp1.addons.reporting.application.dashboard.dto;
 
 import com.fastcode.timesheetapp1.addons.reporting.application.report.dto.CreateReportInput;
-import java.util.ArrayList;
-import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter

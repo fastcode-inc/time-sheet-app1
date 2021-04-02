@@ -1,10 +1,9 @@
 package com.fastcode.timesheetapp1.application.extended.authorization.permission;
 
-import org.springframework.stereotype.Service;
 import com.fastcode.timesheetapp1.application.core.authorization.permission.PermissionAppService;
-
-import com.fastcode.timesheetapp1.domain.extended.authorization.permission.IPermissionRepositoryExtended;
 import com.fastcode.timesheetapp1.commons.logging.LoggingHelper;
+import com.fastcode.timesheetapp1.domain.extended.authorization.permission.IPermissionRepositoryExtended;
+import org.springframework.stereotype.Service;
 
 @Service("permissionAppServiceExtended")
 public class PermissionAppServiceExtended extends PermissionAppService implements IPermissionAppServiceExtended {

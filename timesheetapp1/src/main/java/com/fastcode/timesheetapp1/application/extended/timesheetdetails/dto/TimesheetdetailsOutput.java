@@ -1,7 +1,6 @@
 package com.fastcode.timesheetapp1.application.extended.timesheetdetails.dto;
 
 import com.fastcode.timesheetapp1.application.core.timesheetdetails.dto.FindTimesheetdetailsByIdOutput;
-
 import lombok.Getter;
 import lombok.Setter;
 

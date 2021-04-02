@@ -1,8 +1,9 @@
 package com.fastcode.timesheetapp1.application.core.usertask.dto;
 
-import java.time.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.time.LocalDate;
 
 @Getter
 @Setter

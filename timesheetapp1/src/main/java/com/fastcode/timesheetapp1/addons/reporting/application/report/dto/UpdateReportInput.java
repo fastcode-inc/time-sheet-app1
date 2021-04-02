@@ -1,11 +1,11 @@
 package com.fastcode.timesheetapp1.addons.reporting.application.report.dto;
 
-import java.time.*;
-import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 import org.json.simple.JSONObject;
+
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter

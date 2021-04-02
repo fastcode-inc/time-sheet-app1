@@ -1,10 +1,6 @@
 package com.fastcode.timesheetapp1.commons.error;
 
-import static org.springframework.http.HttpStatus.*;
-
 import com.fastcode.timesheetapp1.commons.logging.LoggingHelper;
-import javax.persistence.EntityExistsException;
-import javax.persistence.EntityNotFoundException;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.exception.ConstraintViolationException;
@@ -26,6 +22,11 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
+import javax.persistence.EntityExistsException;
+import javax.persistence.EntityNotFoundException;
+
+import static org.springframework.http.HttpStatus.*;
 
 @ControllerAdvice
 @RequiredArgsConstructor

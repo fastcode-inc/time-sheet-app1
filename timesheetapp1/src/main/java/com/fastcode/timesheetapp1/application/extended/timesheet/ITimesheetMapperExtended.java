@@ -1,12 +1,11 @@
 package com.fastcode.timesheetapp1.application.extended.timesheet;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.Mappings;
-
 import com.fastcode.timesheetapp1.application.core.timesheet.ITimesheetMapper;
 import com.fastcode.timesheetapp1.application.extended.timesheet.dto.TimesheetOutput;
 import com.fastcode.timesheetapp1.domain.core.timesheet.TimesheetEntity;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.Mappings;
 
 @Mapper(componentModel = "spring")
 public interface ITimesheetMapperExtended extends ITimesheetMapper {

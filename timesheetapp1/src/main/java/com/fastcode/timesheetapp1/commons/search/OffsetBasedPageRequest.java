@@ -1,11 +1,12 @@
 package com.fastcode.timesheetapp1.commons.search;
 
-import java.io.Serializable;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+
+import java.io.Serializable;
 
 /**
  * Created by Ergin

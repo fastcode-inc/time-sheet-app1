@@ -3,12 +3,12 @@ package com.fastcode.timesheetapp1.addons.reporting.domain.dashboardversionrepor
 import com.fastcode.timesheetapp1.addons.reporting.domain.dashboardversion.DashboardversionEntity;
 import com.fastcode.timesheetapp1.addons.reporting.domain.report.ReportEntity;
 import com.fastcode.timesheetapp1.domain.core.abstractentity.AbstractEntity;
-import java.time.*;
-import javax.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import javax.persistence.*;
 
 @Getter
 @Setter
