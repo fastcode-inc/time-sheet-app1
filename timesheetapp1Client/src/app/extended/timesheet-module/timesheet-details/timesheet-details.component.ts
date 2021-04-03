@@ -73,7 +73,10 @@ export class TimesheetDetailsComponent implements OnInit {
         this.timesheetDetails = this.timesheet.timesheetdetailsList;
         this.notes = this.timesheet.notes;
         this.setTimesheetDetailsData();
-      }, err => this.setTimesheetDetailsData());
+      }, err => {
+        this.timesheet = undefined;
+        this.setTimesheetDetailsData()
+      });
     }
   }
 
@@ -209,7 +212,7 @@ export class TimesheetDetailsComponent implements OnInit {
       var date = moment(dateList[i]).date();
       this.dayList.push(this.weekday[day] + ' ' + date);
     }
-    this.dateList = dateList.map(d => this.timesheetService.getFormattedDate(d.toDate(), 'yyyy-mm-dd'));
+    this.dateList = dateList.map(d => moment(d.toDate()).format('YYYY-MM-DD'));
   }
 
   changeTimeSheetStatus(status: string) {

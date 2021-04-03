@@ -5,13 +5,17 @@ import { UsertaskExtendedService } from 'src/app/extended/entities/usertask';
 import { of } from 'rxjs';
 import { ITimesheet, TimesheetService } from 'src/app/entities/timesheet';
 import { TimesheetExtendedService } from 'src/app/extended/entities/timesheet';
-import * as moment from 'moment';
+import * as Moment from 'moment';
 import { TimeofftypeExtendedService } from 'src/app/extended/entities/timeofftype';
 import { ITimeofftype } from 'src/app/entities/timeofftype';
 import { ErrorService } from 'src/app/common/shared';
 import { config } from 'process';
 import { UsersExtendedService } from '../../admin/user-management/users';
 import { TranslateService } from '@ngx-translate/core';
+import { extendMoment } from 'moment-range';
+import { TimesheetdetailsExtendedService } from '../../entities/timesheetdetails';
+
+const moment = extendMoment(Moment);
 
 interface ITimeofftypeOption extends ITimeofftype{
   disabled?: boolean;
@@ -42,6 +46,7 @@ export class TimesheetComponent implements OnInit {
 		public route: ActivatedRoute,
 		public usertaskService: UsertaskExtendedService,
 		public timesheetService: TimesheetExtendedService,
+		public timesheetdetailsService: TimesheetdetailsExtendedService,
 		public timeofftypeService: TimeofftypeExtendedService,
 		public errorService: ErrorService,
 		public translateService: TranslateService,
@@ -78,7 +83,7 @@ export class TimesheetComponent implements OnInit {
   }
 
   getTimesheetDetails() {
-    this.timesheetService.getTimesheetDetails(this.timesheetDate).subscribe(res => {
+    this.timesheetdetailsService.getTimesheetDetails(this.timesheetDate).subscribe(res => {
       this.daysheet = res;
       this.totalDayHours();
       this.getUserTasks();
@@ -149,7 +154,8 @@ export class TimesheetComponent implements OnInit {
       notes: null,
       hours: null,
       timesheetid: this.timesheet ? this.timesheet.id : undefined,
-      workdate: this.timesheetService.getFormattedDate(this.timesheetDate, 'yyyy-mm-dd')
+      // workdate: this.timesheetService.getFormattedDate(this.timesheetDate, 'YYYY-MM-DD')
+      workdate: moment(this.timesheetDate).format('YYYY-MM-DD')
     };
     this.daysheet.push(timesheetDetails);
   }
@@ -160,7 +166,8 @@ export class TimesheetComponent implements OnInit {
       notes: '',
       hours: 0,
       timesheetid: this.timesheet ? this.timesheet.id : undefined,
-      workdate: this.timesheetService.getFormattedDate(this.timesheetDate, 'yyyy-mm-dd')
+      // workdate: this.timesheetService.getFormattedDate(this.timesheetDate, 'YYYY-MM-DD')
+      workdate: moment(this.timesheetDate).format('YYYY-MM-DD')
     };
     this.daysheet.push(timeoff);
   }
@@ -208,7 +215,7 @@ export class TimesheetComponent implements OnInit {
     this.loading = true;
     this.daysheet = this.daysheet.filter(sheet => sheet.hours && sheet.hours > 0)
     if(this.timesheet) {
-      this.timesheetService.createTimesheetDetails(this.daysheet).subscribe(res => {
+      this.timesheetdetailsService.createTimesheetDetails(this.daysheet).subscribe(res => {
         this.loading = false;
         this.getTimesheet();
         this.getTimesheetDetails();
@@ -216,12 +223,12 @@ export class TimesheetComponent implements OnInit {
       });
     } else {
       let timesheet = {
-        periodstartingdate: this.timesheetService.getFormattedDate(this.getStartDateOfPeriod(), 'yyyy-mm-dd'),
-        periodendingdate: this.timesheetService.getFormattedDate(this.getEndingDateOfPeriod(), 'yyyy-mm-dd'),
+        periodstartingdate: moment(this.getStartDateOfPeriod()).format('YYYY-MM-DD'),
+        periodendingdate: moment(this.getEndingDateOfPeriod()).format('YYYY-MM-DD'),
       }
       this.timesheetService.create(timesheet).subscribe(res => {
         this.daysheet = this.daysheet.map(obj=> ({ ...obj, timesheetid: res.id }));
-        this.timesheetService.createTimesheetDetails(this.daysheet).subscribe(res => {
+        this.timesheetdetailsService.createTimesheetDetails(this.daysheet).subscribe(res => {
           this.loading = false;
           this.getTimesheet();
           this.getTimesheetDetails();

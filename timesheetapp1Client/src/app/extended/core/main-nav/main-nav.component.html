@@ -63,11 +63,11 @@
         </mat-nav-list>
       </mat-expansion-panel>
 
-      <a mat-list-item class="sidenav-list-item" routerLink="timesheet" *ngIf="permissions['FILL_TIMESHEET']">
+      <a mat-list-item class="sidenav-list-item" routerLink="timesheet" *ngIf="permissions['CREATE_TIMESHEETDETAILS_BULK']">
         <i class="material-icons">
           more_time
         </i> &nbsp; {{'TIMESHEET.DAY_VIEW' | translate}}</a>
-      <a mat-list-item class="sidenav-list-item" routerLink="timesheet-details" *ngIf="permissions['FILL_TIMESHEET']">
+      <a mat-list-item class="sidenav-list-item" routerLink="timesheet-details" *ngIf="permissions['READ_TIMESHEET_WITH_DETAILS']">
         <i class="material-icons">
           access_time
         </i> &nbsp; {{'TIMESHEET.TIMESHEET_VIEW' | translate}}</a>
@@ -121,14 +121,14 @@
       </mat-expansion-panel>
       
       <mat-expansion-panel class="expansion-panel" 
-        *ngIf="permissions['authEntities'] || permissions['showEntities'] || permissions['ENTITYHISTORY']">
+        *ngIf="permissions['AUTH_ENTITIES'] || permissions['SHOW_ENTITIES'] || permissions['ENTITYHISTORY']">
         <mat-expansion-panel-header class="subnav-header">
           <i class="material-icons">
             account_box
             </i> &nbsp;{{'MainNav.Administration' | translate }}
         </mat-expansion-panel-header>
 
-        <mat-expansion-panel class="expansion-panel" *ngIf="permissions['showEntities']">
+        <mat-expansion-panel class="expansion-panel" *ngIf="permissions['SHOW_ENTITIES']">
           <mat-expansion-panel-header class="subnav-header">
             <i class="material-icons">
               dvr

@@ -1,7 +1,5 @@
 package com.fastcode.timesheetapp1.restcontrollers.extended;
 
-import com.fastcode.timesheetapp1.application.core.timesheet.dto.CreateTimesheetInput;
-import com.fastcode.timesheetapp1.application.core.timesheet.dto.CreateTimesheetOutput;
 import com.fastcode.timesheetapp1.application.core.timesheet.dto.FindTimesheetByIdOutput;
 import com.fastcode.timesheetapp1.application.core.timesheet.dto.UpdateTimesheetOutput;
 import com.fastcode.timesheetapp1.application.extended.authorization.users.IUsersAppServiceExtended;
@@ -9,8 +7,6 @@ import com.fastcode.timesheetapp1.application.extended.timesheet.ITimesheetAppSe
 import com.fastcode.timesheetapp1.application.extended.timesheet.dto.TimesheetOutput;
 import com.fastcode.timesheetapp1.application.extended.timesheet.dto.UpdateStatus;
 import com.fastcode.timesheetapp1.application.extended.timesheetdetails.ITimesheetdetailsAppServiceExtended;
-import com.fastcode.timesheetapp1.application.extended.timesheetdetails.dto.TimesheetdetailsInput;
-import com.fastcode.timesheetapp1.application.extended.timesheetdetails.dto.TimesheetdetailsOutput;
 import com.fastcode.timesheetapp1.application.extended.timesheetstatus.ITimesheetstatusAppServiceExtended;
 import com.fastcode.timesheetapp1.commons.logging.LoggingHelper;
 import com.fastcode.timesheetapp1.domain.core.authorization.users.UsersEntity;
@@ -22,16 +18,12 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -47,23 +39,17 @@ public class TimesheetControllerExtended extends TimesheetController {
 				timesheetstatusAppServiceExtended,
 				usersAppServiceExtended,
 				helper, env);
-		this._timesheetdetailsAppServiceExtended = timesheetdetailsAppServiceExtended;
 		this._timesheetAppServiceExtended = timesheetAppServiceExtended;
 		this.usersAppServiceExtended = usersAppServiceExtended;
 	}
 
 	//Add your custom code here
 
-	@Qualifier("timesheetdetailsExtendedAppService")
-	@NonNull  protected final ITimesheetdetailsAppServiceExtended  _timesheetdetailsAppServiceExtended;
-
 	@Qualifier("timesheetExtendedAppService")
 	@NonNull  protected final ITimesheetAppServiceExtended  _timesheetAppServiceExtended;
 
 	@Qualifier("usersAppServiceExtended")
 	@NonNull protected final IUsersAppServiceExtended usersAppServiceExtended;
-
-
 
 	@RequestMapping(value = "/getTimesheet", method = RequestMethod.GET, consumes = {"application/json"}, produces = {"application/json"})
 	public ResponseEntity<TimesheetOutput> findTimesheetByDate(@RequestParam("date") String date, @RequestParam("includeDetails") Boolean includeDetails, @RequestParam(value="userId", required=false) Long userId,HttpServletRequest request) throws Exception {
@@ -79,7 +65,7 @@ public class TimesheetControllerExtended extends TimesheetController {
 			}
 		}
 		else {
-			if(!usersAppServiceExtended.parseTokenAndCheckIfPermissionExists(token, "FILL_TIMESHEET")) {
+			if(!usersAppServiceExtended.parseTokenAndCheckIfPermissionExists(token, "READ_TIMESHEET_WITH_DETAILS")) {
 				throw new Exception("You don't have permission to fetch timesheet details. " + userId);
 			}
 			UsersEntity loggedInUser = usersAppServiceExtended.getUsers();
@@ -94,8 +80,6 @@ public class TimesheetControllerExtended extends TimesheetController {
 		return new ResponseEntity(output, HttpStatus.OK);
 	}
 
-
-	
 	@RequestMapping(value = "/{id}/updateTimesheetStatus", method = RequestMethod.PUT, consumes = {"application/json"}, produces = {"application/json"})
 	public ResponseEntity<UpdateTimesheetOutput> updateTimesheetStatus(@PathVariable Long id, @RequestBody UpdateStatus input,HttpServletRequest request) throws Exception {
 
@@ -135,22 +119,5 @@ public class TimesheetControllerExtended extends TimesheetController {
 
 		return new ResponseEntity(output, HttpStatus.OK);
 	}
-	
-//    @PreAuthorize("hasAnyAuthority('TIMESHEETENTITY_READ')")
-//	@RequestMapping(method = RequestMethod.GET, consumes = {"application/json"}, produces = {"application/json"})
-//	public ResponseEntity find(@RequestParam(value="search", required=false) String search, @RequestParam(value = "offset", required=false) String offset, @RequestParam(value = "limit", required=false) String limit, Sort sort) throws Exception {
-//
-//		if (offset == null) { offset = env.getProperty("fastCode.offset.default"); }
-//		if (limit == null) { limit = env.getProperty("fastCode.limit.default"); }
-//
-//		if(sort == null || sort.isEmpty()) {
-//			sort = Sort.by(Sort.Direction.ASC, "periodstartingdate");
-//		}
-//		
-//		Pageable Pageable = new OffsetBasedPageRequest(Integer.parseInt(offset), Integer.parseInt(limit), sort);
-//		SearchCriteria searchCriteria = SearchUtils.generateSearchCriteriaObject(search);
-//
-//		return ResponseEntity.ok(_timesheetAppServiceExtended.findWithHours(searchCriteria,Pageable));
-//	}
 }
 
