@@ -11,7 +11,7 @@ RUN rm -r /usr/local/apache2/htdocs/*
 WORKDIR /
 
 RUN apt-get update
-RUN apt-get install curl
+RUN apt-get -y install curl
 
 #Install Node.js
 RUN curl -k -O https://nodejs.org/dist/v10.23.1/node-v10.23.1-linux-x64.tar.gz
