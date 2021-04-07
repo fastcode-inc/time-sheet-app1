@@ -226,7 +226,7 @@ export class TimesheetComponent implements OnInit {
         periodstartingdate: moment(this.getStartDateOfPeriod()).format('YYYY-MM-DD'),
         periodendingdate: moment(this.getEndingDateOfPeriod()).format('YYYY-MM-DD'),
       }
-      this.timesheetService.create(timesheet).subscribe(res => {
+      this.timesheetService.create(<any>timesheet).subscribe(res => {
         this.daysheet = this.daysheet.map(obj=> ({ ...obj, timesheetid: res.id }));
         this.timesheetdetailsService.createTimesheetDetails(this.daysheet).subscribe(res => {
           this.loading = false;

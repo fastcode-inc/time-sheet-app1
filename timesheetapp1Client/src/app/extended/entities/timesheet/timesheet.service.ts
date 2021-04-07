@@ -34,14 +34,4 @@ export class TimesheetExtendedService extends TimesheetService {
     return this.http.put(`${this.url}/${timesheetid}/updateTimesheetStatus`, input).pipe(catchError(this.handleError));
   }
 
-  /**
-   * Calls api to create given item.
-   * @param item
-   * @returns Observable of created entity object.
-   */
-  public create(item): Observable<any> {
-    return this.http
-      .post(this.url, item).pipe(catchError(this.handleError));
-  }
-
 }
