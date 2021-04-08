@@ -48,3 +48,5 @@ services:
       - samplenet
 networks:
   samplenet: null
+volumes:
+  postgresdb: {}
