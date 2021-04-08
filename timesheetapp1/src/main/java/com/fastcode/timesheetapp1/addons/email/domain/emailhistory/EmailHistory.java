@@ -2,12 +2,13 @@ package com.fastcode.timesheetapp1.addons.email.domain.emailhistory;
 
 import com.fastcode.timesheetapp1.addons.email.domain.emailattachments.EmailAttachments;
 import com.fastcode.timesheetapp1.domain.core.abstractentity.AbstractEntity;
+import lombok.Getter;
+import lombok.Setter;
+
+import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
 
 @Entity
 @Table(name = "email_history")

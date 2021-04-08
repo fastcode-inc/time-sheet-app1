@@ -1,9 +1,9 @@
 package com.fastcode.timesheetapp1.addons.reporting.application.dashboardversion.dto;
 
-import java.time.*;
-import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter

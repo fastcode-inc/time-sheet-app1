@@ -1,15 +1,11 @@
 package com.fastcode.timesheetapp1.application.extended.timesheet;
 
-import java.time.LocalDate;
-import java.util.List;
-
-import org.springframework.data.domain.Pageable;
-
 import com.fastcode.timesheetapp1.application.core.timesheet.ITimesheetAppService;
 import com.fastcode.timesheetapp1.application.core.timesheet.dto.UpdateTimesheetOutput;
 import com.fastcode.timesheetapp1.application.extended.timesheet.dto.TimesheetOutput;
 import com.fastcode.timesheetapp1.application.extended.timesheet.dto.UpdateStatus;
-import com.fastcode.timesheetapp1.commons.search.SearchCriteria;
+
+import java.time.LocalDate;
 
 public interface ITimesheetAppServiceExtended extends ITimesheetAppService {
 

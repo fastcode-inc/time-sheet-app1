@@ -11,10 +11,6 @@ import com.fastcode.timesheetapp1.commons.search.SearchCriteria;
 import com.fastcode.timesheetapp1.commons.search.SearchUtils;
 import com.fastcode.timesheetapp1.domain.core.authorization.userspermission.UserspermissionId;
 import com.fastcode.timesheetapp1.security.JWTAppService;
-import java.time.*;
-import java.util.*;
-import javax.persistence.EntityNotFoundException;
-import javax.validation.Valid;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -25,6 +21,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import javax.persistence.EntityNotFoundException;
+import javax.validation.Valid;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/userspermission")

@@ -1,7 +1,5 @@
 package com.fastcode.timesheetapp1.domain.core.authorization.tokenverification;
 
-import java.time.*;
-
 public interface ITokenVerificationManager {
     TokenverificationEntity save(TokenverificationEntity entity);
 

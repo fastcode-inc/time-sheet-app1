@@ -1,9 +1,10 @@
 package com.fastcode.timesheetapp1.application.core.timesheetdetails.dto;
 
-import java.math.BigDecimal;
-import java.time.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Getter
 @Setter

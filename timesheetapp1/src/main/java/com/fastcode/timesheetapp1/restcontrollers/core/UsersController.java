@@ -2,7 +2,6 @@ package com.fastcode.timesheetapp1.restcontrollers.core;
 
 import com.fastcode.timesheetapp1.application.core.authorization.users.IUsersAppService;
 import com.fastcode.timesheetapp1.application.core.authorization.users.dto.*;
-import com.fastcode.timesheetapp1.application.core.authorization.users.dto.FindUsersByIdOutput;
 import com.fastcode.timesheetapp1.application.core.authorization.userspermission.IUserspermissionAppService;
 import com.fastcode.timesheetapp1.application.core.authorization.userspermission.dto.FindUserspermissionByIdOutput;
 import com.fastcode.timesheetapp1.application.core.authorization.usersrole.IUsersroleAppService;
@@ -17,11 +16,6 @@ import com.fastcode.timesheetapp1.commons.search.SearchCriteria;
 import com.fastcode.timesheetapp1.commons.search.SearchUtils;
 import com.fastcode.timesheetapp1.domain.core.authorization.users.UsersEntity;
 import com.fastcode.timesheetapp1.security.JWTAppService;
-import java.time.*;
-import java.util.*;
-import javax.persistence.EntityExistsException;
-import javax.persistence.EntityNotFoundException;
-import javax.validation.Valid;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -33,6 +27,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import javax.persistence.EntityExistsException;
+import javax.persistence.EntityNotFoundException;
+import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/users")

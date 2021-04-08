@@ -2,8 +2,6 @@ package com.fastcode.timesheetapp1.addons.docmgmt.domain.file;
 
 import com.fastcode.timesheetapp1.addons.email.domain.emailattachments.EmailAttachments;
 import com.fastcode.timesheetapp1.domain.core.abstractentity.AbstractEntity;
-import java.util.Date;
-import javax.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,6 +10,9 @@ import org.springframework.content.commons.annotations.ContentId;
 import org.springframework.content.commons.annotations.ContentLength;
 import org.springframework.content.commons.annotations.MimeType;
 import org.springframework.versions.*;
+
+import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "file")

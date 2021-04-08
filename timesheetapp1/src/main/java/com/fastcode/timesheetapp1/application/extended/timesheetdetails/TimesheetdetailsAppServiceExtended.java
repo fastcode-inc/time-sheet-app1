@@ -1,18 +1,5 @@
 package com.fastcode.timesheetapp1.application.extended.timesheetdetails;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
-import javax.persistence.EntityNotFoundException;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
-
 import com.fastcode.timesheetapp1.application.core.project.dto.FindProjectByIdOutput;
 import com.fastcode.timesheetapp1.application.core.task.dto.FindTaskByIdOutput;
 import com.fastcode.timesheetapp1.application.core.timesheetdetails.TimesheetdetailsAppService;
@@ -21,11 +8,7 @@ import com.fastcode.timesheetapp1.application.extended.project.IProjectAppServic
 import com.fastcode.timesheetapp1.application.extended.task.ITaskAppServiceExtended;
 import com.fastcode.timesheetapp1.application.extended.timesheetdetails.dto.TimesheetdetailsInput;
 import com.fastcode.timesheetapp1.application.extended.timesheetdetails.dto.TimesheetdetailsOutput;
-import com.fastcode.timesheetapp1.domain.extended.timesheetdetails.ITimesheetdetailsRepositoryExtended;
-
-import liquibase.pro.license.keymgr.e;
-import lombok.NonNull;
-
+import com.fastcode.timesheetapp1.commons.logging.LoggingHelper;
 import com.fastcode.timesheetapp1.domain.core.authorization.users.UsersEntity;
 import com.fastcode.timesheetapp1.domain.core.task.TaskEntity;
 import com.fastcode.timesheetapp1.domain.core.timeofftype.TimeofftypeEntity;
@@ -34,7 +17,19 @@ import com.fastcode.timesheetapp1.domain.core.timesheetdetails.TimesheetdetailsE
 import com.fastcode.timesheetapp1.domain.extended.task.ITaskRepositoryExtended;
 import com.fastcode.timesheetapp1.domain.extended.timeofftype.ITimeofftypeRepositoryExtended;
 import com.fastcode.timesheetapp1.domain.extended.timesheet.ITimesheetRepositoryExtended;
-import com.fastcode.timesheetapp1.commons.logging.LoggingHelper;
+import com.fastcode.timesheetapp1.domain.extended.timesheetdetails.ITimesheetdetailsRepositoryExtended;
+import lombok.NonNull;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.persistence.EntityNotFoundException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service("timesheetdetailsAppServiceExtended")
 public class TimesheetdetailsAppServiceExtended extends TimesheetdetailsAppService implements ITimesheetdetailsAppServiceExtended {

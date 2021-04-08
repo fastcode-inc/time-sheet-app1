@@ -47,7 +47,7 @@ export class ManagerSheetComponent implements OnInit {
       {
         operator: operatorType.Equals,
         fieldName: 'periodstartingdate',
-        searchValue: this.timesheetService.getFormattedDate(this.timesheetDate, 'yyyy-mm-dd')
+        searchValue: moment(this.timesheetDate).format('YYYY-MM-DD')
       },
       {
         operator: operatorType.Equals,

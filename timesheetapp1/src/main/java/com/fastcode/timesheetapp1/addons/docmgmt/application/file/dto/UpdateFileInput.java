@@ -1,8 +1,9 @@
 package com.fastcode.timesheetapp1.addons.docmgmt.application.file.dto;
 
-import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter

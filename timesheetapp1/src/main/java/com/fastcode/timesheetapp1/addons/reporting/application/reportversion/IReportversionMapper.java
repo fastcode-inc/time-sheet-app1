@@ -1,14 +1,8 @@
 package com.fastcode.timesheetapp1.addons.reporting.application.reportversion;
 
-import com.fastcode.timesheetapp1.addons.reporting.application.reportversion.dto.CreateReportversionInput;
-import com.fastcode.timesheetapp1.addons.reporting.application.reportversion.dto.CreateReportversionOutput;
-import com.fastcode.timesheetapp1.addons.reporting.application.reportversion.dto.FindReportversionByIdOutput;
-import com.fastcode.timesheetapp1.addons.reporting.application.reportversion.dto.GetUsersOutput;
-import com.fastcode.timesheetapp1.addons.reporting.application.reportversion.dto.UpdateReportversionInput;
-import com.fastcode.timesheetapp1.addons.reporting.application.reportversion.dto.UpdateReportversionOutput;
+import com.fastcode.timesheetapp1.addons.reporting.application.reportversion.dto.*;
 import com.fastcode.timesheetapp1.addons.reporting.domain.reportversion.ReportversionEntity;
 import com.fastcode.timesheetapp1.domain.core.authorization.users.UsersEntity;
-import java.time.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;

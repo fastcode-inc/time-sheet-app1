@@ -10,11 +10,6 @@ import com.fastcode.timesheetapp1.commons.logging.LoggingHelper;
 import com.fastcode.timesheetapp1.commons.search.OffsetBasedPageRequest;
 import com.fastcode.timesheetapp1.commons.search.SearchCriteria;
 import com.fastcode.timesheetapp1.commons.search.SearchUtils;
-import java.io.IOException;
-import java.util.List;
-import java.util.Optional;
-import javax.persistence.EntityNotFoundException;
-import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.env.Environment;
@@ -28,6 +23,12 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.versions.VersionInfo;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.persistence.EntityNotFoundException;
+import javax.validation.Valid;
+import java.io.IOException;
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class FileController {

@@ -1,47 +1,40 @@
 package com.fastcode.timesheetapp1.application.core.authorization.users;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import com.fastcode.timesheetapp1.addons.reporting.domain.dashboardversion.*;
-import com.fastcode.timesheetapp1.addons.reporting.domain.dashboardversionreport.*;
-import com.fastcode.timesheetapp1.addons.reporting.domain.reportversion.*;
-import com.fastcode.timesheetapp1.application.core.authorization.users.dto.*;
+import com.fastcode.timesheetapp1.addons.reporting.domain.dashboardversion.DashboardversionEntity;
+import com.fastcode.timesheetapp1.addons.reporting.domain.dashboardversion.IDashboardversionRepository;
+import com.fastcode.timesheetapp1.addons.reporting.domain.dashboardversionreport.DashboardversionreportEntity;
+import com.fastcode.timesheetapp1.addons.reporting.domain.dashboardversionreport.IDashboardversionreportRepository;
+import com.fastcode.timesheetapp1.addons.reporting.domain.reportversion.IReportversionRepository;
+import com.fastcode.timesheetapp1.addons.reporting.domain.reportversion.ReportversionEntity;
+import com.fastcode.timesheetapp1.application.core.authorization.users.dto.CreateUsersInput;
+import com.fastcode.timesheetapp1.application.core.authorization.users.dto.FindUsersByIdOutput;
+import com.fastcode.timesheetapp1.application.core.authorization.users.dto.UpdateUsersInput;
 import com.fastcode.timesheetapp1.commons.logging.LoggingHelper;
-import com.fastcode.timesheetapp1.commons.search.*;
+import com.fastcode.timesheetapp1.commons.search.SearchCriteria;
+import com.fastcode.timesheetapp1.commons.search.SearchFields;
 import com.fastcode.timesheetapp1.domain.core.authorization.role.IRoleRepository;
-import com.fastcode.timesheetapp1.domain.core.authorization.users.*;
+import com.fastcode.timesheetapp1.domain.core.authorization.users.IUsersRepository;
 import com.fastcode.timesheetapp1.domain.core.authorization.users.QUsersEntity;
 import com.fastcode.timesheetapp1.domain.core.authorization.users.UsersEntity;
 import com.fastcode.timesheetapp1.domain.core.authorization.userspreference.IUserspreferenceRepository;
 import com.fastcode.timesheetapp1.domain.core.authorization.userspreference.UserspreferenceEntity;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
-import java.time.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
-import org.mockito.Spy;
+import org.mockito.*;
 import org.slf4j.Logger;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.util.*;
+
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 public class UsersAppServiceTest {

@@ -9,13 +9,6 @@ import com.fastcode.timesheetapp1.domain.core.authorization.tokenverification.To
 import com.fastcode.timesheetapp1.domain.core.authorization.users.IUsersRepository;
 import com.fastcode.timesheetapp1.domain.core.authorization.users.UsersEntity;
 import com.fastcode.timesheetapp1.security.JWTAppService;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Optional;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import javax.persistence.EntityNotFoundException;
-import javax.servlet.http.HttpServletRequest;
 import org.eclipse.jdt.core.compiler.InvalidInputException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -26,6 +19,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.persistence.EntityNotFoundException;
+import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @RestController
 @RequestMapping("/password")

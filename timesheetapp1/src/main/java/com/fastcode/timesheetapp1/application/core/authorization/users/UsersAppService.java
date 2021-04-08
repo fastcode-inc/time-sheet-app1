@@ -1,11 +1,16 @@
 package com.fastcode.timesheetapp1.application.core.authorization.users;
 
-import com.fastcode.timesheetapp1.addons.reporting.domain.dashboardversion.*;
-import com.fastcode.timesheetapp1.addons.reporting.domain.dashboardversionreport.*;
-import com.fastcode.timesheetapp1.addons.reporting.domain.reportversion.*;
+import com.fastcode.timesheetapp1.addons.reporting.domain.dashboardversion.DashboardversionEntity;
+import com.fastcode.timesheetapp1.addons.reporting.domain.dashboardversion.IDashboardversionRepository;
+import com.fastcode.timesheetapp1.addons.reporting.domain.dashboardversionreport.DashboardversionreportEntity;
+import com.fastcode.timesheetapp1.addons.reporting.domain.dashboardversionreport.IDashboardversionreportRepository;
+import com.fastcode.timesheetapp1.addons.reporting.domain.reportversion.IReportversionRepository;
+import com.fastcode.timesheetapp1.addons.reporting.domain.reportversion.ReportversionEntity;
 import com.fastcode.timesheetapp1.application.core.authorization.users.dto.*;
 import com.fastcode.timesheetapp1.commons.logging.LoggingHelper;
-import com.fastcode.timesheetapp1.commons.search.*;
+import com.fastcode.timesheetapp1.commons.search.SearchCriteria;
+import com.fastcode.timesheetapp1.commons.search.SearchFields;
+import com.fastcode.timesheetapp1.commons.search.SearchUtils;
 import com.fastcode.timesheetapp1.domain.core.authorization.users.IUsersRepository;
 import com.fastcode.timesheetapp1.domain.core.authorization.users.QUsersEntity;
 import com.fastcode.timesheetapp1.domain.core.authorization.users.UsersEntity;
@@ -13,8 +18,6 @@ import com.fastcode.timesheetapp1.domain.core.authorization.userspreference.IUse
 import com.fastcode.timesheetapp1.domain.core.authorization.userspreference.UserspreferenceEntity;
 import com.fastcode.timesheetapp1.security.SecurityUtils;
 import com.querydsl.core.BooleanBuilder;
-import java.time.*;
-import java.util.*;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
@@ -24,6 +27,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
+import java.util.*;
 
 @Service("usersAppService")
 @RequiredArgsConstructor

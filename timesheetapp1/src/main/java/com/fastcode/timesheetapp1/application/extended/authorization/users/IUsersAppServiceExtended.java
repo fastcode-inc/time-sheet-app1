@@ -1,14 +1,13 @@
 package com.fastcode.timesheetapp1.application.extended.authorization.users;
 
-import java.util.List;
-
-import org.springframework.data.domain.Pageable;
-
 import com.fastcode.timesheetapp1.addons.scheduler.application.trigger.dto.CreateTriggerInput;
 import com.fastcode.timesheetapp1.application.core.authorization.users.IUsersAppService;
 import com.fastcode.timesheetapp1.application.core.authorization.users.dto.FindUsersByIdOutput;
 import com.fastcode.timesheetapp1.application.core.authorization.users.dto.UpdateUsersOutput;
 import com.fastcode.timesheetapp1.domain.core.authorization.users.UsersEntity;
+import org.springframework.data.domain.Pageable;
+
+import java.util.List;
 
 public interface IUsersAppServiceExtended extends IUsersAppService {
 

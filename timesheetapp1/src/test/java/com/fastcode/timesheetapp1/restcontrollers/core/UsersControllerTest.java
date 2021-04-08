@@ -1,29 +1,14 @@
 package com.fastcode.timesheetapp1.restcontrollers.core;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import com.fastcode.timesheetapp1.application.core.authorization.users.UsersAppService;
 import com.fastcode.timesheetapp1.application.core.authorization.users.dto.*;
 import com.fastcode.timesheetapp1.application.core.authorization.userspermission.UserspermissionAppService;
-import com.fastcode.timesheetapp1.application.core.authorization.userspermission.UserspermissionAppService;
-import com.fastcode.timesheetapp1.application.core.authorization.usersrole.UsersroleAppService;
 import com.fastcode.timesheetapp1.application.core.authorization.usersrole.UsersroleAppService;
 import com.fastcode.timesheetapp1.application.core.timesheet.TimesheetAppService;
 import com.fastcode.timesheetapp1.application.core.usertask.UsertaskAppService;
 import com.fastcode.timesheetapp1.commons.logging.LoggingHelper;
 import com.fastcode.timesheetapp1.commons.search.SearchUtils;
 import com.fastcode.timesheetapp1.domain.core.authorization.users.IUsersRepository;
-import com.fastcode.timesheetapp1.domain.core.authorization.users.IUsersRepository;
-import com.fastcode.timesheetapp1.domain.core.authorization.users.UsersEntity;
 import com.fastcode.timesheetapp1.domain.core.authorization.users.UsersEntity;
 import com.fastcode.timesheetapp1.domain.core.authorization.userspreference.IUserspreferenceManager;
 import com.fastcode.timesheetapp1.domain.core.authorization.userspreference.UserspreferenceEntity;
@@ -36,13 +21,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import java.time.*;
-import java.util.*;
-import javax.annotation.PostConstruct;
-import javax.persistence.EntityExistsException;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityNotFoundException;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
@@ -62,6 +40,21 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import javax.annotation.PostConstruct;
+import javax.persistence.EntityExistsException;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityNotFoundException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, properties = "spring.profiles.active=test")

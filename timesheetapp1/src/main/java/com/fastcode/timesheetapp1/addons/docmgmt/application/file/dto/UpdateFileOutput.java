@@ -1,8 +1,9 @@
 package com.fastcode.timesheetapp1.addons.docmgmt.application.file.dto;
 
-import java.util.Date;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.Date;
 
 @Getter
 @Setter

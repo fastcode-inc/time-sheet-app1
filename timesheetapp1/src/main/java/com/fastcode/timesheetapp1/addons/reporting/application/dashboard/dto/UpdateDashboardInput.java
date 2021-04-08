@@ -1,12 +1,12 @@
 package com.fastcode.timesheetapp1.addons.reporting.application.dashboard.dto;
 
 import com.fastcode.timesheetapp1.addons.reporting.application.report.dto.UpdateReportInput;
-import java.time.*;
-import java.util.ArrayList;
-import java.util.List;
-import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+
+import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter

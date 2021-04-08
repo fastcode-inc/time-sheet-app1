@@ -1,7 +1,5 @@
 package com.fastcode.timesheetapp1.restcontrollers.extended;
 
-import org.springframework.web.bind.annotation.*;
-import com.fastcode.timesheetapp1.restcontrollers.core.UsersController;
 import com.fastcode.timesheetapp1.addons.scheduler.application.job.IJobAppService;
 import com.fastcode.timesheetapp1.addons.scheduler.application.job.dto.CreateJobInput;
 import com.fastcode.timesheetapp1.addons.scheduler.application.trigger.ITriggerAppService;
@@ -9,37 +7,29 @@ import com.fastcode.timesheetapp1.addons.scheduler.application.trigger.dto.Creat
 import com.fastcode.timesheetapp1.addons.scheduler.application.trigger.dto.EmailTriggerInfo;
 import com.fastcode.timesheetapp1.addons.scheduler.application.trigger.dto.GetTriggerOutput;
 import com.fastcode.timesheetapp1.application.extended.authorization.users.IUsersAppServiceExtended;
-import com.fastcode.timesheetapp1.application.extended.timesheet.ITimesheetAppServiceExtended;
 import com.fastcode.timesheetapp1.application.extended.authorization.userspermission.IUserspermissionAppServiceExtended;
 import com.fastcode.timesheetapp1.application.extended.authorization.usersrole.IUsersroleAppServiceExtended;
+import com.fastcode.timesheetapp1.application.extended.timesheet.ITimesheetAppServiceExtended;
 import com.fastcode.timesheetapp1.application.extended.usertask.IUsertaskAppServiceExtended;
-
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import com.fastcode.timesheetapp1.commons.logging.LoggingHelper;
+import com.fastcode.timesheetapp1.commons.search.OffsetBasedPageRequest;
+import com.fastcode.timesheetapp1.domain.core.authorization.users.UsersEntity;
+import com.fastcode.timesheetapp1.restcontrollers.core.UsersController;
 import com.fastcode.timesheetapp1.security.JWTAppService;
-
 import lombok.NonNull;
-
-import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.time.temporal.TemporalAmount;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.*;
 
-import com.fastcode.timesheetapp1.commons.logging.LoggingHelper;
-import com.fastcode.timesheetapp1.commons.search.OffsetBasedPageRequest;
-import com.fastcode.timesheetapp1.commons.search.SearchCriteria;
-import com.fastcode.timesheetapp1.commons.search.SearchUtils;
-import com.fastcode.timesheetapp1.domain.core.authorization.users.UsersEntity;
+import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/users/extended")

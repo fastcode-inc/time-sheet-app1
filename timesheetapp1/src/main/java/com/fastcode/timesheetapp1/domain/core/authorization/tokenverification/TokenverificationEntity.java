@@ -2,13 +2,13 @@ package com.fastcode.timesheetapp1.domain.core.authorization.tokenverification;
 
 import com.fastcode.timesheetapp1.domain.core.abstractentity.AbstractEntity;
 import com.fastcode.timesheetapp1.domain.core.authorization.users.UsersEntity;
-import java.time.*;
-import java.util.Date;
-import javax.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "tokenverification")

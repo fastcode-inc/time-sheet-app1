@@ -7,14 +7,6 @@ import com.fastcode.timesheetapp1.domain.core.authorization.jwtentity.IJwtReposi
 import com.fastcode.timesheetapp1.domain.core.authorization.jwtentity.JwtEntity;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.*;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.*;
-import java.util.stream.Collectors;
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpStatus;
@@ -25,6 +17,15 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 

@@ -1,8 +1,8 @@
 package com.fastcode.timesheetapp1.domain.extended.task;
 
-import org.springframework.stereotype.Repository;
 import com.fastcode.timesheetapp1.domain.core.task.ITaskRepository;
 import org.javers.spring.annotation.JaversSpringDataAuditable;
+import org.springframework.stereotype.Repository;
 
 @JaversSpringDataAuditable
 @Repository("taskRepositoryExtended")

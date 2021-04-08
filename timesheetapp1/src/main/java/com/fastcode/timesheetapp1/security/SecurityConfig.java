@@ -1,8 +1,5 @@
 package com.fastcode.timesheetapp1.security;
 
-import static com.fastcode.timesheetapp1.security.SecurityConstants.CONFIRM;
-import static com.fastcode.timesheetapp1.security.SecurityConstants.REGISTER;
-
 import com.fastcode.timesheetapp1.domain.core.authorization.users.IUsersRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +17,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+
+import static com.fastcode.timesheetapp1.security.SecurityConstants.CONFIRM;
+import static com.fastcode.timesheetapp1.security.SecurityConstants.REGISTER;
 
 @Configuration
 @EnableWebSecurity
@@ -42,12 +42,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+    	CookieCsrfTokenRepository repository = CookieCsrfTokenRepository.withHttpOnlyFalse();
+    	repository.setCookieDomain("coder.getfastcode.org");
         http
             .cors()
             .and()
             .csrf()
             .ignoringAntMatchers("/auth", "/auth/logout")
-            .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+            .csrfTokenRepository(repository)
             .and()
             .sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)

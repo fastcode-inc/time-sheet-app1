@@ -12,13 +12,6 @@ import com.fastcode.timesheetapp1.commons.search.OffsetBasedPageRequest;
 import com.fastcode.timesheetapp1.commons.search.SearchCriteria;
 import com.fastcode.timesheetapp1.commons.search.SearchUtils;
 import com.fastcode.timesheetapp1.domain.core.authorization.users.UsersEntity;
-import java.time.*;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import javax.persistence.EntityExistsException;
-import javax.persistence.EntityNotFoundException;
-import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.env.Environment;
@@ -27,13 +20,14 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.persistence.EntityExistsException;
+import javax.persistence.EntityNotFoundException;
+import javax.validation.Valid;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @SuppressWarnings({ "unchecked", "rawtypes" })

@@ -1,10 +1,11 @@
 package com.fastcode.timesheetapp1.addons.reporting;
 
-import javax.persistence.AttributeConverter;
-import javax.persistence.Converter;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+
+import javax.persistence.AttributeConverter;
+import javax.persistence.Converter;
 
 @Converter
 public class JSONObjectConverter implements AttributeConverter<JSONObject, String> {

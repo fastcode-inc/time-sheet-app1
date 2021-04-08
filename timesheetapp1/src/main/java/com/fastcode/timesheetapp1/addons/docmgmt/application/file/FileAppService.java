@@ -9,7 +9,6 @@ import com.fastcode.timesheetapp1.commons.search.SearchCriteria;
 import com.fastcode.timesheetapp1.commons.search.SearchFields;
 import com.fastcode.timesheetapp1.commons.search.SearchUtils;
 import com.querydsl.core.BooleanBuilder;
-import java.util.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -18,6 +17,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.*;
 
 @Service("fileAppService")
 public class FileAppService implements IFileAppService {

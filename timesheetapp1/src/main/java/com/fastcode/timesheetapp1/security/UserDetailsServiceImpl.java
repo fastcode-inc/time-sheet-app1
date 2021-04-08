@@ -2,7 +2,6 @@ package com.fastcode.timesheetapp1.security;
 
 import com.fastcode.timesheetapp1.domain.core.authorization.users.IUsersRepository;
 import com.fastcode.timesheetapp1.domain.core.authorization.users.UsersEntity;
-import java.util.List;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -13,6 +12,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor

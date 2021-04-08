@@ -1,30 +1,20 @@
 package com.fastcode.timesheetapp1.restcontrollers.extended;
 
-import org.springframework.web.bind.annotation.*;
-import com.fastcode.timesheetapp1.restcontrollers.core.UsertaskController;
-
-import lombok.NonNull;
-
+import com.fastcode.timesheetapp1.application.extended.authorization.users.IUsersAppServiceExtended;
+import com.fastcode.timesheetapp1.application.extended.task.ITaskAppServiceExtended;
 import com.fastcode.timesheetapp1.application.extended.usertask.IUsertaskAppServiceExtended;
 import com.fastcode.timesheetapp1.application.extended.usertask.dto.UsertaskOutput;
-import com.fastcode.timesheetapp1.application.extended.task.ITaskAppServiceExtended;
-import com.fastcode.timesheetapp1.application.core.usertask.dto.GetTaskOutput;
-import com.fastcode.timesheetapp1.application.extended.authorization.users.IUsersAppServiceExtended;
-
-import java.util.List;
-import java.util.Optional;
-
-import javax.persistence.EntityNotFoundException;
-
+import com.fastcode.timesheetapp1.commons.logging.LoggingHelper;
+import com.fastcode.timesheetapp1.domain.core.authorization.users.UsersEntity;
+import com.fastcode.timesheetapp1.restcontrollers.core.UsertaskController;
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
-import com.fastcode.timesheetapp1.commons.logging.LoggingHelper;
-import com.fastcode.timesheetapp1.domain.core.authorization.users.UsersEntity;
-import com.fastcode.timesheetapp1.domain.core.usertask.UsertaskId;
+import java.util.List;
 
 @RestController
 @RequestMapping("/usertask/extended")

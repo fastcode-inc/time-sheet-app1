@@ -2,7 +2,8 @@ package com.fastcode.timesheetapp1.application.core.authorization.userspermissio
 
 import com.fastcode.timesheetapp1.application.core.authorization.userspermission.dto.*;
 import com.fastcode.timesheetapp1.commons.logging.LoggingHelper;
-import com.fastcode.timesheetapp1.commons.search.*;
+import com.fastcode.timesheetapp1.commons.search.SearchCriteria;
+import com.fastcode.timesheetapp1.commons.search.SearchFields;
 import com.fastcode.timesheetapp1.domain.core.authorization.permission.IPermissionRepository;
 import com.fastcode.timesheetapp1.domain.core.authorization.permission.PermissionEntity;
 import com.fastcode.timesheetapp1.domain.core.authorization.users.IUsersRepository;
@@ -12,8 +13,6 @@ import com.fastcode.timesheetapp1.domain.core.authorization.userspermission.QUse
 import com.fastcode.timesheetapp1.domain.core.authorization.userspermission.UserspermissionEntity;
 import com.fastcode.timesheetapp1.domain.core.authorization.userspermission.UserspermissionId;
 import com.querydsl.core.BooleanBuilder;
-import java.time.*;
-import java.util.*;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
@@ -23,6 +22,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.*;
 
 @Service("userspermissionAppService")
 @RequiredArgsConstructor

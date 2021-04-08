@@ -4,13 +4,14 @@ import com.fastcode.timesheetapp1.domain.core.abstractentity.AbstractEntity;
 import com.fastcode.timesheetapp1.domain.core.task.TaskEntity;
 import com.fastcode.timesheetapp1.domain.core.timeofftype.TimeofftypeEntity;
 import com.fastcode.timesheetapp1.domain.core.timesheet.TimesheetEntity;
-import java.math.BigDecimal;
-import java.time.*;
-import javax.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import javax.persistence.*;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "timesheetdetails")

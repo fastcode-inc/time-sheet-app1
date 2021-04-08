@@ -8,7 +8,6 @@ import com.fastcode.timesheetapp1.addons.reporting.application.reportversion.dto
 import com.fastcode.timesheetapp1.addons.reporting.domain.report.ReportEntity;
 import com.fastcode.timesheetapp1.addons.reporting.domain.reportversion.ReportversionEntity;
 import com.fastcode.timesheetapp1.domain.core.authorization.users.UsersEntity;
-import java.time.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;

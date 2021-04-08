@@ -1,12 +1,13 @@
 package com.fastcode.timesheetapp1.domain.core.authorization.userspreference;
 
 import com.querydsl.core.types.Predicate;
-import java.util.Optional;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
+
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor

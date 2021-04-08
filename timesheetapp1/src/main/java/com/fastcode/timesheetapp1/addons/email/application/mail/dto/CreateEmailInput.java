@@ -1,10 +1,11 @@
 package com.fastcode.timesheetapp1.addons.email.application.mail.dto;
 
-import java.util.Date;
-import java.util.List;
-import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+
+import javax.validation.constraints.NotNull;
+import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter

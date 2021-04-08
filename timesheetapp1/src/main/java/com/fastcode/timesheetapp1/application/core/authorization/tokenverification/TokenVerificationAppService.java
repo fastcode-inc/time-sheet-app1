@@ -4,14 +4,15 @@ import com.fastcode.timesheetapp1.domain.core.authorization.tokenverification.IT
 import com.fastcode.timesheetapp1.domain.core.authorization.tokenverification.TokenverificationEntity;
 import com.fastcode.timesheetapp1.domain.core.authorization.users.IUsersRepository;
 import com.fastcode.timesheetapp1.domain.core.authorization.users.UsersEntity;
-import java.util.Date;
-import java.util.UUID;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Date;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor

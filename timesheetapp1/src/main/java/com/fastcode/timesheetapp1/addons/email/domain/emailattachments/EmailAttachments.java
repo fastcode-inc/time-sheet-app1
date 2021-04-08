@@ -3,18 +3,10 @@ package com.fastcode.timesheetapp1.addons.email.domain.emailattachments;
 import com.fastcode.timesheetapp1.addons.docmgmt.domain.file.FileEntity;
 import com.fastcode.timesheetapp1.addons.email.domain.emailhistory.EmailHistory;
 import com.fastcode.timesheetapp1.domain.core.abstractentity.AbstractEntity;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name = "email_attachments")

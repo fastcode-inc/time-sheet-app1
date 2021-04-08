@@ -1,21 +1,6 @@
 package com.fastcode.timesheetapp1.commons.error;
 
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
-import static org.springframework.http.HttpStatus.CONFLICT;
-import static org.springframework.http.HttpStatus.METHOD_NOT_ALLOWED;
-import static org.springframework.http.HttpStatus.NOT_FOUND;
-
 import com.fastcode.timesheetapp1.commons.logging.LoggingHelper;
-import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
-import javax.persistence.EntityExistsException;
-import javax.persistence.EntityNotFoundException;
 import org.assertj.core.api.Assertions;
 import org.hibernate.exception.ConstraintViolationException;
 import org.junit.Before;
@@ -42,6 +27,17 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.NoHandlerFoundException;
+
+import javax.persistence.EntityExistsException;
+import javax.persistence.EntityNotFoundException;
+import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.*;
+import static org.springframework.http.HttpStatus.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 public class RestExceptionHandlerTest {

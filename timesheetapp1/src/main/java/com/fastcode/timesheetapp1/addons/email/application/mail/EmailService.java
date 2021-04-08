@@ -9,12 +9,6 @@ import com.fastcode.timesheetapp1.addons.email.domain.emailattachments.EmailAtta
 import com.fastcode.timesheetapp1.addons.email.domain.emailhistory.EmailHistory;
 import com.fastcode.timesheetapp1.addons.email.domain.emailhistory.EmailHistoryRepository;
 import com.fastcode.timesheetapp1.commons.logging.LoggingHelper;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-import javax.mail.internet.MimeMessage;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -26,6 +20,13 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.mail.internet.MimeMessage;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EmailService implements IEmailService {

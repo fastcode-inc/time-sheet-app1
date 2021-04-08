@@ -7,11 +7,6 @@ import com.fastcode.timesheetapp1.domain.core.authorization.userspermission.IUse
 import com.fastcode.timesheetapp1.domain.core.authorization.userspermission.UserspermissionEntity;
 import com.fastcode.timesheetapp1.domain.core.authorization.usersrole.IUsersroleRepository;
 import com.fastcode.timesheetapp1.domain.core.authorization.usersrole.UsersroleEntity;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import javax.servlet.http.Cookie;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -19,6 +14,12 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+
+import javax.servlet.http.Cookie;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor

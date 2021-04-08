@@ -1,10 +1,10 @@
 package com.fastcode.timesheetapp1.addons.reporting.domain.dashboardversionreport;
 
-import java.io.Serializable;
-import java.time.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.io.Serializable;
 
 @Getter
 @Setter
