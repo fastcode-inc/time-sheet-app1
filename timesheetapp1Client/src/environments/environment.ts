@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://api-admin.coder.getfastcode.org',
-  reportingUrl: 'https://reporting-admin.coder.getfastcode.org',
+  apiUrl: 'https://54.226.12.222:5555',
+  reportingUrl: 'https://54.226.12.222:5556',
 };
 
 /*

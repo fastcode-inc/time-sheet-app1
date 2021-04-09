@@ -43,7 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
     	CookieCsrfTokenRepository repository = CookieCsrfTokenRepository.withHttpOnlyFalse();
-    	repository.setCookieDomain("coder.getfastcode.org");
+    	repository.setCookieDomain("54.226.12.222");
         http
             .cors()
             .and()
