@@ -91,7 +91,7 @@ public class TimesheetControllerExtended extends TimesheetController {
 		}
 		if(input.getUserId() !=null) {
 
-			if(!usersAppServiceExtended.parseTokenAndCheckIfPermissionExists(token, "TIMESHEETSTATUSENTITY_UPDATE")) {
+			if(!usersAppServiceExtended.parseTokenAndCheckIfPermissionExists(token, "CHANGE_TIMESHEET_STATUS")) {
 				throw new Exception("You don't have permission to fetch timesheet details against userid " + input.getUserId());
 			}
 

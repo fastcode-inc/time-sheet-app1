@@ -39,8 +39,7 @@ export class MainNavExtendedComponent extends MainNavComponent {
 	setPermissions() {
 		super.setPermissions();
 		this.permissions['AUTH_ENTITIES'] = false;
-		let perms = ["SHOW_ENTITIES", "SET_REMINDER", "CREATE_TIMESHEETDETAILS_BULK", "READ_TIMESHEET_WITH_DETAILS"]
-		this.permissions['TIMESHEETSTATUSENTITY_UPDATE'] = this.globalPermissionService.hasPermissionOnEntity('TIMESHEETSTATUS', 'update');
+		let perms = ["SWAGGER_API", "CHANGE_TIMESHEET_STATUS", "SHOW_ENTITIES", "SET_REMINDER", "CREATE_TIMESHEETDETAILS_BULK", "READ_TIMESHEET_WITH_DETAILS"]
 		this.permissions['TIMESHEETENTITY_CREATE'] = this.globalPermissionService.hasPermissionOnEntity('TIMESHEET', 'create');
 		this.authEntityList.forEach(entity => {
 			if(this.permissions[entity]) {
